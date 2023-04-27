@@ -1,0 +1,272 @@
+{
+  "forPoloTeeShirt": {
+    "id": "1",
+    "profit": "0.2",
+    "tshirtsCostRang1": "230",
+    "tshirtsCostRang2": "200",
+    "tshirtsCostRang3": "180",
+    "tshirtsCostRang4": "160",
+    "tshirtsCostRang5": "140"
+  },
+  "forCustomHoodie": {
+    "id": "2",
+    "profit": "0.2",
+    "tshirtsCostRang1": "350",
+    "tshirtsCostRang2": "320",
+    "tshirtsCostRang3": "300",
+    "tshirtsCostRang4": "280",
+    "tshirtsCostRang5": "250"
+  },
+  "forHoodieOnDemand": {
+    "id": "3",
+    "profit": "0.3",
+    "heatCostMultiplier": "20",
+    "otherCostMultiplier": "150",
+    "hoodieCostMultiplier": "450"
+  },
+  "forDeskCalendar": {
+    "id": "4",
+    "profit": "0.2",
+    "packetPrice": "1800",
+    "totalPlateCostMultiplier": "110",
+    "bindingCostMultiplier": "30"
+  },
+  "forEconomyWallCalendar": {
+    "id": "5",
+    "profit": "0.3",
+    "paperPacketCost": "5000",
+    "bindingCostMultiplier": "4"
+  },
+  "forNormalWallCalendar": {
+    "id": "6",
+    "profit": "0.25",
+    "paperPacketCost": "5000",
+    "bindingCostMultiplerForLeaf3": "8",
+    "bindingCostMultiplerForLeaf6": "9",
+    "bindingCostMultiplerForLeaf12": "12",
+    "coverCostMultiplierForYes": "2.8",
+    "printCostMultiplier": "400"
+  },
+    "forNormalWallCalendarChatGpt": {
+    "marginPercent":"0.25",
+    "paperPacketCost":"5000",
+    "bindingCostValue":[8,9,12],
+    "coverCostValue":"2.8",
+    "printCostValue":"400"
+  },
+  "forCustomNotebook": {
+    "id": "7",
+    "profit": "0.2",
+    "coverPacketPrice": "3200",
+    "plateCostMultiplier": "110",
+    "innerPacketPrice80gm": "3400",
+    "innerPacketPrice100gm": "4350",
+    "innerPacketPrice120gm": "5100",
+    "coverPrintCostMeltiplier":"250",
+    "innerPaperPrintCost":"250",
+    "bindingCostMultplier": {
+      "Spiral0": " 8",
+      "Spiral1": "7",
+      "Wire_O0": "12",
+      "Wire_O1": "10",
+      "Glue0": "6",
+      "Glue1": "5"
+    }
+  },
+  "forEconomyNotebook": {
+    "id": "8",
+    "profit": "0.2",
+    "coverPacketPrice": "2200",
+    "plateCostMultiplier": "110",
+    "innerPacketPrice": "3600",
+    "bindingCostMultplier": {
+      "Spiral0": " 8",
+      "Spiral1": "7",
+
+      "Wire_O0": "9",
+      "Wire_O1": "8",
+
+      "Glue0": "6",
+      "Glue1": "5"
+    }
+  },
+  "forArtPaperShoppingBagSmall": {
+    "id": "9",
+    "profit": "0.2",
+    "packetPrice": {
+      "150 GSM": "5000",
+      "170 GSM": "5700"
+    }
+  },
+  "forArtPaperShoppingBagMedium": {
+    "id": "10",
+    "profit": "0.2",
+    "packetPrice": {
+      "150 GSM": "4200",
+      "170 GSM": "4800"
+    }
+  },
+  "forArtPaperShoppingBagLarge": {
+    "id": "11",
+    "profit": "0.2",
+    "packetPrice": {
+      "150 GSM": "4200",
+      "170 GSM": "4800"
+    }
+  },
+  "forDuplexShoppingBagMedium": {
+    "id": "12",
+    "profit": "0.2",
+    "packetPrice": {
+      "300 GSM": "2100"
+    }
+  },
+  "forDuplexShoppingBagLarge": {
+    "id": "13",
+    "profit": "0.2",
+    "packetPrice": {
+      "300 GSM": "3100"
+    }
+  },
+  "forDuplexShoppingBagExtraLarge": {
+    "id": "14",
+    "profit": "0.2",
+    "packetPrice": {
+      "300 GSM": "3100"
+    }
+  },
+  "forDuplexShoppingBagXXLarge": {
+    "id": "15",
+    "profit": "0.2",
+    "packetPrice": {
+      "300 GSM": "4000"
+    }
+  },
+  "forSwedishShoppingBagLarge": {
+    "id": "16",
+    "profit": 0.2,
+    "packetPrice": {
+      "300 GSM": 3100
+    }
+  },
+  "forSwedishShoppingBagExtraLarge": {
+    "id": "17",
+    "profit": 0.2,
+    "packetPrice": {
+      "300 GSM": 3100
+    }
+  },
+  "forIdCardWithRibbon": {
+    "id": "18",
+    "profit": "1"
+  },
+  "forCrest": {
+    "id": "19",
+    "profit": "0.3"
+  },
+  "forMug": {
+    "id": "20",
+    "profit": "0.3"
+  },
+  "forLeflet": {
+    "id": "21",
+    "profit": "0.2",
+    "for100GSM": "4200",
+    "for120GSM": "4600",
+    "for150GSM": "5700"
+  },
+  "forLetterEnvelope": {
+    "profit": 0.5,
+    "packetPriceRange1": "2300",
+    "packetPriceRange2": "2950",
+    "packetPriceRange3": "3450"
+  },
+  "forLetterHead": {
+    "id": "23",
+    "profit": "0.2",
+    "for80GSM": "2300",
+    "for100GSM": "2950",
+    "for120GSM": "3450"
+  },
+  "forDigitalPrintedTShirts": {
+    "id": "25",
+    "profit": "0.3",
+    "heatCostMultiplier": "20",
+    "otherCost": "150",
+    "tSHirtCostMultiplier": "120"
+  },
+  "forCustomPrintedTShirts": {
+    "profit": 0.2
+  },
+  "forCustomMask": {
+    "profit": 0.3,
+    "muskCostMultiplierRang1": "50",
+    "muskCostMultiplierRang2": "40",
+    "muskCostMultiplierRang3": "30"
+  },
+  "forThankYouCard": {
+    "profit": 1,
+    "paperCostMultiplier": 150,
+    "cuttingCostMultiplier": 2
+  },
+  "forHangTagSizeLg": {
+    "profit": 0.2,
+    "packetPrice": "3100"
+  },
+  "forHangTagSizeSm": {
+    "profit": 1,
+    "costPerSet": "105"
+  },
+  "forCertificate": {
+    "profitWithFrame": 0.4,
+    "profitWithOutFrame": 1,
+    "artCardMultiplier": "15",
+    "embossCardMultiplier": "20",
+    "frameCostMultiplier": "220"
+  },
+  "forA4Envelope": {
+    "profit": 0.3,
+    "packetPriceForEco": "2500",
+    "packetPriceForStd": "2800",
+    "packetPriceForprem": "3200"
+  },
+  "forBrandLabel": {
+    "profit": 0.2,
+    "sizeCostMultiplier1": "2.5",
+    "sizeCostMultiplier2": "3",
+    "materialCostMultipler1": "500",
+    "materialCostMultipler2": "800"
+  },
+  "forCashMemo": {
+    "profit": 0.25,
+    "costMultiplierForEco": "2500",
+    "costMultiplierForStd": "3000",
+    "costMultiplierForPrem": "3700"
+  },
+  "forMoneyReceipt": {
+    "profit": 0.3,
+    "totalCostMultiplier": "2000"
+  },
+  "forPaperSticker": {
+    "profit": 0.2,
+    "sheetCostMultiplier": "25"
+  },
+  "forCourierSticker": {
+    "profit": 0.91,
+    "perSheetCost": "35"
+  },
+  "forPaperStickerOnDemand": {
+    "profit": 0.7,
+    "perSetCost": "35"
+  },
+  "forCatelogue": {
+    "profit": 0.2,
+    "packPrice300gm": "2200",
+    "packPrice150gm": "5000"
+  } ,
+   "forMagazine": {
+    "profit": 0.2,
+    "packPriceFor150gsm": "5000",
+    "packPriceFor300gsm": "2200"
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "profit": 0.2,
+    "coverPacketPrice": 3200,
+    "plateCostMultiplier": 110,
+    "innerPacketPrice": 3000,
+    "bindingCostMultplier": {
+      "Spiral": {
+        "0": 8,
+        "1": 7
+      },
+      "Wire-O": {
+        "0": 12,
+        "1": 10
+      },
+      "Glue": {
+        "0": 6,
+        "1": 5
+      }
+    }
+  }
+  

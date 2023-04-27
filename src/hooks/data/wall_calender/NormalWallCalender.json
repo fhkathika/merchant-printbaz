@@ -1,0 +1,13 @@
+{
+    "profit":0.25,
+    "bindingCost":{
+        "3":8,
+        "6":9,
+        "12":12
+    },
+    "coverCost":{
+        "Yes":2.8,
+        "No":0
+    },
+    "paperPacketCost":5000
+}

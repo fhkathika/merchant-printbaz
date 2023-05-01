@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import TeeShirtCapingCalcForm from "./Component/teeShrtCapming/TeeShirtCapingCalcForm";
 import PrivateRoute from "../src/routes/PrivateRoute.jsx";
 import NavigationBar from "./Component/Navbar/NavigationBar";
@@ -19,18 +19,21 @@ import MyOrders from "./Component/Orders/MyOrders";
 import NewOrder from "./Component/newOrder/NewOrder";
 function App() {
   const { user, loading } = useContext(AuthContext);
-  const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!loading) {
-  //     if (user) {
-  //       // User is authenticated, so navigate to dashboard
-  //       navigate('/dashboard');
-  //     } else {
-  //       // User is not authenticated, so navigate to login page
-  //       navigate('/login');
-  //     }
-  //   }
-  // }, [user, navigate, loading]);
+  const navigate=useNavigate();
+  const location=useLocation();
+const from=location.state?.from?.pathname
+  useEffect(() => {
+   
+      if (!user) {
+        // User is authenticated, so navigate to dashboard
+        navigate('/');
+
+      } 
+      else{
+        navigate(from,{replace:true});
+      }
+    
+  }, [user, navigate]);
   if (loading) {
     return (
       <>
@@ -51,9 +54,9 @@ function App() {
         <Route
           path="/"
           element={
-            <PrivateRoute>
-              <DashBoard />
-            </PrivateRoute>
+          
+              <Login />
+          
           }
         />
         <Route

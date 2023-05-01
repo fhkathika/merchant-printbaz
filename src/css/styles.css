@@ -232,9 +232,12 @@
    justify-content: center;
    align-items: center;
  }
- .navbar-dropdown-toggle svg {
-  fill: white !important;
-} 
+ /* .navbar-dropdown-toggle  {
+  color: white !important;
+}  */
+.navbar-toggler {
+background-color: white !important;
+}
   .dropdownButtonMobile{
   
    

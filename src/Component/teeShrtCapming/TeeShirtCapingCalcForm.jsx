@@ -9,6 +9,7 @@ import  "../../css/styles.css"
 import Login from '../login/Login';
 import Register from '../login/Register';
 import { Link } from 'react-router-dom';
+import NavigationBar from '../Navbar/NavigationBar';
 const TeeShirtCapingCalcForm = () => {
     let id = "teeShirtCampingId";
     let collections = "productValues";
@@ -100,48 +101,11 @@ const {user}=useContext(AuthContext)
 
     return (
 <>
-
+<NavigationBar/>
 
       
               <Container className="sbcalc  lg xs md  mt-4">
-              {
-                  !user && <div id="popup1" className="overlay">
-                  <div className="popup">
-                      {/* <a className="close" onClick={closePopup}>&times;</a> */}
-                      <div className="content">
-                      <div style={{ display: display }}>
-                      <Login id ="login" closePopup={()=>closePopup}/>
-                      </div>
-                      
-                      <div style={{marginTop: "15px" }}>
-                      <div>
-                          {
-                              displayNone==="none" &&
-                              <p  style={{ backgroundColor:"none",border:"none",textDecoration:"none",color:"#124",fontWeight:"500",cursor:"pointer",textAlign:"center"}} onClick={showRegister}> Sign Up</p>
-                              
-                             
-                          }
-     
-      <div id="register"style={{ display: displayNone }}> <Register/></div>
-      {
-                          displayNone==="block" && 
-                          <p  style={{ backgroundColor:"none",border:"none",textDecoration:"none",color:"#124",fontWeight:"500",cursor:"pointer",textAlign:"center",marginTop:"12px"}} onClick={showLogin}> Log in</p>
-                      }
-    </div>
-               
-
-                      </div>
-                    
-                    
-                      </div>
-                    
-                  </div>
-                  </div>
-              
-}
-
-              
-           {/* <GotoAnotherPathBtn path="/" className="section-title" title="Tee Shirt  Price Calculator"></GotoAnotherPathBtn> */}
+    {/* <GotoAnotherPathBtn path="/" className="section-title" title="Tee Shirt  Price Calculator"></GotoAnotherPathBtn> */}
            <h2>Tee Shirt Calculator</h2>
         <Table responsive>
      <thead>

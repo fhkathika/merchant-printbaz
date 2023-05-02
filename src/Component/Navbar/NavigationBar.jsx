@@ -42,7 +42,7 @@ const NavigationBar = () => {
      
         <Navbar bg="light" expand="lg" collapseOnSelect>
   <Container fluid>
-    <Link className="navbar-brand navbar-brand-mobile" to="/">
+    <Link className="navbar-brand navbar-brand-mobile" to="/dashboard">
       <img src="https://media.discordapp.net/attachments/1069579536842379305/1097040318043537449/Logo-02.png?width=1440&height=392" alt="" />
     </Link>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -56,7 +56,7 @@ const NavigationBar = () => {
             <Link className="nav-link" to="/myorders">Order</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/">Invoice</Link>
+            <Link className="nav-link" to="">Invoice</Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/newOrder">New Order</Link>

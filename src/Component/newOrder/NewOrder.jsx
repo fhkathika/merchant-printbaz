@@ -245,22 +245,45 @@
 
 // export default NewOrder;
 
+import { collection, doc, getDoc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { useState } from "react";
-import { Form } from "react-bootstrap";
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import { Button, Form } from "react-bootstrap";
+import { db, storage } from '../../firebase.config';
 import teeShirtFormula from "../../Formulas/teeShirtFormula";
 import { useGetData } from "../../hooks/useGetData";
 import NavigationBar from "../Navbar/NavigationBar";
 const NewOrder = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone:"",
+    address:"",
+    instruction:"",
+    color:"",
+    teshirtSize:"",
+    quantity:"",
+    printSize:"",
+    collectAmount:"",
+    images: [],
+    resellerOrderArr:[]
+   
+  });
+
   let id = "resellerOrdersId";
   let collections = "resellerInfo";
   let idPrice = "teeShirtCampingId";
   let collectionsPrice = "productValues";
+  const [progress, setProgress] = useState(0);
   const [dbData, setDbData] = useState({});
   const { fetchedData, searchProduct, setSearchProduct } = useGetData(
     idPrice,
     collectionsPrice,
     dbData
   );
+  const handleChange=(e)=>{
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log("formData",formData);
+  }
   const resellerOrdersFromDb = fetchedData?.resellerOrders;
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState();
@@ -271,7 +294,13 @@ const NewOrder = () => {
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
   const [instruction, setInstruction] = useState();
-  console.log("fetchedData", fetchedData);
+  // const [deliveryFee, setDeliveryFee] = useState(70);
+  const [collectAmount, setCollectAmount] = useState();
+  const [showAlert, setShowAlert] = useState(false);
+//money received calculation
+
+
+
   const price1to9_10x14 = fetchedData?.printSize10x14?.price1to9_10x14;
   const price10to19_10x14 = fetchedData?.printSize10x14?.price10to19_10x14;
   const price20to29_10x14 = fetchedData?.printSize10x14?.price20to29_10x14;
@@ -304,240 +333,12 @@ const NewOrder = () => {
   const price30to40_2p5X5 = fetchedData?.printSize2p5X5?.price30to40_2p5X5;
   const price41to49_2p5X5 = fetchedData?.printSize2p5X5?.price41to49_2p5X5;
   const price50Plus_2p5X5 = fetchedData?.printSize2p5X5?.price50Plus_2p5X5;
-  return (
-    <div>
-      <meta charSet="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>New Order</title>
-      <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      />
-      <style
-        dangerouslySetInnerHTML={{
-          __html:
-            "\n    /* General styles */\nbody {\n  font-family: 'Arial', sans-serif;\n  background-color: #f8f9fa;\n  margin: 0;\n  padding: 0;\n}\n\nh1, h3 {\n  font-weight: bold;\n}\n\n.row {\n  margin: 0 auto;\n}\n\n.navbar {\n  background-color: #001846 !important;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n  padding: 20px;\n  padding-left: 40px !important;\n}\n\n.navbar-brand img {\n  width: 150px;\n}\n\n.nav-link {\n  color: #ffffff !important;\n  font-size: 16px;\n  font-weight: 600;\n}\n\n.nav-link:hover {\n  background-color: #ffffff;\n  color: #001846 !important;\n}\n.dropdown{\n  padding-left: 1200px;\n}\n\n.dropdown-menu {\n  margin-left: 1120px;\n  \n}\n\n.new-order {\n  margin: 0 10% 0 10%;\n}\n\n/* Form styles */\nform {\n  margin-bottom: 30px;\n}\n\nlabel {\n  font-weight: 600;\n}\n\ninput[type=\"number\"] {\n  -moz-appearance: textfield;\n}\n\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\n/* Buttons */\nbutton {\n  margin-right: 10px;\n}\n\n.add-field {\n  margin-left: 5px;\n}\n\n/* Terms and conditions */\np {\n  text-align: justify;\n  line-height: 1.5;\n  margin-left: 15px;\n  margin-right: 15px;\n}\n\n  ",
-        }}
-      />
+  console.log("collectAmount",collectAmount);
 
-      <NavigationBar />
-      <div className="new-order">
-        <div className="row mt-5">
-          <div className="col-12">
-            <h1>New Order</h1>
-          </div>
-        </div>
-        <Form
-              className="sm lg xs md "
-              onSubmit={(e) => {
-                e.preventDefault();
+  let printbazcost;
 
-                setPrice((_) =>
-                  teeShirtFormula(
-                    quantity,
-                    printSize,
-                    price1to9_10x14,
-                    price10to19_10x14,
-                    price20to29_10x14,
-                    price30to40_10x14,
-                    price41to49_10x14,
-                    price50Plus_10x14,
-                    price1to9_10x10,
-                    price10to19_10x10,
-                    price20to29_10x10,
-                    price30to40_10x10,
-                    price41to49_10x10,
-                    price50Plus_10x10,
-                    price1to9_10x5,
-                    price10to19_10x5,
-                    price20to29_10x5,
-                    price30to40_10x5,
-                    price41to49_10x5,
-                    price50Plus_10x5,
-                    price1to9_5X5,
-                    price10to19_5X5,
-                    price20to29_5X5,
-                    price30to40_5X5,
-                    price41to49_5X5,
-                    price50Plus_5X5,
-                    price1to9_2p5X5,
-                    price10to19_2p5X5,
-                    price20to29_2p5X5,
-                    price30to40_2p5X5,
-                    price41to49_2p5X5,
-                    price50Plus_2p5X5
-                  )
-                );
-              }}
-            >
-        <div className="row mt-5">
-          {/* 1st Column */}
-          <div className="col-md-4">
-          <h3>Recipient Details</h3>
-
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Recipient's Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            value={name}
-            className="form-control"
-            id="recipientName"
-            required
-            placeholder="Enter Name"
-          />
-        </Form.Group>
-           
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Recipient's Phone</Form.Label>
-          <Form.Control
-              type="number"
-              name="phone"
-              value={phone}
-              onChange={(e) => {
-
-                setPhone((_) => e.target.value);
-            }}
-              className="form-control"
-              id="recipientPhone"
-            required
-            placeholder="Enter recipient number"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Recipient's/Delivery Address</Form.Label>
-          <Form.Control
-              type="text"
-              name="address"
-              value={address}
-              onChange={(e) => {
-
-                setAddress((_) => e.target.value);
-            }}
-           
-              className="form-control"
-              id="recipientAddress"
-            required
-            placeholder="Enter recipient address"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>   Special Instructions</Form.Label>
-          <Form.Control
-              type="text"
-              name="instruction"
-              value={instruction}
-              onChange={(e) => {
-
-                setInstruction((_) => e.target.value);
-            }}
-              className="form-control"
-              id="recipientAddress"
-           
-            placeholder=""
-          />
-        </Form.Group> 
-            
-        
-          </div>
-          {/* 2nd Column */}
-          <div className="col-md-4">
-            <h3>Order Details</h3>
-            
-            
-              
-            <Form.Group
-                                className="mb-3 Print Side w-100 m-auto"
-                                controlId="wccalcPrintSide"
-                            >
-                                <Form.Label className="pr-2">Color</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="color"
-                                    value={color}
-                                    onChange={(e) => {
-
-                                        setColor((_) => e.target.value);
-                                    }}
-                                   
-                                    
-                                >
-                                    <option value="black">Black</option>
-                                    <option value="white">White</option>
-
-                                </Form.Control>
-                            </Form.Group>
-
-                            <Form.Group
-                                className="mb-3 Print Side w-100 m-auto"
-                                controlId="wccalcPrintSide"
-                            >
-                                <Form.Label className="pr-2">Tee Shirt Size</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    value={teshirtSize}
-                                    onChange={(e) => {
-
-                                        setTshirtSize((_) => e.target.value);
-                                    }}
-                                   
-                                    name="teshirtSize"
-                                >
-                                      <option value="m">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
-
-                                </Form.Control>
-                            </Form.Group>
-             
-            
-              <Form.Group
-                className="mb-3 Quantity w-100 m-auto"
-                controlId="wccalcQuantity"
-              >
-                <Form.Label>Quantity</Form.Label>
-
-                <Form.Control
-                  name="quantity"
-                  type="number"
-                  onChange={(data) => setQuantity((_) => data.target.value)}
-                  value={quantity}
-                  placeholder="Enter Quantity"
-                  min="1"
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3 Print Side w-100 m-auto"
-                controlId="wccalcPrintSide"
-              >
-                <Form.Label className="pr-2">Print Size</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={printSize}
-                  onChange={(e) => {
-                    setPrintSize((_) => e.target.value);
-                  }}
-                  name="printSize"
-                >
-                  <option value="10 x 14">10″ x 14″</option>
-                  <option value="10 x 10">10″ x 10″</option>
-                  <option value="10 x 5">10″ x 5″</option>
-                  <option value="5 X 5">5″ x 5″</option>
-                  <option value="2.5 X 5">2.5″ x 5″</option>
-                </Form.Control>
-              </Form.Group>
-          
-         
-          
-          </div>
-          {/* 3rd Column */}
-          <div className="col-md-4">
-            <h3>Cost Details</h3>
-                <label htmlFor="printbazCost">Printbaz Cost</label>
-              
-            {quantity &&
-printSize &&
+if(formData.quantity &&
+formData.printSize &&
 price1to9_10x14 &&
 price10to19_10x14 &&
 price20to29_10x14 &&
@@ -567,97 +368,406 @@ price10to19_2p5X5 &&
 price20to29_2p5X5 &&
 price30to40_2p5X5 &&
 price41to49_2p5X5 &&
-price50Plus_2p5X5 && (
-      <div className="  ">
-            
-            <h4 className="inline_block " style={{color:"",fontWeight:"700"}}>
-       <span style={{fontSize:""}}>&#2547;</span>  {teeShirtFormula( quantity,
-                    printSize,
-                    price1to9_10x14,
-                    price10to19_10x14,
-                    price20to29_10x14,
-                    price30to40_10x14,
-                    price41to49_10x14,
-                    price50Plus_10x14,
-                    price1to9_10x10,
-                    price10to19_10x10,
-                    price20to29_10x10,
-                    price30to40_10x10,
-                    price41to49_10x10,
-                    price50Plus_10x10,
-                    price1to9_10x5,
-                    price10to19_10x5,
-                    price20to29_10x5,
-                    price30to40_10x5,
-                    price41to49_10x5,
-                    price50Plus_10x5,
-                    price1to9_5X5,
-                    price10to19_5X5,
-                    price20to29_5X5,
-                    price30to40_5X5,
-                    price41to49_5X5,
-                    price50Plus_5X5,
-                    price1to9_2p5X5,
-                    price10to19_2p5X5,
-                    price20to29_2p5X5,
-                    price30to40_2p5X5,
-                    price41to49_2p5X5,
-                    price50Plus_2p5X5).totalPrice}    </h4>
-     
-        {/* <span className="inline_block " style={{fontSize:"16px",color:"gray"}}>({teeShirtFormula( quantity,
-                    printSize,
-                    price1to9_10x14,
-                    price10to19_10x14,
-                    price20to29_10x14,
-                    price30to40_10x14,
-                    price41to49_10x14,
-                    price50Plus_10x14,
-                    price1to9_10x10,
-                    price10to19_10x10,
-                    price20to29_10x10,
-                    price30to40_10x10,
-                    price41to49_10x10,
-                    price50Plus_10x10,
-                    price1to9_10x5,
-                    price10to19_10x5,
-                    price20to29_10x5,
-                    price30to40_10x5,
-                    price41to49_10x5,
-                    price50Plus_10x5,
-                    price1to9_5X5,
-                    price10to19_5X5,
-                    price20to29_5X5,
-                    price30to40_5X5,
-                    price41to49_5X5,
-                    price50Plus_5X5,
-                    price1to9_2p5X5,
-                    price10to19_2p5X5,
-                    price20to29_2p5X5,
-                    price30to40_2p5X5,
-                    price41to49_2p5X5,
-                    price50Plus_2p5X5).unitPrice} / piece)</span>  */}
+price50Plus_2p5X5) {
+  
+  const totalPrice = teeShirtFormula(
+    formData.quantity,
+    formData.printSize,
+    price1to9_10x14,
+    price10to19_10x14,
+    price20to29_10x14,
+    price30to40_10x14,
+    price41to49_10x14,
+    price50Plus_10x14,
+    price1to9_10x10,
+    price10to19_10x10,
+    price20to29_10x10,
+    price30to40_10x10,
+    price41to49_10x10,
+    price50Plus_10x10,
+    price1to9_10x5,
+    price10to19_10x5,
+    price20to29_10x5,
+    price30to40_10x5,
+    price41to49_10x5,
+    price50Plus_10x5,
+    price1to9_5X5,
+    price10to19_5X5,
+    price20to29_5X5,
+    price30to40_5X5,
+    price41to49_5X5,
+    price50Plus_5X5,
+    price1to9_2p5X5,
+    price10to19_2p5X5,
+    price20to29_2p5X5,
+    price30to40_2p5X5,
+    price41to49_2p5X5,
+    price50Plus_2p5X5
+  ).totalPrice;
+  
+  printbazcost = totalPrice;
+} else {
+  printbazcost = 0; // or any default value you want to set
+}
+
+
+let deliveryFee = 0;
+if (quantity > 5) {
+  deliveryFee = 70;
+  const remainder = quantity % 5;
+  const groups = Math.floor((quantity - remainder) / 5);
+  if (remainder >= 5) {
+    deliveryFee += (groups + 1) * 15;
+  } else {
+    deliveryFee += groups * 15;
+  }
+} else {
+  deliveryFee = 70;
+}
+
+let recvMoney=0
+let costHandlingfee;
+let recvMoneyWithouthandling=0
+recvMoneyWithouthandling=Number(Math.ceil((formData.collectAmount-(printbazcost+deliveryFee))));
+costHandlingfee=recvMoneyWithouthandling*0.02
+ recvMoney=recvMoneyWithouthandling-costHandlingfee
+
+console.log("recvMoney",recvMoney);
+const handleImageChange = (e) => {
+  const files = e.target.files;
+  const images = [...formData.images];
+  for (let i = 0; i < files.length; i++) {
    
-      </div>
-     
-    )
-              }
-            
+
+      images.push(files[i]);
+   
+  }
+  setFormData({ ...formData, images });
+};
+
+let newresellerOrderArr=[]
+const handleSubmit = (e) => {
+  e.preventDefault();
+//   if (!formData.bkashAccount && !formData.nagadAccount && !formData.rocketAccount &&
+//     !(formData.bankName && formData.accountName && formData.accountNumber && formData.routingNumber && formData.branchName)) {
+//     alert("Please choose at least one payment system");
+//     return;
+// }
+
+ 
+const promises = [];
+const newImageUrls = [];
+const newFileUrls = [];
+
+formData.images.forEach((image) => {
+  const storageRef = ref(
+    storage,
+    `/images/${Date.now()}${image?.name}`
+  );
+  const uploadImage = uploadBytesResumable(storageRef, image);
+  promises.push(uploadImage);
+
+  uploadImage.on(
+    "state_changed",
+    (snapshot) => {
+      const progressPercent = Math.round(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+      setProgress(progressPercent);
+    },
+    (err) => {
+      console.log(err);
+    },
+    () => {
+      getDownloadURL(uploadImage.snapshot.ref).then((url) => {
+        newImageUrls.push(url);
+      });
+    }
+  );
+});
+
+ 
+  Promise.all(promises)
+    .then(() => {
+      const newProduct = {
+        name:formData.name,
+        phone:formData.phone,
+        address:formData.address,
+        instruction:formData.instruction,
+        color:formData.color,
+        teshirtSize:formData.teshirtSize,
+        quantity:formData.quantity,
+        printSize:formData.printSize,
+        collectAmount:formData.collectAmount,
+        printbazcost:printbazcost,
+        deliveryFee:deliveryFee,
+        recvMoney:recvMoney,
+        imageUrls: newImageUrls,
+        createdAt: Timestamp.now().toDate(),
+        id: Date.now(),
+      };
+      const articleRef = collection(db, "resellerInfo");
+      const docRef = doc(articleRef, "resellerOrdersId");
+
+      return getDoc(docRef).then((doc) => {
+        if (doc.exists()) {
+          const resellerOrderArr = doc.data().resellerOrderArr || [];
+          const newresellerOrderArr = [...resellerOrderArr, newProduct];
+
+          return updateDoc(docRef, {
+            resellerOrderArr: newresellerOrderArr,
+          });
+        } else {
+          return setDoc(docRef, {
+            resellerOrderArr: [newProduct],
+          });
+        }
+      });
+    })
+    .then(() => {
+      setShowAlert(true);
+     alert("order added successfully", { type: "success" });
+      setFormData({
+        name: "",
+        phone: "",
+        address: "",
+        instruction:"",
+        color:"",
+        teshirtSize:"",
+        quantity:"",
+        printSize:"",
+        collectAmount:"",
+        images: [],
+        resellerOrderArr: newresellerOrderArr,
+      });
+      setProgress(0);
+    })
+    .catch((err) => {
+      alert("Error adding article", { type: "error" });
+    });
+};
+  return (
+    <div>
+      <meta charSet="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>New Order</title>
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      />
+      <style
+        dangerouslySetInnerHTML={{
+          __html:
+            "\n    /* General styles */\nbody {\n  font-family: 'Arial', sans-serif;\n  background-color: #f8f9fa;\n  margin: 0;\n  padding: 0;\n}\n\nh1, h3 {\n  font-weight: bold;\n}\n\n.row {\n  margin: 0 auto;\n}\n\n.navbar {\n  background-color: #001846 !important;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n  padding: 20px;\n  padding-left: 40px !important;\n}\n\n.navbar-brand img {\n  width: 150px;\n}\n\n.nav-link {\n  color: #ffffff !important;\n  font-size: 16px;\n  font-weight: 600;\n}\n\n.nav-link:hover {\n  background-color: #ffffff;\n  color: #001846 !important;\n}\n.dropdown{\n  padding-left: 1200px;\n}\n\n.dropdown-menu {\n  margin-left: 1120px;\n  \n}\n\n.new-order {\n  margin: 0 10% 0 10%;\n}\n\n/* Form styles */\nform {\n  margin-bottom: 30px;\n}\n\nlabel {\n  font-weight: 600;\n}\n\ninput[type=\"number\"] {\n  -moz-appearance: textfield;\n}\n\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\n/* Buttons */\nbutton {\n  margin-right: 10px;\n}\n\n.add-field {\n  margin-left: 5px;\n}\n\n/* Terms and conditions */\np {\n  text-align: justify;\n  line-height: 1.5;\n  margin-left: 15px;\n  margin-right: 15px;\n}\n\n  ",
+        }}
+      />
+
+      <NavigationBar />
+      <div className="new-order">
+        <div className="row mt-5">
+          <div className="col-12">
+            <h1>New Order</h1>
+          </div>
+        </div>
+        <Form 
+        onSubmit={handleSubmit} 
+        className="mb-4">
+        <div className="row mt-5">
+          {/* 1st Column */}
+          <div className="col-md-4">
+          <h3>Recipient Details</h3>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Recipient's Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={formData.name}
+            className="form-control"
+            id="recipientName"
+            onChange={(e) => handleChange(e)}
+            required
+            placeholder="Enter Name"
+          />
+        </Form.Group>
            
-              <div className="form-group">
-                <label htmlFor="deliveryFee">Delivery Fee</label>
+              <Form.Group className="mb-3" >
+          <Form.Label>Recipient's Phone</Form.Label>
+          <Form.Control
+              type="number"
+              name="phone"
+              value={formData.phone}
+              onChange={(e) => handleChange(e)}
+              className="form-control"
+              id="recipientPhone"
+            required
+            placeholder="Enter recipient number"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" >
+          <Form.Label>Recipient's/Delivery Address</Form.Label>
+          <Form.Control
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={(e) => handleChange(e)}
+           
+              className="form-control"
+              id="recipientAddress"
+            required
+            placeholder="Enter recipient address"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" >
+          <Form.Label>   Special Instructions</Form.Label>
+          <Form.Control
+              type="text"
+              name="instruction"
+              value={formData.instruction}
+              onChange={(e) => handleChange(e)}
+              className="form-control"
+              id="recipientAddress"
+           
+            placeholder=""
+          />
+        </Form.Group> 
+            
+        
+          </div>
+          {/* 2nd Column */}
+          <div className="col-md-4">
+            <h3>Order Details</h3>
+            
+            
               
-              </div>
-              <div className="form-group">
-                <label htmlFor="collectAmount">Collect Amount</label>
-                <input
+            <Form.Group
+                                className="mb-3 Print Side w-100 m-auto"
+                                controlId="wccalcPrintSide"
+                            >
+                                <Form.Label className="pr-2">Color</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    name="color"
+                                    value={formData.color}
+                                    onChange={(e) => handleChange(e)}
+                                    
+                                >
+                                    <option default>select color</option>
+                                    <option value="black">Black</option>
+                                    <option value="white">White</option>
+
+                                </Form.Control>
+                            </Form.Group>
+
+                            <Form.Group
+                                className="mb-3 Print Side w-100 m-auto"
+                                controlId="wccalcPrintSide"
+                            >
+                                <Form.Label className="pr-2">Tee Shirt Size</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    value={formData.teshirtSize}
+                                    onChange={(e) => handleChange(e)}
+                                   
+                                    name="teshirtSize"
+                                >
+                                      <option default>select tee shirt size</option>
+                                      <option value="m">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+
+                                </Form.Control>
+                            </Form.Group>
+             
+            
+              <Form.Group
+                className="mb-3 Quantity w-100 m-auto"
+                controlId="wccalcQuantity"
+              >
+                <Form.Label>Quantity</Form.Label>
+
+                <Form.Control
+                  name="quantity"
                   type="number"
-                  className="form-control"
-                  id="collectAmount"
+                   value={formData.quantity}
+                  onChange={(e) => {handleChange(e);
+                    setQuantity((_) => e.target.value)}
+                  }
+                  
+                 
+                  placeholder="Enter Quantity"
+                  min="1"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="received">You Received</label>
-              </div>
+              </Form.Group>
+              <Form.Group
+                className="mb-3 Print Side w-100 m-auto"
+                controlId="wccalcPrintSide"
+              >
+                <Form.Label className="pr-2">Print Size</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={formData.printSize}
+                  onChange={(e) => {handleChange(e);
+                    setPrintSize((_) => e.target.value)}}
+                  name="printSize"
+                >
+                  <option default>select print size</option>
+                  <option value="10 x 14">10″ x 14″</option>
+                  <option value="10 x 10">10″ x 10″</option>
+                  <option value="10 x 5">10″ x 5″</option>
+                  <option value="5 X 5">5″ x 5″</option>
+                  <option value="2.5 X 5">2.5″ x 5″</option>
+                </Form.Control>
+              </Form.Group>
+          
+         
+          
+          </div>
+          {/* 3rd Column */}
+          <div className="col-md-4">
+            <h3>Cost Details</h3>
+                <label htmlFor="printbazCost">Printbaz Cost</label>
+         
+     <h3> <span style={{fontSize:""}}>&#2547;</span> {printbazcost}</h3>
+     <label htmlFor="printbazCost">Delivery Fee</label>
+         
+         <h3> <span style={{fontSize:""}}>&#2547;</span> {deliveryFee}</h3>
+       
+            
+                <Form.Group className="mb-3" >
+          <Form.Label>Collect Amount</Form.Label>
+          <Form.Control
+            type="number"
+            name="collectAmount"
+            value={formData.collectAmount}
+            className="form-control"
+            onChange={(e) =>{ handleChange(e);
+            setCollectAmount((_)=> e.target.value)
+            }}
+            required
+            placeholder=""
+          />
+        </Form.Group>
+     
+      <label htmlFor="printbazCost">Cash Handling fee</label>
+         
+         <h3> 2%</h3>
+       
+         
+      
+         {
+          formData.quantity && formData.printSize && collectAmount  &&
+           <>
+            <label htmlFor="printbazCost">You Received</label>
+           <h3> {recvMoney} </h3>
+           </>
+          
+           
+         }
+        
+       
+            
           
           </div>
         </div>
@@ -666,40 +776,52 @@ price50Plus_2p5X5 && (
           <div className="col-md-6">
             <h3>Upload Main File</h3>
            
-              <div className="form-group">
-                <input
-                  type="file"
-                  className="form-control-file"
-                  id="mainFile"
-                />
-              </div>
+            <input
+            type="file"
+            name="document"
+            // accept="image/*"
+            className="form-control mb-3"
+            onChange={(e) => handleImageChange(e)}
+          />  
            
           </div>
           {/* 2nd Column */}
           <div className="col-md-6">
             <h3>Upload Mockup/T-Shirt Demo Picture</h3>
           
-              <div className="form-group">
-                <input
-                  type="file"
-                  className="form-control-file"
-                  id="mockupFile"
-                />
-              </div>
+            <input
+            type="file"
+            name="image"
+            // accept="image/*"
+            className="form-control mb-3"
+            onChange={(e) => handleImageChange(e)}
+          />   
           
           </div>
         </div>
-        </Form>
+
+
+        {progress === 0 ? null : (
+            <div className="progress">
+              <div
+                className="progress-bar progress-bar-striped mt-2"
+                style={{ width: `${progress}%` }}
+              >
+                {`uploading image ${progress}%`}
+              </div>
+            </div>
+          )}
+
         <div className="row mt-5">
           <div className="col-12">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-            <button type="reset" className="btn btn-secondary">
-              Cancel
-            </button>
+          <Button type="submit" style={{backgroundColor:"#124"}}>Submit</Button>
+         
+            <Button type="reset" style={{backgroundColor:"gray" ,marginLeft:"10px"}}>Cancel</Button>
           </div>
         </div>
+
+        </Form>
+    
         <div className="row mt-5">
           <div className="col-12">
             <h3>Terms and Conditions</h3>

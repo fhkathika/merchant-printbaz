@@ -23,19 +23,16 @@ function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();
   const location=useLocation();
-const from=location.state?.from?.pathname
-  // useEffect(() => {
-   
-  //     if (!user) {
-  //       // User is authenticated, so navigate to dashboard
-  //       navigate('/');
+  const from=location.state?.from?.pathname || '/dashboard'
+  useEffect(() => {
+    if (!user && location.pathname !== "/login") {
+      navigate("/login");
+    } else if (user && location.pathname === "/login") {
+      // navigate("/dashboard");
+      navigate(from,{replace:true});
+    }
+  }, [user, location.pathname, navigate]);
 
-  //     } 
-  //     else{
-  //       navigate(from,{replace:true});
-  //     }
-    
-  // }, [user, navigate]);
   if (loading) {
     return (
       <>

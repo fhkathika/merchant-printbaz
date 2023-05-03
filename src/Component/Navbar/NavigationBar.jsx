@@ -74,10 +74,14 @@ const NavigationBar = () => {
               <li className="navbar-dropdown-item">Payment</li>
               <li className="navbar-dropdown-item">
                 <Link className='navbar-dropdown-item-Link' to="/teeShrtCapming">Calculator</Link> 
+              </li>     
+                    <li className="navbar-dropdown-item">
+                <Link className='navbar-dropdown-item-Link' to="/printSizeDemo">Print Size Demo</Link> 
+              </li>     
+                    <li className="navbar-dropdown-item">
+                <Link className='navbar-dropdown-item-Link' to="/termsConditions">Terms &amp; Conditions</Link> 
               </li>
-              <li className="navbar-dropdown-item">Print Size Demo</li>
-              <li className="navbar-dropdown-item">Terms &amp; Conditions</li>
-              <li className="navbar-dropdown-item">Settings</li>
+
               {user ? (
                 <li onClick={handleLogOut} className="navbar-dropdown-item" style={{color:"#EA3A3B" ,marginTop:"6px",textDecoration:"none"}}>
                   Log Out

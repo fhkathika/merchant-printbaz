@@ -1,9 +1,12 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import NavigationBar from '../Navbar/NavigationBar';
 
 const PrintSizeDemo = () => {
     return (
-        <div style={{padding:"0px 4px"}} >
+      <>
+      <NavigationBar/>
+      <div style={{padding:"0px 4px"}} >
             <h1 style={{textAlign:"center",color:"orange",margin:"15px 0px"}}>Print size demo</h1>
           <hr />
           <Container  >
@@ -63,6 +66,8 @@ const PrintSizeDemo = () => {
 </Container>
      
         </div>
+      </>
+       
     );
 };
 

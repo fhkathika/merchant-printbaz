@@ -1,7 +1,10 @@
  import React from 'react';
 import { Link } from 'react-router-dom';
+import NavigationBar from '../Navbar/NavigationBar';
 const TermsConditions = () => {
       return (
+        <>
+       
         <div>
           <title />
           <meta content="text/html; charset=utf-8" httpEquiv="Content-Type" />
@@ -10,6 +13,7 @@ const TermsConditions = () => {
           <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css" />
           <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css" />{/*<![endif]*/}
           <style dangerouslySetInnerHTML={{__html: "\n\t\t* {\n\t\t\tbox-sizing: border-box;\n\t\t}\n\n\t\tbody {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t}\n\n\t\ta[x-apple-data-detectors] {\n\t\t\tcolor: inherit !important;\n\t\t\ttext-decoration: inherit !important;\n\t\t}\n\n\t\t#MessageViewBody a {\n\t\t\tcolor: inherit;\n\t\t\ttext-decoration: none;\n\t\t}\n\n\t\tp {\n\t\t\tline-height: inherit\n\t\t}\n\n\t\t.desktop_hide,\n\t\t.desktop_hide table {\n\t\t\tmso-hide: all;\n\t\t\tdisplay: none;\n\t\t\tmax-height: 0px;\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t.image_block img+div {\n\t\t\tdisplay: none;\n\t\t}\n\n\t\t@media (max-width:655px) {\n\n\t\t\t.desktop_hide table.icons-inner,\n\t\t\t.social_block.desktop_hide .social-table {\n\t\t\t\tdisplay: inline-block !important;\n\t\t\t}\n\n\t\t\t.icons-inner {\n\t\t\t\ttext-align: center;\n\t\t\t}\n\n\t\t\t.icons-inner td {\n\t\t\t\tmargin: 0 auto;\n\t\t\t}\n\n\t\t\t.row-content {\n\t\t\t\twidth: 100% !important;\n\t\t\t}\n\n\t\t\t.mobile_hide {\n\t\t\t\tdisplay: none;\n\t\t\t}\n\n\t\t\t.stack .column {\n\t\t\t\twidth: 100%;\n\t\t\t\tdisplay: block;\n\t\t\t}\n\n\t\t\t.mobile_hide {\n\t\t\t\tmin-height: 0;\n\t\t\t\tmax-height: 0;\n\t\t\t\tmax-width: 0;\n\t\t\t\toverflow: hidden;\n\t\t\t\tfont-size: 0px;\n\t\t\t}\n\n\t\t\t.desktop_hide,\n\t\t\t.desktop_hide table {\n\t\t\t\tdisplay: table !important;\n\t\t\t\tmax-height: none !important;\n\t\t\t}\n\n\t\t\t.reverse {\n\t\t\t\tdisplay: table;\n\t\t\t\twidth: 100%;\n\t\t\t}\n\n\t\t\t.reverse .column.first {\n\t\t\t\tdisplay: table-footer-group !important;\n\t\t\t}\n\n\t\t\t.reverse .column.last {\n\t\t\t\tdisplay: table-header-group !important;\n\t\t\t}\n\n\t\t\t.row-13 td.column.first .border,\n\t\t\t.row-13 td.column.last .border,\n\t\t\t.row-17 td.column.first .border,\n\t\t\t.row-17 td.column.last .border,\n\t\t\t.row-21 td.column.first .border,\n\t\t\t.row-21 td.column.last .border,\n\t\t\t.row-27 td.column.first .border,\n\t\t\t.row-27 td.column.last .border,\n\t\t\t.row-31 td.column.first .border,\n\t\t\t.row-31 td.column.last .border,\n\t\t\t.row-37 td.column.first .border,\n\t\t\t.row-37 td.column.last .border,\n\t\t\t.row-41 td.column.first .border,\n\t\t\t.row-41 td.column.last .border,\n\t\t\t.row-47 td.column.first .border,\n\t\t\t.row-47 td.column.last .border,\n\t\t\t.row-51 td.column.first .border,\n\t\t\t.row-51 td.column.last .border,\n\t\t\t.row-57 td.column.first .border,\n\t\t\t.row-57 td.column.last .border,\n\t\t\t.row-61 td.column.first .border,\n\t\t\t.row-61 td.column.last .border,\n\t\t\t.row-7 td.column.first .border,\n\t\t\t.row-7 td.column.last .border {\n\t\t\t\tpadding: 0;\n\t\t\t\tborder-top: 0;\n\t\t\t\tborder-right: 0px;\n\t\t\t\tborder-bottom: 0;\n\t\t\t\tborder-left: 0;\n\t\t\t}\n\t\t}\n\t" }} />
+          <NavigationBar/>
           <table border={0} cellPadding={0} cellSpacing={0} className="nl-container" role="presentation" style={{msoTableLspace: '0pt', msoTableRspace: '0pt', backgroundColor: '#f0faff'}} width="100%">
             <tbody  >
               <tr >
@@ -54,10 +58,9 @@ const TermsConditions = () => {
                       </tr>
                     </tbody>
                   </table>
-                  <div style={{border:"none", marginTop:"25px",marginBottom:"25px",textAlign:"center"}}>
-                  <Link  to="/reSellerForm"
-                style={{textDecoration:"none",backgroundColor:"#103175",color:"white",borderRadius:"20px",padding:"12px 16px",fontSize:"18px"}}>Become a reseller</Link>
-                  </div>
+                  {/* <div style={{border:"none", marginTop:"25px",marginBottom:"25px",textAlign:"center"}}>
+                  <Link  to="/reSellerForm"style={{textDecoration:"none",backgroundColor:"#103175",color:"white",borderRadius:"20px",padding:"12px 16px",fontSize:"18px"}}>Become a reseller</Link>
+                  </div> */}
 
                   <table align="center" border={0} cellPadding={0} cellSpacing={0} className="row row-2" role="presentation" style={{msoTableLspace: '0pt', msoTableRspace: '0pt', backgroundColor: '#ffffff', backgroundSize: 'auto'}} width="100%">
                     <tbody>
@@ -2073,6 +2076,8 @@ const TermsConditions = () => {
             </tbody>
           </table>{/* End */}
         </div>
+        </>
+        
       );
     }
  

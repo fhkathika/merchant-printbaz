@@ -27,6 +27,7 @@ const NewOrder = () => {
     phone: "",
     address: "",
     instruction: "",
+    
     color: "",
     teshirtSize: "",
     quantity: "",
@@ -454,8 +455,8 @@ const NewOrder = () => {
                     placement={placement}
                     overlay={
                       <Tooltip id={`tooltip-${placement}`}>
-                        Special instructions (Note: Any specific request for
-                        production, branding or delivery)
+                        Any specific request for
+                        production, branding or delivery
                       </Tooltip>
                     }
                   >
@@ -618,8 +619,8 @@ const NewOrder = () => {
                     placement={placement}
                     overlay={
                       <Tooltip id={`tooltip-${placement}`}>
-                        Amount to Collect (Note: Amount of money you want the
-                        receiver will pay; Must include delivery fee)
+                       Amount of money you want the
+                        receiver will pay; Must include delivery fee
                       </Tooltip>
                     }
                   >

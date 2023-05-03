@@ -56,7 +56,7 @@ const NavigationBar = () => {
             <Link className="nav-link" to="/myorders">Order</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="">Invoice</Link>
+            <Link className="nav-link" to="/invoice">Invoice</Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/newOrder">New Order</Link>

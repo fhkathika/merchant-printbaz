@@ -17,6 +17,7 @@ import { Redirect } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import MyOrders from "./Component/Orders/MyOrders";
 import NewOrder from "./Component/newOrder/NewOrder";
+import Invoice from "./Component/invoice/Invoice";
 function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();
@@ -72,6 +73,14 @@ const from=location.state?.from?.pathname
           element={
             <PrivateRoute>
               <MyOrders />
+            </PrivateRoute>
+          }
+        />  
+          <Route
+          path="/invoice"
+          element={
+            <PrivateRoute>
+              <Invoice />
             </PrivateRoute>
           }
         /> 

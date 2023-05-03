@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
 import NavigationBar from '../Navbar/NavigationBar';
 
@@ -8,7 +9,13 @@ const MyOrders = () => {
     let collections = "resellerInfo";
     const [dbData, setDbData] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-    const resellerOrdersFromDb=fetchedData?.productArr
+    const resellerOrdersFromDb=fetchedData?.resellerOrderArr
+    console.log("resellerOrdersFromDb",resellerOrdersFromDb);
+    const navigate=useNavigate()
+    const handlePage=()=>{
+      navigate("/newOrder")
+      console.log("clicked");
+    }
     return (
         <div>
           <meta charSet="utf-8" />
@@ -24,7 +31,7 @@ const MyOrders = () => {
                 <h1>Order List</h1>
               </div>
               <div className="col-sm-6 text-right">
-                <button className="btn btn-primary" id="newOrderBtn">New Order</button>
+                <button onClick={handlePage} className="btn btn-primary" id="newOrderBtn">New Order</button>
               </div>
             </div>
             {/* Order tabs */} 
@@ -105,62 +112,41 @@ const MyOrders = () => {
               </div>
             </div>
             {/* Order list */}
+            {
+               resellerOrdersFromDb?.map(orderInfo=> 
             <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>abir.printbaz
+           
+                <>
+                   <div className="col-md-2 col-sm-12">
+                <p style={{lineHeight: '15px'}}>{orderInfo?.name}
                 </p></div>
               <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>DQ130323GKKW22</p>
+                <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
               </div>
               <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>Ridwan Rafi</p>
-                <p style={{lineHeight: '15px'}}>Shonir Akhra (Kacchi Bhai Er Goli, Nurpur)</p>
-                <p style={{lineHeight: '15px'}}>01782159720</p>
+                <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+                <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
               </div>
               <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Delivered</p>
-                <p style={{lineHeight: '15px'}}>Updated on 14/03/2023</p>
+                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+                <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
               </div>
               <div className="col-md-1 col-sm-12">
                 <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
               </div>
               <div className="col-md-2 col-sm-12">
-                <p style={{fontWeight: 800, lineHeight: '15px'}}>Cost: <span style={{fontWeight: 400}}>250 BDT</span></p>
-                <p style={{fontWeight: 800, lineHeight: '15px'}}>Collect: <span style={{fontWeight: 400}}>800 BDT</span></p>
-                <p style={{fontWeight: 800, lineHeight: '15px'}}>Receive: <span style={{fontWeight: 400}}>550 BDT</span></p>
+                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
               </div>
               <div className="col-md-1 col-sm-12">
                 <button style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button>
               </div>
+                </>
+             
             </div>
-            <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>abir.printbaz
-                </p></div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>DQ130323GKKW22</p>
-              </div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>Ridwan Rafi</p>
-                <p style={{lineHeight: '15px'}}>Shonir Akhra (Kacchi Bhai Er Goli, Nurpur)</p>
-                <p style={{lineHeight: '15px'}}>01782159720</p>
-              </div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Delivered</p>
-                <p style={{lineHeight: '15px'}}>Updated on 14/03/2023</p>
-              </div>
-              <div className="col-md-1 col-sm-12">
-                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
-              </div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{fontWeight: 800, lineHeight: '15px'}}>Cost: <span style={{fontWeight: 400}}>250 BDT</span></p>
-                <p style={{fontWeight: 800, lineHeight: '15px'}}>Collect: <span style={{fontWeight: 400}}>800 BDT</span></p>
-                <p style={{fontWeight: 800, lineHeight: '15px'}}>Receive: <span style={{fontWeight: 400}}>550 BDT</span></p>
-              </div>
-              <div className="col-md-1 col-sm-12">
-                <button style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button>
-              </div>
-            </div>
+               )
+              }
+          
           </div>
         </div>
       );

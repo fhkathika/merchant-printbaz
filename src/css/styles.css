@@ -494,5 +494,26 @@ transform: translate(-50%, -50%); */
     width: 100% !important;
   }
 }
+.info_icon{
+  width:"30px";
+  height:"30px"
+}
+
+.costOrder_Style{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.addButtonStyle{
+  width: 50px !important;
+  font-weight:700 !important;
+  font-size: 25px !important;
+  line-height: 1 !important;
+  border-radius:5px !important;
+  color: white !important;
+  border: none !important;
+  background-color: rgb(17, 34, 68) !important;
+}
+
 
 

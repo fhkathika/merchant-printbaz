@@ -18,23 +18,24 @@ import { Spinner } from "react-bootstrap";
 import MyOrders from "./Component/Orders/MyOrders";
 import NewOrder from "./Component/newOrder/NewOrder";
 import Invoice from "./Component/invoice/Invoice";
+import OrderTracking from "./Component/orderTracking/OrderTracking";
 function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();
   const location=useLocation();
 const from=location.state?.from?.pathname
-  useEffect(() => {
+  // useEffect(() => {
    
-      if (!user) {
-        // User is authenticated, so navigate to dashboard
-        navigate('/');
+  //     if (!user) {
+  //       // User is authenticated, so navigate to dashboard
+  //       navigate('/');
 
-      } 
-      else{
-        navigate(from,{replace:true});
-      }
+  //     } 
+  //     else{
+  //       navigate(from,{replace:true});
+  //     }
     
-  }, [user, navigate]);
+  // }, [user, navigate]);
   if (loading) {
     return (
       <>
@@ -52,14 +53,16 @@ const from=location.state?.from?.pathname
   return (
     <div className="App">
       <Routes>
-        <Route
+        {/* <Route
           path="/"
           element={
           
               <Login />
           
           }
-        />
+        /> */}
+         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/dashboard"
           element={
@@ -73,6 +76,14 @@ const from=location.state?.from?.pathname
           element={
             <PrivateRoute>
               <MyOrders />
+            </PrivateRoute>
+          }
+        />  
+         <Route
+          path="/viewOrder/:id"
+          element={
+            <PrivateRoute>
+              <OrderTracking />
             </PrivateRoute>
           }
         />  
@@ -102,8 +113,7 @@ const from=location.state?.from?.pathname
           }
         />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+       
         <Route
           path="/printSizeDemo"
           element={

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
 import NavigationBar from '../Navbar/NavigationBar';
 
@@ -14,6 +14,10 @@ const MyOrders = () => {
     const navigate=useNavigate()
     const handlePage=()=>{
       navigate("/newOrder")
+      console.log("clicked");
+    }  
+      const handleViewOrder=()=>{
+      navigate("/viewOrder")
       console.log("clicked");
     }
     return (
@@ -77,9 +81,12 @@ const MyOrders = () => {
                   <select className="form-select" id="orderStatus">
                     <option value>Select Order Status</option>
                     <option value="pending">Pending</option>
-                    <option value="processing">Processing</option>
-                    <option value="completed">Completed</option>
-                    <option value="canceled">Canceled</option>
+                    <option value="approved">Approved</option>
+                    <option value="in production ">In production </option>
+                    <option value="on hold">On hold</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="payment released">Payment released</option>
+                    <option value="returned">Returned</option>
                   </select>
                 </div>
                 <div className="col-md-4">
@@ -139,7 +146,9 @@ const MyOrders = () => {
                 <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
               </div>
               <div className="col-md-1 col-sm-12">
-                <button style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button>
+              <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
+                                               state={ {orderInfo}}>View</Link>
+                {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
               </div>
                 </>
              

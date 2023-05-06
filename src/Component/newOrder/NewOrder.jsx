@@ -127,10 +127,12 @@ const NewOrder = () => {
       ],
     });
   };
-  let printbazcost;
+  let printbazcost=0;
+  let printbazcostbase;
+  for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (
-      formData?.orderDetailArr[0]?.quantity &&
-      formData?.orderDetailArr[0]?.printSize &&
+      formData?.orderDetailArr[i]?.quantity &&
+      formData?.orderDetailArr[i]?.printSize &&
       price1to9_10x14 &&
       price10to19_10x14 &&
       price20to29_10x14 &&
@@ -164,8 +166,8 @@ const NewOrder = () => {
     ) 
     {
       const totalPrice = teeShirtFormula(
-        formData?.orderDetailArr[0]?.quantity,
-        formData?.orderDetailArr[0]?.printSize,
+        formData?.orderDetailArr[i]?.quantity,
+        formData?.orderDetailArr[i]?.printSize,
         price1to9_10x14,
         price10to19_10x14,
         price20to29_10x14,
@@ -197,12 +199,22 @@ const NewOrder = () => {
         price41to49_2p5X5,
         price50Plus_2p5X5
       ).totalPrice;
-  
-      printbazcost = totalPrice;
+
+       printbazcostbase = Number(totalPrice);
+				printbazcost += printbazcostbase;
+        console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
+			
+   
     } else {
-      printbazcost = 0; // or any default value you want to set
+      if(printbazcostbase){
+        printbazcost= printbazcostbase;
+      }
+      else{
+        printbazcost=0;
+      }
+      // or any default value you want to set
     }
-  console.log("printbazcost",printbazcost)
+  }
     let deliveryFeeInsideDhaka = 0;
     const baseDeliveryFee = 70;
     const additionalDeliveryFee = 15;
@@ -492,6 +504,8 @@ const NewOrder = () => {
                  
                     {formData.orderDetailArr.map((item, index) => (
                       <>
+                      <h5 style={{color:"orange"}}>0 {index+1}</h5>
+                      <hr style={{color:"orang !important"}} />
                     <Form.Group
                       className="mb-3 Print Side w-100 m-auto"
                       controlId="wccalcPrintSide"

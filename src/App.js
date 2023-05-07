@@ -19,6 +19,8 @@ import MyOrders from "./Component/Orders/MyOrders";
 import NewOrder from "./Component/newOrder/NewOrder";
 import Invoice from "./Component/invoice/Invoice";
 import OrderTracking from "./Component/orderTracking/OrderTracking";
+import Profile from "./Component/profile/Profile";
+import Payment from "./Component/payment/Payment";
 function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();
@@ -89,6 +91,22 @@ function App() {
           element={
             <PrivateRoute>
               <Invoice />
+            </PrivateRoute>
+          }
+        />  
+           <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />  
+              <Route
+          path="/payment"
+          element={
+            <PrivateRoute>
+              <Payment />
             </PrivateRoute>
           }
         /> 

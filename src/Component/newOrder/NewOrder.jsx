@@ -9,6 +9,7 @@ import { useGetData } from "../../hooks/useGetData";
 
  import NavigationBar from '../Navbar/NavigationBar';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import CustomAlert from '../../alertBox/CustomAlert';
 const NewOrder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -34,6 +35,7 @@ const NewOrder = () => {
    let idPrice = "teeShirtCampingId";
    let collectionsPrice = "productValues";
    const [progress, setProgress] = useState(0);
+   const [showAlert, setShowAlert] = useState(false);
    const [dbData, setDbData] = useState({});
    const { fetchedData, searchProduct, setSearchProduct } = useGetData(
      idPrice,
@@ -43,7 +45,6 @@ const NewOrder = () => {
   //  const [quantity, setQuantity] = useState(1);
   const {user}=useContext(AuthContext);
   const userEmail=user?.email
-
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
@@ -218,13 +219,23 @@ const NewOrder = () => {
     let deliveryFeeInsideDhaka = 0;
     const baseDeliveryFee = 70;
     const additionalDeliveryFee = 15;
-  
-    if (formData?.orderDetailArr[0]?.quantity > 0) {
+    let QuantityBase=0
+    let totalQuantity=0;
+
+    let deliveryFeeOutSideDhaka = 0;
+    const baseDeliveryFeeOutSideDhaka = 100;
+    const additionalDeliveryFeeOutSideDhaka = 25;
+    for  (var j = 0; j < formData?.orderDetailArr?.length; j++) {
+      QuantityBase=Number( formData?.orderDetailArr[j]?.quantity)
+      totalQuantity =Number(QuantityBase+totalQuantity)
+     console.log("testQuantity",totalQuantity);
+   
+    if (formData?.orderDetailArr[j]?.quantity > 0) {
       // Calculate the number of groups of 5 items in the order
-      const groups = Math.floor((formData?.orderDetailArr[0]?.quantity )/ 5);
+      const groups = Math.floor(totalQuantity/ 5);
   
       // Calculate the remainder
-      const remainder = (formData?.orderDetailArr[0]?.quantity) % 5;
+      const remainder = totalQuantity % 5;
   
       // Calculate the delivery fee
       if (groups === 0) {
@@ -237,16 +248,14 @@ const NewOrder = () => {
       }
     }
   
-    let deliveryFeeOutSideDhaka = 0;
-    const baseDeliveryFeeOutSideDhaka = 100;
-    const additionalDeliveryFeeOutSideDhaka = 25;
+  // outside dhaka
   
-    if (formData?.orderDetailArr[0]?.quantity > 0) {
+    if (formData?.orderDetailArr[j]?.quantity > 0) {
       // Calculate the number of groups of 5 items in the order
-      const groups = Math.floor(formData?.orderDetailArr[0]?.quantity / 5);
+      const groups = Math.floor(totalQuantity / 5);
   
       // Calculate the remainder
-      const remainder = formData?.orderDetailArr[0]?.quantity % 5;
+      const remainder = totalQuantity % 5;
   
       // Calculate the delivery fee
       if (groups === 0) {
@@ -261,7 +270,7 @@ const NewOrder = () => {
           groups * additionalDeliveryFeeOutSideDhaka;
       }
     }
-  
+    }
     let deliveryFee;
     if (formData.area === "outside dhaka") {
       deliveryFee = deliveryFeeOutSideDhaka;
@@ -324,7 +333,8 @@ const NewOrder = () => {
         printbazcost: printbazcost,
         deliveryFee: deliveryFee,
         recvMoney: recvMoney,
-        orderStatus: "pending",
+        orderStatus: "Pending",
+        paymentStatus: "Unpaid",
         createdAt: formattedDate,
         id: Date.now(),
         userMail:userEmail
@@ -340,7 +350,7 @@ const NewOrder = () => {
   
     // Update order data in Firestore
     await setDoc(docRef, { orders: ordersArray });
-  
+    setShowAlert(true);
     // Reset form
     setFormData({
       name: "",
@@ -437,6 +447,7 @@ const NewOrder = () => {
                         name="area"
                         value={formData.area}
                         onChange={(e) =>  handleInputChange(e)}
+                        required
                       >
                         <option default>select area</option>
                         <option value="inside dhaka">Inside Dhaka</option>
@@ -514,6 +525,7 @@ const NewOrder = () => {
                       <Form.Control
                         as="select"
                         name="color"
+                        required
                         value={item.color}
                         onChange={(e) =>  handleInputChange(e,index)}
                       >
@@ -531,6 +543,7 @@ const NewOrder = () => {
                       <Form.Control
                         as="select"
                         value={item.teshirtSize}
+                        required
                         onChange={(e) =>  handleInputChange(e,index)}
                         name="teshirtSize"
                       >
@@ -555,6 +568,7 @@ const NewOrder = () => {
                         onChange={(e) => {
                            handleInputChange(e,index)
                         }}
+                        required
                         placeholder="Enter Quantity"
                         min="1"
                       />
@@ -571,6 +585,7 @@ const NewOrder = () => {
                            handleInputChange(e,index);
                         }}
                         name="printSize"
+                        required
                       >
                         <option default>select print size</option>
                         <option value="10 x 14">10″ x 14″</option>
@@ -586,6 +601,7 @@ const NewOrder = () => {
                         type="file"
                         name="file"
                         onChange={(e) => handleFileChange(e, index)} 
+                        required
                         // accept="image/*"
                       />
                     </Form.Group>
@@ -594,10 +610,22 @@ const NewOrder = () => {
                       <Form.Control
                         type="file"
                         name="image"
+                        required
                         // accept="image/*"
                         onChange={(e) => handleFileChange(e, index)}
                       />
                     </Form.Group>
+                    {progress === 0 ? null : (
+            <div className="progress">
+              <div
+                className="progress-bar progress-bar-striped mt-2"
+                style={{ width: `${progress}%` }}
+              >
+                {`uploading image ${progress}%`}
+              </div>
+            </div>
+          )}
+         
                      </>
                      ))}
                   </div>
@@ -755,6 +783,16 @@ const NewOrder = () => {
                 </div>
               </div>
             </div>
+            {showAlert && (
+<CustomAlert
+message="Your order has been submitted successfully."
+onClose={() => setShowAlert(false)}
+
+
+/>
+)
+
+}
           </div>
   
       );

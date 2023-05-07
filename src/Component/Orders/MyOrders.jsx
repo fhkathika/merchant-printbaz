@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
 import NavigationBar from '../Navbar/NavigationBar';
 
@@ -9,8 +10,10 @@ const MyOrders = () => {
     let collections = "resellerInfo";
     const [dbData, setDbData] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-    const resellerOrdersFromDb=fetchedData?.resellerOrderArr
+    const resellerOrdersFromDb=fetchedData?.orders
     console.log("resellerOrdersFromDb",resellerOrdersFromDb);
+    const {user}=useContext(AuthContext);
+    const userEmail=user?.email
     const navigate=useNavigate()
     const handlePage=()=>{
       navigate("/newOrder")
@@ -19,6 +22,11 @@ const MyOrders = () => {
       const handleViewOrder=()=>{
       navigate("/viewOrder")
       console.log("clicked");
+    }
+    const [activeTab, setActiveTab] = useState('all');
+
+    const handleTabClick = (tabId) => {
+      setActiveTab(tabId);
     }
     return (
         <div>
@@ -39,35 +47,36 @@ const MyOrders = () => {
               </div>
             </div>
             {/* Order tabs */} 
-            <ul className="nav nav-tabs mt-4" id="orderTabs">
-              <li className="nav-item text_brandColor">
-                <a className="nav-link active " id="all-tab" data-toggle="tab" href="#all"  style={{color: '#001846 !important'}}>All</a>
+            {/* <ul className="nav nav-tabs mt-4" id="orderTabs">
+              <li className="nav-item ">
+                <a className=" tab-link  active " id="all-tab" data-toggle="tab" href="#all"  style={{color: '#001846 !important'}}>All</a>
               </li>
-              <li className="nav-item text_brandColor">
-                <a className="nav-link text_brandColor" id="active-tab" data-toggle="tab" href="#active" style={{color: '#001846 !important'}}>Active</a>
+              <li className="nav-item ">
+                <a className="tab-link " id="active-tab" data-toggle="tab" href="#active" style={{color: '#001846 !important'}}>Active</a>
               </li>
-              <li className="nav-item text_brandColor">
-                <a className="nav-link " id="delivered-tab" data-toggle="tab" href="#delivered" style={{color: '#001846 !important'}}>Delivered</a>
+              <li className="nav-item ">
+                <a className="tab-link " id="delivered-tab" data-toggle="tab" href="#delivered" style={{color: '#001846 !important'}}>Delivered</a>
               </li>
-              <li className="nav-item text_brandColor">
-                <a className="nav-link" id="returned-tab" data-toggle="tab" href="#returned" style={{color: '#001846 !important'}}>Returned</a>
+              <li className="nav-item ">
+                <a className="tab-link "  id="returned-tab" data-toggle="tab" href="#returned" style={{color: '#001846 !important'}}>Returned</a>
               </li>
-            </ul>
-            {/* Tab content */}
-            <div className="tab-content mt-4">
-              <div id="all" className="container tab-pane active">
-                {/* Order list content for All tab */}
-              </div>
-              <div id="active" className="container tab-pane fade">
-                {/* Order list content for Active tab */}
-              </div>
-              <div id="delivered" className="container tab-pane fade">
-                {/* Order list content for Delivered tab */}
-              </div>
-              <div id="returned" className="container tab-pane fade">
-                {/* Order list content for Returned tab */}
-              </div>
-            </div>
+            </ul> */}
+
+<ul className="nav nav-tabs mt-4" id="orderTabs">
+        <li  className={`nav-item ${activeTab === 'all' ? 'active' : ''}`}>
+          <a className="tab-link" id="all-tab" data-toggle="tab" href="#all" onClick={() => handleTabClick('all')}>All</a>
+        </li>
+        <li className={`nav-item ${activeTab === 'active' ? 'active' : ''}`}>
+          <a className="tab-link" id="active-tab" data-toggle="tab" href="#active" onClick={() => handleTabClick('active')}>Active</a>
+        </li>
+        <li className={`nav-item ${activeTab === 'delivered' ? 'active' : ''}`}>
+          <a className="tab-link" id="delivered-tab" data-toggle="tab" href="#delivered" onClick={() => handleTabClick('delivered')}>Delivered</a>
+        </li>
+        <li className={`nav-item ${activeTab === 'returned' ? 'active' : ''}`}>
+          <a className="tab-link" id="returned-tab" data-toggle="tab" href="#returned" onClick={() => handleTabClick('returned')}>Returned</a>
+        </li>
+      </ul>
+         
             {/* filter */}
             <form id="filter-form">
               <div className="row">
@@ -119,43 +128,204 @@ const MyOrders = () => {
               </div>
             </div>
             {/* Order list */}
-            {
-               resellerOrdersFromDb?.map(orderInfo=> 
-            <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
-           
-                <>
-                   <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>{orderInfo?.name}
-                </p></div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+               {/* Tab content */}
+               <div className="tab-content mt-4">
+              <div id="all" className=" tab-pane active">
+                
+            
               </div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
-                <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
-                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+              <div id="active" className=" tab-pane fade">
+                {/* Order list content for Active tab */}
+                <h1>active</h1>
               </div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-                <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+              <div id="delivered" className=" tab-pane fade">
+                {/* Order list content for Delivered tab */}
+                <h1>delivered</h1>
               </div>
-              <div className="col-md-1 col-sm-12">
-                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
+              <div id="returned" className=" tab-pane fade">
+                {/* Order list content for Returned tab */}
               </div>
-              <div className="col-md-2 col-sm-12">
-                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
-              </div>
-              <div className="col-md-1 col-sm-12">
-              <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
-                                               state={ {orderInfo}}>View</Link>
-                {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
-              </div>
-                </>
-             
             </div>
+        
+              {/* Tab content */}
+      <div className="tab-content mt-4">
+        <div id="all" className={`tab-pane ${activeTab === 'all' ? 'active' : 'fade'}`}>
+           {/* Order list content for All tab */}
+           {
+             resellerOrdersFromDb
+             ?.filter(order => order.userMail === user?.email)
+             .map(orderInfo => (
+               // Your order item JSX code
+               <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }
+        </div>
+        <div id="active" className={`tab-pane ${activeTab === 'active' ? 'active' : 'fade'}`}>
+          {/* Order list content for Active tab */}
+       
+          {
+               resellerOrdersFromDb
+               ?.filter(order => order.userMail === user?.email)
+               ?.map(orderInfo=> 
+              ((orderInfo?.orderStatus==="Approved" || orderInfo?.orderStatus==="In Production" || orderInfo?.orderStatus==="On Hold" ) &&
+              <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+              <>
+                 <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+              </p></div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+            </div>
+            <div className="col-md-1 col-sm-12">
+              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+            </div>
+            <div className="col-md-1 col-sm-12">
+            <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
+                                             state={ {orderInfo}}>View</Link>
+              {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+            </div>
+              </>
+           
+          </div>
+              )
+          
                )
               }
+        </div>
+        <div id="delivered" className={`tab-pane ${activeTab === 'delivered' ? 'active' : 'fade'}`}>
+          {/* Order list content for Delivered tab */}
+          {
+               resellerOrdersFromDb
+               ?.filter(order => order.userMail === user?.email)
+               ?.map(orderInfo=> 
+              ((orderInfo?.orderStatus==="Delivered" || orderInfo?.orderStatus==="Payment Released" || orderInfo?.orderStatus==="on hold" ) &&
+              <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+              <>
+                 <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+              </p></div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+            </div>
+            <div className="col-md-1 col-sm-12">
+              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+            </div>
+            <div className="col-md-1 col-sm-12">
+            <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
+                                             state={ {orderInfo}}>View</Link>
+              {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+            </div>
+              </>
+           
+          </div>
+              )
           
+               )
+              }
+        </div>
+        <div id="returned" className={`tab-pane ${activeTab === 'returned' ? 'active' : 'fade'}`}>
+          {/* Order list content for Returned tab */}
+          {
+               resellerOrdersFromDb
+               ?.filter(order => order.userMail === user?.email)
+               ?.map(orderInfo=> 
+              ((orderInfo?.orderStatus==="Returned") &&
+              <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+              <>
+                 <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+              </p></div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+            </div>
+            <div className="col-md-1 col-sm-12">
+              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
+            </div>
+            <div className="col-md-2 col-sm-12">
+              <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+            </div>
+            <div className="col-md-1 col-sm-12">
+            <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
+                                             state={ {orderInfo}}>View</Link>
+              {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+            </div>
+              </>
+           
+          </div>
+              )
+          
+               )
+              }
+        </div>
+      </div>
           </div>
         </div>
       );

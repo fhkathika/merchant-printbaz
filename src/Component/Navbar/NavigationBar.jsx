@@ -5,8 +5,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import DashBoard from '../../dashboard/DashBoard';
+import { useGetData } from '../../hooks/useGetData';
 const NavigationBar = () => {
   const {user,logOut}=useContext(AuthContext);
+  let id = "resellerId";
+  let collections = "resellerInfo";
+  const [dbData, setDbData] = useState({});
+  const { fetchedData} = useGetData(id, collections, dbData);
+  const resellerInfoFromDb=fetchedData?.resellerInfoArr
+  console.log("from navbar",resellerInfoFromDb);
   // const {user,logOut}=useContext(AuthContext)
   const navigate=useNavigate();
   const handleLogOut=()=>{
@@ -55,9 +62,9 @@ const NavigationBar = () => {
           <li className="nav-item">
             <Link className="nav-link" to="/myorders">Order</Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link" to="/invoice">Invoice</Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link className="nav-link" to="/newOrder">New Order</Link>
           </li>
@@ -65,13 +72,20 @@ const NavigationBar = () => {
         <div className="navbar-dropdown mt-2 dropdownMobile" >
           <button className="navbar-dropdown-toggle dropdownButtonMobile" onClick={handleDropdownClick} >
          
-            <span className="profile-text">{user?.displayName} </span> 
+ 
+            {
+              resellerInfoFromDb?.map(resellerInfo=>( user?.email === resellerInfo.email && <span  className="profile-text">{resellerInfo?.name}</span>))
+            }
             <span className="dropdown-icon"><svg height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g id="_16" data-name="16"><path d="m12 16a1 1 0 0 1 -.71-.29l-6-6a1 1 0 0 1 1.42-1.42l5.29 5.3 5.29-5.29a1 1 0 0 1 1.41 1.41l-6 6a1 1 0 0 1 -.7.29z"/></g></svg></span> 
           </button>
           {dropdownOpen && (
             <ul className="navbar-dropdown-menu "  style={{zIndex:"132"}}>
-              <li className="navbar-dropdown-item">Profile</li>
-              <li className="navbar-dropdown-item">Payment</li>
+              <li className="navbar-dropdown-item">
+                <Link className='navbar-dropdown-item-Link' to="/profile">Profile</Link> 
+              </li>
+                <li className="navbar-dropdown-item">
+                <Link className='navbar-dropdown-item-Link' to="/payment">Payment</Link> 
+              </li>  
               <li className="navbar-dropdown-item">
                 <Link className='navbar-dropdown-item-Link' to="/teeShrtCapming">Calculator</Link> 
               </li>     

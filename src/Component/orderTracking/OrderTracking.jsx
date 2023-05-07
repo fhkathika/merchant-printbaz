@@ -73,7 +73,7 @@ console.log("viewOrder",viewOrder);
                 </div>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-12">
                 <div className="trak-info bg-white p-4 my-3 shadow-sm">
                   <div className="row">
@@ -105,7 +105,7 @@ console.log("viewOrder",viewOrder);
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         );

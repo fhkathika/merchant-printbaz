@@ -54,7 +54,7 @@ const DashBoard = () => {
           <div className="dashboard-card brief-stats-card">
             <div className="d-flex justify-content-between align-items-center">
               <h3>Brief Stats</h3>
-              <input type="date" className="form-control" style={{width: 'auto'}} />
+              {/* <input type="date" className="form-control" style={{width: 'auto'}} /> */}
             </div>
           </div>
         </div>
@@ -64,23 +64,22 @@ const DashBoard = () => {
             <h4>Total Delivered</h4>
             <div className="sub-cat">
               <p>Pending Delivery: {/* Add pending delivery value */}</p>
-              <p>Total Returned: {/* Add total returned value */}</p>
+              <p>Total Returned: </p>
             </div>
           </div>
         </div>
         <div className="col-md-4 mb-4">
           <div className="dashboard-card">
             <div className="d-flex justify-content-between align-items-center">
-              <h4>Payment Processed</h4>
+              <h4>Payments</h4>
             </div>
             <div className="Payment-btn">
-              <button className="btn btn-sm btn-primary mr-2">Details</button>
-              <button className="btn btn-sm btn-secondary">Pay Due</button>
+              <button className="btn btn-sm btn-primary mr-2">Request</button>
             </div>
             <div className="sub-cat">
-              <p>Payment in Process: {/* Add payment in process value */}</p>
-              <p>Due Amount: {/* Add due amount value */}</p>
-              <p>Pending Payment: {/* Add pending payment value */}</p>
+              <p>Total Payment Received:  {/* Add payment in process value */}</p>
+              <p>Total Bill:  {/* Add due amount value */}</p>
+              <p>Due Amount: {/* Add pending payment value */}</p>
             </div>
           </div>
         </div>

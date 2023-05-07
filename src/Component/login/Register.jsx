@@ -5,6 +5,7 @@ import { db } from '../../firebase.config';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CustomAlert from '../../alertBox/CustomAlert';
 import { useNavigate } from 'react-router-dom';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 const Register = ({closePopup}) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +17,9 @@ const Register = ({closePopup}) => {
     email:"",
     password:"",
     businessDuration:"",
+    brandName:"",
     bankName:"",
+    brandLogo:"",
     accountName:"",
     accountNumber:"",
     routingNumber:"",
@@ -64,29 +67,45 @@ const showNagad= () => {
   const handleChange=(e)=>{
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+  const handleFileChange = (e) => {
+    const { name, value } = e.target;
+    if (e.target.type === "file") {
+      // let targetDivName = e.target.name
+      // let output = document.getElementById(targetDivName);
+      // output.src = URL.createObjectURL(e.target.files[0]);
+      // output.onload = function () {
+      //   URL.revokeObjectURL(output.src); // free memory
+      // };
+      formData[name] = e.target.files[0];
+    setFormData({...formData});
+    console.log(formData);
+  };
+}
+
   let newresellerInfoArr=[]
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
       e.preventDefault();
       if (!formData.bkashAccount && !formData.nagadAccount && !formData.rocketAccount &&
         !(formData.bankName && formData.accountName && formData.accountNumber && formData.routingNumber && formData.branchName)) {
         alert("Please choose at least one payment system");
         return;
     }
-    
-      // if (formData.bkashAccount || formData.nagadAccount || formData.rocketAccount|| (formData.bankName &&
-      //   formData.accountName &&
-      //   formData.accountNumber &&
-      //   formData.routingNumber &&
-      //   formData.branchName)) {
-      //   alert("Please choose one payment system");
-      //   return;
-      // }
-     
+    const storageInstance = getStorage();
+    let imageURL=''
+    if (formData.brandLogo) {
+      const imageRef = ref(storageInstance, formData.brandLogo.name);
+      await uploadBytes(imageRef, formData.brandLogo);
+       imageURL = await getDownloadURL(imageRef);
+  
+      // Add the image download URL to the formData object
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        brandLogoURL: imageURL
+      }));
+    }
+  
       const promises = [];
-      const newImageUrls = [];
-    
-     
-      Promise.all(promises)
+     Promise.all(promises)
         .then(() => {
           const newProduct = {
             name:formData.name,
@@ -98,6 +117,8 @@ const showNagad= () => {
             email:formData.email,
             password:formData.password,
             businessDuration:formData.businessDuration,
+            brandName:formData.brandName,
+            brandLogo:imageURL,
             bankName:formData.bankName,
             accountName:formData.accountName,
             accountNumber:formData.accountNumber,
@@ -142,6 +163,8 @@ const showNagad= () => {
             email:"",
             password:"",
             businessDuration:"",
+            brandName:"",
+            brandLogo:"",
             bankName:"",
             accountName:"",
             accountNumber:"",
@@ -165,70 +188,9 @@ const showNagad= () => {
       <Row>
           <Col sm className="m-auto">
           <Form onSubmit={handleSubmit} className="mb-4">
-          <Form.Group className="mb-3" controlId="formBasicName">
-    <Form.Label style={{textAlign:"left"}}>Name <span style={{color:"red"}}>*</span></Form.Label>
-    <Form.Control
-      type="text"
-      name="name"
-      placeholder="Enter name"
-      value={formData.name}
-      onChange={(e) => handleChange(e)}
-      required
-    />
-  </Form.Group>
-  <Form.Group className="mb-3" controlId="formBasicPhone">
-    <Form.Label style={{textAlign:"left"}}>Phone Number <span style={{color:"red"}}>*</span></Form.Label>
-    <Form.Control
-       type="number"
-       maxLength="10"
-      name="phone"
-      value={formData.phone}
-      placeholder="facebook page link"
-      onChange={(e) => handleChange(e)}
-   
-      required
-    />
-  </Form.Group> 
-  <Form.Group className="mb-3" controlId="formBasicAddress">
-    <Form.Label style={{textAlign:"left"}}>Address <span style={{color:"red"}}>*</span></Form.Label>
-    <Form.Control
-      type="text"
-      name="address"
-      value={formData.address}
-      placeholder="enter address"
-      onChange={(e) => handleChange(e)}
-      required
-    />
-  </Form.Group>
- 
-  <Form.Group className="mb-3" controlId="formBasicfbaAccount">
-    <Form.Label style={{textAlign:"left"}}>Facebook Profile Link <span style={{color:"red"}}>*</span></Form.Label>
-    <Form.Control
-      type="text"
-      name="fbAccount"
-      value={formData.fbAccount}
-      placeholder="facebook account link"
-      required
-      onChange={(e) => handleChange(e)}
-    />
-  </Form.Group>
-
-  <Form.Group className="mb-3" controlId="formBasicWhatsapp">
-    <Form.Label style={{textAlign:"left"}}>Whatsapp Number</Form.Label>
-    <Form.Control
-      type="number"
-      maxLength="10"
-      name="whatsapp"
-      value={formData.whatsapp}
-      placeholder="enter whatsapp number"
-     
-      onChange={(e) => handleChange(e)}
-    />
-  </Form.Group>
-
- 
-
-
+          <div className="form-group">
+                      <h3>Basic Information</h3>
+                    </div>
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label style={{textAlign:"left"}}>Email <span style={{color:"red"}}>*</span></Form.Label>
     <Form.Control
@@ -251,6 +213,57 @@ const showNagad= () => {
       onChange={(e) => handleChange(e)}
     />
   </Form.Group>
+  <div className="form-group">
+                      <h3>Personal Information</h3>
+                    </div>
+          <Form.Group className="mb-3" controlId="formBasicName">
+        
+    <Form.Label style={{textAlign:"left"}}>Name <span style={{color:"red"}}>*</span></Form.Label>
+    <Form.Control
+      type="text"
+      name="name"
+      placeholder="Enter name"
+      value={formData.name}
+      onChange={(e) => handleChange(e)}
+      required
+    />
+  </Form.Group>
+  <Form.Group className="mb-3" controlId="formBasicPhone">
+    <Form.Label style={{textAlign:"left"}}>Phone Number <span style={{color:"red"}}>*</span></Form.Label>
+    <Form.Control
+       type="number"
+       maxLength="10"
+      name="phone"
+      value={formData.phone}
+      placeholder="Phone number"
+      onChange={(e) => handleChange(e)}
+   
+      required
+    />
+  </Form.Group> 
+  <Form.Group className="mb-3" controlId="formBasicWhatsapp">
+    <Form.Label style={{textAlign:"left"}}>Whatsapp Number</Form.Label>
+    <Form.Control
+      type="number"
+      maxLength="10"
+      name="whatsapp"
+      value={formData.whatsapp}
+      placeholder="enter whatsapp number"
+     
+      onChange={(e) => handleChange(e)}
+    />
+  </Form.Group>
+  <Form.Group className="mb-3" controlId="formBasicfbaAccount">
+    <Form.Label style={{textAlign:"left"}}>Facebook/Instagram Profile Link <span style={{color:"red"}}>*</span></Form.Label>
+    <Form.Control
+      type="text"
+      name="fbAccount"
+      value={formData.fbAccount}
+      placeholder="facebook/instagram account link"
+      required
+      onChange={(e) => handleChange(e)}
+    />
+  </Form.Group>
   <Form.Group className="mb-3" controlId="formBasicBusinessDuration">
     <Form.Label style={{textAlign:"left"}}>Duration of Business <span style={{color:"red"}}>*</span> <span style={{color:"gray"}}>( example: 6month)</span></Form.Label>
     <Form.Control
@@ -262,8 +275,35 @@ const showNagad= () => {
       required
     />
   </Form.Group>
+  <Form.Group className="mb-3" controlId="formBasicAddress">
+    <Form.Label style={{textAlign:"left"}}>Address <span style={{color:"red"}}>*</span></Form.Label>
+    <Form.Control
+      type="text"
+      name="address"
+      value={formData.address}
+      placeholder="enter address"
+      onChange={(e) => handleChange(e)}
+      required
+    />
+  </Form.Group>
+
+  <div className="form-group">
+                      <h3>Branding Information</h3>
+                    </div>
+  <Form.Group className="mb-3" controlId="formBasicBrandName">
+    <Form.Label style={{textAlign:"left"}}>Brand Name <span style={{color:"red"}}>*</span></Form.Label>
+    <Form.Control
+      type="text"
+      name="brandName"
+      value={formData.brandName}
+      placeholder="brandName"
+      required
+      onChange={(e) => handleChange(e)}
+    />
+  </Form.Group>  
+
   <Form.Group className="mb-3" controlId="formBasicfbPage">
-    <Form.Label style={{textAlign:"left"}}>Facebook Page Link</Form.Label>
+    <Form.Label style={{textAlign:"left"}}>Facebook/Instagram Page Link</Form.Label>
     <Form.Control
       type="text"
       name="fbPageLink"
@@ -273,6 +313,32 @@ const showNagad= () => {
       onChange={(e) => handleChange(e)}
     />
   </Form.Group>
+  <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Brand logo</Form.Label>
+                      <Form.Control
+                        type="file"
+                        name="brandLogo"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(e)}
+                      />
+                    </Form.Group>
+  {/* <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Brand Logo</Form.Label>
+                      <Form.Control
+                        type="file"
+                        name="brandLogo"
+                        onChange={handleFileChange}
+                        // accept="image/*"
+                      />
+                    </Form.Group> */}
+
+ 
+
+
+  <div className="form-group">
+                      <h3>Payment Information</h3>
+                    </div>
+ 
   <DropdownButton  id="dropdown-basic-button" title="Payment Method">
 <Dropdown.Item onClick={showForm}>Bank</Dropdown.Item>
 <Dropdown.Item onClick={showBkash}>Bkash</Dropdown.Item>
@@ -402,6 +468,8 @@ const showNagad= () => {
 <CustomAlert
 message="Your request has been received successfully. We will verify the info and get back to you within 48 hours."
 onClose={() => setShowAlert(false)}
+
+
 />
 )
 

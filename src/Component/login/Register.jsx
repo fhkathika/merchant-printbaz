@@ -6,6 +6,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CustomAlert from '../../alertBox/CustomAlert';
 import { useNavigate } from 'react-router-dom';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import emailjs from '@emailjs/browser';
 const Register = ({closePopup}) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -151,7 +152,8 @@ const showNagad= () => {
         })
         .then(() => {
           setShowAlert(true);
-         
+        
+      
           // alert("Article added successfully", { type: "success" });
           setFormData({
             name: "",

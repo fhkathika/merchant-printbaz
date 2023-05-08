@@ -67,6 +67,10 @@ const NavigationBar = () => {
           </li> */}
           <li className="nav-item">
             <Link className="nav-link" to="/newOrder">New Order</Link>
+          </li> 
+          
+          <li className="nav-item">
+            <Link className="nav-link" to="/testiSendEmail">Test Send Email</Link>
           </li>
         </ul>
         <div className="navbar-dropdown mt-2 dropdownMobile" >

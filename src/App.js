@@ -21,6 +21,7 @@ import Invoice from "./Component/invoice/Invoice";
 import OrderTracking from "./Component/orderTracking/OrderTracking";
 import Profile from "./Component/profile/Profile";
 import Payment from "./Component/payment/Payment";
+import TestiSendEmail from "./testiSendEmail/TestiSendEmail";
 function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();
@@ -91,6 +92,13 @@ function App() {
           element={
             <PrivateRoute>
               <Invoice />
+            </PrivateRoute>
+          }
+        />   <Route
+          path="/testiSendEmail"
+          element={
+            <PrivateRoute>
+              <TestiSendEmail />
             </PrivateRoute>
           }
         />  

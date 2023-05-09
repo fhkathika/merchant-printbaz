@@ -10,6 +10,7 @@ import { useGetData } from "../../hooks/useGetData";
  import NavigationBar from '../Navbar/NavigationBar';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import CustomAlert from '../../alertBox/CustomAlert';
+import SendOrderConfirmationEmail from '../../orderConfirmationMail/SendOrderConfirmationEmail';
 const NewOrder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -350,6 +351,7 @@ const NewOrder = () => {
   
     // Update order data in Firestore
     await setDoc(docRef, { orders: ordersArray });
+     SendOrderConfirmationEmail(sanitizedOrder);
     setShowAlert(true);
     // Reset form
     setFormData({
@@ -438,7 +440,7 @@ const NewOrder = () => {
                       />
                     </Form.Group>
                     <Form.Group
-                      className="mb-3 Print Side w-100 "
+                      className="mb-3 Print Side w-100"
                       controlId="wccalcPrintSide"
                     >
                       <Form.Label className="pr-2">Delivery Area</Form.Label>
@@ -602,16 +604,18 @@ const NewOrder = () => {
                         name="file"
                         onChange={(e) => handleFileChange(e, index)} 
                         required
-                        // accept="image/*"
+                        accept=".ai,.eps"
                       />
+                      <span style={{color:"gray"}}>upload .ai or eps file</span>
                     </Form.Group>
+                    
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Upload Mockup/T-Shirt Demo Picture</Form.Label>
                       <Form.Control
                         type="file"
                         name="image"
                         required
-                        // accept="image/*"
+                        accept="image/*"
                         onChange={(e) => handleFileChange(e, index)}
                       />
                     </Form.Group>

@@ -22,6 +22,7 @@ import OrderTracking from "./Component/orderTracking/OrderTracking";
 import Profile from "./Component/profile/Profile";
 import Payment from "./Component/payment/Payment";
 import TestiSendEmail from "./testiSendEmail/TestiSendEmail";
+import SendOrderConfirmationEmail from "./orderConfirmationMail/SendOrderConfirmationEmail";
 function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();
@@ -76,6 +77,14 @@ function App() {
           element={
             <PrivateRoute>
               <MyOrders />
+            </PrivateRoute>
+          }
+        />  
+          <Route
+          path="/orderConfirmationMail"
+          element={
+            <PrivateRoute>
+              <SendOrderConfirmationEmail/>
             </PrivateRoute>
           }
         />  

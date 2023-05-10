@@ -6,15 +6,24 @@ import Register from '../Component/login/Register';
 import NavigationBar from '../Component/Navbar/NavigationBar';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
 import  "../css/styles.css"
+import { useGetData } from '../hooks/useGetData';
 
 const DashBoard = () => {
   const {user,logOut}=useContext(AuthContext);
+  let id = "resellerOrdersId";
+  let collections = "resellerInfo";
+  const [dbData, setDbData] = useState({});
+  const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
+  const resellerOrdersFromDb=fetchedData?.orders
+  console.log("resellerOrdersFromDb",resellerOrdersFromDb);
     const [activeTab, setActiveTab] = useState("Dashboard");
     const [dropdownOpen, setDropdownOpen] = useState(false);
   
     function closePopup() {
       document.getElementById("popup1").style.display = "none";
     }
+   
+    
     const [display, setDisplay] = useState('flex');
     const [displayNone, setDisplayNone] = useState('none');
     const showRegister = () => {
@@ -33,6 +42,50 @@ const DashBoard = () => {
     }
   
   console.log("user",user);
+  // pending delivery
+  const orderStatusPending=resellerOrdersFromDb
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="Pending" )
+  console.log("orderStatus pending",orderStatusPending);
+  let pendingstatusCount=0
+  for(let i=1;i<=orderStatusPending?.length;i++){
+     pendingstatusCount++
+
+  } 
+  // Returned
+   const orderStatusReturned=resellerOrdersFromDb
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="Returned" )
+  console.log("orderStatus return",orderStatusReturned);
+
+  let returnedstatusCount=0
+  for(let i=1;i<=orderStatusReturned?.length;i++){
+    returnedstatusCount++
+
+  }
+  console.log("returnstatusCount",returnedstatusCount);  
+  
+  // Payment Released
+   const orderStatusPaymentReleased=resellerOrdersFromDb
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="Payment Released" )
+  console.log("orderStatus pament released",orderStatusPaymentReleased);
+  let totalReceiveBase=0
+for(let i=0;i<orderStatusPaymentReleased?.length;i++){
+  let totalReceive=orderStatusPaymentReleased[i]?.recvMoney;
+  totalReceiveBase +=totalReceive;
+console.log("totalReceiveBase",totalReceiveBase);
+}
+
+//patmnet status =paid,orderstatus :delivered
+const PaymentStausPaid=resellerOrdersFromDb
+?.filter(order => order.userMail === user?.email && order.paymentStatus==="Paid" && order?.orderStatus==="Delivered")
+console.log("PaymentStausPaid",PaymentStausPaid);
+
+let statusPaidbase=0;
+for(let i=0;i<PaymentStausPaid?.length;i++){
+  let totalpaid=PaymentStausPaid[i]?.recvMoney;
+  statusPaidbase +=totalpaid;
+console.log("statusPaidbase",statusPaidbase);
+}
+let dueAmount=parseInt(totalReceiveBase-statusPaidbase)
       return (
         <>
         <NavigationBar/>
@@ -63,8 +116,18 @@ const DashBoard = () => {
           <div className="dashboard-card">
             <h4>Total Delivered</h4>
             <div className="sub-cat">
-              <p>Pending Delivery: {/* Add pending delivery value */}</p>
-              <p>Total Returned: </p>
+            <div className='flex'>
+              <p>Pending Delivery:</p>
+              <span style={{color:"orange",fontSize:'16px'}}>{pendingstatusCount} </span>
+             
+              </div>
+               <div className='flex'>
+              <p>Total Returned:</p>
+              <span style={{color:"orange",fontSize:'16px'}}>{returnedstatusCount} </span>
+             
+              </div>
+             
+            
             </div>
           </div>
         </div>
@@ -77,9 +140,25 @@ const DashBoard = () => {
               <button className="btn btn-sm btn-primary mr-2">Request</button>
             </div>
             <div className="sub-cat">
-              <p>Total Payment Received:  {/* Add payment in process value */}</p>
-              <p>Total Bill:  {/* Add due amount value */}</p>
-              <p>Due Amount: {/* Add pending payment value */}</p>
+              <div className='flex'>
+              <p>Total Payment Received: {/* Add payment in process value */}</p>
+              <span style={{color:"orange",fontSize:'16px'}}>{totalReceiveBase} </span>
+             
+              </div>
+               <div className='flex'>
+              <p>Total Bill:  </p>
+              <span style={{color:"orange",fontSize:'16px'}}>{statusPaidbase} </span>
+             
+              </div>
+               <div className='flex'>
+              <p>Due Amount: </p>
+              <span style={{color:"orange",fontSize:'16px'}}>{dueAmount}</span>
+             
+              </div>
+
+             
+                
+             
             </div>
           </div>
         </div>

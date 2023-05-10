@@ -1,8 +1,8 @@
 
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import React, { useContext, useState } from 'react';
-import { Col, Container, Form, Row ,Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import { Col, Container, Form, Row ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
 import { useGetData } from "../../hooks/useGetData";
  import teeShirtFormula from "../../Formulas/teeShirtFormula";
@@ -10,7 +10,8 @@ import { useGetData } from "../../hooks/useGetData";
  import NavigationBar from '../Navbar/NavigationBar';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import CustomAlert from '../../alertBox/CustomAlert';
-import SendOrderConfirmationEmail from '../../orderConfirmationMail/SendOrderConfirmationEmail';
+import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderConfirmationEmail';
+
 const NewOrder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -35,8 +36,10 @@ const NewOrder = () => {
    let collections = "resellerInfo";
    let idPrice = "teeShirtCampingId";
    let collectionsPrice = "productValues";
-   const [progress, setProgress] = useState(0);
+   const [fileprogress, setFileProgress] = useState(0);
+   const [imageprogress, setImageProgress] = useState(0);
    const [showAlert, setShowAlert] = useState(false);
+   const [loading, setLoading] = useState(false);
    const [dbData, setDbData] = useState({});
    const { fetchedData, searchProduct, setSearchProduct } = useGetData(
      idPrice,
@@ -290,7 +293,7 @@ const NewOrder = () => {
     console.log("recvMoney",recvMoney)
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+    setLoading(true)
     // Upload files and images to Firebase Storage
     const storageInstance = getStorage();
     const promises = formData.orderDetailArr.map(async (item) => {
@@ -299,16 +302,35 @@ const NewOrder = () => {
   
       if (item.file) {
         const fileRef = ref(storageInstance, item.file.name);
-        await uploadBytes(fileRef, item.file);
+      
+        // Track progress for file upload
+        const fileUploadTask = uploadBytesResumable(fileRef, item.file);
+      
+        fileUploadTask.on('state_changed', (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setFileProgress(progress);
+        });
+      
+        await fileUploadTask;
+      
         fileURL = await getDownloadURL(fileRef);
       }
   
       if (item.image) {
         const imageRef = ref(storageInstance, item.image.name);
-        await uploadBytes(imageRef, item.image);
+      
+        // Track progress for image upload
+        const imageUploadTask = uploadBytesResumable(imageRef, item.image);
+      
+        imageUploadTask.on('state_changed', (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setImageProgress(progress);
+        });
+      
+        await imageUploadTask;
+      
         imageURL = await getDownloadURL(imageRef);
       }
-  
       return { ...item, file: fileURL, image: imageURL };
     });
     const orderDetailArr = await Promise.all(promises);
@@ -340,7 +362,7 @@ const NewOrder = () => {
         id: Date.now(),
         userMail:userEmail
     };
-  
+
     // Get the existing orders array from Firestore
     const docRef = doc(db, "resellerInfo", "resellerOrdersId");
     const docSnap = await getDoc(docRef);
@@ -353,6 +375,7 @@ const NewOrder = () => {
     await setDoc(docRef, { orders: ordersArray });
      SendOrderConfirmationEmail(sanitizedOrder);
     setShowAlert(true);
+    setLoading(false)
     // Reset form
     setFormData({
       name: "",
@@ -377,7 +400,8 @@ const NewOrder = () => {
       deliveryFee: 70,
       recvAmount: "",
     });
-    setProgress(0);
+    setFileProgress(0);
+    setImageProgress(0);
   };
   
   
@@ -400,6 +424,16 @@ const NewOrder = () => {
             />
       
             <NavigationBar />
+            {loading===true && (
+<>
+<div className="alert-overlay"  />
+<div className="alert-box" >
+  <Spinner  style={{padding:"20px"}} animation="grow" variant="warning" />
+ 
+  <h2>Please wait!</h2>
+</div>
+</>
+)}
             <div className="new-order">
               <div className="row mt-5">
                 <div className="col-12">
@@ -608,6 +642,10 @@ const NewOrder = () => {
                       />
                       <span style={{color:"gray"}}>upload .ai or eps file</span>
                     </Form.Group>
+                    {fileprogress === 0 ? null : (
+         <ProgressBar now={fileprogress} label={`${fileprogress}%`} />
+          )}
+         
                     
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Upload Mockup/T-Shirt Demo Picture</Form.Label>
@@ -619,15 +657,8 @@ const NewOrder = () => {
                         onChange={(e) => handleFileChange(e, index)}
                       />
                     </Form.Group>
-                    {progress === 0 ? null : (
-            <div className="progress">
-              <div
-                className="progress-bar progress-bar-striped mt-2"
-                style={{ width: `${progress}%` }}
-              >
-                {`uploading image ${progress}%`}
-              </div>
-            </div>
+                    {imageprogress === 0 ? null : (
+         <ProgressBar now={imageprogress} label={`${imageprogress}%`} />
           )}
          
                      </>
@@ -709,17 +740,6 @@ const NewOrder = () => {
                 </div>
                 <div className="row mt-5">{/* 1st Column */}</div>
       
-                {progress === 0 ? null : (
-                  <div className="progress">
-                    <div
-                      className="progress-bar progress-bar-striped mt-2"
-                      style={{ width: `${progress}%` }}
-                    >
-                      {`uploading image ${progress}%`}
-                    </div>
-                  </div>
-                )}
-      
                 <div className="row mt-5">
                   <div className="col-12">
                     <Button type="submit" style={{ backgroundColor: "#124" }}>
@@ -787,7 +807,8 @@ const NewOrder = () => {
                 </div>
               </div>
             </div>
-            {showAlert && (
+            {showAlert===true && (
+          
 <CustomAlert
 message="Your order has been submitted successfully."
 onClose={() => setShowAlert(false)}
@@ -796,7 +817,11 @@ onClose={() => setShowAlert(false)}
 />
 )
 
+
+  
+
 }
+
           </div>
   
       );

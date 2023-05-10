@@ -8,11 +8,10 @@ import NavigationBar from '../Navbar/NavigationBar';
     let collections = "resellerInfo";
     const [dbData, setDbData] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-    const resellerOrdersFromDb=fetchedData?.resellerOrderArr
-    console.log("resellerOrdersFromDb",resellerOrdersFromDb);
+  
     const location = useLocation();
 const viewOrder = location.state ? location?.state?.orderInfo : null;
-console.log("viewOrder",viewOrder);
+console.log("viewOrder",viewOrder?.orderStatus);
      return (
         <div>
           <meta charSet="UTF-8" />
@@ -73,7 +72,7 @@ console.log("viewOrder",viewOrder);
                 </div>
               </div>
             </div>
-            {/* <div className="row">
+            <div className="row">
               <div className="col-12">
                 <div className="trak-info bg-white p-4 my-3 shadow-sm">
                   <div className="row">
@@ -84,28 +83,61 @@ console.log("viewOrder",viewOrder);
                   <div className="row trak-status">
                     <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868453112680478/ic-confirmed-red.f41e73a9.png" alt="" />
+                     {
+                      viewOrder?.orderStatus==="Approved" ?
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                      :
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} />
+
+                     }
+                     
                       <p>Accepted</p>
                     </div>
                     <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                      {
+                       viewOrder?.orderStatus==="Product ready"  ?
+                     
+                       
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                       :
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
+                      }
+                     
                       <p>Product Ready</p>
-                    </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868453691494400/ic-inTransit-red.fc3e88dd.png" alt="" />
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                    </div>  
+                      <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
+                      {
+                       viewOrder?.orderStatus==="Out for delivery"  ?
+                     
+                       
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                       :
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
+                      }
+                     
                       <p>Out for Delivery</p>
-                    </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868453402103818/ic-delivered-red.2e305d4e.png" alt="" />
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} />
+                    </div>  
+                     <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
+                      {
+                       viewOrder?.orderStatus==="Delivered"  ?
+                     
+                       
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                       :
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
+                      }
+                     
                       <p>Delivered</p>
                     </div>
+                    
+                   
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
         );

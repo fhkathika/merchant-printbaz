@@ -7,6 +7,8 @@ import CustomAlert from '../../alertBox/CustomAlert';
 import { useNavigate } from 'react-router-dom';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import emailjs from '@emailjs/browser';
+import SendRegisterConfirmationEmail from '../confirmationMailRegister/SendRegisterConfirmationEmail';
+
 const Register = ({closePopup}) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -142,17 +144,20 @@ const showNagad= () => {
     
               return updateDoc(docRef, {
                 resellerInfoArr: newresellerInfoArr,
-              });
+              }).then(() => {
+                // Call SendRegisterConfirmationEmail function
+                SendRegisterConfirmationEmail(newProduct);
+              });;
             } else {
               return setDoc(docRef, {
                 resellerInfoArr: [newProduct],
               });
             }
           });
+          
         })
         .then(() => {
           setShowAlert(true);
-        
       
           // alert("Article added successfully", { type: "success" });
           setFormData({

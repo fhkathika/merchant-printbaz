@@ -90,9 +90,11 @@ const MyOrders = () => {
                   <select className="form-select" id="orderStatus">
                     <option value>Select Order Status</option>
                     <option value="pending">Pending</option>
+                    <option value="on hold">On hold</option>
                     <option value="approved">Approved</option>
                     <option value="in production ">In production </option>
-                    <option value="on hold">On hold</option>
+                    <option value="in production ">Product ready </option>
+                    <option value="in production ">Out for delivery </option>
                     <option value="delivered">Delivered</option>
                     <option value="payment released">Payment released</option>
                     <option value="returned">Returned</option>

@@ -22,7 +22,10 @@ import OrderTracking from "./Component/orderTracking/OrderTracking";
 import Profile from "./Component/profile/Profile";
 import Payment from "./Component/payment/Payment";
 import TestiSendEmail from "./testiSendEmail/TestiSendEmail";
-import SendOrderConfirmationEmail from "./orderConfirmationMail/SendOrderConfirmationEmail";
+import SendRegisterConfirmationEmail from "./Component/confirmationMailRegister/SendRegisterConfirmationEmail";
+import SendOrderConfirmationEmail from "./confirmationMailOrder/SendOrderConfirmationEmail";
+
+
 function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();
@@ -81,10 +84,18 @@ function App() {
           }
         />  
           <Route
-          path="/orderConfirmationMail"
+          path="/confirmationMailOrder"
           element={
             <PrivateRoute>
               <SendOrderConfirmationEmail/>
+            </PrivateRoute>
+          }
+        />  
+           <Route
+          path="/confirmationMailRegister"
+          element={
+            <PrivateRoute>
+              <SendRegisterConfirmationEmail/>
             </PrivateRoute>
           }
         />  

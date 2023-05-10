@@ -6,7 +6,7 @@ const CustomAlert = ({ message, onClose }) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onClose();
-    }, 2000); // Hide the alert box after 3 seconds
+    }, 3000); // Hide the alert box after 3 seconds
 
     return () => clearTimeout(timeoutId);
   }, [onClose]);

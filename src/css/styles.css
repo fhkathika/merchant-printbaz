@@ -224,6 +224,9 @@
    width: 100%;
    margin: auto;
  }
+ .order-header{
+   display: none !important;
+ }
   .dropdown-icon svg {
   fill: black;
    width: 1rem;

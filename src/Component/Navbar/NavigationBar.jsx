@@ -62,16 +62,13 @@ const NavigationBar = () => {
           <li className="nav-item">
             <Link className="nav-link" to="/myorders">Order</Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link className="nav-link" to="/invoice">Invoice</Link>
-          </li> */}
+          </li>
           <li className="nav-item">
             <Link className="nav-link" to="/newOrder">New Order</Link>
           </li> 
-          
-          <li className="nav-item">
-            <Link className="nav-link" to="/testiSendEmail">Test Send Email</Link>
-          </li>
+       
         </ul>
         <div className="navbar-dropdown mt-2 dropdownMobile" >
           <button className="navbar-dropdown-toggle dropdownButtonMobile" onClick={handleDropdownClick} >
@@ -85,19 +82,19 @@ const NavigationBar = () => {
           {dropdownOpen && (
             <ul className="navbar-dropdown-menu "  style={{zIndex:"132"}}>
               <li className="navbar-dropdown-item">
-                <Link className='navbar-dropdown-item-Link' to="/profile">Profile</Link> 
+                <Link className='navbar-dropdown-item-Link' style={{textDecoration:"none"}} to="/profile">Profile</Link> 
               </li>
                 <li className="navbar-dropdown-item">
-                <Link className='navbar-dropdown-item-Link' to="/payment">Payment</Link> 
+                <Link className='navbar-dropdown-item-Link' style={{textDecoration:"none"}} to="/payment">Payment</Link> 
               </li>  
               <li className="navbar-dropdown-item">
-                <Link className='navbar-dropdown-item-Link' to="/teeShrtCapming">Calculator</Link> 
+                <Link className='navbar-dropdown-item-Link'  style={{textDecoration:"none"}} to="/teeShrtCapming">Calculator</Link> 
               </li>     
                     <li className="navbar-dropdown-item">
-                <Link className='navbar-dropdown-item-Link' to="/printSizeDemo">Print Size Demo</Link> 
+                <Link className='navbar-dropdown-item-Link'  style={{textDecoration:"none"}} to="/printSizeDemo">Print Size Demo</Link> 
               </li>     
                     <li className="navbar-dropdown-item">
-                <Link className='navbar-dropdown-item-Link' to="/termsConditions">Terms &amp; Conditions</Link> 
+                <Link className='navbar-dropdown-item-Link' style={{textDecoration:"none"}} to="/termsConditions">Terms &amp; Conditions</Link> 
               </li>
 
               {user ? (

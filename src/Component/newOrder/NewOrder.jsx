@@ -1,16 +1,17 @@
-
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import React, { useContext, useState } from 'react';
 import { Col, Container, Form, Row ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
 import { useGetData } from "../../hooks/useGetData";
- import teeShirtFormula from "../../Formulas/teeShirtFormula";
+import teeShirtFormula from "../../Formulas/teeShirtFormula";
 
- import NavigationBar from '../Navbar/NavigationBar';
+import NavigationBar from '../Navbar/NavigationBar';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import CustomAlert from '../../alertBox/CustomAlert';
 import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderConfirmationEmail';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const NewOrder = () => {
   const [formData, setFormData] = useState({
@@ -86,7 +87,8 @@ const NewOrder = () => {
     const price41to49_2p5X5 = fetchedData?.printSize2p5X5?.price41to49_2p5X5;
     const price50Plus_2p5X5 = fetchedData?.printSize2p5X5?.price50Plus_2p5X5;
     // console.log("collectAmount", collectAmount);
-  
+    const navigate=useNavigate()
+    const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);
 
     // const handleInputChange = (index, event) => {
@@ -291,52 +293,145 @@ const NewOrder = () => {
     costHandlingfee = recvMoneyWithouthandling * 0.02;
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
     console.log("recvMoney",recvMoney)
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true)
-    // Upload files and images to Firebase Storage
-    const storageInstance = getStorage();
-    const promises = formData.orderDetailArr.map(async (item) => {
-      let fileURL = null;
-      let imageURL = null;
-  
-      if (item.file) {
-        const fileRef = ref(storageInstance, item.file.name);
-      
-        // Track progress for file upload
-        const fileUploadTask = uploadBytesResumable(fileRef, item.file);
-      
-        fileUploadTask.on('state_changed', (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setFileProgress(progress);
-        });
-      
-        await fileUploadTask;
-      
-        fileURL = await getDownloadURL(fileRef);
-      }
-  
-      if (item.image) {
-        const imageRef = ref(storageInstance, item.image.name);
-      
-        // Track progress for image upload
-        const imageUploadTask = uploadBytesResumable(imageRef, item.image);
-      
-        imageUploadTask.on('state_changed', (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setImageProgress(progress);
-        });
-      
-        await imageUploadTask;
-      
-        imageURL = await getDownloadURL(imageRef);
-      }
-      return { ...item, file: fileURL, image: imageURL };
-    });
-    const orderDetailArr = await Promise.all(promises);
-  
-    // Create a new object with the order details, excluding any File objects
-    const sanitizedOrder = {
+    const fs = require('fs');
+    
+    // const handleSubmit = async (event) => {
+    //   event.preventDefault();
+    // setLoading(true)
+    //   // Upload files and images to Firebase Storage
+    //   const storageInstance = getStorage();
+    //   const promises = formData.orderDetailArr.map(async (item) => {
+    //     let fileURL = null;
+    //     let imageURL = null;
+    
+    //     if (item.file) {
+    //       const fileRef = ref(storageInstance, item.file.name);
+        
+    //       // Track progress for file upload
+    //       const fileUploadTask = uploadBytesResumable(fileRef, item.file);
+        
+    //       fileUploadTask.on('state_changed', (snapshot) => {
+    //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //         setFileProgress(progress);
+    //       });
+        
+    //       await fileUploadTask;
+        
+    //       fileURL = await getDownloadURL(fileRef);
+    //     }
+    
+    //     if (item.image) {
+    //       const imageRef = ref(storageInstance, item.image.name);
+        
+    //       // Track progress for image upload
+    //       const imageUploadTask = uploadBytesResumable(imageRef, item.image);
+        
+    //       imageUploadTask.on('state_changed', (snapshot) => {
+    //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //         setImageProgress(progress);
+    //       });
+        
+    //       await imageUploadTask;
+        
+    //       imageURL = await getDownloadURL(imageRef);
+    //     }
+    //     return { ...item, file: fileURL, image: imageURL };
+    //   });
+    //   const orderDetailArr = await Promise.all(promises);
+    
+    //   // Create a new object with the order details, excluding any File objects
+    //   const sanitizedOrder = {
+    //     name: formData.name,
+    //     phone: formData.phone,
+    //     address: formData.address,
+    //     instruction: formData.instruction,
+        
+    //     area: formData.area,
+    //     resellerOrderArr: formData.resellerOrderArr,
+    //     orderDetailArr: orderDetailArr?.map((item) => ({
+    //       color: item.color,
+    //       teshirtSize: item.teshirtSize,
+    //       quantity: item.quantity,
+    //       printSize: item.printSize,
+    //       file: item.file,
+    //       image: item.image,
+    //     })),
+    //     collectAmount: formData.collectAmount,
+    //       printbazcost: printbazcost,
+    //       deliveryFee: deliveryFee,
+    //       recvMoney: recvMoney,
+    //       orderStatus: "Pending",
+    //       paymentStatus: "Unpaid",
+    //       createdAt: formattedDate,
+    //       id: Date.now(),
+    //       userMail:userEmail
+    //   };
+    //   //send order into mongodb
+    //   try {
+    //     // Send the sanitized order data to the MongoDB API endpoint
+    //     const response = await axios.post('/submitorder', sanitizedOrder);
+    //     console.log('MongoDB response:', response.data);
+    //   } catch (error) {
+    //     console.error('Error sending data to MongoDB:', error);
+    //     // Handle error here
+    //   }
+    
+    //   // Get the existing orders array from Firestore
+    //   const docRef = doc(db, "resellerInfo", "resellerOrdersId");
+    //   const docSnap = await getDoc(docRef);
+    //   const ordersArray = docSnap.exists() ? docSnap.data().orders : [];
+    //   console.log('Sanitized Order:', sanitizedOrder);
+    //   // Add the sanitized order object to the existing orders array
+    //   ordersArray.push(sanitizedOrder);
+    
+    //   // Update order data in Firestore
+    //   await setDoc(docRef, { orders: ordersArray });
+    //    SendOrderConfirmationEmail(sanitizedOrder);
+    //   setShowAlert(true);
+    //   setLoading(false)
+    //   // Reset form
+    //   setFormData({
+    //     name: "",
+    //     phone: "",
+    //     address: "",
+    //     instruction: "",
+    //     collectAmount: "",
+    //     area: "",
+    //     resellerOrderArr: [],
+    //     orderDetailArr: [
+    //       {
+    //         color: "",
+    //         teshirtSize: "",
+    //         quantity: "",
+    //         printSize: "",
+    //         file: "",
+    //         image: "",
+    //       },
+    //     ],
+    //     printbazcost: 350,
+    //     amountToCollect: "",
+    //     deliveryFee: 70,
+    //     recvAmount: "",
+    //   });
+    //   setFileProgress(0);
+    //   setImageProgress(0);
+    // };
+
+
+const handleSubmit = async () => {
+  try {
+    // Prepare the data to be sent to the backend API
+    const orderDetailArr = formData.orderDetailArr.map((item) => ({
+      color: item.color,
+      teshirtSize: item.teshirtSize,
+      quantity: item.quantity,
+      printSize: item.printSize,
+      file: item.file,
+      image: item.image,
+    }));
+
+    const orderData = {
+      // Include the necessary order data properties
       name: formData.name,
       phone: formData.phone,
       address: formData.address,
@@ -363,50 +458,18 @@ const NewOrder = () => {
         userMail:userEmail
     };
 
-    // Get the existing orders array from Firestore
-    const docRef = doc(db, "resellerInfo", "resellerOrdersId");
-    const docSnap = await getDoc(docRef);
-    const ordersArray = docSnap.exists() ? docSnap.data().orders : [];
-    console.log('Sanitized Order:', sanitizedOrder);
-    // Add the sanitized order object to the existing orders array
-    ordersArray.push(sanitizedOrder);
-  
-    // Update order data in Firestore
-    await setDoc(docRef, { orders: ordersArray });
-     SendOrderConfirmationEmail(sanitizedOrder);
-    setShowAlert(true);
-    setLoading(false)
-    // Reset form
-    setFormData({
-      name: "",
-      phone: "",
-      address: "",
-      instruction: "",
-      collectAmount: "",
-      area: "",
-      resellerOrderArr: [],
-      orderDetailArr: [
-        {
-          color: "",
-          teshirtSize: "",
-          quantity: "",
-          printSize: "",
-          file: "",
-          image: "",
-        },
-      ],
-      printbazcost: 350,
-      amountToCollect: "",
-      deliveryFee: 70,
-      recvAmount: "",
-    });
-    setFileProgress(0);
-    setImageProgress(0);
-  };
-  
-  
-  
-  
+    // Make a POST request to the backend API endpoint
+    const response = await axios.post('/submitorder', orderData);
+
+    // Handle the response if needed
+    console.log('API response:', response.data);
+  } catch (error) {
+    // Handle errors that occur during the request
+    console.error('API error:', error);
+  }
+};
+
+
     return (
           <div>
             <meta charSet="UTF-8" />
@@ -733,7 +796,7 @@ const NewOrder = () => {
                     {formData?.orderDetailArr[0]?.quantity && formData?.orderDetailArr[0]?.printSize && formData?.collectAmount && (
                       <div className="costOrder_Style">
                         <label htmlFor="printbazCost">You will receive</label>
-                        <h3> {recvMoney}</h3>
+                        <h3> {parseInt(recvMoney)}</h3>
                       </div>
                     )}
                   </div>

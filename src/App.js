@@ -24,6 +24,7 @@ import Payment from "./Component/payment/Payment";
 import TestiSendEmail from "./testiSendEmail/TestiSendEmail";
 import SendRegisterConfirmationEmail from "./Component/confirmationMailRegister/SendRegisterConfirmationEmail";
 import SendOrderConfirmationEmail from "./confirmationMailOrder/SendOrderConfirmationEmail";
+import InvoicePdf from "./Component/invoicePdf/InvoicePdf";
 
 
 function App() {
@@ -31,14 +32,24 @@ function App() {
   const navigate=useNavigate();
   const location=useLocation();
   const from=location.state?.from?.pathname || '/dashboard'
+  // useEffect(() => {
+  //   if (!user && location.pathname !== "/login") {
+  //     navigate("/login");
+  //   } else if (user && location.pathname === "/login") {
+  //     // navigate("/dashboard");
+  //     navigate(from,{replace:true});
+  //   }
+  // }, [user, location.pathname, navigate]);
   useEffect(() => {
-    if (!user && location.pathname !== "/login") {
-      navigate("/login");
-    } else if (user && location.pathname === "/login") {
-      // navigate("/dashboard");
-      navigate(from,{replace:true});
+    if (!loading) {
+        if (!user && location.pathname !== "/login") {
+            navigate("/login");
+        } else if (user && location.pathname === "/login") {
+            navigate(from, {replace: true});
+        }
     }
-  }, [user, location.pathname, navigate]);
+}, [user, location.pathname, navigate, loading]);
+
 
   if (loading) {
     return (
@@ -114,7 +125,17 @@ function App() {
               <Invoice />
             </PrivateRoute>
           }
-        />   <Route
+        />  
+            <Route
+          path="/invoicePdf/:id"
+          element={
+            <PrivateRoute>
+              <InvoicePdf />
+            </PrivateRoute>
+          }
+        /> 
+        
+          <Route
           path="/testiSendEmail"
           element={
             <PrivateRoute>

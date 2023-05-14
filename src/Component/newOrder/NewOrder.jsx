@@ -20,15 +20,14 @@ const NewOrder = () => {
     instruction: '',
     collectAmount: '',
     area: '',
-    resellerOrderArr: [],
     orderDetailArr: [
       {
         color: '',
         teshirtSize: '',
         quantity: '',
         printSize: '',
-        file: '',
-        image: '',
+        file: null,
+        image: null,
       },
     ],
   });
@@ -121,6 +120,7 @@ const NewOrder = () => {
       newOrderDetailArr[index][[event.target.name]] = files[0];
       setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
       console.log('Updated Order State:', formData);
+      console.log('File:', files); // Log the file object
     }
   };
 
@@ -294,180 +294,219 @@ const NewOrder = () => {
     console.log("recvMoney",recvMoney)
   
     
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-    setLoading(true)
-      // Upload files and images to Firebase Storage
-      const storageInstance = getStorage();
-      const promises = formData.orderDetailArr.map(async (item) => {
-        let fileURL = null;
-        let imageURL = null;
+    // const handleSubmit = async (event) => {
+    //   event.preventDefault();
+    // setLoading(true)
+    //   // Upload files and images to Firebase Storage
+    //   const storageInstance = getStorage();
+    //   const promises = formData.orderDetailArr.map(async (item) => {
+    //     let fileURL = null;
+    //     let imageURL = null;
     
-        if (item.file) {
-          const fileRef = ref(storageInstance, item.file.name);
+    //     if (item.file) {
+    //       const fileRef = ref(storageInstance, item.file.name);
         
-          // Track progress for file upload
-          const fileUploadTask = uploadBytesResumable(fileRef, item.file);
+    //       // Track progress for file upload
+    //       const fileUploadTask = uploadBytesResumable(fileRef, item.file);
         
-          fileUploadTask.on('state_changed', (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setFileProgress(progress);
-          });
+    //       fileUploadTask.on('state_changed', (snapshot) => {
+    //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //         setFileProgress(progress);
+    //       });
         
-          await fileUploadTask;
+    //       await fileUploadTask;
         
-          fileURL = await getDownloadURL(fileRef);
-        }
+    //       fileURL = await getDownloadURL(fileRef);
+    //     }
     
-        if (item.image) {
-          const imageRef = ref(storageInstance, item.image.name);
+    //     if (item.image) {
+    //       const imageRef = ref(storageInstance, item.image.name);
         
-          // Track progress for image upload
-          const imageUploadTask = uploadBytesResumable(imageRef, item.image);
+    //       // Track progress for image upload
+    //       const imageUploadTask = uploadBytesResumable(imageRef, item.image);
         
-          imageUploadTask.on('state_changed', (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setImageProgress(progress);
-          });
+    //       imageUploadTask.on('state_changed', (snapshot) => {
+    //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //         setImageProgress(progress);
+    //       });
         
-          await imageUploadTask;
+    //       await imageUploadTask;
         
-          imageURL = await getDownloadURL(imageRef);
-        }
-        return { ...item, file: fileURL, image: imageURL };
-      });
-      const orderDetailArr = await Promise.all(promises);
+    //       imageURL = await getDownloadURL(imageRef);
+    //     }
+    //     return { ...item, file: fileURL, image: imageURL };
+    //   });
+    //   const orderDetailArr = await Promise.all(promises);
     
-      // Create a new object with the order details, excluding any File objects
-      const sanitizedOrder = {
-        name: formData.name,
-        phone: formData.phone,
-        address: formData.address,
-        instruction: formData.instruction,
+    //   // Create a new object with the order details, excluding any File objects
+    //   const sanitizedOrder = {
+    //     name: formData.name,
+    //     phone: formData.phone,
+    //     address: formData.address,
+    //     instruction: formData.instruction,
         
-        area: formData.area,
-        resellerOrderArr: formData.resellerOrderArr,
-        orderDetailArr: orderDetailArr?.map((item) => ({
-          color: item.color,
-          teshirtSize: item.teshirtSize,
-          quantity: item.quantity,
-          printSize: item.printSize,
-          file: item.file,
-          image: item.image,
-        })),
-        collectAmount: formData.collectAmount,
-          printbazcost: printbazcost,
-          deliveryFee: deliveryFee,
-          recvMoney: recvMoney,
-          orderStatus: "Pending",
-          paymentStatus: "Unpaid",
-          createdAt: formattedDate,
-          id: Date.now(),
-          userMail:userEmail
-      };
-      //send order into mongodb
-      try {
-        // Send the sanitized order data to the MongoDB API endpoint
-        const response = await axios.post('/submitorder', sanitizedOrder);
-        console.log('MongoDB response:', response.data);
-      } catch (error) {
-        console.error('Error sending data to MongoDB:', error);
-        // Handle error here
-      }
+    //     area: formData.area,
+    //     resellerOrderArr: formData.resellerOrderArr,
+    //     orderDetailArr: orderDetailArr?.map((item) => ({
+    //       color: item.color,
+    //       teshirtSize: item.teshirtSize,
+    //       quantity: item.quantity,
+    //       printSize: item.printSize,
+    //       file: item.file,
+    //       image: item.image,
+    //     })),
+    //     collectAmount: formData.collectAmount,
+    //       printbazcost: printbazcost,
+    //       deliveryFee: deliveryFee,
+    //       recvMoney: recvMoney,
+    //       orderStatus: "Pending",
+    //       paymentStatus: "Unpaid",
+    //       createdAt: formattedDate,
+    //       id: Date.now(),
+    //       userMail:userEmail
+    //   };
+    //   //send order into mongodb
+    //   try {
+    //     // Send the sanitized order data to the MongoDB API endpoint
+    //     const response = await axios.post('/submitorder', sanitizedOrder);
+    //     console.log('MongoDB response:', response.data);
+    //   } catch (error) {
+    //     console.error('Error sending data to MongoDB:', error);
+    //     // Handle error here
+    //   }
     
-      // Get the existing orders array from Firestore
-      const docRef = doc(db, "resellerInfo", "resellerOrdersId");
-      const docSnap = await getDoc(docRef);
-      const ordersArray = docSnap.exists() ? docSnap.data().orders : [];
-      console.log('Sanitized Order:', sanitizedOrder);
-      // Add the sanitized order object to the existing orders array
-      ordersArray.push(sanitizedOrder);
+    //   // Get the existing orders array from Firestore
+    //   const docRef = doc(db, "resellerInfo", "resellerOrdersId");
+    //   const docSnap = await getDoc(docRef);
+    //   const ordersArray = docSnap.exists() ? docSnap.data().orders : [];
+    //   console.log('Sanitized Order:', sanitizedOrder);
+    //   // Add the sanitized order object to the existing orders array
+    //   ordersArray.push(sanitizedOrder);
     
-      // Update order data in Firestore
-      await setDoc(docRef, { orders: ordersArray });
-       SendOrderConfirmationEmail(sanitizedOrder);
-      setShowAlert(true);
-      setLoading(false)
-      // Reset form
-      setFormData({
-        name: "",
-        phone: "",
-        address: "",
-        instruction: "",
-        collectAmount: "",
-        area: "",
-        resellerOrderArr: [],
-        orderDetailArr: [
-          {
-            color: "",
-            teshirtSize: "",
-            quantity: "",
-            printSize: "",
-            file: "",
-            image: "",
-          },
-        ],
-        printbazcost: 350,
-        amountToCollect: "",
-        deliveryFee: 70,
-        recvAmount: "",
-      });
-      setFileProgress(0);
-      setImageProgress(0);
-    };
+    //   // Update order data in Firestore
+    //   await setDoc(docRef, { orders: ordersArray });
+    //    SendOrderConfirmationEmail(sanitizedOrder);
+    //   setShowAlert(true);
+    //   setLoading(false)
+    //   // Reset form
+    //   setFormData({
+    //     name: "",
+    //     phone: "",
+    //     address: "",
+    //     instruction: "",
+    //     collectAmount: "",
+    //     area: "",
+    //     resellerOrderArr: [],
+    //     orderDetailArr: [
+    //       {
+    //         color: "",
+    //         teshirtSize: "",
+    //         quantity: "",
+    //         printSize: "",
+    //         file: "",
+    //         image: "",
+    //       },
+    //     ],
+    //     printbazcost: 350,
+    //     amountToCollect: "",
+    //     deliveryFee: 70,
+    //     recvAmount: "",
+    //   });
+    //   setFileProgress(0);
+    //   setImageProgress(0);
+    // };
 
-
-// const handleSubmit = async () => {
+// for mongodb previous
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
 //   try {
 //     // Prepare the data to be sent to the backend API
-//     const orderDetailArr = formData.orderDetailArr.map((item) => ({
+//     let orderDetailArr = formData.orderDetailArr.map((item) => ({
 //       color: item.color,
 //       teshirtSize: item.teshirtSize,
 //       quantity: item.quantity,
 //       printSize: item.printSize,
-//       file: item.file,
-//       image: item.image,
+//       file: item?.file,
+//       image: item?.image,
 //     }));
-
+// console.log("orderDetailArr",orderDetailArr);
 //     const orderData = {
 //       // Include the necessary order data properties
 //       name: formData.name,
 //       phone: formData.phone,
 //       address: formData.address,
 //       instruction: formData.instruction,
-      
 //       area: formData.area,
-//       resellerOrderArr: formData.resellerOrderArr,
-//       orderDetailArr: orderDetailArr?.map((item) => ({
-//         color: item.color,
-//         teshirtSize: item.teshirtSize,
-//         quantity: item.quantity,
-//         printSize: item.printSize,
-//         file: item.file,
-//         image: item.image,
-//       })),
+//       orderDetailArr: orderDetailArr,
 //       collectAmount: formData.collectAmount,
-//         printbazcost: printbazcost,
-//         deliveryFee: deliveryFee,
-//         recvMoney: recvMoney,
-//         orderStatus: "Pending",
-//         paymentStatus: "Unpaid",
-//         createdAt: formattedDate,
-//         id: Date.now(),
-//         userMail:userEmail
+//       printbazcost: printbazcost,
+//       deliveryFee: deliveryFee,
+//       recvMoney: recvMoney,
+//       orderStatus: "Pending",
+//       paymentStatus: "Unpaid",
+//       createdAt: formattedDate,
+//       id: Date.now(),
+//       userMail:userEmail
 //     };
-
+//     console.log('orderData:',orderData);
 //     // Make a POST request to the backend API endpoint
-//     const response = await axios.post('/submitorder', orderData);
+//     const response = await axios.post('http://localhost:5000/submitorder',orderData);
 
 //     // Handle the response if needed
 //     console.log('API response:', response.data);
+  
 //   } catch (error) {
 //     // Handle errors that occur during the request
 //     console.error('API error:', error);
 //   }
 // };
 
+// foe mongodb new
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const formData2 = new FormData();
+
+    const orderDetailArr = formData.orderDetailArr?.map((item, index) => {
+      const files = item.file;
+      if (files && files.length > 0) {
+        files.forEach((file, fileIndex) => {
+          formData2.append(`file${index}-${fileIndex}`, file); // Append each file to the form data with a unique key
+        });
+        delete item.files; // Remove the files property from the item
+      }
+      formData2.append(`color${index}`, item.color); // Append the color property to the form data with a unique key
+      formData2.append(`teshirtSize${index}`, item.teshirtSize); // Append the teshirtSize property
+      formData2.append(`quantity${index}`, item.quantity); // Append the quantity property
+      formData2.append(`printSize${index}`, item.printSize); // Append the printSize property
+     
+
+      return item;
+    });
+console.log("orderDetailArr",orderDetailArr);
+    formData2.append('orderDetailArr', JSON.stringify(orderDetailArr));
+    formData2.append('name', formData.name);
+    formData2.append('phone', formData.phone);
+    formData2.append('address', formData.address);
+    formData2.append('instruction', formData.instruction);
+    formData2.append('area', formData.area);
+    formData2.append('collectAmount', formData.collectAmount);
+    formData2.append('printbazcost', printbazcost);
+    formData2.append('deliveryFee', deliveryFee);
+    formData2.append('recvMoney', recvMoney);
+    formData2.append('orderStatus', 'Pending');
+    formData2.append('paymentStatus', 'Unpaid');
+    formData2.append('createdAt', formattedDate);
+    formData2.append('id', Date.now());
+    formData2.append('userMail', userEmail);
+
+    const response = await axios.post('http://localhost:5000/submitorder', formData2);
+
+    console.log('API response:', response.data);
+  } catch (error) {
+    console.error('API error:', error);
+  }
+};
 
     return (
           <div>
@@ -698,6 +737,7 @@ const NewOrder = () => {
                       <Form.Control
                         type="file"
                         name="file"
+                      
                         onChange={(e) => handleFileChange(e, index)} 
                         required
                         accept=".ai,.eps"

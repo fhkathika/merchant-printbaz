@@ -25,6 +25,7 @@ import TestiSendEmail from "./testiSendEmail/TestiSendEmail";
 import SendRegisterConfirmationEmail from "./Component/confirmationMailRegister/SendRegisterConfirmationEmail";
 import SendOrderConfirmationEmail from "./confirmationMailOrder/SendOrderConfirmationEmail";
 import InvoicePdf from "./Component/invoicePdf/InvoicePdf";
+import RedirectToAppropriateRoute from "./Component/RedirectToAppropriateRoute";
 
 
 function App() {
@@ -68,14 +69,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        {/* <Route
-          path="/"
-          element={
-          
-              <Login />
-          
-          }
-        /> */}
+      <Route path="/" element={<RedirectToAppropriateRoute/>} />
          <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route

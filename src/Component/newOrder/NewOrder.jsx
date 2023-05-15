@@ -466,15 +466,20 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     const formData2 = new FormData();
-
-    const orderDetailArr = formData.orderDetailArr?.map((item, index) => {
+    const orderDetailArr = formData.orderDetailArr || []; 
+   orderDetailArr?.forEach((item, index) => {
       const files = item.file;
-      if (files && files.length > 0) {
-        files.forEach((file, fileIndex) => {
-          formData2.append(`file${index}-${fileIndex}`, file); // Append each file to the form data with a unique key
-        });
-        delete item.files; // Remove the files property from the item
+      const images = item.image;
+      console.log("files",files);
+      if (files instanceof File) {
+        formData2.append(`file`, files); // Append the file to the form data with a unique key
+     console.log("working files",files);
+      } if (images instanceof File) {
+        formData2.append(`image`, images); // Append the file to the form data with a unique key
+     console.log("working images",images);
       }
+      
+    
       formData2.append(`color${index}`, item.color); // Append the color property to the form data with a unique key
       formData2.append(`teshirtSize${index}`, item.teshirtSize); // Append the teshirtSize property
       formData2.append(`quantity${index}`, item.quantity); // Append the quantity property
@@ -483,7 +488,7 @@ const handleSubmit = async (e) => {
 
       return item;
     });
-console.log("orderDetailArr",orderDetailArr);
+    console.log("orderDetailArr",orderDetailArr);
     formData2.append('orderDetailArr', JSON.stringify(orderDetailArr));
     formData2.append('name', formData.name);
     formData2.append('phone', formData.phone);
@@ -500,7 +505,21 @@ console.log("orderDetailArr",orderDetailArr);
     formData2.append('id', Date.now());
     formData2.append('userMail', userEmail);
 
-    const response = await axios.post('http://localhost:5000/submitorder', formData2);
+    const response = await fetch("http://localhost:5000/submitorder", {
+      method: "POST",
+      body: formData2,
+    });
+    const result = await response.json();
+    console.log("Success:", result);
+  
+    // for (let pair of formData2.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
+    // for (let [key, value] of formData2.entries()) {
+    //   console.log(key, value);
+    // }
+    
+    // const response = await axios.post('http://localhost:5000/submitorder', formData2);
 
     console.log('API response:', response.data);
   } catch (error) {
@@ -541,7 +560,7 @@ console.log("orderDetailArr",orderDetailArr);
                   <h1>New Order</h1>
                 </div>
               </div>
-              <Form onSubmit={handleSubmit} className="mb-4">
+              <Form onSubmit={handleSubmit}  className="mb-4">
                 <div className="row mt-5">
                   {/* 1st Column */}
                   <div className="col-md-4">
@@ -737,7 +756,7 @@ console.log("orderDetailArr",orderDetailArr);
                       <Form.Control
                         type="file"
                         name="file"
-                      
+                       
                         onChange={(e) => handleFileChange(e, index)} 
                         required
                         accept=".ai,.eps"
@@ -754,6 +773,7 @@ console.log("orderDetailArr",orderDetailArr);
                       <Form.Control
                         type="file"
                         name="image"
+                        enctype="multipart/form-data"
                         required
                         accept="image/*"
                         onChange={(e) => handleFileChange(e, index)}

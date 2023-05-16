@@ -470,13 +470,12 @@ const handleSubmit = async (e) => {
    orderDetailArr?.forEach((item, index) => {
       const files = item.file;
       const images = item.image;
-      console.log("files",files);
       if (files instanceof File) {
         formData2.append(`file`, files); // Append the file to the form data with a unique key
-     console.log("working files",files);
+   
       } if (images instanceof File) {
         formData2.append(`image`, images); // Append the file to the form data with a unique key
-     console.log("working images",images);
+   
       }
       
     
@@ -488,7 +487,6 @@ const handleSubmit = async (e) => {
 
       return item;
     });
-    console.log("orderDetailArr",orderDetailArr);
     formData2.append('orderDetailArr', JSON.stringify(orderDetailArr));
     formData2.append('name', formData.name);
     formData2.append('phone', formData.phone);
@@ -521,7 +519,7 @@ const handleSubmit = async (e) => {
     
     // const response = await axios.post('http://localhost:5000/submitorder', formData2);
 
-    console.log('API response:', response.data);
+    console.log('API response:', response);
   } catch (error) {
     console.error('API error:', error);
   }

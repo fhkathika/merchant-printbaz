@@ -2,12 +2,15 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
+import useGetMongoData from '../../hooks/useGetMongoData';
 import NavigationBar from '../Navbar/NavigationBar';
 
 
 const MyOrders = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
+    const {info}=useGetMongoData()
+    console.log("info",info);
     const [dbData, setDbData] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
     const resellerOrdersFromDb=fetchedData?.orders
@@ -154,11 +157,11 @@ const MyOrders = () => {
         <div id="all" className={`tab-pane ${activeTab === 'all' ? 'active' : 'fade'}`}>
            {/* Order list content for All tab */}
            {
-             resellerOrdersFromDb
+             info
              ?.filter(order => order.userMail === user?.email)
-             .map(orderInfo => (
+             .map((orderInfo,index) => (
                // Your order item JSX code
-               <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
                <>
                   <div className="col-md-2 col-sm-12">
@@ -198,11 +201,11 @@ const MyOrders = () => {
           {/* Order list content for Active tab */}
        
           {
-               resellerOrdersFromDb
+               info
                ?.filter(order => order.userMail === user?.email)
-               ?.map(orderInfo=> 
+               ?.map((orderInfo,index)=> 
               ((orderInfo?.orderStatus==="Approved" || orderInfo?.orderStatus==="In Production" || orderInfo?.orderStatus==="On Hold" ) &&
-              <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+              <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
               <>
                  <div className="col-md-2 col-sm-12">
@@ -242,11 +245,11 @@ const MyOrders = () => {
         <div id="delivered" className={`tab-pane ${activeTab === 'delivered' ? 'active' : 'fade'}`}>
           {/* Order list content for Delivered tab */}
           {
-               resellerOrdersFromDb
+               info
                ?.filter(order => order.userMail === user?.email)
-               ?.map(orderInfo=> 
+               ?.map((orderInfo,index)=> 
               ((orderInfo?.orderStatus==="Delivered" || orderInfo?.orderStatus==="Payment Released" || orderInfo?.orderStatus==="on hold" ) &&
-              <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+              <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
               <>
                  <div className="col-md-2 col-sm-12">
@@ -286,11 +289,11 @@ const MyOrders = () => {
         <div id="returned" className={`tab-pane ${activeTab === 'returned' ? 'active' : 'fade'}`}>
           {/* Order list content for Returned tab */}
           {
-               resellerOrdersFromDb
+               info
                ?.filter(order => order.userMail === user?.email)
-               ?.map(orderInfo=> 
+               ?.map((orderInfo,index)=> 
               ((orderInfo?.orderStatus==="Returned") &&
-              <div className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+              <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
               <>
                  <div className="col-md-2 col-sm-12">

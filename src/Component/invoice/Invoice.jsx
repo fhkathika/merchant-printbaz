@@ -5,6 +5,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
+import useGetMongoData from '../../hooks/useGetMongoData';
 import InvoicePdf from '../invoicePdf/InvoicePdf';
 import NavigationBar from '../Navbar/NavigationBar';
 
@@ -12,6 +13,7 @@ import NavigationBar from '../Navbar/NavigationBar';
 const Invoice = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
+    const {info}=useGetMongoData()
     const [dbData, setDbData] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
     const resellerOrdersFromDb=fetchedData?.orders
@@ -108,7 +110,7 @@ const Invoice = () => {
         <div id="all" className={`tab-pane ${activeTab === 'all' ? 'active' : 'fade'}`}>
            {/* invoice list */}
            {
-             resellerOrdersFromDb
+             info
              ?.filter(order => order.userMail === user?.email)
              .map(orderInfo => (
                // Your order item JSX code
@@ -142,7 +144,7 @@ const Invoice = () => {
                <li style={{listStyle:"none"}}> 
                {/* <a  href={`http://localhost:5000/invoicePdf/${orderInfo?.id}`}>PDF</a> */}
                {/* <button onClick={generatePDF} type="button">Export PDF</button> */}
-              <a href={`/invoicePdf/${orderInfo?.id}`} download="invoice.pdf">PDF</a>
+              {/* <a href={`/invoicePdf/${orderInfo?.id}`} download="invoice.pdf">PDF</a> */}
 </li>
              </ul>
                </>

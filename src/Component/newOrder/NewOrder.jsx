@@ -467,23 +467,26 @@ const handleSubmit = async (e) => {
   try {
     const formData2 = new FormData();
     const orderDetailArr = formData.orderDetailArr || []; 
-   orderDetailArr?.forEach((item, index) => {
-      const files = item.file;
-      const images = item.image;
-      if (files instanceof File) {
-        formData2.append(`file`, files); // Append the file to the form data with a unique key
-   
-      } if (images instanceof File) {
-        formData2.append(`image`, images); // Append the file to the form data with a unique key
-   
+
+    // Process the file data separately from orderDetailArr
+    const fileDataArr = [];
+    const imageDataArr = [];
+
+    orderDetailArr?.forEach((item, index) => {
+      if (item.file) {
+        formData2.append(`file${index}`, item.file);
+        fileDataArr.push({ index, file: item.file });
       }
       
-    
-      formData2.append(`color${index}`, item.color); // Append the color property to the form data with a unique key
-      formData2.append(`teshirtSize${index}`, item.teshirtSize); // Append the teshirtSize property
-      formData2.append(`quantity${index}`, item.quantity); // Append the quantity property
-      formData2.append(`printSize${index}`, item.printSize); // Append the printSize property
-     
+      if (item.image) {
+        formData2.append(`image${index}`, item.image);
+        imageDataArr.push({ index, image: item.image });
+      }
+
+      formData2.append(`color${index}`, item.color);
+      formData2.append(`teshirtSize${index}`, item.teshirtSize);
+      formData2.append(`quantity${index}`, item.quantity);
+      formData2.append(`printSize${index}`, item.printSize);
 
       return item;
     });
@@ -521,7 +524,7 @@ const handleSubmit = async (e) => {
 
     console.log('API response:', response);
   } catch (error) {
-    console.error('API error:', error);
+    console.error('API error:', error.message);
   }
 };
 
@@ -771,7 +774,7 @@ const handleSubmit = async (e) => {
                       <Form.Control
                         type="file"
                         name="image"
-                        enctype="multipart/form-data"
+                       
                         required
                         accept="image/*"
                         onChange={(e) => handleFileChange(e, index)}

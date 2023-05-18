@@ -86,80 +86,166 @@ const showNagad= () => {
 }
 
   let newresellerInfoArr=[]
+    // const handleSubmit = async(e) => {
+    //   e.preventDefault();
+    //   if (!formData.bkashAccount && !formData.nagadAccount && !formData.rocketAccount &&
+    //     !(formData.bankName && formData.accountName && formData.accountNumber && formData.routingNumber && formData.branchName)) {
+    //     alert("Please choose at least one payment system");
+    //     return;
+    // }
+    // const storageInstance = getStorage();
+    // let imageURL=''
+    // if (formData.brandLogo) {
+    //   const imageRef = ref(storageInstance, formData.brandLogo.name);
+    //   await uploadBytes(imageRef, formData.brandLogo);
+    //    imageURL = await getDownloadURL(imageRef);
+  
+    //   // Add the image download URL to the formData object
+    //   setFormData((prevFormData) => ({
+    //     ...prevFormData,
+    //     brandLogoURL: imageURL
+    //   }));
+    // }
+  
+    //   const promises = [];
+    //  Promise.all(promises)
+    //     .then(() => {
+    //       const newProduct = {
+    //         name:formData.name,
+    //         fbPageLink:formData.fbPageLink,
+    //         fbAccount:formData.fbAccount,
+    //         phone:formData.phone,
+    //         whatsapp:formData.whatsapp,
+    //         address:formData.address,
+    //         email:formData.email,
+    //         password:formData.password,
+    //         businessDuration:formData.businessDuration,
+    //         brandName:formData.brandName,
+    //         brandLogo:imageURL,
+    //         bankName:formData.bankName,
+    //         accountName:formData.accountName,
+    //         accountNumber:formData.accountNumber,
+    //         routingNumber:formData.routingNumber,
+    //         branchName:formData.branchName,
+    //         bkashAccount:formData.bkashAccount,
+    //         nagadAccount:formData.nagadAccount,
+    //         rocketAccount:formData.rocketAccount,
+            
+    //         createdAt: Timestamp.now().toDate(),
+    //         id: Date.now(),
+    //       };
+    //       const articleRef = collection(db, "resellerInfo");
+    //       const docRef = doc(articleRef, "resellerId");
+    
+    //       return getDoc(docRef).then((doc) => {
+    //         if (doc.exists()) {
+    //           const resellerInfoArr = doc.data().resellerInfoArr || [];
+    //           const newresellerInfoArr = [...resellerInfoArr, newProduct];
+    
+    //           return updateDoc(docRef, {
+    //             resellerInfoArr: newresellerInfoArr,
+    //           }).then(() => {
+    //             // Call SendRegisterConfirmationEmail function
+    //             SendRegisterConfirmationEmail(newProduct);
+    //           });;
+    //         } else {
+    //           return setDoc(docRef, {
+    //             resellerInfoArr: [newProduct],
+    //           });
+    //         }
+    //       });
+          
+    //     })
+    //     .then(() => {
+    //       setShowAlert(true);
+      
+    //       // alert("Article added successfully", { type: "success" });
+    //       setFormData({
+    //         name: "",
+    //         fbPageLink: "",
+    //         fbAccount: "",
+    //         phone:"",
+    //         whatsapp:"",
+    //         address:"",
+    //         email:"",
+    //         password:"",
+    //         businessDuration:"",
+    //         brandName:"",
+    //         brandLogo:"",
+    //         bankName:"",
+    //         accountName:"",
+    //         accountNumber:"",
+    //         routingNumber:"",
+    //         branchName:"",
+    //         bkashAccount:"",
+    //         nagadAccount:"",
+    //         rocketAccount:"",
+    //         resellerInfoArr: newresellerInfoArr,
+    //       });
+         
+    //     //  navigate("/login")
+    //     })
+    //     .catch((err) => {
+    //       alert("Error adding article", { type: "error" });
+    //     });
+    // };
+
+   //// send data  server side
     const handleSubmit = async(e) => {
       e.preventDefault();
       if (!formData.bkashAccount && !formData.nagadAccount && !formData.rocketAccount &&
         !(formData.bankName && formData.accountName && formData.accountNumber && formData.routingNumber && formData.branchName)) {
         alert("Please choose at least one payment system");
         return;
-    }
-    const storageInstance = getStorage();
-    let imageURL=''
-    if (formData.brandLogo) {
-      const imageRef = ref(storageInstance, formData.brandLogo.name);
-      await uploadBytes(imageRef, formData.brandLogo);
-       imageURL = await getDownloadURL(imageRef);
-  
-      // Add the image download URL to the formData object
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        brandLogoURL: imageURL
-      }));
-    }
-  
-      const promises = [];
-     Promise.all(promises)
-        .then(() => {
-          const newProduct = {
-            name:formData.name,
-            fbPageLink:formData.fbPageLink,
-            fbAccount:formData.fbAccount,
-            phone:formData.phone,
-            whatsapp:formData.whatsapp,
-            address:formData.address,
-            email:formData.email,
-            password:formData.password,
-            businessDuration:formData.businessDuration,
-            brandName:formData.brandName,
-            brandLogo:imageURL,
-            bankName:formData.bankName,
-            accountName:formData.accountName,
-            accountNumber:formData.accountNumber,
-            routingNumber:formData.routingNumber,
-            branchName:formData.branchName,
-            bkashAccount:formData.bkashAccount,
-            nagadAccount:formData.nagadAccount,
-            rocketAccount:formData.rocketAccount,
-            
-            createdAt: Timestamp.now().toDate(),
-            id: Date.now(),
-          };
-          const articleRef = collection(db, "resellerInfo");
-          const docRef = doc(articleRef, "resellerId");
+      }
     
-          return getDoc(docRef).then((doc) => {
-            if (doc.exists()) {
-              const resellerInfoArr = doc.data().resellerInfoArr || [];
-              const newresellerInfoArr = [...resellerInfoArr, newProduct];
+      // Generate the timestamp
+      const createdAt = new Date();
     
-              return updateDoc(docRef, {
-                resellerInfoArr: newresellerInfoArr,
-              }).then(() => {
-                // Call SendRegisterConfirmationEmail function
-                SendRegisterConfirmationEmail(newProduct);
-              });;
-            } else {
-              return setDoc(docRef, {
-                resellerInfoArr: [newProduct],
-              });
-            }
-          });
-          
-        })
-        .then(() => {
-          setShowAlert(true);
-      
-          // alert("Article added successfully", { type: "success" });
+      // Define the new product
+      const newProduct = {
+        name: formData.name,
+        fbPageLink: formData.fbPageLink,
+        fbAccount: formData.fbAccount,
+        phone: formData.phone,
+        whatsapp: formData.whatsapp,
+        address: formData.address,
+        email: formData.email,
+        password: formData.password,
+        businessDuration: formData.businessDuration,
+        brandName: formData.brandName,
+        bankName: formData.bankName,
+        accountName: formData.accountName,
+        accountNumber: formData.accountNumber,
+        routingNumber: formData.routingNumber,
+        branchName: formData.branchName,
+        bkashAccount: formData.bkashAccount,
+        nagadAccount: formData.nagadAccount,
+        rocketAccount: formData.rocketAccount,
+        createdAt: createdAt,
+        id: createdAt.getTime(),
+      };
+    
+      // Create a new FormData object
+      const data = new FormData();
+    
+      // Append all fields to the FormData object
+      Object.keys(newProduct).forEach(key => {
+        data.append(key, newProduct[key]);
+      });
+    
+      // Append the file to the FormData object
+      data.append('brandLogo', formData.brandLogo);
+    
+      // Submit the data to the server
+      fetch('http://localhost:5000/register', {
+        method: 'POST',
+        body: data
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'User registered successfully! Approval status is currently false.') {
+          // Reset form fields
           setFormData({
             name: "",
             fbPageLink: "",
@@ -171,7 +257,6 @@ const showNagad= () => {
             password:"",
             businessDuration:"",
             brandName:"",
-            brandLogo:"",
             bankName:"",
             accountName:"",
             accountNumber:"",
@@ -180,15 +265,26 @@ const showNagad= () => {
             bkashAccount:"",
             nagadAccount:"",
             rocketAccount:"",
-            resellerInfoArr: newresellerInfoArr,
           });
-         
-        //  navigate("/login")
-        })
-        .catch((err) => {
-          alert("Error adding article", { type: "error" });
-        });
+      
+          // navigate("/login")
+        }else if (data.message === 'User registered successfully!') {
+          setShowAlert(true);
+          // Handle success case
+          // You can show a success message or redirect to a different page
+          // alert("User registered successfully!");
+        } else {
+          // Handle other error cases
+          alert("Error registering user: " + data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert("Error registering user: " + error.message);
+      });
+      
     };
+    
     return (
       <Container className='sbcalc  lg xs md mt-4'>
       <h3 style={{textAlign:"center"}}>Registration </h3>

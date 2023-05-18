@@ -17,7 +17,7 @@ const Invoice = () => {
     const [dbData, setDbData] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
     const resellerOrdersFromDb=fetchedData?.orders
-    console.log("resellerOrdersFromDb",resellerOrdersFromDb);
+    console.log("info",info);
     const {user}=useContext(AuthContext);
     const userEmail=user?.email
     const navigate=useNavigate()

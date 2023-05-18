@@ -102,7 +102,6 @@ const showNagad= () => {
             bkashAccount:formData.bkashAccount,
             nagadAccount:formData.nagadAccount,
             rocketAccount:formData.rocketAccount,
-            
             createdAt: Timestamp.now().toDate(),
             id: Date.now(),
           };

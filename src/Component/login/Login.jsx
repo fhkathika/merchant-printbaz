@@ -161,47 +161,96 @@ const Login = () => {
       setDisplay('block');
       setDisplayNone('block')
     }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    signIn(email,password)
-    .then(result=>{
-        const user=result.user;
-        console.log(user);
-        localStorage.setItem('user', JSON.stringify(user));
-        form.reset();
-        setError("");
-        // navigate("/dashboard");
-        if(loading){
-          return <Spinner animation="border" variant="primary"/>
-      }
-        navigate(from,{replace:true});
+//using api
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const password = form.password.value;
+
+  // Create the request body
+  const requestBody = {
+    email: email,
+    password: password
+  };
+
+
+  fetch('http://localhost:5000/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestBody)
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response from the server
+    if (data?.token) {
+      // Store the token in local storage or context for authentication
+      localStorage.setItem('token', data?.token);
+      form.reset();
+      setError("");
+
+      // Check if approval status is not approved
+      // if (data.user && data.user.approval !== 'approved') {
+      //   setError("Your account is pending approval.");
+      // } else {
+      //   navigate(from, { replace: true });
+      // }
+    } else {
+      // Handle login error from the server
+      setError("Invalid email or password....");
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    setError("Error logging in. Please try again later.");
+  });
+};
+
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const email = form.email.value;
+  //   const password = form.password.value;
+  //   signIn(email,password)
+  //   .then(result=>{
+  //       const user=result.user;
+  //       console.log(user);
+  //       localStorage.setItem('user', JSON.stringify(user));
+  //       form.reset();
+  //       setError("");
+  //       // navigate("/dashboard");
+  //       if(loading){
+  //         return <Spinner animation="border" variant="primary"/>
+  //     }
+  //       navigate(from,{replace:true});
      
     
-    })
-    .catch(e=>{
+  //   })
+  //   .catch(e=>{
       
-      console.error(e.message)
-      if(loading){
-        return <Spinner animation="border" variant="primary"/>
-    }
-      if (e.message === "Firebase: Error (auth/wrong-password).") {
-        setError("Wrong Password.");
-      } else if (
-        e.message ===
-        "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
-      ) {
-        setError(
-          "Account temporarily disabled. Please contact customer support."
-        );
-      } else if (e.message === "Firebase: Error (auth/user-not-found).") {
-        setError("Your didnot register yet or register request pending");
-      }
+  //     console.error(e.message)
+  //     if(loading){
+  //       return <Spinner animation="border" variant="primary"/>
+  //   }
+  //     if (e.message === "Firebase: Error (auth/wrong-password).") {
+  //       setError("Wrong Password.");
+  //     } else if (
+  //       e.message ===
+  //       "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
+  //     ) {
+  //       setError(
+  //         "Account temporarily disabled. Please contact customer support."
+  //       );
+  //     } else if (e.message === "Firebase: Error (auth/user-not-found).") {
+  //       setError("Your didnot register yet or register request pending");
+  //     }
      
-    })
-  };
+  //   })
+  // };
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {

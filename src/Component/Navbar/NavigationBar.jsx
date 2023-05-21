@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import DashBoard from '../../dashboard/DashBoard';
 import { useGetData } from '../../hooks/useGetData';
 const NavigationBar = () => {
-  const {user,logOut}=useContext(AuthContext);
+  const {user,logoutUser}=useContext(AuthContext);
   let id = "resellerId";
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
@@ -17,15 +17,8 @@ const NavigationBar = () => {
   // const {user,logOut}=useContext(AuthContext)
   const navigate=useNavigate();
   const handleLogOut=()=>{
-    logOut()
-   
-    .then(()=>{
-      localStorage.removeItem('user');
-      navigate("/login");
-
-    })
-    .catch(error=>console.log(error))
-    // navigate("/login");
+    logoutUser();
+    navigate('/login')
   }
 
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -74,9 +67,9 @@ const NavigationBar = () => {
           <button className="navbar-dropdown-toggle dropdownButtonMobile" onClick={handleDropdownClick} >
          
  
-            {
-              resellerInfoFromDb?.map(resellerInfo=>( user?.email === resellerInfo.email && <span  className="profile-text">{resellerInfo?.name}</span>))
-            }
+           
+               <span  className="profile-text">{user?.name}</span>
+            
             <span className="dropdown-icon"><svg height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g id="_16" data-name="16"><path d="m12 16a1 1 0 0 1 -.71-.29l-6-6a1 1 0 0 1 1.42-1.42l5.29 5.3 5.29-5.29a1 1 0 0 1 1.41 1.41l-6 6a1 1 0 0 1 -.7.29z"/></g></svg></span> 
           </button>
           {dropdownOpen && (

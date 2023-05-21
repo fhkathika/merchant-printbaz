@@ -17,7 +17,9 @@ root.render(
     <App />
     </AuthProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode> 
+  
+
 );
 const SendAnalytics = ()=> {
   ReactGA.send({

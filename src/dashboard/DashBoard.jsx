@@ -16,6 +16,7 @@ const DashBoard = () => {
   const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
   const resellerOrdersFromDb=fetchedData?.orders
   console.log("resellerOrdersFromDb",resellerOrdersFromDb);
+  console.log("user from dashboard",user);
     const [activeTab, setActiveTab] = useState("Dashboard");
     const [dropdownOpen, setDropdownOpen] = useState(false);
   

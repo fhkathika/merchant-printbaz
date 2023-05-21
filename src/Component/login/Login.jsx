@@ -1,140 +1,19 @@
-// import { GoogleAuthProvider } from "firebase/auth";
-// import React, { useContext, useState } from "react";
-// import { Container, Spinner } from "react-bootstrap";
-// import Button from "react-bootstrap/Button";
-// import Form from "react-bootstrap/Form";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+
 
 import { Container, Form } from "react-bootstrap";
 
-// const Login = ({closePopup}) => {
-//   const { signIn ,loading} = useContext(AuthContext);
-//   const [error,setError]=useState('');
-//   const [close,setClose]=useState('');
 
-//   const navigate=useNavigate();
-//   const location=useLocation();
-//   const from=location.state?.from?.pathname || '/'
-//   const handleGoogleSignIn = () => {
-//     providerLogin(googleProvider)
-//       .then((result) => {
-//         const user = result.user;
-//         console.log(user);
-//         navigate(from,{replace:true});
-//       })
-//       .catch((error) => console.error(error));
-//   };
-//   const { providerLogin } = useContext(AuthContext);
-//   const googleProvider = new GoogleAuthProvider();
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const form = e.target;
-//     const email = form.email.value;
-//     const password = form.password.value;
-//     signIn(email,password)
-//     .then(result=>{
-//         const user=result.user;
-//         console.log(user);
-//         form.reset();
-//         setError("");
-//         if(loading){
-//           return <Spinner animation="border" variant="primary"/>
-//       }
-//         navigate(from,{replace:true});
-//         setClose(closePopup)
-//     })
-//     .catch(e=>{
-      
-//       console.error(e.message)
-//       if(loading){
-//         return <Spinner animation="border" variant="primary"/>
-//     }
-//       if (e.message === "Firebase: Error (auth/wrong-password).") {
-//         setError("Wrong Password.");
-//       } else if (
-//         e.message ===
-//         "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
-//       ) {
-//         setError(
-//           "Account temporarily disabled. Please contact customer support."
-//         );
-//       } else if (e.message === "Firebase: Error (auth/user-not-found).") {
-//         setError("This account does not exist in our database.");
-//       }
-     
-//     })
-//   };
-//   return (
-//     <Container className=" mx-auto">
-//       <h3 style={{ marginTop: "20px", textAlign: "center" }}>Sign in as a reseller </h3>
-//       <Form onSubmit={handleSubmit}>
-      
-//         <Form.Group className="mb-3" controlId="formBasicEmail">
-//           <Form.Label>Email address</Form.Label>
-//           <Form.Control
-//             type="email"
-//             name="email"
-//             required
-//             placeholder="Enter email"
-//           />
-//         </Form.Group>
-
-//         <Form.Group className="mb-3" controlId="formBasicPassword">
-//           <Form.Label>Password</Form.Label>
-//           <Form.Control
-//             type="password"
-//             name="password"
-//             required
-//             placeholder="Password"
-//           />
-//         </Form.Group>
-//         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-//           <Form.Check type="checkbox" label="Check me out" />
-//         </Form.Group> */}
-//         <div className="loginBtn" >
-//         <Button style={{backgroundColor: "#124",marginTop:"5px"}} type="submit">
-//           Login
-//         </Button>
-//         </div>
-       
-//        <br />
-//         <Form.Text className="text-danger">
-//        {loading}
-//         </Form.Text> <Form.Text className="text-danger">
-//        {error}
-//         </Form.Text>
-//       </Form>
-//       <div className="btn_groupFlex">
-//       {/* <Button
-//      className="googleBtn"
-    
-//      onClick={() => {
-//        handleGoogleSignIn();
-//        closePopup();
-//      }}
-//    >
-//      {" "}
-//     <img className="icon" src="/images/search.png" alt="google"/> <span>Sign In With Google</span> 
-//    </Button>  */}
-  
-//       </div>
-     
-//     </Container>
-//   );
-// };
-
-// export default Login;
  import React, { useContext, useEffect, useState } from "react";
  import {  Spinner } from "react-bootstrap";
  import Button from "react-bootstrap/Button";
  import { Link, useLocation, useNavigate } from "react-router-dom";
  import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 import Register from "./Register";
+import ResetPasswordMail from "../resetPasswordMail/ResetPasswordMail";
 const Login = () => {
-  const {user}=useContext(AuthContext)
-  const { signIn ,loading} = useContext(AuthContext);
+  const {user,loading,loginUser,currentUser}=useContext(AuthContext);
   const navigate=useNavigate();
+  console.log(":currentUser",user);
      const location=useLocation();
   const from=location.state?.from?.pathname || '/dashboard'
   const [error,setError]=useState('');
@@ -161,6 +40,12 @@ const Login = () => {
       setDisplay('block');
       setDisplayNone('block')
     }
+    // useEffect(() => {
+    //   const user = JSON.parse(localStorage.getItem('user'));
+    //   if (user) {
+    //     navigate('/dashboard');
+    //   }
+    // }, [user]);
 //using api
 
 const handleSubmit = (e) => {
@@ -183,80 +68,101 @@ const handleSubmit = (e) => {
     },
     body: JSON.stringify(requestBody)
   })
-  .then(response => response.json())
+  .then(response => {
+    // check for error response
+    if (!response.ok) {
+      // if error response, convert it to JSON and throw an error
+      return response.json().then(err => {
+        throw new Error(err.message);
+      });
+    }
+    return response.json();
+  })
   .then(data => {
     // Handle the response from the server
-    if (data?.token) {
-      // Store the token in local storage or context for authentication
-      localStorage.setItem('token', data?.token);
-      form.reset();
-      setError("");
-
-      // Check if approval status is not approved
-      // if (data.user && data.user.approval !== 'approved') {
-      //   setError("Your account is pending approval.");
-      // } else {
-      //   navigate(from, { replace: true });
-      // }
-    } else {
-      // Handle login error from the server
-      setError("Invalid email or password....");
-    }
+   // Store the token in local storage or context for authentication
+   localStorage.setItem('token', data?.token);
+   loginUser(data?.token, data.user);  // This line is important
+   console.log('User logged in successfully', data.user);
+   setError("");
+   navigate("/dashboard");
+    
   })
   .catch(error => {
+    // Handle all errors here
     console.error('Error:', error);
-    setError("Error logging in. Please try again later.");
+    setError(error.message);
   });
 };
+// const handleForgotPassword = (email) => {
+//   ResetPasswordMail(email);
+// }
+ 
+// const handleForgotPassword = (email) => {
+//   fetch('http://localhost:5000/forgot-password', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ email })
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       if (data.message) {
+//         console.log(data.message); // Password reset request successful
+//       } else {
+//         console.error("Error: ", data.error); // Handle error response
+//       }
+//     })
+//     .catch(error => {
+//       console.error("Error: ", error); // Handle network or other errors
+//     });
+// };
+
+// const handleResetPassword = (userId, resetToken, newPassword) => {
+//   fetch('http://localhost:5000/reset-password', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ userId, resetToken, newPassword })
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       if (data.message) {
+//         console.log(data.message); // Password reset successful
+//       } else {
+//         console.error("Error: ", data.error); // Handle error response
+//       }
+//     })
+//     .catch(error => {
+//       console.error("Error: ", error); // Handle network or other errors
+//     });
+// };
 
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const form = e.target;
-  //   const email = form.email.value;
-  //   const password = form.password.value;
-  //   signIn(email,password)
-  //   .then(result=>{
-  //       const user=result.user;
-  //       console.log(user);
-  //       localStorage.setItem('user', JSON.stringify(user));
-  //       form.reset();
-  //       setError("");
-  //       // navigate("/dashboard");
-  //       if(loading){
-  //         return <Spinner animation="border" variant="primary"/>
-  //     }
-  //       navigate(from,{replace:true});
-     
-    
-  //   })
-  //   .catch(e=>{
-      
-  //     console.error(e.message)
-  //     if(loading){
-  //       return <Spinner animation="border" variant="primary"/>
-  //   }
-  //     if (e.message === "Firebase: Error (auth/wrong-password).") {
-  //       setError("Wrong Password.");
-  //     } else if (
-  //       e.message ===
-  //       "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
-  //     ) {
-  //       setError(
-  //         "Account temporarily disabled. Please contact customer support."
-  //       );
-  //     } else if (e.message === "Firebase: Error (auth/user-not-found).") {
-  //       setError("Your didnot register yet or register request pending");
-  //     }
-     
-  //   })
-  // };
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      navigate('/dashboard');
-    }
-  }, []);
+
+const handleForgotPassword = (email) => {
+  fetch('http://localhost:5000/forgot-password', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        console.log(data.message); // Password reset request successful
+      } else {
+        console.error("Error: ", data.error); // Handle error response
+      }
+    })
+    .catch(error => {
+      console.error("Error: ", error); // Handle network or other errors
+    });
+};
+
     return (
       <div>
         <meta charSet="UTF-8" />
@@ -316,7 +222,8 @@ const handleSubmit = (e) => {
            <Button onClick={handleSignUp} style={{backgroundColor: "#124",marginTop:"5px",marginLeft:"10px"}} >
           Sign up
         </Button>
-        
+        <p  style={{marginTop:"15px",cursor:"pointer"}} onClick={() => handleForgotPassword(user?.email)}>Forgot Password</p>
+
         </div>
        
        <br />

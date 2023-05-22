@@ -423,21 +423,25 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     const formData2 = new FormData();
-    const orderDetailArr = formData.orderDetailArr || []; 
+    const orderDetailArr = formData.orderDetailArr || [];
 
-    // Process the file data separately from orderDetailArr
-    const fileDataArr = [];
-    const imageDataArr = [];
+    const filesAndImagesArr = [];
 
     orderDetailArr?.forEach((item, index) => {
+      const fileAndImageData = {};
+
       if (item.file) {
-        formData2.append(`file${index}`, item.file);
-        fileDataArr.push({ index, file: item.file });
+        fileAndImageData.file = item.file;
+        formData2.append(`file`, item.file); // Append the file to the FormData object
       }
       
       if (item.image) {
-        formData2.append(`image${index}`, item.image);
-        imageDataArr.push({ index, image: item.image });
+        fileAndImageData.image = item.image;
+        formData2.append(`image`, item.image); // Append the image to the FormData object
+      }
+
+      if (Object.keys(fileAndImageData).length) {
+        filesAndImagesArr.push(fileAndImageData);
       }
 
       formData2.append(`color${index}`, item.color);
@@ -447,6 +451,10 @@ const handleSubmit = async (e) => {
 
       return item;
     });
+
+    formData2.append('filesAndImages', JSON.stringify(filesAndImagesArr)); // Append the filesAndImagesArr as a JSON string
+
+    // Append the remaining form data
     formData2.append('orderDetailArr', JSON.stringify(orderDetailArr));
     formData2.append('name', formData.name);
     formData2.append('phone', formData.phone);
@@ -469,21 +477,13 @@ const handleSubmit = async (e) => {
     });
     const result = await response.json();
     console.log("Success:", result);
-  
-    // for (let pair of formData2.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
-    // for (let [key, value] of formData2.entries()) {
-    //   console.log(key, value);
-    // }
-    
-    // const response = await axios.post('http://localhost:5000/submitorder', formData2);
 
     console.log('API response:', response);
   } catch (error) {
     console.error('API error:', error.message);
   }
 };
+
 
     return (
           <div>

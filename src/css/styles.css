@@ -534,5 +534,9 @@ align-items: center;
   font-size: 20px;
   font-weight: 700;
 }
+.resetPassSubmitBtnCOlor{
+  background-color: #dcd5d5 !important;
+  color: #012652 !important;
+}
 
 

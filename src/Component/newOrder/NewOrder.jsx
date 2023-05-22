@@ -416,50 +416,7 @@ const NewOrder = () => {
     //   setImageProgress(0);
     // };
 
-// for mongodb previous
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   try {
-//     // Prepare the data to be sent to the backend API
-//     let orderDetailArr = formData.orderDetailArr.map((item) => ({
-//       color: item.color,
-//       teshirtSize: item.teshirtSize,
-//       quantity: item.quantity,
-//       printSize: item.printSize,
-//       file: item?.file,
-//       image: item?.image,
-//     }));
-// console.log("orderDetailArr",orderDetailArr);
-//     const orderData = {
-//       // Include the necessary order data properties
-//       name: formData.name,
-//       phone: formData.phone,
-//       address: formData.address,
-//       instruction: formData.instruction,
-//       area: formData.area,
-//       orderDetailArr: orderDetailArr,
-//       collectAmount: formData.collectAmount,
-//       printbazcost: printbazcost,
-//       deliveryFee: deliveryFee,
-//       recvMoney: recvMoney,
-//       orderStatus: "Pending",
-//       paymentStatus: "Unpaid",
-//       createdAt: formattedDate,
-//       id: Date.now(),
-//       userMail:userEmail
-//     };
-//     console.log('orderData:',orderData);
-//     // Make a POST request to the backend API endpoint
-//     const response = await axios.post('http://localhost:5000/submitorder',orderData);
 
-//     // Handle the response if needed
-//     console.log('API response:', response.data);
-  
-//   } catch (error) {
-//     // Handle errors that occur during the request
-//     console.error('API error:', error);
-//   }
-// };
 
 // foe mongodb new
 const handleSubmit = async (e) => {

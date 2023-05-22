@@ -26,6 +26,8 @@ import SendRegisterConfirmationEmail from "./Component/confirmationMailRegister/
 import SendOrderConfirmationEmail from "./confirmationMailOrder/SendOrderConfirmationEmail";
 import InvoicePdf from "./Component/invoicePdf/InvoicePdf";
 import RedirectToAppropriateRoute from "./Component/RedirectToAppropriateRoute";
+import ResetPasswordField from "./Component/resetPasswordFIeld/ResetPasswordField";
+import UpdatePasswordField from "./Component/UpdatePasswordField";
 
 
 function App() {
@@ -65,6 +67,8 @@ function App() {
       <Routes>
       <Route path="/" element={<RedirectToAppropriateRoute/>} />
          <Route path="/login" element={<Login />} />
+         <Route path="/resetPasswordFIeld" element={<ResetPasswordField />} />
+         <Route path="/reset/:token" element={<UpdatePasswordField/>} />
         <Route path="/register" element={<Register />} />
         <Route
           path="/dashboard"

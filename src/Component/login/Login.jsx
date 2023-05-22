@@ -10,6 +10,7 @@ import { Container, Form } from "react-bootstrap";
  import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 import Register from "./Register";
 import ResetPasswordMail from "../resetPasswordMail/ResetPasswordMail";
+import ResetPasswordField from "../resetPasswordFIeld/ResetPasswordField";
 const Login = () => {
   const {user,loading,loginUser,currentUser}=useContext(AuthContext);
   const navigate=useNavigate();
@@ -18,6 +19,7 @@ const Login = () => {
   const from=location.state?.from?.pathname || '/dashboard'
   const [error,setError]=useState('');
     const [close,setClose]=useState('');
+    const [resetPaswordField,showResetPaswordField]=useState(false);
  
     function closePopup() {
       document.getElementById("popup1").style.display = "none";
@@ -94,74 +96,6 @@ const handleSubmit = (e) => {
     setError(error.message);
   });
 };
-// const handleForgotPassword = (email) => {
-//   ResetPasswordMail(email);
-// }
- 
-// const handleForgotPassword = (email) => {
-//   fetch('http://localhost:5000/forgot-password', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ email })
-//   })
-//     .then(response => response.json())
-//     .then(data => {
-//       if (data.message) {
-//         console.log(data.message); // Password reset request successful
-//       } else {
-//         console.error("Error: ", data.error); // Handle error response
-//       }
-//     })
-//     .catch(error => {
-//       console.error("Error: ", error); // Handle network or other errors
-//     });
-// };
-
-// const handleResetPassword = (userId, resetToken, newPassword) => {
-//   fetch('http://localhost:5000/reset-password', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ userId, resetToken, newPassword })
-//   })
-//     .then(response => response.json())
-//     .then(data => {
-//       if (data.message) {
-//         console.log(data.message); // Password reset successful
-//       } else {
-//         console.error("Error: ", data.error); // Handle error response
-//       }
-//     })
-//     .catch(error => {
-//       console.error("Error: ", error); // Handle network or other errors
-//     });
-// };
-
-
-
-const handleForgotPassword = (email) => {
-  fetch('http://localhost:5000/forgot-password', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email })
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.message) {
-        console.log(data.message); // Password reset request successful
-      } else {
-        console.error("Error: ", data.error); // Handle error response
-      }
-    })
-    .catch(error => {
-      console.error("Error: ", error); // Handle network or other errors
-    });
-};
 
     return (
       <div>
@@ -222,7 +156,7 @@ const handleForgotPassword = (email) => {
            <Button onClick={handleSignUp} style={{backgroundColor: "#124",marginTop:"5px",marginLeft:"10px"}} >
           Sign up
         </Button>
-        <p  style={{marginTop:"15px",cursor:"pointer"}} onClick={() => handleForgotPassword(user?.email)}>Forgot Password</p>
+        <Link  style={{marginTop:"15px",cursor:"pointer"}} to="/resetPasswordFIeld">Forgot Password</Link>
 
         </div>
        
@@ -349,7 +283,10 @@ const handleForgotPassword = (email) => {
               </div>
             </div>
           </div>
-        </div></div>
+        </div>
+      
+          
+        </div>
     );
   }
   export default Login;

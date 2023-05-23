@@ -83,11 +83,13 @@ const handleSubmit = (e) => {
   .then(data => {
     // Handle the response from the server
    // Store the token in local storage or context for authentication
-   localStorage.setItem('token', data?.token);
-   loginUser(data?.token, data.user);  // This line is important
-   console.log('User logged in successfully', data.user);
-   setError("");
-   navigate("/dashboard");
+ // Add delay to ensure token is set in localStorage before calling loginUser
+ setTimeout(() => {
+  loginUser(data?.token, data.user);
+  console.log('User logged in successfully', data.user);
+
+  navigate("/dashboard");
+}, 1000);
     
   })
   .catch(error => {
@@ -156,9 +158,9 @@ const handleSubmit = (e) => {
            <Button onClick={handleSignUp} style={{backgroundColor: "#124",marginTop:"5px",marginLeft:"10px"}} >
           Sign up
         </Button>
-        <Link  style={{marginTop:"15px",cursor:"pointer"}} to="/resetPasswordFIeld">Forgot Password</Link>
+       </div>
 
-        </div>
+        <Link className="forgetPassStyle"   to="/resetPasswordFIeld">Forgot Password?</Link>
        
        <br />
         <Form.Text className="text-danger">
@@ -169,8 +171,12 @@ const handleSubmit = (e) => {
       </Form>
      
       {
-                  register===true && <div id="popup1" className="overlay">
-                  <div className="popup">
+                  register===true && <div id="popup1" className="overlay"   onClick={(event) => {
+                    if (event.target === event.currentTarget) {
+                      closePopup();
+                    }
+                  }} >
+                  <div className="popup" >
                       <a className="close cursor_pointer mr-4" onClick={closePopup}>&times;</a>
                       <div className="content">
                       <div style={{ display: display }}>

@@ -48,6 +48,8 @@ const NewOrder = () => {
   //  const [quantity, setQuantity] = useState(1);
   const {user}=useContext(AuthContext);
   const userEmail=user?.email
+  const [isLoading, setIsLoading] = useState(false);
+
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
@@ -421,10 +423,10 @@ const NewOrder = () => {
 // foe mongodb new
 const handleSubmit = async (e) => {
   e.preventDefault();
+  setIsLoading(true)
   try {
     const formData2 = new FormData();
     const orderDetailArr = formData.orderDetailArr || [];
-
     const filesAndImagesArr = [];
 
     orderDetailArr?.forEach((item, index) => {
@@ -433,6 +435,7 @@ const handleSubmit = async (e) => {
       if (item.file) {
         fileAndImageData.file = item.file;
         formData2.append(`file`, item.file); // Append the file to the FormData object
+  
       }
       
       if (item.image) {
@@ -468,19 +471,29 @@ const handleSubmit = async (e) => {
     formData2.append('orderStatus', 'Pending');
     formData2.append('paymentStatus', 'Unpaid');
     formData2.append('createdAt', formattedDate);
-    formData2.append('id', Date.now());
+    // formData2.append('id',orderId);
     formData2.append('userMail', userEmail);
-
+  
     const response = await fetch("http://localhost:5000/submitorder", {
       method: "POST",
       body: formData2,
     });
-    const result = await response.json();
-    console.log("Success:", result);
-
-    console.log('API response:', response);
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Success:", result.insertedId);
+      console.log('API response:', response);
+      const orderConfirmationData = { id: result.insertedId, userMail: userEmail };
+      SendOrderConfirmationEmail(orderConfirmationData); // Send email confirmation
+    
+      setShowAlert(true);
+    } else {
+      throw new Error('API error: ' + response.status);
+    }
   } catch (error) {
     console.error('API error:', error.message);
+  }
+  finally {
+    setIsLoading(false); // Set loading status to false
   }
 };
 
@@ -541,7 +554,8 @@ const handleSubmit = async (e) => {
                     <Form.Group className="mb-3">
                       <Form.Label>Recipient's Phone</Form.Label>
                       <Form.Control
-                        type="number"
+                        type="tel"
+                        pattern="[0-9]{11}"
                         name="phone"
                         value={formData.phone}
                         onChange={(e) =>  handleInputChange(e)}
@@ -832,6 +846,20 @@ const handleSubmit = async (e) => {
                     >
                       Cancel
                     </Button>
+                    {
+  isLoading===true &&(
+    <>
+     <div className="alert-overlay"  />
+       <div className="alert-box" >
+     
+         <Spinner  style={{padding:"20px"}} animation="grow" variant="warning" />
+         
+         <h2>Please wait!</h2>
+       </div>
+    </>
+  )
+  
+}
                   </div>
                 </div>
               </Form>
@@ -895,12 +923,14 @@ onClose={() => setShowAlert(false)}
 
 
 />
+
+
 )
 
 
-  
-
 }
+
+ 
 
           </div>
   

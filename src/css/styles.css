@@ -166,6 +166,7 @@
   height: 60%;
   position: relative;
   transition: all 5s ease-in-out;
+  z-index: 1234;
 }
 
 .popup h2 {
@@ -255,6 +256,7 @@ background-color: white !important;
 }
 .loginBtn{
   text-align: left;
+  margin-bottom: 10px;
 }
 .icon{
   width: 1rem;
@@ -479,6 +481,11 @@ transform: translate(-50%, -50%); */
 }
 .cursor_pointer{
   cursor: pointer;
+  z-index: 1111;
+}
+.forgetPassStyle{
+margin-top: 25px ;
+cursor: pointer;
 }
 @media screen and (max-width: 768px) {
   .navbar-nav {

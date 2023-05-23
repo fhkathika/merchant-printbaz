@@ -45,7 +45,7 @@ const UpdatePasswordField = () => {
       
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label style={{color:"white"}}>Enter Your Registered Email</Form.Label>
+          <Form.Label style={{color:"white"}}>Enter your new password</Form.Label>
           <Form.Control
           type="password" id="password" name="password" placeholder="Enter your new password" required
           />

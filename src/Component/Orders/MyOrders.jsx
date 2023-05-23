@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
@@ -17,6 +17,10 @@ const MyOrders = () => {
     console.log("resellerOrdersFromDb",resellerOrdersFromDb);
     const {user}=useContext(AuthContext);
     const userEmail=user?.email
+
+    const [orders, setOrders] = useState([]);
+
+   
     const navigate=useNavigate()
     const handlePage=()=>{
       navigate("/newOrder")
@@ -168,7 +172,7 @@ const MyOrders = () => {
                <p style={{lineHeight: '15px'}}>{orderInfo?.name}
                </p></div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
@@ -186,7 +190,7 @@ const MyOrders = () => {
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
              </div>
              <div className="col-md-1 col-sm-12">
-             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
                                               state={ {orderInfo}}>View</Link>
                {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
              </div>

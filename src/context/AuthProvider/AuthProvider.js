@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
 
   const fetchUserData = async (token) => {
     try {
-        const response = await fetch("http://localhost:5000/user", {
+        const response = await fetch("https://merchantprintbazserver-dxev.onrender.com/user", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

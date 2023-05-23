@@ -7,7 +7,7 @@ const useGetMongoData = () => {
     const userEmail=user?.email;
     useEffect(()=>{
         const getOrders = async () => {
-         await fetch('http://localhost:5000/allorder')
+         await fetch('https://merchantprintbazserver-dxev.onrender.com/allorder')
         .then(res=>res.json())
         .then(data => setInfo(data))
         }

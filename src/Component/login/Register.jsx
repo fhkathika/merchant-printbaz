@@ -201,7 +201,7 @@ const handleChange=(e)=>{
         data.append('brandLogo', formData.brandLogo);
       
         // Submit the data to the server
-        fetch('http://localhost:5000/register', {
+        fetch('https://merchantprintbazserver-dxev.onrender.com/register', {
           method: 'POST',
           body: data
         })

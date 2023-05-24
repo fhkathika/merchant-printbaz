@@ -474,7 +474,7 @@ const handleSubmit = async (e) => {
     // formData2.append('id',orderId);
     formData2.append('userMail', userEmail);
   
-    const response = await fetch("http://localhost:5000/submitorder", {
+    const response = await fetch("http://mserver.printbaz.com/submitorder", {
       method: "POST",
       body: formData2,
     });

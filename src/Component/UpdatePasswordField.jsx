@@ -9,7 +9,7 @@ const UpdatePasswordField = () => {
         const password = e.target.password.value;
         const token = window.location.pathname.split('/').pop();
       
-        fetch(`http://localhost:5000/reset/${token}`, {
+        fetch(`http://mserver.printbaz.com/reset/${token}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -62,6 +62,8 @@ const handleSubmit = async (e) => {
     password: password
   };
   
+  console.log('Submit:', requestBody); // Log what you're submitting
+
   try {
     const response = await fetch('https://mserver.printbaz.com/login', { 
       
@@ -73,6 +75,8 @@ const handleSubmit = async (e) => {
     });
 
     const data = await response.json();
+
+    console.log('Response:', data); // Log the response data
 
     if (!response.ok) {
       throw new Error(data.message);
@@ -119,7 +123,7 @@ const handleSubmit = async (e) => {
               
                   <Container className=" mx-auto">
       <h4 style={{ marginTop: "20px"}}>Sign in   </h4>
-      <Form onSubmit={handleSubmit}>   
+      <Form  onSubmit={(e) => handleSubmit(e)}>   
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control

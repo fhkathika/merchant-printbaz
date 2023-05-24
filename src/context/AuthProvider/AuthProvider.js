@@ -34,7 +34,7 @@ const loginUser = async (token, userData) => {
   // First, fetch user data and then set the user
 
   const fetchedUser = await fetchUserData(token); 
-  setToken(fetchedUser);
+  setUser(fetchedUser); // Update the user state with fetchedUser, not the token state
 };
 
 

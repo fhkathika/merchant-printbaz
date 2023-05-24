@@ -75,17 +75,18 @@ const handleSubmit = async (e) => {
     });
 
     const data = await response.json();
-
+   
     console.log('Response:', data); // Log the response data
-
+    navigate("/dashboard");
     if (!response.ok) {
       throw new Error(data.message);
     }
+   
 
     // Store the token in local storage or context for authentication
     loginUser(data?.token, data.user);
     console.log('User logged in successfully', data.user);
-    navigate("/dashboard");
+    
   } catch (error) {
     // Handle all errors here
     console.error('Error:', error);

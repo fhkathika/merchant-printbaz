@@ -50,7 +50,7 @@ const Login = () => {
     // }, [user]);
 //using api
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   const form = e.target;
   const email = form.email.value;
@@ -62,41 +62,30 @@ const handleSubmit = (e) => {
     password: password
   };
 
+  try {
+    const response = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    });
 
-  fetch('http://localhost:5000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(requestBody)
-  })
-  .then(response => {
-    // check for error response
     if (!response.ok) {
-      // if error response, convert it to JSON and throw an error
-      return response.json().then(err => {
-        throw new Error(err.message);
-      });
+      const errorData = await response.json();
+      throw new Error(errorData.message);
     }
-    return response.json();
-  })
-  .then(data => {
-    // Handle the response from the server
-   // Store the token in local storage or context for authentication
- // Add delay to ensure token is set in localStorage before calling loginUser
- setTimeout(() => {
-  loginUser(data?.token, data.user);
-  console.log('User logged in successfully', data.user);
 
-  navigate("/dashboard");
-}, 1000);
-    
-  })
-  .catch(error => {
+    const data = await response.json();
+    // Store the token in local storage or context for authentication
+    loginUser(data?.token, data.user);
+    console.log('User logged in successfully', data.user);
+    navigate("/dashboard");
+  } catch (error) {
     // Handle all errors here
     console.error('Error:', error);
     setError(error.message);
-  });
+  }
 };
 
     return (

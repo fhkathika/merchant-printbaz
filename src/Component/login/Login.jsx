@@ -72,12 +72,12 @@ const handleSubmit = async (e) => {
       body: JSON.stringify(requestBody)
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message);
+      throw new Error(data.message);
     }
 
-    const data = await response.json();
     // Store the token in local storage or context for authentication
     loginUser(data?.token, data.user);
     console.log('User logged in successfully', data.user);
@@ -88,6 +88,7 @@ const handleSubmit = async (e) => {
     setError(error.message);
   }
 };
+
 
     return (
       <div>

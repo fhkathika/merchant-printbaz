@@ -119,7 +119,7 @@ const validatePassword = (password) => {
   }
 
   // password is valid
-  setPasswordError("valid password")
+  setPasswordError("")
   return true;
 };
 const handleChange=(e)=>{
@@ -201,7 +201,7 @@ const handleChange=(e)=>{
         data.append('brandLogo', formData.brandLogo);
       
         // Submit the data to the server
-        fetch('https://merchantprintbazserver-dxev.onrender.com/register', {
+        fetch('http://localhost:5000/register', {
           method: 'POST',
           body: data
         })

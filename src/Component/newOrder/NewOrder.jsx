@@ -474,7 +474,7 @@ const handleSubmit = async (e) => {
     // formData2.append('id',orderId);
     formData2.append('userMail', userEmail);
   
-    const response = await fetch("https://merchantprintbazserver-dxev.onrender.com/submitorder", {
+    const response = await fetch("http://localhost:5000/submitorder", {
       method: "POST",
       body: formData2,
     });

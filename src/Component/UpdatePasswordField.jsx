@@ -9,7 +9,7 @@ const UpdatePasswordField = () => {
         const password = e.target.password.value;
         const token = window.location.pathname.split('/').pop();
       
-        fetch(`https://merchantprintbazserver-dxev.onrender.com/reset/${token}`, {
+        fetch(`http://localhost:5000/reset/${token}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

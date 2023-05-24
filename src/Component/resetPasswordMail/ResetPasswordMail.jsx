@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ResetPasswordMail = (email) => {
-  axios.post('https://merchantprintbazserver-dxev.onrender.com/forgot-password', { email })
+  axios.post('http://localhost:5000/forgot-password', { email })
     .then((response) => {
       console.log("send mail",response);
     })

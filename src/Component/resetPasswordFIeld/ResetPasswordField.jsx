@@ -10,7 +10,7 @@ const ResetPasswordField = () => {
  
         const email = e.target.email.value;
       
-        fetch('https://merchantprintbazserver-dxev.onrender.com/forgot-password', {
+        fetch('http://localhost:5000/forgot-password', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

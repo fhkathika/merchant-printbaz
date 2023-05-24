@@ -142,7 +142,7 @@ const Invoice = () => {
              </div>
              <ul className="col-md-1 col-sm-12 " style={{display:"flex"}} >
                <li style={{listStyle:"none"}}> 
-               {/* <a  href={`https://merchantprintbazserver-dxev.onrender.com/invoicePdf/${orderInfo?.id}`}>PDF</a> */}
+               {/* <a  href={`http://localhost:5000/invoicePdf/${orderInfo?.id}`}>PDF</a> */}
                {/* <button onClick={generatePDF} type="button">Export PDF</button> */}
               {/* <a href={`/invoicePdf/${orderInfo?.id}`} download="invoice.pdf">PDF</a> */}
 </li>

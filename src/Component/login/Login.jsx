@@ -63,7 +63,7 @@ const handleSubmit = (e) => {
   };
 
 
-  fetch('https://merchantprintbazserver-dxev.onrender.com/login', {
+  fetch('http://localhost:5000/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

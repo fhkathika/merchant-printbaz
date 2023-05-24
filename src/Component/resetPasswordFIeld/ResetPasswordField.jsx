@@ -10,7 +10,7 @@ const ResetPasswordField = () => {
  
         const email = e.target.email.value;
       
-        fetch('http://mserver.printbaz.com/forgot-password', {
+        fetch('https://mserver.printbaz.com/forgot-password', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

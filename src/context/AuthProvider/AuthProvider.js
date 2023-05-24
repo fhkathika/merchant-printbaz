@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
 
   const fetchUserData = async (token) => {
     try {
-        const response = await fetch("http://mserver.printbaz.com/user", {
+        const response = await fetch("https://mserver.printbaz.com/user", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

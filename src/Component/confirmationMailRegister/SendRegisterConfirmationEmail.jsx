@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const SendRegisterConfirmationEmail = (register) => {
-  axios.post('http://mserver.printbaz.com/registerEmail', register )
+  axios.post('https://mserver.printbaz.com/registerEmail', register )
     .then((response) => {
       console.log("send mail for register",response);
     })

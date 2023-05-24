@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ResetPasswordMail = (email) => {
-  axios.post('http://mserver.printbaz.com/forgot-password', { email })
+  axios.post('https://mserver.printbaz.com/forgot-password', { email })
     .then((response) => {
       console.log("send mail",response);
     })

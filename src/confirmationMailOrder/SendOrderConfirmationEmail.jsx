@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const SendOrderConfirmationEmail = (order) => {
-  axios.post('http://mserver.printbaz.com/webhook', order )
+  axios.post('https://mserver.printbaz.com/webhook', order )
     .then((response) => {
       console.log("send mail",response);
     })

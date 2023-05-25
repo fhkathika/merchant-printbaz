@@ -77,7 +77,8 @@ const handleSubmit = async (e) => {
     const data = await response.json();
    
     console.log('Response:', data); // Log the response data
-    navigate("/dashboard");
+   
+    // navigate("/dashboard");
     if (!response.ok) {
       throw new Error(data.message);
     }
@@ -90,7 +91,8 @@ const handleSubmit = async (e) => {
   } catch (error) {
     // Handle all errors here
     console.error('Error:', error);
-    setError(error.message);
+   
+    setError(error);
   }
 };
 
@@ -159,12 +161,16 @@ const handleSubmit = async (e) => {
         <Link className="forgetPassStyle"   to="/resetPasswordFIeld">Forgot Password?</Link>
        
        <br />
-        <Form.Text className="text-danger">
+        {/* <Form.Text className="text-danger">
        {loading}
-        </Form.Text> <Form.Text className="text-danger">
-       {error}
-        </Form.Text>
+        </Form.Text>  */}
+         
+      
       </Form>
+      {error && 
+            <Form.Text className="text-danger">
+       {error.message}
+        </Form.Text>}
      
       {
                   register===true && <div id="popup1" className="overlay"   onClick={(event) => {

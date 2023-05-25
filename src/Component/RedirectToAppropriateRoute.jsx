@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider/AuthProvider";
 const RedirectToAppropriateRoute = () => {
   const { user, loading } = useContext(AuthContext);
-
+console.log("user",user);
   if (loading) {
     return (
       <>

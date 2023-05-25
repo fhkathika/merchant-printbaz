@@ -577,7 +577,7 @@ const handleSubmit = async (e) => {
                         onChange={(e) =>  handleInputChange(e)}
                         required
                       >
-                        <option default>select area</option>
+                        <option value="">select area</option>
                         <option value="inside dhaka">Inside Dhaka</option>
                         <option value="outside dhaka">Outside Dhaka</option>
                       </Form.Control>
@@ -657,7 +657,7 @@ const handleSubmit = async (e) => {
                         value={item.color}
                         onChange={(e) =>  handleInputChange(e,index)}
                       >
-                        <option default>select color</option>
+                        <option value="">select color</option>
                         <option value="black">Black</option>
                         <option value="white">White</option>
                       </Form.Control>
@@ -675,7 +675,7 @@ const handleSubmit = async (e) => {
                         onChange={(e) =>  handleInputChange(e,index)}
                         name="teshirtSize"
                       >
-                        <option default>select tee shirt size</option>
+                        <option value="">select tee shirt size</option>
                         <option value="m">M</option>
                         <option value="L">L</option>
                         <option value="XL">XL</option>
@@ -715,7 +715,7 @@ const handleSubmit = async (e) => {
                         name="printSize"
                         required
                       >
-                        <option default>select print size</option>
+                       <option value="">select print size</option> 
                         <option value="10 x 14">10″ x 14″</option>
                         <option value="10 x 10">10″ x 10″</option>
                         <option value="10 x 5">10″ x 5″</option>

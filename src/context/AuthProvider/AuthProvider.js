@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -6,7 +7,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
-
+const navigate=useNavigate()
   const fetchUserData = async (token) => {
     try {
         const response = await fetch("https://mserver.printbaz.com/user", {
@@ -31,10 +32,17 @@ const AuthProvider = ({ children }) => {
 
 const loginUser = async (token, userData) => {
   localStorage.setItem("token", token);
-  // First, fetch user data and then set the user
 
-  const fetchedUser = await fetchUserData(token); 
-  setUser(fetchedUser); // Update the user state with fetchedUser, not the token state
+  try {
+    const fetchedUser = await fetchUserData(token); 
+    setUser(fetchedUser); // Update the user state with fetchedUser
+    console.log('User logged in successfully', fetchedUser);
+
+    // Navigate to the dashboard after setting the user state
+    navigate("/dashboard");
+  } catch (error) {
+    console.error("Error logging in:", error);
+  }
 };
 
 

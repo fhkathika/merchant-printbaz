@@ -112,13 +112,13 @@ const {user}=useContext(AuthContext)
        <tr >
  
         
-           <th >PriceSize</th>
-           <th >Pricefor (1-9pcs)</th>
-           <th >Pricefor (10-19pcs)</th>
-           <th >Pricefor (20-29pcs)</th>
-           <th >Pricefor (30-40pcs)</th>
-           <th >Pricefor (40-49pcs)</th>
-           <th >Pricefor 50and50+pcs</th> 
+           <th >Print Size</th>
+           <th >Price for (1-9 pcs)</th>
+           <th >Price for (10-19 pcs)</th>
+           <th >Price for (20-29 pcs)</th>
+           <th >Price for (30-40 pcs)</th>
+           <th >Price for (40-49 pcs)</th>
+           <th >Price for 50and50 + pcs</th> 
       
        </tr>
      </thead>
@@ -247,7 +247,7 @@ const {user}=useContext(AuthContext)
                                 className="mb-3 Print Side w-50 m-auto"
                                 controlId="wccalcPrintSide"
                             >
-                                <Form.Label className="pr-2">Paper Size</Form.Label>
+                                <Form.Label className="pr-2">Print Size</Form.Label>
                                 <Form.Control
                                     as="select"
                                     value={printSize}

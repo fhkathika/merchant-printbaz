@@ -55,9 +55,9 @@ const NavigationBar = () => {
           <li className="nav-item">
             <Link className="nav-link" to="/myorders">Order</Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link" to="/invoice">Invoice</Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link className="nav-link" to="/newOrder">New Order</Link>
           </li> 

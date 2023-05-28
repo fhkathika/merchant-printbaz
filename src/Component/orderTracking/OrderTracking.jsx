@@ -25,7 +25,7 @@ console.log("viewOrder",viewOrder?.orderStatus);
             <div className="row">
               <div className="col-12">
                 <div className="order-id bg-white p-3 my-3 shadow-sm">
-                  <h3 className="d-inline-block font-weight-bold">ORDER {viewOrder?.id} &nbsp;</h3>
+                  <h3 className="d-inline-block font-weight-bold">ORDER {viewOrder?._id} &nbsp;</h3>
                   <p className="d-inline-block py-2 px-3 bg-success text-white font-weight-bold rounded">{viewOrder?.orderStatus}</p>
                 </div>
               </div>

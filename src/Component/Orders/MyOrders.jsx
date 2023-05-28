@@ -216,7 +216,7 @@ const MyOrders = () => {
               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
               </p></div>
             <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
@@ -260,7 +260,7 @@ const MyOrders = () => {
               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
               </p></div>
             <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
@@ -304,7 +304,7 @@ const MyOrders = () => {
               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
               </p></div>
             <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.id}</p>
+              <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>

@@ -28,8 +28,9 @@ import InvoicePdf from "./Component/invoicePdf/InvoicePdf";
 import RedirectToAppropriateRoute from "./Component/RedirectToAppropriateRoute";
 import ResetPasswordField from "./Component/resetPasswordFIeld/ResetPasswordField";
 import UpdatePasswordField from "./Component/UpdatePasswordField";
+import ReactGA from 'react-ga';
 
-
+ReactGA.initialize("UA-267461228-1")
 function App() {
   const { user, loading } = useContext(AuthContext);
   const navigate=useNavigate();

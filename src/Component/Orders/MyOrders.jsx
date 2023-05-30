@@ -181,7 +181,7 @@ const MyOrders = () => {
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-               <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+               <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt.substr(0, 10)}  </p>
              </div>
              <div className="col-md-1 col-sm-12">
                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
@@ -225,7 +225,7 @@ const MyOrders = () => {
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt.substr(0, 10)}  </p>
             </div>
             <div className="col-md-1 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
@@ -269,7 +269,7 @@ const MyOrders = () => {
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+              <p style={{lineHeight: '15px'}}>Updated on   {orderInfo?.createdAt.substr(0, 10)}  </p>
             </div>
             <div className="col-md-1 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
@@ -313,7 +313,7 @@ const MyOrders = () => {
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt}  </p>
+              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt.substr(0, 10)}  </p>
             </div>
             <div className="col-md-1 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>

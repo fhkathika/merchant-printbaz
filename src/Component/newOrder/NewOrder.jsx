@@ -1,7 +1,6 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+
 import React, { useContext, useState } from 'react';
-import { Col, Container, Form, Row ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner} from 'react-bootstrap';
+import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
 import { useGetData } from "../../hooks/useGetData";
 import teeShirtFormula from "../../Formulas/teeShirtFormula";
@@ -25,7 +24,9 @@ const NewOrder = () => {
         color: '',
         teshirtSize: '',
         quantity: '',
+        printSide:'',
         printSize: '',
+        printSizeBack:'',
         file: null,
         image: null,
       },
@@ -40,12 +41,12 @@ const NewOrder = () => {
    const [showAlert, setShowAlert] = useState(false);
    const [loading, setLoading] = useState(false);
    const [dbData, setDbData] = useState({});
+   const [printSide, setPrintSide] = useState('');
    const { fetchedData, searchProduct, setSearchProduct } = useGetData(
      idPrice,
      collectionsPrice,
      dbData
    );
-  //  const [quantity, setQuantity] = useState(1);
   const {user}=useContext(AuthContext);
   const userEmail=user?.email
   const [isLoading, setIsLoading] = useState(false);
@@ -86,26 +87,21 @@ const NewOrder = () => {
     const price30to40_2p5X5 = fetchedData?.printSize2p5X5?.price30to40_2p5X5;
     const price41to49_2p5X5 = fetchedData?.printSize2p5X5?.price41to49_2p5X5;
     const price50Plus_2p5X5 = fetchedData?.printSize2p5X5?.price50Plus_2p5X5;
-    // console.log("collectAmount", collectAmount);
+  
     const navigate=useNavigate()
     const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);
 
-    // const handleInputChange = (index, event) => {
-    //   const values = [...inputs];
-    //   values[index].value = event.target.value;
-    //   setInputs(values);
-    //   setSum(values.reduce((total, input) => total + Number(input.value), 0));
-  
+
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
-    if (name==="color" || name==="teshirtSize" || name==="quantity" || name==="printSize") {
+    if (name==="color" || name==="teshirtSize" || name==="quantity" || name==="printSize"|| name==="printSide" || name==="printSizeBack") {
       console.log(value)
       // const fieldName = name.split('.')[1];
       const newOrderDetailArr = [...formData.orderDetailArr];
       newOrderDetailArr[index][event.target.name]=event.target.value;
       setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
-      console.log(newOrderDetailArr);
+   
       }
    else {
         setFormData({ ...formData, [name]: value });
@@ -132,10 +128,18 @@ const NewOrder = () => {
       ...formData,
       orderDetailArr: [
         ...formData.orderDetailArr,
-        { color: null, teshirtSize: null, quantity: null, printSize: null, file: null, image: null },
+        { color: null, teshirtSize: null, quantity: null, printSize: null,printSizeBack:"", file: null, image: null },
       ],
     });
   };
+// remove field
+const removeField = (index) => {
+  setFormData({
+    ...formData,
+    orderDetailArr: formData.orderDetailArr.filter((_, i) => i !== index),
+  });
+};
+
   let printbazcost=0;
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
@@ -208,10 +212,27 @@ const NewOrder = () => {
         price41to49_2p5X5,
         price50Plus_2p5X5
       ).totalPrice;
+      let backSidePrintCost=0
+      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14"){
+        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 130
+      }
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"){
+        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 100
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"){
+        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 50
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"){
+        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 30
+      }
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"){
+        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 15
+      }
+      console.log("formData?.orderDetailArr[i]?.printSizeBack",(formData?.orderDetailArr[i]?.quantity * 80));
 
-       printbazcostbase = Number(totalPrice);
-				printbazcost += printbazcostbase;
-        console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
+  printbazcostbase = Number(totalPrice)+backSidePrintCost;
+  printbazcost += printbazcostbase;
+  console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
+
+      
 			
    
     } else {
@@ -331,6 +352,9 @@ const handleSubmit = async (e) => {
       formData2.append(`teshirtSize${index}`, item.teshirtSize);
       formData2.append(`quantity${index}`, item.quantity);
       formData2.append(`printSize${index}`, item.printSize);
+      formData2.append(`printSide${index}`, item.printSide);
+  
+
 
       return item;
     });
@@ -355,8 +379,8 @@ const handleSubmit = async (e) => {
     formData2.append('userMail', userEmail);
   
     const response = await
-    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-     fetch("http://localhost:5000/submitorder", //add this when work local server
+     fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
+    //  fetch("http://localhost:5000/submitorder", //add this when work local server
      
      {
       method: "POST",
@@ -527,7 +551,15 @@ const handleSubmit = async (e) => {
                  
                     {formData.orderDetailArr.map((item, index) => (
                       <>
-                      <h5 style={{color:"orange"}}>0 {index+1}</h5>
+                      
+                      {
+                        index !==0 && <div className='flex'> 
+                        <h5 style={{color:"orange"}}>0 {index+1}</h5>
+                          <Button className="addButtonStyle" onClick={() => removeField(index)}>-</Button>
+                          </div>
+                      }
+                     
+                     
                       <hr style={{color:"orang !important"}} />
                     <Form.Group
                       className="mb-3 Print Side w-100 m-auto"
@@ -589,6 +621,28 @@ const handleSubmit = async (e) => {
                       className="mb-3 Print Side w-100 m-auto"
                       controlId="wccalcPrintSide"
                     >
+                      <Form.Label className="pr-2">Print side</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={item.printSide}
+                        onChange={(e) => {
+                           handleInputChange(e,index);
+                        }}
+                        name="printSide"
+                        required
+                      >
+                       <option value="">select print side</option> 
+                        <option value="frontSide">Front Side</option>
+                        <option value="backSide">Back Side</option>
+                        <option value="bothSide">Both Side</option>
+                      </Form.Control>
+                    </Form.Group>
+                    {
+                     ( item.printSide==="frontSide" || item.printSide==="backSide") &&
+                      <Form.Group
+                      className="mb-3 Print Side w-100 m-auto"
+                      controlId="wccalcPrintSide"
+                    >
                       <Form.Label className="pr-2">Print Size</Form.Label>
                       <Form.Control
                         as="select"
@@ -607,6 +661,59 @@ const handleSubmit = async (e) => {
                         <option value="2.5 X 5">2.5″ x 5″</option>
                       </Form.Control>
                     </Form.Group>
+}
+                    {
+                      item.printSide==="bothSide" && 
+                      <>
+
+<Form.Group
+                      className="mb-3 Print Side w-100 m-auto"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">Print Size front</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={item.printSize}
+                        onChange={(e) => {
+                           handleInputChange(e,index);
+                        }}
+                        name="printSize"
+                        required
+                      >
+                       <option value="">select print size</option> 
+                        <option value="10 x 14">10″ x 14″</option>
+                        <option value="10 x 10">10″ x 10″</option>
+                        <option value="10 x 5">10″ x 5″</option>
+                        <option value="5 X 5">5″ x 5″</option>
+                        <option value="2.5 X 5">2.5″ x 5″</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group
+                    className="mb-3 Print Side w-100 m-auto"
+                    controlId="wccalcPrintSide"
+                  >
+                    <Form.Label className="pr-2">Print Size back</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={item.printSizeBack}
+                      onChange={(e) => {
+                         handleInputChange(e,index);
+                      }}
+                      name="printSizeBack"
+                      required
+                    >
+                     <option value="">select print size</option> 
+                      <option value="10 x 14">10″ x 14″</option>
+                      <option value="10 x 10">10″ x 10″</option>
+                      <option value="10 x 5">10″ x 5″</option>
+                      <option value="5 X 5">5″ x 5″</option>
+                      <option value="2.5 X 5">2.5″ x 5″</option>
+                    </Form.Control>
+                  </Form.Group>
+                      </>
+                     
+                    }
+                   
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Upload Main File</Form.Label>
                       <Form.Control

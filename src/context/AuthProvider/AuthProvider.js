@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
 const navigate=useNavigate()
   const fetchUserData = async (token) => {
     try {
-        // const response = await fetch("https://mserver.printbaz.com/user",  //add this when upload  in main server 
-        const response = await fetch("http://localhost:5000/user",   //add this when work local server
+        const response = await fetch("https://mserver.printbaz.com/user",  //add this when upload  in main server 
+        // const response = await fetch("http://localhost:5000/user",   //add this when work local server
          
         {
             headers: {

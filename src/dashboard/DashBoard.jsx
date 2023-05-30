@@ -7,6 +7,7 @@ import NavigationBar from '../Component/Navbar/NavigationBar';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
 import  "../css/styles.css"
 import { useGetData } from '../hooks/useGetData';
+import useGetMongoData from '../hooks/useGetMongoData';
 
 const DashBoard = () => {
   const {user,logOut}=useContext(AuthContext);
@@ -15,8 +16,9 @@ const DashBoard = () => {
   const [dbData, setDbData] = useState({});
   const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
   const resellerOrdersFromDb=fetchedData?.orders
-  console.log("resellerOrdersFromDb",resellerOrdersFromDb);
+  const {info}=useGetMongoData()
   console.log("user from dashboard",user);
+  console.log("info",info);
     const [activeTab, setActiveTab] = useState("Dashboard");
     const [dropdownOpen, setDropdownOpen] = useState(false);
   
@@ -44,7 +46,7 @@ const DashBoard = () => {
   
   console.log("user",user);
   // pending delivery
-  const orderStatusPending=resellerOrdersFromDb
+  const orderStatusPending=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="Pending" )
   console.log("orderStatus pending",orderStatusPending);
   let pendingstatusCount=0
@@ -53,7 +55,7 @@ const DashBoard = () => {
 
   } 
   // Returned
-   const orderStatusReturned=resellerOrdersFromDb
+   const orderStatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="Returned" )
   console.log("orderStatus return",orderStatusReturned);
 
@@ -65,7 +67,7 @@ const DashBoard = () => {
   console.log("returnstatusCount",returnedstatusCount);  
   
   // Payment Released
-   const orderStatusPaymentReleased=resellerOrdersFromDb
+   const orderStatusPaymentReleased=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="Payment Released" )
   console.log("orderStatus pament released",orderStatusPaymentReleased);
   let totalReceiveBase=0
@@ -76,7 +78,7 @@ console.log("totalReceiveBase",totalReceiveBase);
 }
 
 //patmnet status =paid,orderstatus :delivered
-const PaymentStausPaid=resellerOrdersFromDb
+const PaymentStausPaid=info
 ?.filter(order => order.userMail === user?.email && order.paymentStatus==="Paid" && order?.orderStatus==="Delivered")
 console.log("PaymentStausPaid",PaymentStausPaid);
 

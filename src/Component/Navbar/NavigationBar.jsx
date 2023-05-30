@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Form, Nav, NavDropdown, Offcanvas } from 'react-bootstrap';
+import { Nav} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,7 +13,6 @@ const NavigationBar = () => {
   const [dbData, setDbData] = useState({});
   const { fetchedData} = useGetData(id, collections, dbData);
   const resellerInfoFromDb=fetchedData?.resellerInfoArr
-  console.log("from navbar",resellerInfoFromDb);
   // const {user,logOut}=useContext(AuthContext)
   const navigate=useNavigate();
   const handleLogOut=()=>{

@@ -1,9 +1,6 @@
 
-
 import { Container, Form } from "react-bootstrap";
-
-
- import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
  import {  Spinner } from "react-bootstrap";
  import Button from "react-bootstrap/Button";
  import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +8,7 @@ import { Container, Form } from "react-bootstrap";
 import Register from "./Register";
 import ResetPasswordMail from "../resetPasswordMail/ResetPasswordMail";
 import ResetPasswordField from "../resetPasswordFIeld/ResetPasswordField";
+import ReactGA from 'react-ga';
 const Login = () => {
   const {user,loading,loginUser,currentUser}=useContext(AuthContext);
   const navigate=useNavigate();
@@ -52,6 +50,7 @@ const Login = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  ReactGA.event({'category':'Test','action':'submit','label':'label'})
   const form = e.target;
   const email = form.email.value;
   const password = form.password.value;
@@ -65,8 +64,8 @@ const handleSubmit = async (e) => {
   console.log('Submit:', requestBody); // Log what you're submitting
 
   try {
-    // const response = await fetch('https://mserver.printbaz.com/login', //add this when upload  in main server 
-    const response = await fetch('http://localhost:5000/login',  //add this when work local server
+    const response = await fetch('https://mserver.printbaz.com/login', //add this when upload  in main server 
+    // const response = await fetch('http://localhost:5000/login',  //add this when work local server
     
     { 
       

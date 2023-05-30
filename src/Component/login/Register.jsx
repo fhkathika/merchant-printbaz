@@ -9,7 +9,7 @@ import { getDownloadURL, getStorage, ref, StorageError, uploadBytes } from 'fire
 import emailjs from '@emailjs/browser';
 import SendRegisterConfirmationEmail from '../confirmationMailRegister/SendRegisterConfirmationEmail';
 import AlredayRegisterAlert from '../../alreadyRegisterAlert/AlredayRegisterAlert';
-
+import ReactGA from 'react-ga';
 const Register = ({closePopup}) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -153,7 +153,9 @@ const handleChange=(e)=>{
   
    //// send data  server side
     const handleSubmit = async(e) => {
+     
       e.preventDefault();
+      ReactGA.event({'category':'Test','action':'submit','label':'label'})
       setIsLoading(true)
       try{
         if (!formData.bkashAccount && !formData.nagadAccount && !formData.rocketAccount &&
@@ -201,8 +203,8 @@ const handleChange=(e)=>{
         data.append('brandLogo', formData.brandLogo);
       
         // Submit the data to the server
-        // fetch('https://mserver.printbaz.com/register', //add this when upload  in main server 
-        fetch('http://localhost:5000/register', //add this when work local server
+        fetch('https://mserver.printbaz.com/register', //add this when upload  in main server 
+        // fetch('http://localhost:5000/register', //add this when work local server
         
         {
           method: 'POST',

@@ -119,7 +119,8 @@ const NewOrder = () => {
     if (name==="file" || name==="image") {
       // const fieldName = name.split('.')[1];
       const newOrderDetailArr = [...formData.orderDetailArr];
-      newOrderDetailArr[index][[event.target.name]] = files[0];
+       // Change from a single file to an array of files
+      newOrderDetailArr[index][[event.target.name]] =Array.from(files);
       setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
       console.log('Updated Order State:', formData);
       console.log('File:', files); // Log the file object
@@ -311,14 +312,15 @@ const handleSubmit = async (e) => {
       const fileAndImageData = {};
 
       if (item.file) {
-        fileAndImageData.file = item.file;
-        formData2.append(`file`, item.file); // Append the file to the FormData object
-  
+        item.file.forEach((file, fileIndex) => {
+          formData2.append(`file${index}_${fileIndex}`, file); // Append each file
+        });
       }
       
       if (item.image) {
-        fileAndImageData.image = item.image;
-        formData2.append(`image`, item.image); // Append the image to the FormData object
+        item.image.forEach((image, imageIndex) => {
+          formData2.append(`image${index}_${imageIndex}`, image); // Append each image
+        });
       }
 
       if (Object.keys(fileAndImageData).length) {

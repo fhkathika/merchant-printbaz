@@ -201,7 +201,10 @@ const handleChange=(e)=>{
         data.append('brandLogo', formData.brandLogo);
       
         // Submit the data to the server
-        fetch('https://mserver.printbaz.com/register', {
+        // fetch('https://mserver.printbaz.com/register', //add this when upload  in main server 
+        fetch('http://localhost:5000/register', //add this when work local server
+        
+        {
           method: 'POST',
           body: data
         })

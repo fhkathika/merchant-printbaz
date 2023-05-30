@@ -65,7 +65,10 @@ const handleSubmit = async (e) => {
   console.log('Submit:', requestBody); // Log what you're submitting
 
   try {
-    const response = await fetch('https://mserver.printbaz.com/login', { 
+    // const response = await fetch('https://mserver.printbaz.com/login', //add this when upload  in main server 
+    const response = await fetch('http://localhost:5000/login',  //add this when work local server
+    
+    { 
       
       method: 'POST',
       headers: {

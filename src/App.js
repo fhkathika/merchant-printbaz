@@ -29,6 +29,7 @@ import RedirectToAppropriateRoute from "./Component/RedirectToAppropriateRoute";
 import ResetPasswordField from "./Component/resetPasswordFIeld/ResetPasswordField";
 import UpdatePasswordField from "./Component/UpdatePasswordField";
 import ReactGA from 'react-ga';
+import Footer from "./Component/footer/Footer";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -196,6 +197,7 @@ function App() {
           }
         />
       </Routes>
+     
     </div>
   );
 }

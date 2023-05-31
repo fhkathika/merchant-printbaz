@@ -10,6 +10,7 @@ import Login from '../login/Login';
 import Register from '../login/Register';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../Navbar/NavigationBar';
+import Footer from '../footer/Footer';
 const TeeShirtCapingCalcForm = () => {
     let id = "teeShirtCampingId";
     let collections = "productValues";
@@ -285,6 +286,7 @@ const {user}=useContext(AuthContext)
        
           
         </Container>
+        <Footer/>
         </>  
     );
 };

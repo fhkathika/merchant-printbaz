@@ -6,6 +6,7 @@ import { Form } from 'react-bootstrap';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { db } from '../../firebase.config';
 import { useGetData } from '../../hooks/useGetData';
+import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
 
  const Profile = () => {
@@ -213,7 +214,7 @@ if (updateData.brandLogo) {
               </div>
 
                ))}
-        
+        <Footer/>
         </div>
       );
 };

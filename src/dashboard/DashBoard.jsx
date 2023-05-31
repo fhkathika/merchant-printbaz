@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Footer from '../Component/footer/Footer';
 import Login from '../Component/login/Login';
 import Register from '../Component/login/Register';
 import NavigationBar from '../Component/Navbar/NavigationBar';
@@ -91,7 +92,7 @@ console.log("statusPaidbase",statusPaidbase);
 }
 let dueAmount=parseInt(totalReceiveBase-statusPaidbase)
       return (
-        <>
+        <div className='payment_container'>
         <NavigationBar/>
        
     
@@ -104,7 +105,7 @@ let dueAmount=parseInt(totalReceiveBase-statusPaidbase)
     {/* CSS styles */}
    
 
-    <div className="container mt-5">
+    <div className="container mt-5 " style={{marginBottom:"50px"}}>
       <h1 className="text-center mb-4 dashboard-title test">Dashboard</h1>
       
       <div className="row ">
@@ -192,13 +193,13 @@ let dueAmount=parseInt(totalReceiveBase-statusPaidbase)
    
     </div>
 
- 
+    <Footer ></Footer>
 
 
     
   
     
-            </>
+            </div>
        
   );
 };

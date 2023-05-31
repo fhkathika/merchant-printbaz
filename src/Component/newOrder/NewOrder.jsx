@@ -10,6 +10,7 @@ import CustomAlert from '../../alertBox/CustomAlert';
 import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderConfirmationEmail';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../footer/Footer';
 
 const NewOrder = () => {
   const [formData, setFormData] = useState({
@@ -433,7 +434,7 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
-            <div className="new-order">
+            <div className="new-order" style={{marginBottom:"50px"}}>
               <div className="row mt-5">
                 <div className="col-12">
                   <h1>New Order</h1>
@@ -923,7 +924,7 @@ onClose={() => setShowAlert(false)}
 
 }
 
- 
+ <Footer/>
 
           </div>
   

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
 
 const PrintSizeDemo = () => {
@@ -66,6 +67,7 @@ const PrintSizeDemo = () => {
 </Container>
      
         </div>
+        <Footer/>
       </>
        
     );

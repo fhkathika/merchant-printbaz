@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Nav} from 'react-bootstrap';
+import { Dropdown, Nav} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -48,7 +48,7 @@ const NavigationBar = () => {
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="my-2 my-lg-0" style={{width:"100%",height:"100%",display:"flex",justifyContent:"space-between" }} >
         <ul className="navbar-nav" style={{zIndex:"111"}}>
-          <li className="nav-item">
+          <li className="nav-item" >
             <Link className="nav-link" to="/dashboard">Dashboard</Link>
           </li>
           <li className="nav-item">
@@ -72,7 +72,7 @@ const NavigationBar = () => {
             <span className="dropdown-icon"><svg height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g id="_16" data-name="16"><path d="m12 16a1 1 0 0 1 -.71-.29l-6-6a1 1 0 0 1 1.42-1.42l5.29 5.3 5.29-5.29a1 1 0 0 1 1.41 1.41l-6 6a1 1 0 0 1 -.7.29z"/></g></svg></span> 
           </button>
           {dropdownOpen && (
-            <ul className="navbar-dropdown-menu "  style={{zIndex:"132"}}>
+            <ul className="navbar-dropdown-menu dropdown-menu-mobile "  style={{zIndex:"132"}}>
               <li className="navbar-dropdown-item">
                 <Link className='navbar-dropdown-item-Link' style={{textDecoration:"none"}} to="/profile">Profile</Link> 
               </li>
@@ -106,54 +106,10 @@ const NavigationBar = () => {
     </Navbar.Collapse>
   </Container>
 </Navbar>
-       
-{/* <nav className="navbar">
-      <div className="navbar-left">
-      <div className="navbar-logo">
-        <img src="/images/Logo-01.png" alt="Logo" />
-      </div>
-      <ul className="navbar-links">
-        <li
-          className={`navbar-link ${activeTab === "Dashboard" ? "active" : ""}`}
-          onClick={() => handleTabClick("Dashboard")}
-        >
-          Dashboard
-        </li>
-        <li
-          className={`navbar-link ${activeTab === "Delivery" ? "active" : ""}`}
-          onClick={() => handleTabClick("Delivery")}
-        >
-          Delivery
-        </li>
-        <li
-          className={`navbar-link ${activeTab === "Invoices" ? "active" : ""}`}
-          onClick={() => handleTabClick("Invoices")}
-        >
-          Invoices
-        </li>
-      </ul>
 
-      </div>
-    
-      <div className="navbar-dropdown">
-        <button className="navbar-dropdown-toggle" onClick={handleDropdownClick}>
-          
-          <span className="profile-icon"><img src='/images/user (2).svg' alt=''/></span> 
-          <span className="profile-text">Profile</span> 
-          <span className="dropdown-icon"><img src='/images/down.svg' alt='down icon'/></span> 
-          
-        </button>
-        {dropdownOpen && (
-          <ul className="navbar-dropdown-menu">
-            <li className="navbar-dropdown-item">Menu Item 1</li>
-            <li className="navbar-dropdown-item">Menu Item 2</li>
-            <li className="navbar-dropdown-item">Menu Item 3</li>
-          </ul>
-        )}
-      </div>
-    </nav> */}
+{/* new navbar */}
 
-       
+
  
   </>
 

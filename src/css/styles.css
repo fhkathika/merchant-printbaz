@@ -1,5 +1,29 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  /* display: flex;
+  flex-direction: column;
+  min-height: 100vh ; */
+}
+
+a[x-apple-data-detectors] {
+  color: inherit !important;
+  text-decoration: inherit !important;
+}
+
+#content {
+  flex-grow: 1;
+}
+.payment_container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh ; 
+}
+
 /* navbar */
-.navbar {
+
+/* .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,6 +31,11 @@
   padding: 0 20px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+.navbar-dropdown {
+  /* position: relative;
+  z-index: 9999;  */
+  /* background-color: #001846; */
 }
 
 .navbar-logo img {
@@ -115,7 +144,29 @@
   background-color: #f4f4f4;
   color: #333;
 }
+@media (max-width: 767px) { 
+  .dropdown-menu-mobile {
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 230px; 
+  }
+  .nav-link{
+    background-color: #001846 !important;
+    color: White !important;
+   
+  }
+  .dropdownMobile{
+    background-color: #001846 !important;
+    color: White !important;
+  }
+  .profile-text{
+    color: White !important;
+    margin-left: -7px !important;
+  }
+}
 
+/* //navbar end */
 .box {
   width: 40%;
   margin: 0 auto;
@@ -212,14 +263,14 @@
   .dropdownMobile{
     z-index: 111;
     background-color: #f8f9fa;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     color: #012652 !important;
   
   }
   .profile-text {
-    color: black !important;
+    /* color: black !important; */
     font-weight: bold;
-    padding: 5px;
+    /* padding: 5px; */
   }
  .navbar-nav{
    width: 100%;
@@ -229,7 +280,7 @@
    display: none !important;
  }
   .dropdown-icon svg {
-  fill: black;
+  fill: rgb(255, 255, 255);
    width: 1rem;
    height: 1rem;
    display: flex;
@@ -243,7 +294,7 @@
 background-color: white !important;
 }
   .dropdownButtonMobile{
-  
+  margin-left: 0 !important;
    
   
   }
@@ -287,15 +338,7 @@ background-color: white !important;
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-}
 
-a[x-apple-data-detectors] {
-  color: inherit !important;
-  text-decoration: inherit !important;
-}
 
 #MessageViewBody a {
   color: inherit;
@@ -317,6 +360,116 @@ p {
 .image_block img+div {
   display: none;
 }
+
+/* footer starts */
+/* footer */
+.footer_div{  
+ 
+  margin-top:auto;
+
+
+
+}
+.footer_container{
+  /* position: fixed; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+ 
+}
+
+.fotter3rd_Layer{
+background-color: #001846;
+padding: 25px 0px;
+width: 100%;
+}
+.footer_Section_Layer{
+  margin-top: 15px;
+  max-width: 1450px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.elementDiv1{
+  padding: 0px 15px;
+}
+.footerIcon{
+  text-align: left;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 15px;
+}
+.footerImg_container{
+  padding: 0 0 10px;
+ 
+}
+.footerImg_container img{
+ width: 50%;
+ 
+}
+.footer1stElement{
+  display: block;
+  align-items: center;
+  width: 100%;
+}
+.firstElementAlign{
+display: flex;
+align-items: center;
+
+}
+.firstElementAlign_text{
+  margin-left: 12px;
+
+}
+.w35px{
+  width: 35px;
+}
+.socialMedia_icon_size{
+  width: 30px;
+}
+.margin_bottom12{
+  margin-bottom: 12px;
+}
+.copyRight_Style{
+  margin: auto;
+  color: #f5f5f5;
+  text-align: center;
+}
+.col_30{
+  width: 30%;
+}
+.col_25{
+  width: 25%;
+}
+.col_15{
+  width: 15%;
+}
+.m_left25P{
+  margin-left: 25%;
+  }
+  .m_L15P{
+    margin-left: 15%;
+  }
+@media only screen and (max-width: 600px) {
+  .block{
+    display:block
+  }
+  .col_100{
+    width: 100%;
+  }
+  .margin_left20{
+    margin-left: 20px;
+  }
+  .copyRight_Style_For_mobile{
+    font-size: 12px;
+  }
+  .m_0{
+    margin: 0px;
+  }
+}
+/* footer end  */
 
 @media (max-width:655px) {
 
@@ -492,7 +645,7 @@ margin-top: 25px ;
 cursor: pointer;
 }
 @media screen and (max-width: 768px) {
-  .navbar-nav {
+  /* .navbar-nav {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
   .navbar-nav .nav-link {
@@ -501,7 +654,7 @@ cursor: pointer;
     background-color: #f8f9fa;
     padding-left: 10px !important;
    
-  }
+  } */
 }
 @media only screen and (max-width: 991.98px) {
   .my-2.my-lg-0 {
@@ -564,4 +717,7 @@ align-items: center;
   height: 100%;
   width: 100%;
   position: absolute;
+}
+.brand_color{
+  background-color: #001846 !important;
 }

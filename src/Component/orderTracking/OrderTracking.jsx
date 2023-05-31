@@ -2,6 +2,7 @@
  import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
+import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
  const OrderTracking = () => {
     let id = "resellerOrdersId";
@@ -139,6 +140,7 @@ console.log("viewOrder",viewOrder?.orderStatus);
               </div>
             </div>
           </div>
+          <Footer/>
         </div>
         );
  };

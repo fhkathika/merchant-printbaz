@@ -277,6 +277,10 @@ background-color: white !important;
   display: flex;
   justify-content: space-between;
 }
+.flex_justify_around{
+  display: flex;
+  justify-content: space-around;
+}
 
 /* terms Condition */
 * {
@@ -547,3 +551,17 @@ align-items: center;
 }
 
 
+.video-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+}
+
+.video-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}

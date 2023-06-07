@@ -1,24 +1,38 @@
 
  import { collection, doc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { db } from '../../firebase.config';
 import { useGetData } from '../../hooks/useGetData';
+import useGetMongoData from '../../hooks/useGetMongoData';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
 
  const Profile = () => {
        //  const [quantity, setQuantity] = useState(1);
   const {user}=useContext(AuthContext);
+ const [loginUser,setLoginUser]=useState([])
+
   let id = "resellerId";
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
   const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-  const resellerInfoFromDb=fetchedData?.resellerInfoArr
-  console.log("resellerInfoFromDb",resellerInfoFromDb);
+  // const resellerInfoFromDb=fetchedData?.resellerInfoArr
+  // console.log("resellerInfoFromDb",resellerInfoFromDb);
   const [updateData,setUpdateData]=useState([])
+let loggedUser= loginUser?.filter(logUser => logUser.email === user?.email)
+console.log("loggedUser",loggedUser);
+  useEffect(()=>{
+    const getOrders = async () => {
+     await fetch('https://mserver.printbaz.com/alluser') //for main site
+    //  await fetch('http://localhost:5000/alluser') //for testing site
+    .then(res=>res.json())
+    .then(data => setLoginUser(data))
+    }
+    getOrders()
+},[loginUser])
   const handleFileChange = (e) => {
     const { name, value } = e.target;
     if (e.target.type === "file") {
@@ -103,8 +117,7 @@ if (updateData.brandLogo) {
          
           <NavigationBar/>
           {
-               resellerInfoFromDb?.map(resellerInfo=> 
-                user?.email === resellerInfo.email &&( 
+               loggedUser?.map(resellerInfo=> 
                 <div className="profile-info">
                 <div className="row">
                   <div className="col-lg-12">
@@ -161,7 +174,7 @@ if (updateData.brandLogo) {
             id="image"
             name="brandLogo"
             className={``}
-            src={resellerInfo?.brandLogo}
+            src={resellerInfo?.brandLogoURL}
             alt="brandLogo"
         />
     </label>
@@ -213,7 +226,7 @@ if (updateData.brandLogo) {
                 </div>
               </div>
 
-               ))}
+              )}
         <Footer/>
         </div>
       );

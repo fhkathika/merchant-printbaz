@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactGA from "react-ga4";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 //Initialize GA4
+
 ReactGA.initialize("G-LJBBSL41NN");
 root.render(
   <React.StrictMode>

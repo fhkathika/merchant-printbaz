@@ -30,7 +30,6 @@ import ResetPasswordField from "./Component/resetPasswordFIeld/ResetPasswordFiel
 import UpdatePasswordField from "./Component/UpdatePasswordField";
 import ReactGA from 'react-ga';
 import Footer from "./Component/footer/Footer";
-import AdsComponent from "./Component/adComponet/AdsComponent";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {

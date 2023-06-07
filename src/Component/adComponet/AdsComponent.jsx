@@ -19,12 +19,13 @@ console.log("dataAdSlot",dataAdSlot);
     return (
        <>
         {/* Ads01  */}
-<ins class="adsbygoogle"
-    style={{display:"block"}}
-    data-ad-client="ca-pub-4692348192702438"
-    data-ad-slot={dataAdSlot}
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
+        <ins class="adsbygoogle"
+     style={{display:"block"}}
+     data-ad-client="ca-pub-4692348192702438"
+     data-ad-slot={dataAdSlot}
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  
        </>
     );
 };

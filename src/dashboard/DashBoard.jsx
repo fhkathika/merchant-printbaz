@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import AdsComponent from '../Component/adComponet/AdsComponent';
 import Footer from '../Component/footer/Footer';
 import Login from '../Component/login/Login';
 import Register from '../Component/login/Register';
@@ -192,7 +193,7 @@ let dueAmount=parseInt(totalReceiveBase-statusPaidbase)
 
    
     </div>
-
+    <AdsComponent dataAdSlot='4296894420' />
     <Footer ></Footer>
 
 

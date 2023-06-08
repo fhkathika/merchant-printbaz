@@ -58,7 +58,7 @@ const DashBoard = () => {
   } 
   // Returned
    const orderStatusReturned=info
-  ?.filter(order => order.userMail === user?.email && order.orderStatus==="Returned" )
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
   console.log("orderStatus return",orderStatusReturned);
 
   let returnedstatusCount=0
@@ -70,7 +70,7 @@ const DashBoard = () => {
   
   // Payment Released
    const orderStatusPaymentReleased=info
-  ?.filter(order => order.userMail === user?.email && order.orderStatus==="Payment Released" )
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="payment-released" )
   console.log("orderStatus pament released",orderStatusPaymentReleased);
   let totalReceiveBase=0
 for(let i=0;i<orderStatusPaymentReleased?.length;i++){
@@ -81,7 +81,7 @@ console.log("totalReceiveBase",totalReceiveBase);
 
 //patmnet status =paid,orderstatus :delivered
 const PaymentStausPaid=info
-?.filter(order => order.userMail === user?.email && order.paymentStatus==="Paid" && order?.orderStatus==="Delivered")
+?.filter(order => order.userMail === user?.email && order.paymentStatus==="paid" && order?.orderStatus==="delivered")
 console.log("PaymentStausPaid",PaymentStausPaid);
 
 let statusPaidbase=0;
@@ -90,7 +90,8 @@ for(let i=0;i<PaymentStausPaid?.length;i++){
   statusPaidbase +=totalpaid;
 console.log("statusPaidbase",statusPaidbase);
 }
-let dueAmount=parseInt(totalReceiveBase-statusPaidbase)
+let dueAmount=parseInt(statusPaidbase-totalReceiveBase)
+console.log("dueAmount",dueAmount);
       return (
         <div className='payment_container'>
  
@@ -168,12 +169,12 @@ let dueAmount=parseInt(totalReceiveBase-statusPaidbase)
               </div>
                <div className='flex'>
               <p>Total Bill:  </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{statusPaidbase} </span>
+              <span style={{color:"orange",fontSize:'16px'}}>{parseInt(statusPaidbase)} </span>
              
               </div>
                <div className='flex'>
               <p>Due Amount: </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{dueAmount}</span>
+              <span style={{color:"orange",fontSize:'16px'}}> {dueAmount>=0 && dueAmount }</span>
              
               </div>
 

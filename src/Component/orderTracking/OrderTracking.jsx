@@ -26,7 +26,7 @@ console.log("viewOrder",viewOrder?.orderStatus);
             <div className="row">
               <div className="col-12">
                 <div className="order-id bg-white p-3 my-3 shadow-sm">
-                  <h3 className="d-inline-block font-weight-bold">ORDER {viewOrder?._id} &nbsp;</h3>
+                  <h3 className="d-inline-block font-weight-bold">ORDER ID: {viewOrder?._id} &nbsp;</h3>
                   <p className="d-inline-block py-2 px-3 bg-success text-white font-weight-bold rounded">{viewOrder?.orderStatus}</p>
                 </div>
               </div>
@@ -85,7 +85,7 @@ console.log("viewOrder",viewOrder?.orderStatus);
                     <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868453112680478/ic-confirmed-red.f41e73a9.png" alt="" />
                      {
-                      viewOrder?.orderStatus==="Approved" ?
+                     viewOrder?.orderStatus==="returned"|| viewOrder?.orderStatus==="Approved" || viewOrder?.orderStatus==="in-production" ||  viewOrder?.orderStatus==="out for delivery" ||  viewOrder?.orderStatus==="payment-released"||   viewOrder?.orderStatus==="delivered"    ?
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
                       :
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} />
@@ -97,7 +97,7 @@ console.log("viewOrder",viewOrder?.orderStatus);
                     <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
                       {
-                       viewOrder?.orderStatus==="Product ready"  ?
+                                         viewOrder?.orderStatus==="returned" || viewOrder?.orderStatus==="in-production" ||  viewOrder?.orderStatus==="out for delivery" ||  viewOrder?.orderStatus==="payment-released"||   viewOrder?.orderStatus==="delivered"   ?
                      
                        
                        <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
@@ -105,12 +105,12 @@ console.log("viewOrder",viewOrder?.orderStatus);
                        <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
                       }
                      
-                      <p>Product Ready</p>
+                      <p>In Production</p>
                     </div>  
                       <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
                       {
-                       viewOrder?.orderStatus==="Out for delivery"  ?
+                       viewOrder?.orderStatus==="returned"|| viewOrder?.orderStatus==="out for delivery" || viewOrder?.orderStatus==="payment-released"||  viewOrder?.orderStatus==="delivered"   ?
                      
                        
                        <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
@@ -123,7 +123,7 @@ console.log("viewOrder",viewOrder?.orderStatus);
                      <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
                       {
-                       viewOrder?.orderStatus==="Delivered"  ?
+                   viewOrder?.orderStatus==="returned"||   viewOrder?.orderStatus==="payment-released"|| viewOrder?.orderStatus==="delivered"  ?
                      
                        
                        <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />

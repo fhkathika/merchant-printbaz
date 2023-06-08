@@ -182,7 +182,7 @@ const MyOrders = () => {
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-               <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt.substr(0, 10)}  </p>
+               <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.statusDate}   </p>
              </div>
              <div className="col-md-1 col-sm-12">
                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
@@ -226,13 +226,13 @@ const MyOrders = () => {
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt.substr(0, 10)}  </p>
+              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.statusDate}  </p>
             </div>
             <div className="col-md-1 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
             </div>
             <div className="col-md-2 col-sm-12">
-              <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+           <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
             </div>
             <div className="col-md-1 col-sm-12">
             <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
@@ -270,7 +270,7 @@ const MyOrders = () => {
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on   {orderInfo?.createdAt.substr(0, 10)}  </p>
+              <p style={{lineHeight: '15px'}}>Updated on   {orderInfo?.statusDate}   </p>
             </div>
             <div className="col-md-1 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
@@ -314,7 +314,7 @@ const MyOrders = () => {
             </div>
             <div className="col-md-2 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.createdAt.substr(0, 10)}  </p>
+              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.statusDate}   </p>
             </div>
             <div className="col-md-1 col-sm-12">
               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>

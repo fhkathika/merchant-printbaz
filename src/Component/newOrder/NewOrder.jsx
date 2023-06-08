@@ -51,6 +51,9 @@ const NewOrder = () => {
   const {user}=useContext(AuthContext);
   const userEmail=user?.email
   const [isLoading, setIsLoading] = useState(false);
+  const [recvAmount,setRecvAmount]=useState()
+  const [formValid, setFormValid] = useState(false);
+
 
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
@@ -317,7 +320,17 @@ const removeField = (index) => {
     costHandlingfee = recvMoneyWithouthandling * 0.02;
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
     console.log("recvMoney",recvMoney)
-  
+    const validateForm = () => {
+      if (recvMoney < 0) {
+        setFormValid(true);
+        setRecvAmount("Received money cannot be less than 0.");
+        return true;
+      } else {
+        setFormValid(false);
+        return false;
+      }
+    };
+    
     
    
 
@@ -325,6 +338,12 @@ const removeField = (index) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   setIsLoading(true)
+    // Validate the form here
+    if (validateForm()) {
+      setIsLoading(false) // Set loading status to false if form is invalid
+      return; // Exit the function if form is invalid
+    }
+  
   try {
     const formData2 = new FormData();
     const orderDetailArr = formData.orderDetailArr || [];
@@ -819,9 +838,17 @@ const handleSubmit = async (e) => {
                     </div>
       
                     {formData?.orderDetailArr[0]?.quantity && formData?.orderDetailArr[0]?.printSize && formData?.collectAmount && (
-                      <div className="costOrder_Style">
+                      <div >
+                        <div className="costOrder_Style">
                         <label htmlFor="printbazCost">You will receive</label>
                         <h3> {parseInt(recvMoney)}</h3>
+                        </div>
+                       
+                      
+                        { formValid===true &&
+    <p style={{color:"red",textAlign:"right"}}>{recvAmount}</p>
+  }
+                       
                       </div>
                     )}
                   </div>

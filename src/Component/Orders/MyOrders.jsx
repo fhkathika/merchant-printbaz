@@ -36,6 +36,54 @@ const MyOrders = () => {
     const handleTabClick = (tabId) => {
       setActiveTab(tabId);
     }
+
+    const getViewClientColor = (status) => {
+      if (status === "Pending") {
+        return "Orange";
+      }
+      if (status === "on-hold") {
+        return "Orange";
+      }
+      if (status === "on hold artwork issue") {
+        return "Orange";
+      }  
+          if (status === "on hold billing issue") {
+        return "Orange";
+      } 
+      if (status === "on hold out of stock") {
+        return "Orange";
+      }  
+      if (status === "Approved") {
+        return "green";
+      } 
+    
+        if (status === "in-production") {
+        return "green";
+      }
+        if (status === "out for delivery") {
+        return "green";
+      }  
+      if (status === "delivered") {
+        return "green";
+      } 
+       if (status === "payment-released") {
+        return "green";
+      } 
+      if (status === "returned") {
+        return "red";
+      }    
+        if (status === "cancel") {
+        return "red";
+      }   
+       if (status === "paid") {
+        return "#1fea70";
+      }  
+      if (status === "Unpaid") {
+        return "#360eea";
+      }
+      // you can add more conditions here or just return a default color
+      // return "defaultColor";
+    };
     return (
         <div className='payment_container'>
           <meta charSet="utf-8" />
@@ -181,7 +229,9 @@ const MyOrders = () => {
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.statusDate}   </p>
              </div>
              <div className="col-md-1 col-sm-12">

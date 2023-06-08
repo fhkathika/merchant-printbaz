@@ -13,6 +13,53 @@ import NavigationBar from '../Navbar/NavigationBar';
     const location = useLocation();
 const viewOrder = location.state ? location?.state?.orderInfo : null;
 console.log("viewOrder",viewOrder?.orderStatus);
+const getViewClientColor = (status) => {
+  if (status === "Pending") {
+    return "Orange";
+  }
+  if (status === "on-hold") {
+    return "Orange";
+  }
+  if (status === "on hold artwork issue") {
+    return "Orange";
+  }  
+      if (status === "on hold billing issue") {
+    return "Orange";
+  } 
+  if (status === "on hold out of stock") {
+    return "Orange";
+  }  
+  if (status === "Approved") {
+    return "green";
+  } 
+
+    if (status === "in-production") {
+    return "green";
+  }
+    if (status === "out for delivery") {
+    return "green";
+  }  
+  if (status === "delivered") {
+    return "green";
+  } 
+   if (status === "payment-released") {
+    return "green";
+  } 
+  if (status === "returned") {
+    return "red";
+  }    
+    if (status === "cancel") {
+    return "red";
+  }   
+   if (status === "paid") {
+    return "#1fea70";
+  }  
+  if (status === "Unpaid") {
+    return "#360eea";
+  }
+  // you can add more conditions here or just return a default color
+  // return "defaultColor";
+};
      return (
         <div>
           <meta charSet="UTF-8" />
@@ -27,7 +74,9 @@ console.log("viewOrder",viewOrder?.orderStatus);
               <div className="col-12">
                 <div className="order-id bg-white p-3 my-3 shadow-sm">
                   <h3 className="d-inline-block font-weight-bold">ORDER ID: {viewOrder?._id} &nbsp;</h3>
-                  <p className="d-inline-block py-2 px-3 bg-success text-white font-weight-bold rounded">{viewOrder?.orderStatus}</p>
+                  <p className="d-inline-block py-2 px-3  text-white font-weight-bold rounded" style={{backgroundColor: getViewClientColor(
+                                viewOrder?.orderStatus
+                                )}}>{viewOrder?.orderStatus}</p>
                 </div>
               </div>
             </div>

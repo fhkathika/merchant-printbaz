@@ -317,7 +317,8 @@ const removeField = (index) => {
     recvMoneyWithouthandling = Number(
       Math.ceil(formData.collectAmount - (printbazcost + deliveryFee))
     );
-    costHandlingfee = recvMoneyWithouthandling * 0.02;
+    // costHandlingfee = recvMoneyWithouthandling * 0.02;
+    costHandlingfee = Number(formData.collectAmount * 0.02);
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
     console.log("recvMoney",recvMoney)
     const validateForm = () => {

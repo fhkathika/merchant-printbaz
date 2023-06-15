@@ -778,7 +778,7 @@ const handleSubmit = async (e) => {
          <ProgressBar now={imageprogress} label={`${imageprogress}%`} />
           )}
 
-<Form.Group controlId="formBrandLogo" className="mb-3">
+{/* <Form.Group controlId="formBrandLogo" className="mb-3">
   <Form.Label>Upload Your Brand Logo (optional)</Form.Label>
   <Form.Control
     type="file"
@@ -793,7 +793,7 @@ const handleSubmit = async (e) => {
       setFormData({ ...formData, orderDetailArr: orderDetailArrCopy });
     }}
   />
-</Form.Group>
+</Form.Group> */}
 
          
                      </>

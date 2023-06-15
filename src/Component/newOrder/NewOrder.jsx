@@ -30,6 +30,7 @@ const NewOrder = () => {
         printSizeBack:'',
         file: null,
         image: null,
+        brandLogo: null,
       },
     ],
   });
@@ -43,6 +44,7 @@ const NewOrder = () => {
    const [loading, setLoading] = useState(false);
    const [dbData, setDbData] = useState({});
    const [printSide, setPrintSide] = useState('');
+   const [addbrandLogo, setAddBrandLogo] = useState('');
    const { fetchedData, searchProduct, setSearchProduct } = useGetData(
      idPrice,
      collectionsPrice,
@@ -143,7 +145,7 @@ const removeField = (index) => {
     orderDetailArr: formData.orderDetailArr.filter((_, i) => i !== index),
   });
 };
-
+let updatedPrintbazcost=0
   let printbazcost=0;
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
@@ -332,7 +334,7 @@ const removeField = (index) => {
       }
     };
     
-    
+   
    
 
 // foe mongodb new
@@ -352,7 +354,7 @@ const handleSubmit = async (e) => {
 
     orderDetailArr?.forEach((item, index) => {
       const fileAndImageData = {};
-
+      console.log("item.brandLogo",item.brandLogo);
       if (item.file) {
         item.file.forEach((file, fileIndex) => {
           formData2.append(`file${index}_${fileIndex}`, file); // Append each file
@@ -364,6 +366,13 @@ const handleSubmit = async (e) => {
           formData2.append(`image${index}_${imageIndex}`, image); // Append each image
         });
       }
+        // Append brandLogo
+
+  if (item.brandLogo) {
+    formData2.append(`brandLogo${index}`, item.brandLogo);
+}
+
+
 
       if (Object.keys(fileAndImageData).length) {
         filesAndImagesArr.push(fileAndImageData);
@@ -768,6 +777,24 @@ const handleSubmit = async (e) => {
                     {imageprogress === 0 ? null : (
          <ProgressBar now={imageprogress} label={`${imageprogress}%`} />
           )}
+
+<Form.Group controlId="formBrandLogo" className="mb-3">
+  <Form.Label>Upload Your Brand Logo (optional)</Form.Label>
+  <Form.Control
+    type="file"
+    name="brandLogo"
+    accept="image/jpeg, image/png"
+    onChange={(e) => {
+      const orderDetailArrCopy = [...formData.orderDetailArr];
+      orderDetailArrCopy[0].brandLogo = e.target.files[0];  // Change 0 with the index of the order detail item being updated
+      const hasBrandLogo = e.target.files.length > 0;
+      setAddBrandLogo(hasBrandLogo)
+   
+      setFormData({ ...formData, orderDetailArr: orderDetailArrCopy });
+    }}
+  />
+</Form.Group>
+
          
                      </>
                      ))}
@@ -780,7 +807,7 @@ const handleSubmit = async (e) => {
       
                       <h3>
                         {" "}
-                        <span style={{ fontSize: "" }}>&#2547;</span> {printbazcost}
+                        <span style={{ fontSize: "" }}>&#2547;</span> {addbrandLogo ?parseInt(printbazcost+5):printbazcost}
                       </h3>
                     </div>
       

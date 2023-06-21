@@ -1,18 +1,54 @@
 
- import React, { useState } from 'react'
+ import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Accordion } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
+import SupportTicketPopUp from '../supportTicketPopUp/SupportTicketPopUp';
+import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSupportTickets';
  const OrderTracking = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
     const [dbData, setDbData] = useState({});
+    const [showTicketPopUp, setShowTicketPopUp] = useState(false);
+    const [popupId, setPopupId] = useState('');
+    const [usersTickets, setUsersTickets] = useState([]);
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-  
+    const [shownPopupTicketId, setShownPopupTicketId] = useState(null);
+    const [usersStoredTickets, setUsersStoredTickets] = useState([]);
     const location = useLocation();
 const viewOrder = location.state ? location?.state?.orderInfo : null;
-console.log("viewOrder",viewOrder?.orderStatus);
+console.log("viewOrder",viewOrder);
+
+const closePopup = () => {setShowTicketPopUp(false);};
+
+useEffect(() => {
+  // Fetch the chat log from the server when the component mounts
+  fetchChatLog();
+  
+}, []);
+const fetchChatLog = async () => {
+  try {
+    // const response = await axios.get(`http://localhost:5000/getOrderIdmessages/${viewOrder?._id}`);
+    const response = await axios.get(`https://mserver.printbaz.com/getOrderIdmessages/${viewOrder?._id}`);
+    setUsersTickets(response.data.messages);
+    console.log("response.data.messages",response.data.messages);
+  } catch (err) {
+    console.error(err);
+  }
+};
+console.log("usersTickets",usersTickets);
+const generateId = () => {
+  // Generate an ID using your logic (e.g., library or custom code)
+  const id = Math.random().toString(36).substr(2, 9);
+  return id;
+};
+const handleShowTicketPopUp=()=>{
+  setShowTicketPopUp(true)
+  setPopupId(generateId); // Set the generated ID
+} 
 const getViewClientColor = (status) => {
   if (status === "Pending") {
     return "Orange";
@@ -77,6 +113,70 @@ const getViewClientColor = (status) => {
                   <p className="d-inline-block py-2 px-3  text-white font-weight-bold rounded" style={{backgroundColor: getViewClientColor(
                                 viewOrder?.orderStatus
                                 )}}>{viewOrder?.orderStatus}</p>
+                </div>
+              </div>
+            </div> 
+              <div className="row">
+              <div className="col-12">
+                <div className="order-id bg-white p-3 my-3 shadow-sm">
+                <button className='status-btn' onClick={handleShowTicketPopUp}>Create A Support Ticket</button>
+                {
+         showTicketPopUp &&  (
+            <SupportTicketPopUp
+            userOrderId={viewOrder?._id}
+            onClose={closePopup}
+            ticketId={popupId}
+            fetchTickets={fetchChatLog}
+            userEmail={viewOrder?.userMail}
+            userName={viewOrder?.username}
+            
+            />
+            )
+     }
+
+<hr />
+     <h4 style={{marginTop:"20px"}}>All Support Tickets</h4>
+     {
+   usersTickets?.map(tickets =>
+  
+       <Accordion defaultActiveKey="0">
+     
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>
+         Ticket Id:  <span style={{color:"blue",fontWeight:"bold",marginLeft:"10px"}}>{ tickets?.ticketId}</span> 
+         
+      {
+         tickets?.ticketStatus==="open" &&
+         <span style={{marginLeft:"10px",color:"purple",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      }  
+       {
+         tickets?.ticketStatus==="replied" &&
+         <span style={{marginLeft:"10px",color:"green",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      } 
+       {
+         tickets?.ticketStatus==="pending" &&
+         <span style={{marginLeft:"10px",color:"orange",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      }  {
+         tickets?.ticketStatus==="closed" &&
+         <span style={{marginLeft:"10px",color:"red",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      }
+         </Accordion.Header>
+        <Accordion.Body>
+        <UsersStoredSupportTickets
+                   userOrderId={viewOrder?._id}
+                   onClose={() => setShownPopupTicketId(null)}
+                   ticketId={tickets?.ticketId}
+                   ticketIssue={tickets?.ticketIssue}
+                   userEmail={viewOrder?.userMail}
+                   userName={viewOrder?.name}
+               />
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+   )}
+    
+      
+
                 </div>
               </div>
             </div>

@@ -329,7 +329,7 @@ const ViewTicket = () => {
           <div className="row">
             <div className="col-12">
               {
-                !openTextBox && 
+              ( openTextBox!==true)  && 
                 <div className="ticket-replay">
                 <img src="https://media.discordapp.net/attachments/1069579536842379305/1107191553501450260/Logo-01.jpg?width=616&height=616" alt="" />
                 <button className="ttm-button" onClick={()=>setOpenTextBox(true)}><i className="fa fa-reply" aria-hidden="true" style={{marginRight: '5px'}} />Reply</button>

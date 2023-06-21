@@ -1,7 +1,7 @@
 
  import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Accordion } from 'react-bootstrap';
+import { Accordion, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
 import Footer from '../footer/Footer';
@@ -119,7 +119,7 @@ const getViewClientColor = (status) => {
               <div className="row">
               <div className="col-12">
                 <div className="order-id bg-white p-3 my-3 shadow-sm">
-                <button className='status-btn' onClick={handleShowTicketPopUp}>Create A Support Ticket</button>
+                <Button  className='btn-success' onClick={handleShowTicketPopUp}>Create A Support Ticket</Button>
                 {
          showTicketPopUp &&  (
             <SupportTicketPopUp

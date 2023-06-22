@@ -157,7 +157,7 @@ const getViewClientColor = (status) => {
          tickets?.ticketStatus==="pending" &&
          <span style={{marginLeft:"10px",color:"orange",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
       }  {
-         tickets?.ticketStatus==="closed" &&
+         tickets?.ticketStatus==="close" &&
          <span style={{marginLeft:"10px",color:"red",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
       }
          </Accordion.Header>

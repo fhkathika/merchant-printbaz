@@ -32,6 +32,7 @@ import ReactGA from 'react-ga';
 import Footer from "./Component/footer/Footer";
 import Ticket from "./Component/ticket/Ticket";
 import ViewTicket from "./Component/viewTicket/ViewTicket";
+import ScreenShot from "./Component/screenShot/ScreenShot";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -154,6 +155,14 @@ function App() {
           element={
             <PrivateRoute>
               <Profile />
+            </PrivateRoute>
+          }
+        /> 
+           <Route
+          path="/screenshot"
+          element={
+            <PrivateRoute>
+              <ScreenShot />
             </PrivateRoute>
           }
         />  

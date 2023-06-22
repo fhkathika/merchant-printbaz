@@ -76,7 +76,7 @@ const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, o
   
   let filterByTicketId=usersStoredTickets?.find(ticket=>ticket.ticketId===ticketId)
 console.log("usersStoredTickets",usersStoredTickets);
-
+const lastTicketStatus = filterByTicketId?.ticketStatus
 const handleNewMessageChange = (e) => {
       console.log(e.target.value);
       setNewMsg(e.target.value);
@@ -308,13 +308,19 @@ function timeSince(date) {
           <div className="row">
             <div className="col-12">
               {
-                !openTextBox && 
+                (!openTextBox && lastTicketStatus!=="close") && 
                 <div className="ticket-replay">
               
                 <button className="ttm-button" onClick={()=>setOpenTextBox(true)}><i className="fa fa-reply" aria-hidden="true" style={{marginRight: '5px'}} />Reply</button>
                 <button className="ttm-button"><i className="fa fa-sticky-note" aria-hidden="true" style={{marginRight: '5px'}} />Add Note</button>
                 <button className="ttm-button"><i className="fa fa-paper-plane" aria-hidden="true" style={{marginRight: '5px'}} />Send Copy</button>
               </div>
+              }
+                {
+                lastTicketStatus==="close" &&
+                <div className="ticket-replay">
+                  <h2 style={{textAlign:"center",color:"red"}}>Ticket Closed!</h2>
+                </div>
               }
             
             </div>

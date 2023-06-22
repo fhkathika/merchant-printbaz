@@ -26,6 +26,8 @@ const Ticket = () => {
   };
   console.log("fetchAllTicket",fetchAllTicket);
 
+
+
   function timeSince(date) {
 
     var seconds = Math.floor((new Date() - date) / 1000);
@@ -72,7 +74,7 @@ const Ticket = () => {
       <div className="row">
         <div className="col-12">
           <div className="ticket-header">
-            <h1>All Tickets</h1>
+            <h1>All Tickets </h1>
           </div>
          
         </div>
@@ -93,13 +95,16 @@ const Ticket = () => {
               const fileId = allTicket?.brandLogoURL?.split('/d/')[1]?.split('/view')[0];
               const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
               return(
-                <Link to={`/viewTicket/${allTicket?._id}`} state={{allTicket}} key={index}>
+               
+ 
+                                
+                <Link to={`/viewTicket/${allTicket?._id}`} state={{allTicket}}   key={index}>
 
-<div className="ticket-display">
+<div className="ticket-display" >
                 <div className="row">
                   <div className="col-8">
                     <div className="td-box1">
-                      <div className="box1-left">
+                      <div className="box1-left"> 
                         {/* <input className="check-box" type="checkbox" /> */}
                        
                         <img src={user?.brandLogoURL} alt="" />
@@ -114,8 +119,11 @@ const Ticket = () => {
                 {allTicket?.ticketIssue==="cancellation" &&"Cancellation"}
                 {allTicket?.ticketIssue==="general query" &&"General Query"}
                </h6>  
-               
-                        <h3>{user?.name}</h3>
+              
+               <h3 className='' >{user?.name} </h3>
+             
+              
+                        
                         <h4>Order ID: {allTicket?.orderId}</h4>
                         <h5>Ticket ID: {allTicket?.ticketId}</h5>
                        
@@ -128,7 +136,16 @@ const Ticket = () => {
                       </div>
                     </div>
                   </div>
-                
+                <div className='col-4 '>
+                {
+                 allTicket?.unread==="true" &&
+
+                   <span  className='notification-badge-individual'>New Message</span> 
+              
+                 
+               }
+             
+                </div>
                 </div>
               </div>
                 </Link>

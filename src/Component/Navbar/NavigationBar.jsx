@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dropdown, Nav} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -11,9 +12,35 @@ const NavigationBar = () => {
   let id = "resellerId";
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
+  const [fetchAllTicket, setFetchAllTicket] = useState([]);
   const { fetchedData} = useGetData(id, collections, dbData);
   const resellerInfoFromDb=fetchedData?.resellerInfoArr
   // const {user,logOut}=useContext(AuthContext)
+  console.log("user",user);
+  useEffect(() => {
+    // Fetch the chat log from the server when the component mounts
+
+    fetchOrderIddata();
+      // Fetch the chat log every 10 seconds
+      const intervalId = setInterval(() => {
+        fetchOrderIddata();
+    
+      }, 10000);
+    
+      // Clean up the interval on unmount
+      return () => clearInterval(intervalId);
+  }, []);
+  const fetchOrderIddata = async () => {
+    try {
+        // const response = await axios.get(`http://localhost:5000/myTicket/${user?.email}`);
+      const response = await axios.get(`https://mserver.printbaz.com/myTicket/${user?.email}`);
+      setFetchAllTicket(response?.data);
+   
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  console.log("fetchAllTicket",fetchAllTicket);
   const navigate=useNavigate();
   const handleLogOut=()=>{
     logoutUser();
@@ -30,7 +57,7 @@ const NavigationBar = () => {
   const handleDropdownClick = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
+let msgCount=0;
     return (<>
      <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -59,9 +86,25 @@ const NavigationBar = () => {
           </li> */}
           <li className="nav-item">
             <Link className="nav-link" to="/newOrder">New Order</Link>
-          </li> 
+          </li>  
+           {/* <li className="nav-item">
+            <Link className="nav-link" to="/screenshot">Screenshots</Link>
+          </li>  */}
             <li className="nav-item">
             <Link className="nav-link" to="/ticket">Ticket</Link>
+         {
+   fetchAllTicket?.forEach(readMsg => {
+    if(readMsg?.unread === "true"){
+      msgCount++
+   }
+
+  })
+   }
+   {
+     msgCount>0 &&
+     <span className='notification-badge' >{msgCount}</span>
+   }
+        
           </li> 
        
         </ul>

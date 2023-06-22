@@ -752,7 +752,7 @@ const handleSubmit = async (e) => {
                        
                         onChange={(e) => handleFileChange(e, index)} 
                         required
-                        accept=".ai,.eps"
+                        accept=".ai,.eps,.psd,.pdf,.svg,.png"
                         multiple
                       />
                       <span style={{color:"gray"}}>upload .ai or eps file</span>

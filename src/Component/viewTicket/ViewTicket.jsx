@@ -25,7 +25,30 @@ const ViewTicket = () => {
       // const BlotFormatter = require('quill-blot-formatter');
       Quill.register('modules/blotFormatter', BlotFormatter);
     }
-  
+
+
+
+useEffect(() => {
+  // mark as read message 
+  const markAsRead = async (messageId) => {
+    console.log("click mark as read function");
+    try {
+      console.log("click mark as read function from try");
+        const response = await axios.post('https://mserver.printbaz.com/markAsRead', {
+        // const response = await axios.post('http://localhost:5000/markAsRead', {
+            messageId: messageId
+        });
+        if (response?.data?.success) {
+            console.log(' mark message as read');
+        }
+    } catch (err) {
+      console.log("click mark as read function from catch");
+        console.error(err);
+    }
+  };
+  markAsRead(viewTicketDetail?._id)
+}, [viewTicketDetail?._id]);
+
     useEffect(() => {
       if (quill) {
         quill.on('text-change', (delta, oldContents) => {
@@ -56,7 +79,11 @@ const ViewTicket = () => {
         });
       }
     }, [quill, Quill]);
-   
+    let filterByTicketId=usersStoredTickets?.find(ticket=>ticket.ticketId===viewTicketDetail?.ticketId)
+    const lastTicketStatus = filterByTicketId?.ticketStatus
+
+
+    console.log("lastTicketStatus",lastTicketStatus);
     useEffect(() => {
       // Fetch the chat log from the server when the component mounts
       fetchOrderIddata();
@@ -85,9 +112,11 @@ const ViewTicket = () => {
           console.error(err);
         }
       };
-      let filterByTicketId=usersStoredTickets?.find(ticket=>ticket.ticketId===viewTicketDetail?.ticketId)
-   
-   console.log("filterByTicketId",filterByTicketId);  
+    
+
+  //  console.log("filterByTicketId",filterByTicketId);  
+
+
     ///input text
       const handleNewMessageChange = (e) => {
         console.log(e.target.value);
@@ -98,7 +127,7 @@ const ViewTicket = () => {
       setSelectedFiles(e.target.files);
     };
     
- 
+  
     const handleSendMessage = async (e) => {
         e.preventDefault();
              // After the message is sent, scroll to the bottom of the chat log
@@ -251,94 +280,105 @@ const ViewTicket = () => {
               </div>
             </div>
           </div>
-          <div className="" style={{overflow:"scroll",maxHeight:"30rem"}}>
+          <div className="" style={{overflowY:"scroll",maxHeight:"30rem"}}>
               {
-                  filterByTicketId?.messages?.map(viewTick=>
-                  
-                    <div className="col-12">
+                  filterByTicketId?.messages?.map(viewTick=>{
+                
+                  return(
+<div className="col-12">
              
-                 {/* for admin messsage  */}
+             {/* for admin messsage  */}
+          {
+            viewTick.admin==="Printbaz" && 
+            <div className="col-12">
+            <div className="mer-info">
+              <img src="https://media.discordapp.net/attachments/1069579536842379305/1107191553501450260/Logo-01.jpg?width=616&height=616" alt="" />
+              <h2 style={{color: 'red'}}>Printbaz</h2>
+              <h3>{timeSince(new Date(viewTick?.timestamp))} ({new Date(viewTick?.timestamp).toLocaleString("en-US", { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' })})</h3>
+              <hr className='hr_lineStyle'/>
+              <div dangerouslySetInnerHTML={{ __html: viewTick.content }} />
               {
-                viewTick.admin==="Printbaz" && 
-                <div className="col-12">
-                <div className="mer-info">
-                  <img src="https://media.discordapp.net/attachments/1069579536842379305/1107191553501450260/Logo-01.jpg?width=616&height=616" alt="" />
-                  <h2 style={{color: 'red'}}>Printbaz</h2>
-                  <h3>{timeSince(new Date(viewTick?.timestamp))} ({new Date(viewTick?.timestamp).toLocaleString("en-US", { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' })})</h3>
-                  <hr className='hr_lineStyle'/>
-                  <div dangerouslySetInnerHTML={{ __html: viewTick.content }} />
-                  {
-  viewTick?.files?.map(adminFile => {
-    const fileId = adminFile.split('/d/')[1].split('/view')[0];
-    const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
-    return (
-      <>
-        
-          <iframe src={previewURL}  style={{width: "auto", height: "auto",alignItems:"center"}}></iframe>
-      </>
-    )
-  })
-} 
+viewTick?.files?.map(adminFile => {
+const fileId = adminFile.split('/d/')[1].split('/view')[0];
+const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
+return (
+  <>
     
-
-                
-                </div>
-              </div>
-              }  
-
-              {/* for client message  */}
-                {
-                viewTick.admin!=="Printbaz" && 
-           
-                <div className="col-12">
-                <div className="mer-info">
-                  <img src={user?.brandLogoURL} alt="" />
-                  <h2 >{viewTicketDetail?.userName}</h2>
-                  <h3 >{timeSince(new Date(viewTick?.timestamp))} ({new Date(viewTick?.timestamp).toLocaleString("en-US", { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' })})</h3>
-                  <hr className='hr_lineStyle'/>
-              
-                  {/* <p>   {viewTick.content}</p> */}
-                  <div dangerouslySetInnerHTML={{ __html: viewTick.content }} />
-                
-                  {/* // upload image  */}
-                  {
-  viewTick?.files?.map(adminFile => {
-    const fileId = adminFile.split('/d/')[1].split('/view')[0];
-    const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
-    return (
-      <>
-        
-          <iframe src={previewURL}  style={{width: "auto", height: "auto",alignItems:"center"}}></iframe>
-      </>
-    )
-  })
+      <iframe src={previewURL}  style={{width: "auto", height: "auto",alignItems:"center"}}></iframe>
+  </>
+)
+})
 } 
 
-                
-                </div>
-              </div>
-              }
 
-             
-                  </div>
+            
+            </div>
+          </div>
+          }  
+
+          {/* for client message  */}
+            {
+            viewTick.admin!=="Printbaz" && 
+       
+            <div className="col-12">
+            <div className="mer-info">
+              <img src={user?.brandLogoURL} alt="" />
+              <h2 >{viewTicketDetail?.userName}</h2>
+              <h3 >{timeSince(new Date(viewTick?.timestamp))} ({new Date(viewTick?.timestamp).toLocaleString("en-US", { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' })})</h3>
+              <hr className='hr_lineStyle'/>
+       
+              {/* <p>   {viewTick.content}</p> */}
+              <div dangerouslySetInnerHTML={{ __html: viewTick.content }} />
+            
+              {/* // upload image  */}
+              {
+viewTick?.files?.map(adminFile => {
+const fileId = adminFile.split('/d/')[1].split('/view')[0];
+const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
+return (
+  <>
+    
+      <iframe src={previewURL}  style={{width: "auto", height: "auto",alignItems:"center"}}></iframe>
+  </>
+)
+})
+} 
+
+            
+            </div>
+          </div>
+          }
+
+         
+              </div>
+
+                  )
+                  }
+                    
                     )
               }
               <div ref={messagesEndRef} />
-
+         
           </div>
           <div className="row">
             <div className="col-12">
               {
-              ( openTextBox!==true)  && 
+              ( openTextBox!==true && lastTicketStatus!=="close")  && 
                 <div className="ticket-replay">
                 <img src="https://media.discordapp.net/attachments/1069579536842379305/1107191553501450260/Logo-01.jpg?width=616&height=616" alt="" />
                 <button className="ttm-button" onClick={()=>setOpenTextBox(true)}><i className="fa fa-reply" aria-hidden="true" style={{marginRight: '5px'}} />Reply</button>
                
               </div>
               }
+              {
+                lastTicketStatus==="close" &&
+                <div className="ticket-replay">
+                  <h2 style={{textAlign:"center",color:"red"}}>Ticket Closed!</h2>
+                </div>
+              }
             
             </div>
-          </div> 
+          </div>
             <div className="row">
               <div className='col-12'>
               {

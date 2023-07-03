@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import "../css/styles.css"
 
 const CustomAlert = ({ message, onClose }) => {
   useEffect(() => {

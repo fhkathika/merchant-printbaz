@@ -407,7 +407,7 @@ const handleSubmit = async (e) => {
     formData2.append('createdAt', formattedDate);
     // formData2.append('id',orderId);
     formData2.append('userMail', userEmail);
-  
+  console.log("formData2",formData2);
     const response = await
      fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
     //  fetch("http://localhost:5000/submitorder", //add this when work local server

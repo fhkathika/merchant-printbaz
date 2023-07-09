@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Overlay, Tooltip } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
@@ -11,16 +12,20 @@ const MyOrders = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
     const {info}=useGetMongoData()
+    const target = useRef(null);
     console.log("info",info);
     const [dbData, setDbData] = useState({});
+    const [show, setShow] = useState(false);
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
     const resellerOrdersFromDb=fetchedData?.orders
+    const [filterOrders,setFilterOrders]=useState('all');
     console.log("resellerOrdersFromDb",resellerOrdersFromDb);
     const {user}=useContext(AuthContext);
     const userEmail=user?.email
+console.log("filterOrders",filterOrders);
 
     const [orders, setOrders] = useState([]);
-
+    let options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }; // options for toLocaleDateString
    
     const navigate=useNavigate()
     const handlePage=()=>{
@@ -31,9 +36,53 @@ const MyOrders = () => {
       navigate("/viewOrder")
       console.log("clicked");
     }
+    const handleInputChange = (event, index) => {
+      const { name, value } = event.target;
+      setFilterOrders(value)
+    }
     const [activeTab, setActiveTab] = useState('all');
+// filter order based on status 
+let pendingOrders=info?.filter(users=>users?.orderStatus==="Pending");
 
-    const handleTabClick = (tabId) => {
+let approvedOrders=info?.filter(users=>users?.orderStatus==="Approved");
+let onHoldOrders=info?.filter(users=>users?.orderStatus==="on-hold");
+let onHoldArtworkIssueOrders=info?.filter(users=>users?.orderStatus==="on hold artwork issue");
+let onHoldBillingIssueOrders=info?.filter(users=>users?.orderStatus==="on hold billing issue");
+let onHoldOutOfStockOrders=info?.filter(users=>users?.orderStatus==="on hold out of stock");
+let inProductionOrders=info?.filter(users=>users?.orderStatus==="in-production");
+let outForDeliveryOrders=info?.filter(users=>users?.orderStatus==="out for delivery");
+let deliveredOrders=info?.filter(users=>users?.orderStatus==="delivered");
+let cancelOrders=info?.filter(users=>users?.orderStatus==="cancel");
+let returnOrders=info?.filter(users=>users?.orderStatus==="returned");
+let filterByOrderId=info?.filter(users=>users?._id===filterOrders);
+let filterBydate = info?.filter(users => {
+  let date = new Date(users?.createdAt);
+
+  let day = date.getDate();
+  day = day < 10 ? '0' + day : day;
+
+  let month = date.getMonth() + 1;
+  month = month < 10 ? '0' + month : month;
+
+  let year = date.getFullYear();
+
+  let formattedDate = `${day}/${month}/${year}`;
+
+  return formattedDate === filterOrders;
+});
+   
+const copyOrderId = () => {
+  navigator.clipboard.writeText(info?._id);
+  
+  setShow(true)
+  console.log("viewOrder?._id",info?._id);
+  setTimeout(() => {
+    setShow(false);
+  }, 1000);
+  
+  // Show a notification or perform any other action after copying the ID
+};
+const handleTabClick = (tabId) => {
       setActiveTab(tabId);
     }
 
@@ -84,6 +133,21 @@ const MyOrders = () => {
       // you can add more conditions here or just return a default color
       // return "defaultColor";
     };
+    let date = new Date(info?.createdAt); // create a new Date object
+  
+
+    let day = date.getDate();
+    day = day < 10 ? '0' + day : day;  // adding leading zero if date is single digit
+    
+    let month = date.getMonth() + 1;  // getMonth() returns month index starting from 0
+    month = month < 10 ? '0' + month : month;  // adding leading zero if month is single digit
+    
+    let year = date.getFullYear();
+    
+    let formattedDate = `${day}/${month}/${year}`;
+    
+    console.log(formattedDate);  // Output: "04/07/2023"
+    
     return (
         <div className='payment_container'>
           <meta charSet="utf-8" />
@@ -118,7 +182,7 @@ const MyOrders = () => {
               </li>
             </ul> */}
 
-<ul className="nav nav-tabs mt-4" id="orderTabs">
+{/* <ul className="nav nav-tabs mt-4" id="orderTabs">
         <li  className={`nav-item ${activeTab === 'all' ? 'active' : ''}`}>
           <a className="tab-link" id="all-tab" data-toggle="tab" href="#all" onClick={() => handleTabClick('all')}>All</a>
         </li>
@@ -131,34 +195,37 @@ const MyOrders = () => {
         <li className={`nav-item ${activeTab === 'returned' ? 'active' : ''}`}>
           <a className="tab-link" id="returned-tab" data-toggle="tab" href="#returned" onClick={() => handleTabClick('returned')}>Returned</a>
         </li>
-      </ul>
+      </ul> */}
          
             {/* filter */}
             <form id="filter-form">
               <div className="row">
                 <div className="col-md-4">
                   <label htmlFor="orderID" className="form-label">Order ID</label>
-                  <input type="text" className="form-control" id="orderID" placeholder="Enter Order ID" />
+                  <input type="text" onChange={(e) =>  handleInputChange(e)} className="form-control" id="orderID" placeholder="Enter Order ID" />
                 </div>
-                <div className="col-md-4">
-                  <label htmlFor="orderStatus" className="form-label">Order Status</label>
-                  <br />
-                  <select className="form-select" id="orderStatus">
-                    <option value>Select Order Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="on hold">On hold</option>
-                    <option value="approved">Approved</option>
-                    <option value="in production ">In production </option>
-                    <option value="in production ">Product ready </option>
-                    <option value="in production ">Out for delivery </option>
-                    <option value="delivered">Delivered</option>
-                    <option value="payment released">Payment released</option>
-                    <option value="returned">Returned</option>
-                  </select>
-                </div>
+                <div className="col-lg-2 col-sm-12 col-md-4">
+                <label htmlFor="status-filter">Status:</label>
+                <select id="status-filter" className="form-control" onChange={(e) =>  handleInputChange(e)}>
+                  <option value="all">All</option>
+                  <option value="Pending">Pending</option>
+                  <option value="on-hold">On Hold</option>
+                  <option value="on hold artwork issue">On hold -  Artwork issue</option>
+                  <option value="on hold billing issue">On hold - Billing Issue</option>
+                  <option value="on hold out of stock">On hold - Out of Stock</option>
+                  <option value="Approved">Approved</option>
+                  <option value="in-production">In Production</option>
+                  <option value="out for delivery">Out for delivery</option>
+                 <option value="delivered">Delivered</option>
+                  <option value="payment-released">Payment Released</option>
+                  <option value="returned">Returned</option>
+                  <option value="cancel">Cancel</option>
+                  
+                </select>
+              </div>
                 <div className="col-md-4">
                   <label htmlFor="date" className="form-label">Date</label>
-                  <input type="date" className="form-control" id="date" />
+                  <input type="date" className="form-control" onChange={(e) =>  handleInputChange(e)} id="date" />
                 </div>
               </div>
             </form>
@@ -204,13 +271,151 @@ const MyOrders = () => {
                 {/* Order list content for Returned tab */}
               </div>
             </div>
-        
-              {/* Tab content */}
-      <div className="tab-content mt-4">
-        <div id="all" className={`tab-pane ${activeTab === 'all' ? 'active' : 'fade'}`}>
-           {/* Order list content for All tab */}
-           {
-             info
+            {/* filter by order Id  */}
+            {
+            filterByOrderId
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }   {/* filter by order Date  */}
+            {
+            filterBydate
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }  
+              
+                {
+           filterOrders==="all" &&  info
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id} </p>
+               {/* <h3 className="d-inline-block font-weight-bold" onClick={copyOrderId}>{orderInfo?._id} &nbsp;<span style={{cursor:"pointer",padding:"5px",fontSize:"16px"}} ref={target}  onClick={copyOrderId}><i class="fa fa-copy ml-2 mt-1 text-green cursor-pointer text-sm"></i></span></h3> */}
+                  {/* <button className="status-btn d-inline-block py-2 px-3 font-weight-bold">{viewOrder?.orderStatus}</button> */}
+                  <Overlay target={target.current} show={show} placement="right">
+        {(props) => (
+          <Tooltip id="overlay-example" {...props}>
+           copied!
+          </Tooltip>
+        )}
+      </Overlay>
+            
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              } 
+                {
+           filterOrders==="on-hold" &&  onHoldOrders
              ?.filter(order => order.userMail === user?.email)
              .map((orderInfo,index) => (
                // Your order item JSX code
@@ -232,7 +437,51 @@ const MyOrders = () => {
                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-               <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }  
+               {
+           filterOrders==="Pending" &&  pendingOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
                <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
@@ -251,141 +500,395 @@ const MyOrders = () => {
              ))
             
               }
-        </div>
-        <div id="active" className={`tab-pane ${activeTab === 'active' ? 'active' : 'fade'}`}>
-          {/* Order list content for Active tab */}
-       
-          {
-               info
-               ?.filter(order => order.userMail === user?.email)
-               ?.map((orderInfo,index)=> 
-              ((orderInfo?.orderStatus==="Approved" || orderInfo?.orderStatus==="In Production" || orderInfo?.orderStatus==="On Hold" ) &&
-              <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+              {
+           filterOrders==="Approved" &&  approvedOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
-              <>
-                 <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.name}
-              </p></div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
-              <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
-              <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.statusDate}  </p>
-            </div>
-            <div className="col-md-1 col-sm-12">
-              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-           <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
-            </div>
-            <div className="col-md-1 col-sm-12">
-            <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
-                                             state={ {orderInfo}}>View</Link>
-              {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
-            </div>
-              </>
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }  
+              {
+           filterOrders==="on hold artwork issue" &&  onHoldArtworkIssueOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
-          </div>
-              )
-          
-               )
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
               }
-        </div>
-        <div id="delivered" className={`tab-pane ${activeTab === 'delivered' ? 'active' : 'fade'}`}>
-          {/* Order list content for Delivered tab */}
-          {
-               info
-               ?.filter(order => order.userMail === user?.email)
-               ?.map((orderInfo,index)=> 
-              ((orderInfo?.orderStatus==="Delivered" || orderInfo?.orderStatus==="Payment Released" || orderInfo?.orderStatus==="on hold" ) &&
-              <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+              {
+           filterOrders==="on hold billing issue" &&  onHoldBillingIssueOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
-              <>
-                 <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.name}
-              </p></div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
-              <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
-              <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on   {orderInfo?.statusDate}   </p>
-            </div>
-            <div className="col-md-1 col-sm-12">
-              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
-            </div>
-            <div className="col-md-1 col-sm-12">
-            <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
-                                             state={ {orderInfo}}>View</Link>
-              {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
-            </div>
-              </>
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              } 
+               {
+           filterOrders==="on hold out of stock" &&  onHoldOutOfStockOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
            
-          </div>
-              )
-          
-               )
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              } 
+               {
+           filterOrders==="in-production" &&  inProductionOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              } 
+               {
+           filterOrders==="out for delivery" &&  outForDeliveryOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }  
+                {
+           filterOrders==="delivered" &&  deliveredOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }  
+               {
+           filterOrders==="cancel" &&  cancelOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
+              }     {
+           filterOrders==="returned" &&  returnOrders
+             ?.filter(order => order.userMail === user?.email)
+             .map((orderInfo,index) => (
+               // Your order item JSX code
+               <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
+           
+               <>
+                  <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               </p></div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
+               <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+                                orderInfo?.orderStatus
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+               <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
+               <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+             </div>
+             <div className="col-md-2 col-sm-12">
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+             </div>
+             <div className="col-md-1 col-sm-12">
+             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}>View</Link>
+               {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
+             </div>
+               </>
+            
+           </div>
+             ))
+            
               }
-        </div>
-        <div id="returned" className={`tab-pane ${activeTab === 'returned' ? 'active' : 'fade'}`}>
-          {/* Order list content for Returned tab */}
-          {
-               info
-               ?.filter(order => order.userMail === user?.email)
-               ?.map((orderInfo,index)=> 
-              ((orderInfo?.orderStatus==="Returned") &&
-              <div key={index} className="row mt-4 order-list" style={{border: '#00194600 2px solid', padding: '30px 10px 10px 10px', backgroundColor: '#ffffff', boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.3)'}}>
-           
-              <>
-                 <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.name}
-              </p></div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
-              <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
-              <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'greenyellow', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
-              <p style={{lineHeight: '15px'}}>Updated on {orderInfo?.statusDate}   </p>
-            </div>
-            <div className="col-md-1 col-sm-12">
-              <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>Unpaid</p>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
-            </div>
-            <div className="col-md-1 col-sm-12">
-            <Link style={{textDEcoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?.id}`}
-                                             state={ {orderInfo}}>View</Link>
-              {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
-            </div>
-              </>
-           
-          </div>
-              )
-          
-               )
-              }
-        </div>
-      </div>
+        
+              {/* Tab content */}
+   
           </div>
           <Footer/>
         </div>

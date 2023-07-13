@@ -56,7 +56,7 @@ const NewOrder = () => {
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
 
-
+console.log("clientUser",user);
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
@@ -237,10 +237,6 @@ let updatedPrintbazcost=0
   printbazcostbase = Number(totalPrice)+backSidePrintCost;
   printbazcost += printbazcostbase;
   console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
-
-      
-			
-   
     } else {
       if(printbazcostbase){
         printbazcost= printbazcostbase;
@@ -333,10 +329,7 @@ let updatedPrintbazcost=0
         return false;
       }
     };
-    
-   
-   
-
+ 
 // foe mongodb new
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -407,6 +400,11 @@ const handleSubmit = async (e) => {
     formData2.append('createdAt', formattedDate);
     // formData2.append('id',orderId);
     formData2.append('userMail', userEmail);
+
+    formData2.append('clientName', user?.name);
+    formData2.append('clientbrandName', user?.brandName);
+    // formData2.append('clientbrandLogoURL', user?.brandLogoURL);
+    formData2.append('clientPhone', user?.phone);
   console.log("formData2",formData2);
     const response = await
      fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 

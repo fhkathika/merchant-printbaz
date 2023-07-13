@@ -1,24 +1,27 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Overlay, Tooltip } from 'react-bootstrap';
+import { Button, Overlay, Tooltip } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
 import useGetMongoData from '../../hooks/useGetMongoData';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const MyOrders = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
     const {info}=useGetMongoData()
-    const target = useRef(null);
+    const refs = useRef({});
     console.log("info",info);
     const [dbData, setDbData] = useState({});
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
     const resellerOrdersFromDb=fetchedData?.orders
     const [filterOrders,setFilterOrders]=useState('all');
+    const [startDate,setStartDate]=useState(null);
+    const [endDate,setEndDate]=useState(null);
     console.log("resellerOrdersFromDb",resellerOrdersFromDb);
     const {user}=useContext(AuthContext);
     const userEmail=user?.email
@@ -55,37 +58,40 @@ let deliveredOrders=info?.filter(users=>users?.orderStatus==="delivered");
 let cancelOrders=info?.filter(users=>users?.orderStatus==="cancel");
 let returnOrders=info?.filter(users=>users?.orderStatus==="returned");
 let filterByOrderId=info?.filter(users=>users?._id===filterOrders);
-let filterBydate = info?.filter(users => {
-  let date = new Date(users?.createdAt);
 
-  let day = date.getDate();
-  day = day < 10 ? '0' + day : day;
 
-  let month = date.getMonth() + 1;
-  month = month < 10 ? '0' + month : month;
-
-  let year = date.getFullYear();
-
-  let formattedDate = `${day}/${month}/${year}`;
-
-  return formattedDate === filterOrders;
-});
    
-const copyOrderId = () => {
-  navigator.clipboard.writeText(info?._id);
+const copyOrderId = (orderId, index) => {
+  navigator.clipboard.writeText(orderId);
   
-  setShow(true)
-  console.log("viewOrder?._id",info?._id);
+  setShow(prevShow => ({ ...prevShow, [index]: true }));
+  console.log("viewOrder?._id",orderId);
   setTimeout(() => {
-    setShow(false);
-  }, 1000);
-  
-  // Show a notification or perform any other action after copying the ID
+    setShow(prevShow => ({ ...prevShow, [index]: false }));
+  }, 3000);
 };
+
+useEffect(() => {
+  info?.filter(order => order.userMail === user?.email).forEach((order, index) => {
+    refs.current[index] = React.createRef();
+  });
+}, [info, user]);
 const handleTabClick = (tabId) => {
       setActiveTab(tabId);
     }
-
+// start date Handler 
+const handleChangeStartDate=(date)=>{
+  setStartDate(date)
+  setFilterOrders('')
+}
+const handleChangeEndDate=(date)=>{
+  setEndDate(date)
+  setFilterOrders('')
+}
+const filerByOrderDate=info.filter(order=>{
+  const orderDate=new Date(order?.createdAt)
+  return orderDate>=new Date(startDate) && orderDate<=new Date(endDate)
+})
     const getViewClientColor = (status) => {
       if (status === "Pending") {
         return "Orange";
@@ -223,10 +229,21 @@ const handleTabClick = (tabId) => {
                   
                 </select>
               </div>
-                <div className="col-md-4">
-                  <label htmlFor="date" className="form-label">Date</label>
-                  <input type="date" className="form-control" onChange={(e) =>  handleInputChange(e)} id="date" />
-                </div>
+                <div className="col-md-2 ">
+                  <label htmlFor="startDate" className="form-label">Start Date</label>
+                  <DatePicker className='form-control' selected={startDate} onChange={handleChangeStartDate} selectsStart startDate={startDate} endDate={endDate} />
+                 
+                
+                  </div>   
+                   <div className="col-md-2 ">
+               
+                 
+                  <label style={{textAlign:"start"}} htmlFor="endDate" className="form-label">End Date</label>
+                  <DatePicker className='form-control' selected={endDate} onChange={handleChangeEndDate} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
+                  </div>
+             
+                 
+               
               </div>
             </form>
             {/* Order header */}
@@ -281,7 +298,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -317,7 +334,7 @@ const handleTabClick = (tabId) => {
             
               }   {/* filter by order Date  */}
             {
-            filterBydate
+            filerByOrderDate
              ?.filter(order => order.userMail === user?.email)
              .map((orderInfo,index) => (
                // Your order item JSX code
@@ -325,7 +342,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -370,21 +387,30 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
-             <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?._id} </p>
-               {/* <h3 className="d-inline-block font-weight-bold" onClick={copyOrderId}>{orderInfo?._id} &nbsp;<span style={{cursor:"pointer",padding:"5px",fontSize:"16px"}} ref={target}  onClick={copyOrderId}><i class="fa fa-copy ml-2 mt-1 text-green cursor-pointer text-sm"></i></span></h3> */}
-                  {/* <button className="status-btn d-inline-block py-2 px-3 font-weight-bold">{viewOrder?.orderStatus}</button> */}
-                  <Overlay target={target.current} show={show} placement="right">
-        {(props) => (
-          <Tooltip id="overlay-example" {...props}>
-           copied!
-          </Tooltip>
-        )}
-      </Overlay>
-            
-             </div>
+               <div className="col-md-2 col-sm-12">
+                <p
+                  style={{ lineHeight: "15px" }}
+                  ref={refs.current[index]}
+                  // onClick={() => copyOrderId(orderInfo?._id, index)}
+                >
+                  {orderInfo?._id}
+                  <img
+                    style={{ width: "20px", marginLeft: "5px" }}
+                    onClick={() => copyOrderId(orderInfo?._id, index)}
+                    src="/images/copy-icon.png"
+                    alt="copy-icon"
+                  />
+                </p>
+                <Overlay target={refs.current[index]?.current} show={show[index]} >
+                  {(props) => (
+                    <Tooltip id={`overlay-example-${index}`} {...props}>
+                    copied
+                    </Tooltip>
+                  )}
+                </Overlay>
+              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?.name}</p>
                <p style={{lineHeight: '15px'}}>{orderInfo?.address}</p>
@@ -423,7 +449,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -466,7 +492,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -509,7 +535,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -552,7 +578,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -595,7 +621,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -638,7 +664,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -681,7 +707,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -724,7 +750,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -767,7 +793,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -810,7 +836,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>
@@ -852,7 +878,7 @@ const handleTabClick = (tabId) => {
            
                <>
                   <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px'}}>{orderInfo?.name}
+               <p style={{lineHeight: '15px'}}>{orderInfo?.clientName}
                </p></div>
              <div className="col-md-2 col-sm-12">
                <p style={{lineHeight: '15px'}}>{orderInfo?._id}</p>

@@ -318,7 +318,10 @@ let updatedPrintbazcost=0
     // costHandlingfee = recvMoneyWithouthandling * 0.02;
     costHandlingfee = Number(formData.collectAmount * 0.02);
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
+   
+    let suggestedCollectAmount = Math.ceil((1 + printbazcost + deliveryFee) / 0.98);
     console.log("recvMoney",recvMoney)
+    console.log("suggestedCollectAmount",suggestedCollectAmount)
     const validateForm = () => {
       if (recvMoney < 0) {
         setFormValid(true);
@@ -407,8 +410,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
   console.log("formData2",formData2);
     const response = await
-     fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-    //  fetch("http://localhost:5000/submitorder", //add this when work local server
+    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
+     fetch("http://localhost:5000/submitorder", //add this when work local server
      
      {
       method: "POST",
@@ -820,6 +823,9 @@ const handleSubmit = async (e) => {
                           : deliveryFeeInsideDhaka}
                       </h3>
                     </div>
+                    <div>
+
+                    <div  className="costOrder_Style">
                     <Form.Group className="mb-3 ">
                       <Form.Label>Amount to Collect</Form.Label>
                       {["bottom"].map((placement) => (
@@ -846,6 +852,7 @@ const handleSubmit = async (e) => {
                           </span>
                         </OverlayTrigger>
                       ))}
+                    
                       <Form.Control
                         type="number"
                         name="collectAmount"
@@ -858,6 +865,20 @@ const handleSubmit = async (e) => {
                         placeholder=""
                       />
                     </Form.Group>
+                    <Form.Group className="mb-3 ">
+                      <Form.Label>Minimum Amount to Collect</Form.Label>
+                     
+                      <Form.Control
+                        type="number"
+                        name="collectAmount"
+                        value={suggestedCollectAmount}
+                        readOnly
+                      />
+                    </Form.Group>
+                     
+                      </div>
+                    </div>
+                    
                     <div className="costOrder_Style">
                       <label htmlFor="printbazCost">Cash Handling fee</label>{" "}
                       <h3> 2%</h3>

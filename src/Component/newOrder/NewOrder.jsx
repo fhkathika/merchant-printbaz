@@ -865,19 +865,19 @@ const handleSubmit = async (e) => {
                         placeholder=""
                       />
                     </Form.Group>
-                    {printbazcost && ( deliveryFeeOutSideDhaka ||deliveryFeeInsideDhaka) ?
+                   
                            <Form.Group className="mb-3 ">
                            <Form.Label>Minimum Amount to Collect</Form.Label>
                           
                            <Form.Control
                              type="number"
                              name="collectAmount"
-                             value={suggestedCollectAmount && suggestedCollectAmount}
+                             value={ printbazcost && ( deliveryFeeOutSideDhaka ||deliveryFeeInsideDhaka) && suggestedCollectAmount ?suggestedCollectAmount : '' }
                              readOnly
                            />
                          </Form.Group>
-                         :''
-                    }
+                        
+                    
                    
                      
                       </div>

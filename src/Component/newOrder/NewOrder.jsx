@@ -410,8 +410,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
   console.log("formData2",formData2);
     const response = await
-    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-     fetch("http://localhost:5000/submitorder", //add this when work local server
+     fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
+    //  fetch("http://localhost:5000/submitorder", //add this when work local server
      
      {
       method: "POST",

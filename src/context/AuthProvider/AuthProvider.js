@@ -21,7 +21,7 @@ const navigate=useNavigate()
 
         if (response.ok) {
             const userData = await response.json();
-            console.log('fetchUserData response', userData);
+            // console.log('fetchUserData response', userData);
             setUser(userData)
             return userData;
         }
@@ -39,7 +39,7 @@ const loginUser = async (token, userData) => {
   try {
     const fetchedUser = await fetchUserData(token); 
     setUser(fetchedUser); // Update the user state with fetchedUser
-    console.log('User logged in successfully', fetchedUser);
+    // console.log('User logged in successfully', fetchedUser);
 
     // Navigate to the dashboard after setting the user state
     navigate("/dashboard");

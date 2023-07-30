@@ -14,7 +14,7 @@ const MyOrders = () => {
     let collections = "resellerInfo";
     const {info}=useGetMongoData()
     const refs = useRef({});
-    console.log("info",info);
+
     const [dbData, setDbData] = useState({});
     const [show, setShow] = useState({});
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
@@ -22,10 +22,10 @@ const MyOrders = () => {
     const [filterOrders,setFilterOrders]=useState('all');
     const [startDate,setStartDate]=useState(null);
     const [endDate,setEndDate]=useState(null);
-    console.log("resellerOrdersFromDb",resellerOrdersFromDb);
+   
     const {user}=useContext(AuthContext);
     const userEmail=user?.email
-console.log("filterOrders",filterOrders);
+
 
     const [orders, setOrders] = useState([]);
     let options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }; // options for toLocaleDateString
@@ -33,11 +33,11 @@ console.log("filterOrders",filterOrders);
     const navigate=useNavigate()
     const handlePage=()=>{
       navigate("/newOrder")
-      console.log("clicked");
+    
     }  
       const handleViewOrder=()=>{
       navigate("/viewOrder")
-      console.log("clicked");
+   
     }
     const handleInputChange = (event, index) => {
       const { name, value } = event.target;
@@ -65,7 +65,7 @@ const copyOrderId = (orderId, index) => {
   navigator.clipboard.writeText(orderId);
   
   setShow(prevShow => ({ ...prevShow, [index]: true }));
-  console.log("viewOrder?._id",orderId);
+
   setTimeout(() => {
     setShow(prevShow => ({ ...prevShow, [index]: false }));
   }, 3000);
@@ -152,7 +152,7 @@ const filerByOrderDate=info.filter(order=>{
     
     let formattedDate = `${day}/${month}/${year}`;
     
-    console.log(formattedDate);  // Output: "04/07/2023"
+    // console.log(formattedDate);  // Output: "04/07/2023"
     
     return (
         <div className='payment_container'>

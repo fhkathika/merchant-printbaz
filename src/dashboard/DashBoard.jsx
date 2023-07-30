@@ -19,8 +19,7 @@ const DashBoard = () => {
   const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
   const resellerOrdersFromDb=fetchedData?.orders
   const {info}=useGetMongoData()
-  console.log("user from dashboard",user);
-  console.log("info",info);
+
     const [activeTab, setActiveTab] = useState("Dashboard");
     const [dropdownOpen, setDropdownOpen] = useState(false);
   
@@ -39,18 +38,13 @@ const DashBoard = () => {
       setDisplay('block');
       setDisplayNone('none')
     }
-    if(!user){
-      console.log("non user exists");
-    }
-    else {
-      console.log(" user exists");
-    }
   
-  console.log("user",user);
+  
+  // console.log("user",user);
   // pending delivery
   const orderStatusPending=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="Pending" )
-  console.log("orderStatus pending",orderStatusPending);
+  // console.log("orderStatus pending",orderStatusPending);
   let pendingstatusCount=0
   for(let i=1;i<=orderStatusPending?.length;i++){
      pendingstatusCount++
@@ -59,39 +53,39 @@ const DashBoard = () => {
   // Returned
    const orderStatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
-  console.log("orderStatus return",orderStatusReturned);
+  // console.log("orderStatus return",orderStatusReturned);
 
   let returnedstatusCount=0
   for(let i=1;i<=orderStatusReturned?.length;i++){
     returnedstatusCount++
 
   }
-  console.log("returnstatusCount",returnedstatusCount);  
+  // console.log("returnstatusCount",returnedstatusCount);  
   
   // Payment Released
    const orderStatusPaymentReleased=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="payment-released" )
-  console.log("orderStatus pament released",orderStatusPaymentReleased);
+  // console.log("orderStatus pament released",orderStatusPaymentReleased);
   let totalReceiveBase=0
 for(let i=0;i<orderStatusPaymentReleased?.length;i++){
   let totalReceive=orderStatusPaymentReleased[i]?.recvMoney;
   totalReceiveBase +=totalReceive;
-console.log("totalReceiveBase",totalReceiveBase);
+// console.log("totalReceiveBase",totalReceiveBase);
 }
 
 //patmnet status =paid,orderstatus :delivered
 const PaymentStausPaid=info
 ?.filter(order => order.userMail === user?.email && order.paymentStatus==="paid" && order?.orderStatus==="delivered")
-console.log("PaymentStausPaid",PaymentStausPaid);
+
 
 let statusPaidbase=0;
 for(let i=0;i<PaymentStausPaid?.length;i++){
   let totalpaid=PaymentStausPaid[i]?.recvMoney;
   statusPaidbase +=totalpaid;
-console.log("statusPaidbase",statusPaidbase);
+// console.log("statusPaidbase",statusPaidbase);
 }
 let dueAmount=parseInt(statusPaidbase-totalReceiveBase)
-console.log("dueAmount",dueAmount);
+// console.log("dueAmount",dueAmount);
       return (
         <div className='payment_container'>
  

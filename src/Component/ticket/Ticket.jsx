@@ -8,7 +8,7 @@ const Ticket = () => {
   const[fetchAllTicket,setFetchAllTicket]=useState([])
   const {user}=useContext(AuthContext);
   const userEmail=user?.email
-  console.log("user",user);
+
   useEffect(() => {
     // Fetch the chat log from the server when the component mounts
    
@@ -24,7 +24,7 @@ const Ticket = () => {
       console.error(err);
     }
   };
-  console.log("fetchAllTicket",fetchAllTicket);
+  // console.log("fetchAllTicket",fetchAllTicket);
 
 
 

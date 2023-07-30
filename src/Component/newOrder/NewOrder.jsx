@@ -56,7 +56,7 @@ const NewOrder = () => {
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
 
-console.log("clientUser",user);
+
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
@@ -102,7 +102,7 @@ console.log("clientUser",user);
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
     if (name==="color" || name==="teshirtSize" || name==="quantity" || name==="printSize"|| name==="printSide" || name==="printSizeBack") {
-      console.log(value)
+     
       // const fieldName = name.split('.')[1];
       const newOrderDetailArr = [...formData.orderDetailArr];
       newOrderDetailArr[index][event.target.name]=event.target.value;
@@ -112,7 +112,7 @@ console.log("clientUser",user);
    else {
         setFormData({ ...formData, [name]: value });
         // setSum(formData.reduce((total, input) => total + Number(input.value), 0));
-        console.log('order address',formData);
+   
       }
     } 
    
@@ -124,8 +124,7 @@ console.log("clientUser",user);
        // Change from a single file to an array of files
       newOrderDetailArr[index][[event.target.name]] =Array.from(files);
       setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
-      console.log('Updated Order State:', formData);
-      console.log('File:', files); // Log the file object
+    
     }
   };
 
@@ -236,7 +235,7 @@ let updatedPrintbazcost=0
 
   printbazcostbase = Number(totalPrice)+backSidePrintCost;
   printbazcost += printbazcostbase;
-  console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
+  // console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
     } else {
       if(printbazcostbase){
         printbazcost= printbazcostbase;
@@ -259,7 +258,7 @@ let updatedPrintbazcost=0
     for  (var j = 0; j < formData?.orderDetailArr?.length; j++) {
       QuantityBase=Number( formData?.orderDetailArr[j]?.quantity)
       totalQuantity =Number(QuantityBase+totalQuantity)
-     console.log("testQuantity",totalQuantity);
+   
    
     if (formData?.orderDetailArr[j]?.quantity > 0) {
       // Calculate the number of groups of 5 items in the order
@@ -320,8 +319,8 @@ let updatedPrintbazcost=0
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
    
     let suggestedCollectAmount = Math.ceil((1 + printbazcost + deliveryFee) / 0.98);
-    console.log("recvMoney",recvMoney)
-    console.log("suggestedCollectAmount",suggestedCollectAmount)
+    // console.log("recvMoney",recvMoney)
+    // console.log("suggestedCollectAmount",suggestedCollectAmount)
     const validateForm = () => {
       if (recvMoney < 0) {
         setFormValid(true);
@@ -350,7 +349,7 @@ const handleSubmit = async (e) => {
 
     orderDetailArr?.forEach((item, index) => {
       const fileAndImageData = {};
-      console.log("item.brandLogo",item.brandLogo);
+      // console.log("item.brandLogo",item.brandLogo);
       if (item.file) {
         item.file.forEach((file, fileIndex) => {
           formData2.append(`file${index}_${fileIndex}`, file); // Append each file
@@ -408,7 +407,7 @@ const handleSubmit = async (e) => {
     formData2.append('clientbrandName', user?.brandName);
     // formData2.append('clientbrandLogoURL', user?.brandLogoURL);
     formData2.append('clientPhone', user?.phone);
-  console.log("formData2",formData2);
+ 
     const response = await
      fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
     //  fetch("http://localhost:5000/submitorder", //add this when work local server
@@ -419,8 +418,8 @@ const handleSubmit = async (e) => {
     });
     if (response.ok) {
       const result = await response.json();
-      console.log("Success:", result.insertedId);
-      console.log('API response:', response);
+      // console.log("Success:", result.insertedId);
+      // console.log('API response:', response);
       const orderConfirmationData = { id: result.insertedId, userMail: userEmail };
       SendOrderConfirmationEmail(orderConfirmationData); // Send email confirmation
     

@@ -16,7 +16,7 @@ const NavigationBar = () => {
   const { fetchedData} = useGetData(id, collections, dbData);
   const resellerInfoFromDb=fetchedData?.resellerInfoArr
   // const {user,logOut}=useContext(AuthContext)
-  console.log("user",user);
+
   useEffect(() => {
     // Fetch the chat log from the server when the component mounts
 
@@ -40,7 +40,7 @@ const NavigationBar = () => {
       console.error(err);
     }
   };
-  console.log("fetchAllTicket",fetchAllTicket);
+  // console.log("fetchAllTicket",fetchAllTicket);
   const navigate=useNavigate();
   const handleLogOut=()=>{
     logoutUser();

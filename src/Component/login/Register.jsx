@@ -38,7 +38,7 @@ const Register = ({closePopup}) => {
 
   const [passwordError, setPasswordError] = useState('');
 
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formValid, setFormValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -153,10 +153,14 @@ const handleChange=(e)=>{
   
    //// send data  server side
     const handleSubmit = async(e) => {
-     
+    
       e.preventDefault();
+   // If already submitting, don't proceed
+   if(isSubmitting===true) return;
+   setShowAlert(true);
+
       ReactGA.event({'category':'Test','action':'submit','label':'label'})
-      setIsLoading(true)
+     
       try{
         if (!formData.bkashAccount && !formData.nagadAccount && !formData.rocketAccount &&
           !(formData.bankName && formData.accountName && formData.accountNumber && formData.routingNumber && formData.branchName)) {
@@ -236,11 +240,13 @@ const handleChange=(e)=>{
               nagadAccount:"",
               rocketAccount:"",
             });
-        
+            // setIsSubmitting(true);
           navigate("/login")
           }else if (data.message === 'User registered successfully!') {
+            setIsSubmitting(true);
             SendRegisterConfirmationEmail(newProduct);
-            setShowAlert(true);
+           
+            navigate("/login")
             // const regEmail={email:formData.email}
         
          
@@ -265,6 +271,7 @@ const handleChange=(e)=>{
   }
   finally {
     setIsLoading(false); // Set loading status to false
+    setIsSubmitting(false); // Reset submitting status
   }
      
    

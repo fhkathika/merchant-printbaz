@@ -17,7 +17,7 @@ const ViewTicket = () => {
     const [usersStoredTickets, setUsersStoredTickets] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
     const {user}=useContext(AuthContext);
-    console.log("viewTicketDetail",viewTicketDetail);
+  
     const { quill, quillRef, Quill } = useQuill({
       modules: { blotFormatter: {} }
     });
@@ -54,7 +54,7 @@ useEffect(() => {
         quill.on('text-change', (delta, oldContents) => {
           // const text =  quillRef.current.getEditor().getText();
           // setNewMsg(text)
-          console.log("delta,delta",delta);
+         
           delta.ops.forEach((op) => {
             if (typeof op.insert === 'string') {
               console.log('Inserted text:', op.insert);
@@ -81,9 +81,10 @@ useEffect(() => {
     }, [quill, Quill]);
     let filterByTicketId=usersStoredTickets?.find(ticket=>ticket.ticketId===viewTicketDetail?.ticketId)
     const lastTicketStatus = filterByTicketId?.ticketStatus
+    const adminUser = filterByTicketId?.adminUser
 
 
-    console.log("lastTicketStatus",lastTicketStatus);
+    console.log("adminUser from client",adminUser);
     useEffect(() => {
       // Fetch the chat log from the server when the component mounts
       fetchOrderIddata();
@@ -145,6 +146,7 @@ useEffect(() => {
              userOrderId:viewTicketDetail?.orderId,
              userName:user?.name,
              userEmail:viewTicketDetail?.userEmail,
+             adminUser:adminUser,
               user: user?.name,
                content: newMsg };
       
@@ -156,6 +158,7 @@ useEffect(() => {
             userName: newMessage.userName,
             userEmail: newMessage.userEmail,
             admin: newMessage.user,
+            adminUser: newMessage.adminUser,
             orderId:newMessage.userOrderId,
             timestamp: new Date().toISOString(), // this won't be the exact timestamp saved in the DB
           };
@@ -190,7 +193,7 @@ useEffect(() => {
           }
           setNewMsg('');
           fetchOrderIddata()
-          console.log("chatLog",chatLog);
+        
         } catch (err) {
           console.error(err);
         }
@@ -362,14 +365,9 @@ return (
           </div>
           <div className="row">
             <div className="col-12">
-              {
-              ( openTextBox!==true && lastTicketStatus!=="close")  && 
-                <div className="ticket-replay">
-                <img src="https://media.discordapp.net/attachments/1069579536842379305/1107191553501450260/Logo-01.jpg?width=616&height=616" alt="" />
-                <button className="ttm-button" onClick={()=>setOpenTextBox(true)}><i className="fa fa-reply" aria-hidden="true" style={{marginRight: '5px'}} />Reply</button>
-               
-              </div>
-              }
+             
+             
+              
               {
                 lastTicketStatus==="close" &&
                 <div className="ticket-replay">
@@ -381,8 +379,7 @@ return (
           </div>
             <div className="row">
               <div className='col-12'>
-              {
-             openTextBox && 
+            
              <form className="input-group chat-messages p-4 " onSubmit={handleSendMessage}>
     <div   ref={quillRef}  />
     {/* <textarea  className='col-12'
@@ -429,7 +426,7 @@ return (
                                    <button className="btn"><i className="fa fa-paperclip" aria-hidden="true" /></button>
                                    <button className="btn btn-primary">Reply</button> */}
                    </form>
-           }
+           
               </div>
         
            

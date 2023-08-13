@@ -15,39 +15,62 @@ import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSup
     const [showTicketPopUp, setShowTicketPopUp] = useState(false);
     const [popupId, setPopupId] = useState('');
     const [usersTickets, setUsersTickets] = useState([]);
+    const[fetchAllTicket,setFetchAllTicket]=useState([])
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
     const [shownPopupTicketId, setShownPopupTicketId] = useState(null);
     const [usersStoredTickets, setUsersStoredTickets] = useState([]);
     const location = useLocation();
 const viewOrder = location.state ? location?.state?.orderInfo : null;
-console.log("viewOrder",viewOrder);
+
 
 const closePopup = () => {setShowTicketPopUp(false);};
 
 useEffect(() => {
   // Fetch the chat log from the server when the component mounts
   fetchChatLog();
-  
+  fetchAllTicketData()
 }, []);
 const fetchChatLog = async () => {
   try {
     // const response = await axios.get(`http://localhost:5000/getOrderIdmessages/${viewOrder?._id}`);
     const response = await axios.get(`https://mserver.printbaz.com/getOrderIdmessages/${viewOrder?._id}`);
     setUsersTickets(response.data.messages);
-    console.log("response.data.messages",response.data.messages);
+
   } catch (err) {
     console.error(err);
   }
 };
-console.log("usersTickets",usersTickets);
-const generateId = () => {
-  // Generate an ID using your logic (e.g., library or custom code)
-  const id = Math.random().toString(36).substr(2, 9);
-  return id;
+
+const fetchAllTicketData = async () => {
+  try {
+    // const response = await axios.get('http://localhost:5000/allTicketIds');
+    const response = await axios.get('https://mserver.printbaz.com/allTicketIds');
+    setFetchAllTicket(response.data);
+ 
+  } catch (err) {
+    console.error(err);
+  }
 };
+
+let idCounter = 1; // Initialize a counter for the IDs
+const generateId = () => {
+  const paddedId = String(idCounter).padStart(6, '0'); // Convert counter to string and pad with leading zeros
+
+  if (fetchAllTicket?.filter(ticketId => ticketId === paddedId).length > 0){
+    idCounter++; // Increment the counter
+    return generateId(); // Recursively call the function to generate the next ID
+  }
+
+  idCounter++; // Increment the counter
+  return paddedId;
+};
+
 const handleShowTicketPopUp=()=>{
+  fetchAllTicketData()
   setShowTicketPopUp(true)
-  setPopupId(generateId); // Set the generated ID
+
+  setPopupId(generateId()); // Set the generated ID
+ 
 } 
 const getViewClientColor = (status) => {
   if (status === "Pending") {
@@ -167,6 +190,7 @@ const getViewClientColor = (status) => {
                    onClose={() => setShownPopupTicketId(null)}
                    ticketId={tickets?.ticketId}
                    ticketIssue={tickets?.ticketIssue}
+                   adminUser={tickets?.adminUser}
                    userEmail={viewOrder?.userMail}
                    userName={viewOrder?.name}
                />

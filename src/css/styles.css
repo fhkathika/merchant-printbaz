@@ -837,7 +837,7 @@ color: #bababa !important;
   font-size: 12px;
   position: absolute;
   font-weight: 700;
-  top: -10px;
+  top: 0px;
   right: -10px;
 }
 .notification-badge-individual {

@@ -82,7 +82,7 @@ const SupportTicketPopUp = ({ message,ticketId,userOrderId,onClose,fetchTickets,
       console.log(e.target.value);
       setNewMsg(e.target.value);
   };
- console.log("newMessage",newMsg); 
+ console.log("chatLog",chatLog); 
 
  const getViewClientColor = (status) => {
   if (status === "onHold artwork issue") {

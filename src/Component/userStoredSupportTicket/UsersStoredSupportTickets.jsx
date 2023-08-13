@@ -7,8 +7,8 @@ import { useQuill } from 'react-quilljs';
 import BlotFormatter from 'quill-blot-formatter';
 import 'quill/dist/quill.snow.css';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
-const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, onClose,userEmail,userName }) => {
-  
+const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, onClose,adminUser,userEmail,userName }) => {
+  console.log("adminUser",adminUser);
   const [chatLog, setChatLog] = useState([]);
   const [newMsg, setNewMsg] = useState('');
   const [usersStoredTickets, setUsersStoredTickets] = useState([]);
@@ -75,8 +75,10 @@ const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, o
   };
   
   let filterByTicketId=usersStoredTickets?.find(ticket=>ticket.ticketId===ticketId)
+  let filterByAdminUser=usersStoredTickets?.filter(ticket=>ticket.adminUser===adminUser)
 console.log("usersStoredTickets",usersStoredTickets);
 const lastTicketStatus = filterByTicketId?.ticketStatus
+console.log("filterByTicketId?.adminUser",filterByTicketId);
 const handleNewMessageChange = (e) => {
       console.log(e.target.value);
       setNewMsg(e.target.value);
@@ -105,7 +107,7 @@ console.log("status",status);
     Array.from(selectedFiles).forEach((file)=>{
       formData.append('files',file)
     })
-    const newMessage = { ticketId: ticketId,userOrderId:userOrderId,ticketIssue:ticketIssue,ticketStatus:"pending", user:user?.name, content: newMsg,userEmail:userEmail,userName:user?.name };
+    const newMessage = { ticketId: ticketId,userOrderId:userOrderId,ticketIssue:ticketIssue,ticketStatus:"pending", user:user?.name, content: newMsg,userEmail:userEmail,adminUser:adminUser,userName:user?.name };
 
     const chatMessage = {
       ticketId: newMessage.ticketId,  // added this line
@@ -115,6 +117,7 @@ console.log("status",status);
       userEmail: newMessage.userEmail,
       userName: newMessage.userName,
       admin: newMessage.user,
+      adminUser: newMessage.adminUser,
       orderId:newMessage.userOrderId,
       timestamp: new Date().toISOString(), // this won't be the exact timestamp saved in the DB
     };
@@ -307,15 +310,7 @@ function timeSince(date) {
           </div>
           <div className="row">
             <div className="col-12">
-              {
-                (!openTextBox && lastTicketStatus!=="close") && 
-                <div className="ticket-replay">
-              
-                <button className="ttm-button" onClick={()=>setOpenTextBox(true)}><i className="fa fa-reply" aria-hidden="true" style={{marginRight: '5px'}} />Reply</button>
-                <button className="ttm-button"><i className="fa fa-sticky-note" aria-hidden="true" style={{marginRight: '5px'}} />Add Note</button>
-                <button className="ttm-button"><i className="fa fa-paper-plane" aria-hidden="true" style={{marginRight: '5px'}} />Send Copy</button>
-              </div>
-              }
+            
                 {
                 lastTicketStatus==="close" &&
                 <div className="ticket-replay">
@@ -327,8 +322,8 @@ function timeSince(date) {
           </div> 
             <div className="row">
               <div className='col-12'>
-              {
-             openTextBox && 
+              
+          
              <form className="input-group chat-messages p-4 " onSubmit={handleSendMessage}>
      <div   ref={quillRef}  />
     {/* <textarea  className='col-12'
@@ -357,6 +352,12 @@ function timeSince(date) {
                      <div>
                      <button className="ttm-button" onClick={()=>setOpenTextBox(false)}> <i className="fa fa-trash" aria-hidden="true" style={{ marginRight: '5px' }} /></button>
                      <button className="ttm-button" type="submit"><i className="fa fa-reply" aria-hidden="true" style={{marginRight: '5px'}} />Reply</button>
+               
+              
+                {/* <button className="ttm-button" onClick={()=>setOpenTextBox(true)}><i className="fa fa-reply" aria-hidden="true" style={{marginRight: '5px'}} />Reply</button> */}
+                {/* <button className="ttm-button"><i className="fa fa-sticky-note" aria-hidden="true" style={{marginRight: '5px'}} />Add Note</button> */}
+                {/* <button className="ttm-button"><i className="fa fa-paper-plane" aria-hidden="true" style={{marginRight: '5px'}} />Send Copy</button> */}
+            
                      </div>
                     
                    
@@ -372,7 +373,7 @@ function timeSince(date) {
                                    <button className="btn btn-primary">Reply</button> */}
                   
                    </form>
-           }
+         
            {
              showAlert &&
              <AlertMessage 

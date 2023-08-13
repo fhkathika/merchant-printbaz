@@ -155,7 +155,7 @@ if(e.target.value==="general query"){
     Array.from(selectedFiles).forEach((file)=>{
       formData.append('files',file)
     })
-    const newMessage = { ticketId: ticketId,userOrderId:userOrderId,ticketIssue:ticketIssue,ticketStatus:"pending", user: user?.name, content: newMsg,userEmail:userEmail,userName:user?.name };
+    const newMessage = { ticketId: ticketId,userOrderId:userOrderId,adminUser:"",ticketIssue:ticketIssue,ticketStatus:"pending(created by client)", user: user?.name, content: newMsg,userEmail:userEmail,userName:user?.name };
 
     const chatMessage = {
       ticketId: newMessage.ticketId,  // added this line
@@ -163,6 +163,7 @@ if(e.target.value==="general query"){
       ticketStatus: newMessage.ticketStatus,
       ticketIssue: newMessage.ticketIssue,
       userEmail: newMessage.userEmail,
+      adminUser:newMessage.adminUser,
       userName: newMessage.userName,
       admin: newMessage.user,
       orderId:newMessage.userOrderId,

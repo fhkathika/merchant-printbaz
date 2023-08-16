@@ -98,7 +98,6 @@ const NewOrder = () => {
     const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);
 
-
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
     if (name==="color" || name==="teshirtSize" || name==="quantity" || name==="printSize"|| name==="printSide" || name==="printSizeBack") {
@@ -916,7 +915,8 @@ const handleSubmit = async (e) => {
                       style={{ backgroundColor: "gray", marginLeft: "10px" }}
                     >
                       Cancel
-                    </Button>
+                    </Button> 
+                
                     {
   isLoading===true &&(
     <>

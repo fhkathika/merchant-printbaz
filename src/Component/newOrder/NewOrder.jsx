@@ -44,7 +44,7 @@ const NewOrder = () => {
    const [loading, setLoading] = useState(false);
    const [dbData, setDbData] = useState({});
    const [printSide, setPrintSide] = useState('');
-   const [addbrandLogo, setAddBrandLogo] = useState('');
+   const [addbrandLogo, setAddBrandLogo] = useState(false);
    const { fetchedData, searchProduct, setSearchProduct } = useGetData(
      idPrice,
      collectionsPrice,
@@ -231,12 +231,20 @@ let updatedPrintbazcost=0
         backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 15
       }
       console.log("formData?.orderDetailArr[i]?.printSizeBack",(formData?.orderDetailArr[i]?.quantity * 80));
+      if(addbrandLogo===true){
+        // printbazcost=parseInt(printbazcostbase+5)
+        printbazcostbase = Number(totalPrice)+backSidePrintCost+5;
+        printbazcost += printbazcostbase;
+      }
+      else{
+        printbazcostbase = Number(totalPrice)+backSidePrintCost;
+        printbazcost += printbazcostbase;
+      }
 
-  printbazcostbase = Number(totalPrice)+backSidePrintCost;
-  printbazcost += printbazcostbase;
   // console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
     } else {
       if(printbazcostbase){
+      
         printbazcost= printbazcostbase;
       }
       else{
@@ -787,7 +795,10 @@ const handleSubmit = async (e) => {
       const orderDetailArrCopy = [...formData.orderDetailArr];
       orderDetailArrCopy[0].brandLogo = e.target.files[0];  // Change 0 with the index of the order detail item being updated
       const hasBrandLogo = e.target.files.length > 0;
-      setAddBrandLogo(hasBrandLogo)
+      if(hasBrandLogo){
+        setAddBrandLogo(true)
+      }
+     
    
       setFormData({ ...formData, orderDetailArr: orderDetailArrCopy });
     }}
@@ -806,7 +817,8 @@ const handleSubmit = async (e) => {
       
                       <h3>
                         {" "}
-                        <span style={{ fontSize: "" }}>&#2547;</span> {addbrandLogo ?parseInt(printbazcost+5):printbazcost}
+                        {/* <span style={{ fontSize: "" }}>&#2547;</span> {addbrandLogo ?parseInt(printbazcost+5):printbazcost} */}
+                        <span style={{ fontSize: "" }}>&#2547;</span> {printbazcost}
                       </h3>
                     </div>
       

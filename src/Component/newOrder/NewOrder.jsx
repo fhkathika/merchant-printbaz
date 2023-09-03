@@ -630,7 +630,13 @@ const handleSubmit = async (e) => {
                       >
                         <option value="">select tee shirt size</option>
                         <option value="m">M</option>
-                        <option value="L">L</option>
+                        {
+                          item.color==="black"?
+                          <option value="L"  disabled>L (out of stock)</option>
+                          :
+                          <option value="L">L</option>
+                        }
+                     
                         <option value="XL">XL</option>
                         <option value="XXL">XXL</option>
                       </Form.Control>

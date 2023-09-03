@@ -638,7 +638,14 @@ const handleSubmit = async (e) => {
                         }
                      
                         <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
+                        {
+                          item.color==="black"?
+                          <option value="XXL" disabled>XXL (out of stock)</option>
+                          :
+                          <option value="XXL">XXL</option>
+                        }
+                     
+                    
                       </Form.Control>
                     </Form.Group>
       

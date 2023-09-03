@@ -629,21 +629,37 @@ const handleSubmit = async (e) => {
                         name="teshirtSize"
                       >
                         <option value="">select tee shirt size</option>
-                        <option value="m">M</option>
+                       
                         {
                           item.color==="black"?
-                          <option value="L"  disabled>L (out of stock)</option>
-                          :
-                          <option value="L">L</option>
-                        }
-                     
-                        <option value="XL">XL</option>
-                        {
-                          item.color==="black"?
+                          <>
+                           <option value="m">M</option>
+                              <option value="L"  disabled>L (out of stock)</option>
+                              <option value="XL">XL</option>
                           <option value="XXL" disabled>XXL (out of stock)</option>
+                          </>
+                      
+                         
                           :
-                          <option value="XXL">XXL</option>
-                        }
+                          item.color==="white"?
+                          <>
+                           <option value="m">M</option>
+                           <option value="L"  disabled>L (out of stock)</option>
+                           <option value="XL" disabled>XL (out of stock)</option>
+                           <option value="XXL" disabled>XXL (out of stock)</option>
+                          </>
+                          :
+                          <>
+                          <option value="m">M</option>
+                         <option value="L">L</option>
+                         <option value="XL">XL</option>
+                          <option value="XXL" >XXL</option>
+                         </> 
+                        } 
+                        
+                     
+                     
+                        
                      
                     
                       </Form.Control>

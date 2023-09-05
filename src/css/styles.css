@@ -854,3 +854,62 @@ color: #bababa !important;
 }
 
 
+@media only screen and (max-width: 600px) {
+        
+  /* .d-none{
+    display: block;
+  } */
+  .block_phone{
+    display: block !important;
+  }
+
+.all-content{
+margin: 20px !important;
+}
+  .diplay_none{
+    display: block !important;
+  }
+
+  .d-none-phone{
+    display: none !important ;
+  }
+  .text_Align_Left{
+text-align: left !important;
+  }
+
+  .tab{
+    font-size: 14px;
+    padding:8px 11px
+  }
+  .admin-dis-chat{
+    padding: 10px !important;
+  }
+  .tab-content{
+    padding:20px 10px !important;
+  }
+  .btn_phone{
+    padding: 8px 10px !important;
+  }
+
+  .p-4{
+    padding:0rem !important;
+  }
+  .px-4{
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+.font_16{
+font-size: 16px !important ;
+}
+.weight_600{
+font-weight: 600;
+}
+.font_16{
+font-size: 16px !important;
+}
+
+}
+
+.diplay_none{
+  display: none !important;
+}

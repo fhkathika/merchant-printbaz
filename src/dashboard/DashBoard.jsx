@@ -16,8 +16,8 @@ const DashBoard = () => {
   let id = "resellerOrdersId";
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
-  const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-  const resellerOrdersFromDb=fetchedData?.orders
+  // const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
+  // const resellerOrdersFromDb=fetchedData?.orders
   const {info}=useGetMongoData()
 
     const [activeTab, setActiveTab] = useState("Dashboard");
@@ -76,15 +76,26 @@ for(let i=0;i<orderStatusPaymentReleased?.length;i++){
 //patmnet status =paid,orderstatus :delivered
 const PaymentStausPaid=info
 ?.filter(order => order.userMail === user?.email && order.paymentStatus==="paid" && order?.orderStatus==="delivered")
-
+console.log("PaymentStausPaid",PaymentStausPaid);
+const returnValueFilter=info?.filter(order => order.userMail === user?.email && order?.orderStatus==="returned")
+console.log("returnValueFilter",returnValueFilter);
 
 let statusPaidbase=0;
 for(let i=0;i<PaymentStausPaid?.length;i++){
   let totalpaid=PaymentStausPaid[i]?.recvMoney;
-  statusPaidbase +=totalpaid;
-// console.log("statusPaidbase",statusPaidbase);
+  statusPaidbase =statusPaidbase+totalpaid;
+
 }
+// returned amount 
+let returnAmountBase=0;
+for(let i=0;i<returnValueFilter?.length;i++){
+  let totalreturned=returnValueFilter[i]?.recvMoney;
+  statusPaidbase =returnAmountBase+totalreturned;
+
+}
+
 let dueAmount=parseInt(statusPaidbase-totalReceiveBase)
+// let dueAmount=statusPaidbase-(totalReceiveBase-)
 // console.log("dueAmount",dueAmount);
       return (
         <div className='payment_container'>
@@ -163,7 +174,17 @@ let dueAmount=parseInt(statusPaidbase-totalReceiveBase)
               </div>
                <div className='flex'>
               <p>Total Bill:  </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{parseInt(statusPaidbase)} </span>
+              <span style={{color:"orange",fontSize:'16px'}}>{parseInt(statusPaidbase)} Tk </span>
+             
+              </div> 
+              <div className='flex'>
+              <p>Return Value:  </p>
+              <span style={{color:"orange",fontSize:'16px'}}>{parseInt()} Tk </span>
+             
+              </div> 
+              <div className='flex'>
+              <p>Total Payment Receive:  </p>
+              <span style={{color:"orange",fontSize:'16px'}}>{parseInt()} Tk </span>
              
               </div>
                <div className='flex'>

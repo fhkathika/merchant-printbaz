@@ -1,6 +1,6 @@
 
  import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef,useState } from 'react'
 import { Accordion, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
@@ -19,11 +19,72 @@ import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSup
     const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
     const [shownPopupTicketId, setShownPopupTicketId] = useState(null);
     const [usersStoredTickets, setUsersStoredTickets] = useState([]);
+    const [getSpecificOrderById, setGetSpecificOrderById] = useState();
+    const [show,setShow]=useState(false)
+    const target = useRef(null);
     const location = useLocation();
 const viewOrder = location.state ? location?.state?.orderInfo : null;
 
+useEffect(()=>{
+  const getOrderById=async()=>{
+           // Fetch the updated order details
+  // await fetch(`https://mserver.printbaz.com/getorder/${id}`)
+  await fetch(`http://localhost:5000/getorder/${viewOrder?._id}`)
+  .then(res=>res.json())
+  .then(data => {setGetSpecificOrderById(data)
+  })
+    
+  
+       }
+       getOrderById()
+        // Update the previousPath state when the location changes
 
+      },[])
+      console.log("getSpecificOrderById",getSpecificOrderById);
 const closePopup = () => {setShowTicketPopUp(false);};
+
+useEffect(() => {
+  // Function to handle fetching
+  const fetchData = async () => {
+    const returnedAmm =
+      Number(getSpecificOrderById?.printbazcost) +
+      Number(getSpecificOrderById?.deliveryFee);
+    const orderReturmed = getSpecificOrderById?.orderStatus=== "returned";
+console.log("orderReturmed",orderReturmed);
+if(orderReturmed===true){
+  try {
+    const response = await fetch(
+      `http://localhost:5000/returnOrderAddition/${viewOrder?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ returnedAmount: returnedAmm }),
+      }
+    );
+
+    if (response.ok) {
+      // Update the approval status in the viewClient object
+      // You can update the state or do whatever you want here
+    } else {
+      console.error("Status Error:", response);
+      // Handle error here
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    // Handle error here
+  }
+}
+  
+  };
+
+  // Call the async function
+  fetchData();
+}, [getSpecificOrderById, viewOrder]);
+
+
+ 
 
 useEffect(() => {
   // Fetch the chat log from the server when the component mounts
@@ -51,7 +112,11 @@ const fetchAllTicketData = async () => {
     console.error(err);
   }
 };
+let date = new Date(getSpecificOrderById?.createdAt); // create a new Date object
 
+let options = {month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'  }; // options for toLocaleDateString
+
+let formattedDate = date.toLocaleDateString('en-US', options); 
 let idCounter = 1; // Initialize a counter for the IDs
 const generateId = () => {
   const paddedId = String(idCounter).padStart(6, '0'); // Convert counter to string and pad with leading zeros
@@ -119,6 +184,17 @@ const getViewClientColor = (status) => {
   // you can add more conditions here or just return a default color
   // return "defaultColor";
 };
+const copyOrderId = () => {
+  navigator.clipboard.writeText(getSpecificOrderById?._id);
+  
+  setShow(true)
+  // console.log("viewOrder?._id",viewOrder?._id);
+  setTimeout(() => {
+    setShow(false);
+  }, 1000);
+  
+  // Show a notification or perform any other action after copying the ID
+};
      return (
         <div>
           <meta charSet="UTF-8" />
@@ -129,16 +205,124 @@ const getViewClientColor = (status) => {
           
           <NavigationBar/>
           <div className="all-content">
+          <div className="row mt-5">
+              <div className="col-12">
+                <div className="order-id bg-white p-4  shadow-sm" >
+                <div style={{display:""}} className="row">
+                  <div className='col-lg-6'>
+                  <h3 className=" font-weight-bold col-lg-12 font_16" onClick={copyOrderId}>ORDER ID: {viewOrder?._id} &nbsp;<span style={{cursor:"pointer",padding:"5px",fontSize:"16px"}} ref={target}  onClick={copyOrderId}><i class="fa fa-copy ml-2 mt-1 text-green cursor-pointer text-sm"></i></span> 
+                <h5 className='font_16' style={{marginTop:"10px"}}>{formattedDate}</h5>
+                </h3>
+                  
+                  </div>
+              
+         
+   
+  
+                  <div className="   font-weight-bold col-lg-3 "
+                        style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
+                      >
+                        <div style={{display:""}}>
+                         
+                        <p className="d-inline-block py-2 px-3  text-white font-weight-bold rounded" style={{backgroundColor:"blue",color:"white"}}>{getSpecificOrderById?.paymentStatus}</p>
+                     
+                       
+                        </div>
+                        
+                       
+               
+
+                      </div> 
+                      
+                      <div className="   font-weight-bold col-lg-3 "
+                        style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
+                      >
+                        <div style={{display:""}}>
+                         
+                        <p className="d-inline-block py-2 px-3  text-white font-weight-bold rounded" style={{backgroundColor: getViewClientColor(
+                                getSpecificOrderById?.orderStatus
+                                )}}>{getSpecificOrderById?.orderStatus}</p>
+                     
+                        <p className='text_Align_Left' style={{textAlign:"center",marginTop:'10px'}}>Status changed at: {getSpecificOrderById?.statusDate}</p>
+                        </div>
+                        
+                       
+               
+
+                      </div>
+                </div>
+              
+                     
+                </div>
+            
+              </div>
+            </div>
             <div className="row">
               <div className="col-12">
-                <div className="order-id bg-white p-3 my-3 shadow-sm">
-                  <h3 className="d-inline-block font-weight-bold">ORDER ID: {viewOrder?._id} &nbsp;</h3>
-                  <p className="d-inline-block py-2 px-3  text-white font-weight-bold rounded" style={{backgroundColor: getViewClientColor(
-                                viewOrder?.orderStatus
-                                )}}>{viewOrder?.orderStatus}</p>
+                <div className="trak-info bg-white p-4 my-3 shadow-sm">
+                  <div className="row">
+                    <div className="col-12">
+                      <h3 className="all-title mb-4">Tracking Details</h3>
+                    </div>
+                  </div>
+                  <div className="row trak-status">
+                    <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868453112680478/ic-confirmed-red.f41e73a9.png" alt="" />
+                     {
+                     getSpecificOrderById?.orderStatus==="returned"|| getSpecificOrderById?.orderStatus==="Approved" || getSpecificOrderById?.orderStatus==="in-production" ||  getSpecificOrderById?.orderStatus==="out for delivery" ||  getSpecificOrderById?.orderStatus==="payment-released"||   getSpecificOrderById?.orderStatus==="delivered"    ?
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                      :
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} />
+
+                     }
+                     
+                      <p>Accepted</p>
+                    </div>
+                    <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
+                      {
+                                         getSpecificOrderById?.orderStatus==="returned" || getSpecificOrderById?.orderStatus==="in-production" ||  getSpecificOrderById?.orderStatus==="out for delivery" ||  getSpecificOrderById?.orderStatus==="payment-released"||   getSpecificOrderById?.orderStatus==="delivered"   ?
+                     
+                       
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                       :
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
+                      }
+                     
+                      <p>In Production</p>
+                    </div>  
+                      <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
+                      {
+                       getSpecificOrderById?.orderStatus==="returned"|| getSpecificOrderById?.orderStatus==="out for delivery" || getSpecificOrderById?.orderStatus==="payment-released"||  getSpecificOrderById?.orderStatus==="delivered"   ?
+                     
+                       
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                       :
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
+                      }
+                     
+                      <p>Out for Delivery</p>
+                    </div>  
+                     <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
+                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
+                      {
+                   getSpecificOrderById?.orderStatus==="returned"||   getSpecificOrderById?.orderStatus==="payment-released"|| getSpecificOrderById?.orderStatus==="delivered"  ?
+                     
+                       
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
+                       :
+                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
+                      }
+                     
+                      <p>Delivered</p>
+                    </div>
+                    
+                   
+                  </div>
                 </div>
               </div>
-            </div> 
+            </div>
               <div className="row">
               <div className="col-12">
                 <div className="order-id bg-white p-3 my-3 shadow-sm">
@@ -146,12 +330,12 @@ const getViewClientColor = (status) => {
                 {
          showTicketPopUp &&  (
             <SupportTicketPopUp
-            userOrderId={viewOrder?._id}
+            userOrderId={getSpecificOrderById?._id}
             onClose={closePopup}
             ticketId={popupId}
             fetchTickets={fetchChatLog}
-            userEmail={viewOrder?.userMail}
-            userName={viewOrder?.username}
+            userEmail={getSpecificOrderById?.userMail}
+            userName={getSpecificOrderById?.username}
             
             />
             )
@@ -186,13 +370,13 @@ const getViewClientColor = (status) => {
          </Accordion.Header>
         <Accordion.Body>
         <UsersStoredSupportTickets
-                   userOrderId={viewOrder?._id}
+                   userOrderId={getSpecificOrderById?._id}
                    onClose={() => setShownPopupTicketId(null)}
                    ticketId={tickets?.ticketId}
                    ticketIssue={tickets?.ticketIssue}
                    adminUser={tickets?.adminUser}
-                   userEmail={viewOrder?.userMail}
-                   userName={viewOrder?.name}
+                   userEmail={getSpecificOrderById?.userMail}
+                   userName={getSpecificOrderById?.name}
                />
         </Accordion.Body>
       </Accordion.Item>
@@ -205,7 +389,35 @@ const getViewClientColor = (status) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-7 col-md-12 mb-3">
+            <div className="col-lg-4 col-md-12 mb-3">
+               
+                  <div className="rec-info bg-white p-4 shadow-sm">
+                  <div className="row">
+                    <div className="col-12">
+                      <h3 className="all-title">Client Details</h3>
+                    </div>
+                    <div className="col-md-6 col-sm-12">
+                      <h5>Name</h5>
+                      <p>{getSpecificOrderById?.clientName}</p>
+                    </div>
+                    <div className="col-md-6 col-sm-12">
+                      <h5>Brand Name</h5>
+                      <p>{getSpecificOrderById?.clientbrandName}</p>
+                    </div>
+                    <div className="col-md-6 col-sm-12">
+                      <h5>Email</h5>
+                      <p>{getSpecificOrderById?.userMail}</p>
+                    </div>
+                    <div className="col-md-6 col-sm-12">
+                      <h5>Contact Number</h5>
+                      <p>{getSpecificOrderById?.clientPhone}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                
+              </div>
+              <div className="col-lg-4 col-md-12 mb-3">
                 <div className="rec-info bg-white p-3 shadow-sm">
                   <div className="row">
                     <div className="col-12">
@@ -213,105 +425,423 @@ const getViewClientColor = (status) => {
                     </div>
                     <div className="col-md-6 col-sm-12">
                       <h5>Name</h5>
-                      <p>{viewOrder?.name}</p>
+                      <p>{getSpecificOrderById?.name}</p>
                     </div>
                     <div className="col-md-6 col-sm-12">
                       <h5>Phone</h5>
-                      <p>{viewOrder?.phone}</p>
+                      <p>{getSpecificOrderById?.phone}</p>
                     </div>
                     <div className="col-12">
                       <h5>Address</h5>
-                      <p>{viewOrder?.address}</p>
+                      <p>{getSpecificOrderById?.address}</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4 offset-lg-1 col-md-12">
+              <div className="col-lg-4 col-md-12 mb-3">
                 <div className="bg-white p-3 shadow-sm">
                   <div className="row amu-title">
                     <div className="col-12">
                       <h3 className="all-title">Cost of Order</h3>
                       <h6>Printbaz Cost</h6>
-                      <p>{viewOrder?.printbazcost}</p>
+                      <p>{getSpecificOrderById?.printbazcost}</p>
                       <h6>Delivery Fee</h6>
-                      <p>{viewOrder?.deliveryFee}</p>
+                      <p>{getSpecificOrderById?.deliveryFee}</p>
                       <h6>Collect Amount</h6>
-                      <p>{viewOrder?.collectAmount}</p>
+                      <p>{getSpecificOrderById?.collectAmount}</p>
                       <h6>Cash Handling Fee</h6>
                       <p>2%</p>
-                      <h6>Receivable Amount</h6>
-                      <p>{viewOrder?.recvMoney}</p>
+                      {
+getSpecificOrderById?.orderStatus==="returned"?
+<>
+
+<h6 style={{color:"red"}}>Returned Amount</h6>
+<p style={{color:"red"}}> {getSpecificOrderById?.returnedAmount}</p>
+</>
+:
+<>
+
+<h6>Receivable Amount</h6>
+<p>{getSpecificOrderById?.recvMoney}</p>
+</>
+                      }
+                      
+                     
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-12">
-                <div className="trak-info bg-white p-4 my-3 shadow-sm">
+           {/* //instruction box  */}
+           <div className='row'>
+           <div className="col-lg-12 col-md-12 mb-3">
+                <div className="rec-info bg-white p-4 shadow-sm">
                   <div className="row">
                     <div className="col-12">
-                      <h3 className="all-title mb-4">Tracking Details</h3>
+                      <h3 className="all-title">Instruction</h3>
                     </div>
                   </div>
-                  <div className="row trak-status">
-                    <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868453112680478/ic-confirmed-red.f41e73a9.png" alt="" />
-                     {
-                     viewOrder?.orderStatus==="returned"|| viewOrder?.orderStatus==="Approved" || viewOrder?.orderStatus==="in-production" ||  viewOrder?.orderStatus==="out for delivery" ||  viewOrder?.orderStatus==="payment-released"||   viewOrder?.orderStatus==="delivered"    ?
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
-                      :
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} />
-
-                     }
-                     
-                      <p>Accepted</p>
+               
+                  <div className="row order-list-title">
+                    <div className="col-12">
+                      <h4 className='font_16'>{getSpecificOrderById?.instruction}</h4>
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
-                      {
-                                         viewOrder?.orderStatus==="returned" || viewOrder?.orderStatus==="in-production" ||  viewOrder?.orderStatus==="out for delivery" ||  viewOrder?.orderStatus==="payment-released"||   viewOrder?.orderStatus==="delivered"   ?
-                     
-                       
-                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
-                       :
-                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
-                      }
-                     
-                      <p>In Production</p>
-                    </div>  
-                      <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
-                      {
-                       viewOrder?.orderStatus==="returned"|| viewOrder?.orderStatus==="out for delivery" || viewOrder?.orderStatus==="payment-released"||  viewOrder?.orderStatus==="delivered"   ?
-                     
-                       
-                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
-                       :
-                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
-                      }
-                     
-                      <p>Out for Delivery</p>
-                    </div>  
-                     <div className="col-lg-3 col-md-6 col-sm-12 text-center mb-3">
-                      <img src="https://media.discordapp.net/attachments/1069579536842379305/1102868452777140255/ic-picked-red.94cd32af.png" alt="" />
-                      {
-                   viewOrder?.orderStatus==="returned"||   viewOrder?.orderStatus==="payment-released"|| viewOrder?.orderStatus==="delivered"  ?
-                     
-                       
-                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711228821544/check_2.png" alt="" style={{width: '25px'}} />
-                       :
-                       <img src="https://media.discordapp.net/attachments/1069579536842379305/1102872711610515456/remove.png" alt="" style={{width: '25px'}} /> 
-                      }
-                     
-                      <p>Delivered</p>
-                    </div>
-                    
-                   
+              
                   </div>
+               
+                
+                 
                 </div>
               </div>
-            </div>
+           </div>
+
+           <div className="col-lg-12 col-md-12 mb-3">
+  <div className="rec-info bg-white p-4 shadow-sm">
+    <div className="row">
+      <div className="col-12">
+        <h3 className="all-title">Order Details</h3>
+      </div>
+    </div>
+ 
+    <div className="row order-list-title d-none-phone">
+      
+      <div className="col-3">
+        <h4>Color</h4>
+      </div>
+      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+        <h4>T-shirt Size</h4>
+      </div>
+      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+        <h4>Quantity</h4>
+      </div>
+      {/* <div className="col-1" style={{display:"flex",justifyContent:"center"}}>
+        <h4>Print Size</h4>
+      </div> */}
+      {/* <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+        <h4>Main File</h4>
+      </div> */}
+      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+        <h4>Picture</h4>
+      </div>
+        {/* <div className="col-1">
+        <h4>BrandLogo</h4>
+      </div> */}
+      {/* <div className="col-2">
+        <h4>Picture</h4>
+      </div> */}
+    </div>
+    {
+      getSpecificOrderById?.orderDetailArr?.map((orderDetail,orderIndex)=><>
+        <div className="row order-tab d-none-phone " key={orderIndex}>
+        <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
+        
+      <div className="col-3">
+        <p>{orderDetail?.color}</p>
+      </div>
+      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+        {orderDetail?.teshirtSize}
+      </div>
+      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+      {orderDetail?.quantity}
+      </div>
+ 
+    
+      <div className="col-lg-2" style={{display:"flex",justifyContent:"right"}}>
+      <div className="card file">
+{
+orderDetail?.image?.map(imageUrl => {
+// Extract the file ID from the URL
+//  let fileId = "";
+//  if (imageUrl.includes("/file/d/")) {
+//    fileId = imageUrl.split("/file/d/")[1].split("/")[0];
+//  } else if (imageUrl.includes("id=")) {
+//    fileId = imageUrl.split("id=")[1];
+//  }
+
+const fileId = imageUrl?.split('/d/')[1].split('/view')[0];
+const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
+
+return (
+<div key={imageUrl}>
+
+<div className="file-info">
+<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
+
+</div>
+</div>
+)
+})
+}
+</div>
+      </div>
+    
+    </div>
+    <div className="row  " >
+      {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
+      <div className="col-12 "  key={orderIndex}>
+    
+      {/* {orderDetail?.printSide} */}
+    
+      <p >Print side : <span style={{fontweight:'700'}}> {orderDetail?.printSide}</span></p>
+      <p >FrontSide : <span className='bold'>{orderDetail?.printSize?orderDetail?.printSize:"N/A"}</span></p>
+      <p>BackSide: {orderDetail?.printSizeBack ? orderDetail?.printSizeBack :"N/A"}</p>
+     
+    
+       
+    
+     <div className="col-lg-12" >
+     <h4>Main File :</h4>
+      <div className="card file">
+{
+orderDetail?.file?.map((fileUrl,fileIndex) => {
+// Extract the file ID from the URL
+//  let fileId = "";
+//  if (fileUrl?.includes("/file/d/")) {
+//    fileId = fileUrl?.split("/file/d/")[1]?.split("/")[0];
+//  } else if (fileUrl?.includes("id=")) {
+//    fileId = fileUrl?.split("id=")[1];
+//  }
+
+const fileId = fileUrl?.split('/d/')[1].split('/view')[0];
+const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
+// Construct the direct download link
+//  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+let dropdownId = `dropdown${orderIndex}-${fileIndex}`;
+return (
+<div key={fileIndex} style={{display:"flex"}}>
+
+<div className="file-info" style={{marginLeft:"15px",border:"none"}}>
+<iframe src={previewURL}  style={{ textDecoration: "none",border:"none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
+
+</div>
+</div>
+)
+})
+}
+</div>
+
+</div>
+     
+     {/* <p >Main File :<div className="file-info">
+<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
+
+</div></p> */}
+   
+
+{
+orderDetail?.brandLogo &&
+<>
+<h4>Brang Logo :</h4>
+<div className="card file">
+      {
+(() => {
+// Extract the file ID from the URL
+let fileId = "";
+if (orderDetail?.brandLogo?.includes("/file/d/")) {
+fileId = orderDetail?.brandLogo?.split("/file/d/")[1].split("/")[0];
+} else if (orderDetail?.brandLogo?.includes("id=")) {
+fileId = orderDetail?.brandLogo?.split("id=")[1];
+}
+// Construct the direct download link
+const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+return (
+<div >
+
+<div className="card-body file-info">
+{
+orderDetail?.brandLogo &&
+<>
+
+<div className="card file">
+      {
+(() => {
+// Extract the file ID from the URL
+let fileId = "";
+if (orderDetail?.brandLogo?.includes("/file/d/")) {
+fileId = orderDetail?.brandLogo?.split("/file/d/")[1].split("/")[0];
+} else if (orderDetail?.brandLogo?.includes("id=")) {
+fileId = orderDetail?.brandLogo?.split("id=")[1];
+}
+const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
+// Construct the direct download link
+const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+return (
+<div >
+
+<div className="card-body file-info">
+{
+orderDetail?.brandLogo ?
+<div>
+<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download> <p>Brand Logo</p></a>
+</div>
+:
+""
+}
+
+
+{/* <span className="file-size">1009.2kb</span><br /> */}
+</div>
+</div>
+)
+})()
+}
+
+</div>
+</>
+
+}
+
+
+{/* <span className="file-size">1009.2kb</span><br /> */}
+</div>
+</div>
+)
+})()
+}
+
+</div>
+</>
+
+}
+
+      </div>
+      <hr />
+    </div>
+
+{/* for mobile  */}
+    <div className="row  diplay_none" >
+      <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
+      <div className="col-12 "  key={orderIndex}>
+     <p >Color:  <span className='bold'>{orderDetail?.color}</span></p>
+     <p >T-shirt Size : <span className='bold'> {orderDetail?.teshirtSize}</span></p>
+     <p >Quantity : <span className='bold'> {orderDetail?.quantity}</span></p>
+     <p >Print Size : <span className='bold'>{orderDetail?.printSize}</span></p>
+     <div className="col-lg-12" >
+     <p>Main File :</p>
+      <div className="card file">
+{
+orderDetail?.file?.map((fileUrl,fileIndex) => {
+// Extract the file ID from the URL
+//  let fileId = "";
+//  if (fileUrl?.includes("/file/d/")) {
+//    fileId = fileUrl?.split("/file/d/")[1]?.split("/")[0];
+//  } else if (fileUrl?.includes("id=")) {
+//    fileId = fileUrl?.split("id=")[1];
+//  }
+
+const fileId = fileUrl?.split('/d/')[1].split('/view')[0];
+const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
+// Construct the direct download link
+//  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+let dropdownId = `dropdown${orderIndex}-${fileIndex}`;
+return (
+<div key={fileIndex}>
+
+<div className="file-info">
+<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
+
+</div>
+</div>
+)
+})
+}
+</div>
+
+</div>
+     
+     {/* <p >Main File :<div className="file-info">
+<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
+
+</div></p> */}
+                <div className="col-lg-12" >
+     <p>Picture :</p>
+      <div className="card file">
+      {
+orderDetail?.image?.map(imageUrl => {
+
+
+const fileId = imageUrl?.split('/d/')[1].split('/view')[0];
+const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
+
+return (
+<div key={imageUrl}>
+
+<div className="file-info">
+<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
+
+</div>
+</div>
+)
+})
+}
+</div>
+
+</div>
+
+{
+orderDetail?.brandLogo &&
+<>
+<p>Brang Logo :</p>
+<div className="card file">
+      {
+(() => {
+// Extract the file ID from the URL
+let fileId = "";
+if (orderDetail?.brandLogo?.includes("/file/d/")) {
+fileId = orderDetail?.brandLogo?.split("/file/d/")[1].split("/")[0];
+} else if (orderDetail?.brandLogo?.includes("id=")) {
+fileId = orderDetail?.brandLogo?.split("id=")[1];
+}
+// Construct the direct download link
+const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+return (
+<div >
+
+<div className="card-body file-info">
+{
+orderDetail?.brandLogo ?
+<a className="dropdown-item" href={downloadUrl} download> <p>Brand Logo</p></a>
+:
+""
+}
+
+
+{/* <span className="file-size">1009.2kb</span><br /> */}
+</div>
+</div>
+)
+})()
+}
+
+</div>
+</>
+
+}
+
+      </div>
+      <hr />
+    </div>
+      </>)
+    }
+  
+   
+  </div>
+</div>
+           
           </div>
           <Footer/>
         </div>

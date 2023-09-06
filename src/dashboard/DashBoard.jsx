@@ -54,23 +54,69 @@ const DashBoard = () => {
    const orderStatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
   // console.log("orderStatus return",orderStatusReturned);
+   const orderStatusDelivered=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="delivered" ) 
+  // on hold artwork issue
+  const orderStatusonHoldartworkissue=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="on hold artwork issue" )
+    // on hold billing issue
+  const orderStatusonHoldbillingissue=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="on hold billing issue" )
+    // on hold out of stock
+  const orderStatusonHoldoutofstock=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="on hold out of stock" )
+  
 
   let returnedstatusCount=0
   for(let i=1;i<=orderStatusReturned?.length;i++){
     returnedstatusCount++
 
   }
+  let deliveredstatusCount=0
+  for(let i=1;i<=orderStatusDelivered?.length;i++){
+    deliveredstatusCount++
+
+  }let onHoldArtWorkstatusCount=0
+  for(let i=1;i<=orderStatusonHoldartworkissue?.length;i++){
+    onHoldArtWorkstatusCount++
+
+  }let onHoldBillingstatusCount=0
+  for(let i=1;i<=orderStatusonHoldbillingissue?.length;i++){
+    onHoldBillingstatusCount++
+
+  }let onHoldoutofstockCount=0
+  for(let i=1;i<=orderStatusonHoldoutofstock?.length;i++){
+    onHoldoutofstockCount++
+
+  }
+console.log("onHoldArtWorkstatusCount",onHoldArtWorkstatusCount);
+console.log("onHoldBillingstatusCount",onHoldBillingstatusCount);
+
+  const totalHold=Number(onHoldArtWorkstatusCount+onHoldBillingstatusCount+onHoldoutofstockCount)
+  console.log("totalHold",totalHold);
   // console.log("returnstatusCount",returnedstatusCount);  
   
   // Payment Released
    const orderStatusPaymentReleased=info
-  ?.filter(order => order.userMail === user?.email && order.orderStatus==="payment-released" )
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="payment-released" ) 
+  //return amount
+    const orderSatatusReturned=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
   // console.log("orderStatus pament released",orderStatusPaymentReleased);
-  let totalReceiveBase=0
+
+
+
+  
+  let totalReceiveBase=0,totalReturnAmmountBase=0;
 for(let i=0;i<orderStatusPaymentReleased?.length;i++){
   let totalReceive=orderStatusPaymentReleased[i]?.recvMoney;
   totalReceiveBase +=totalReceive;
 // console.log("totalReceiveBase",totalReceiveBase);
+}
+for(let i=0;i<orderSatatusReturned?.length;i++){
+  let totalReturn=orderSatatusReturned[i]?.returnedAmount;
+  totalReturnAmmountBase +=totalReturn;
+console.log("totalReturnAmmountBase",totalReturnAmmountBase);
 }
 
 //patmnet status =paid,orderstatus :delivered
@@ -94,7 +140,11 @@ for(let i=0;i<returnValueFilter?.length;i++){
 
 }
 
-let dueAmount=parseInt(statusPaidbase-totalReceiveBase)
+let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
+console.log("statusPaidbase",statusPaidbase);
+console.log("totalReceiveBase",totalReceiveBase);
+console.log("totalReturnAmmountBase",totalReturnAmmountBase);
+console.log("dueAmount",dueAmount);
 // let dueAmount=statusPaidbase-(totalReceiveBase-)
 // console.log("dueAmount",dueAmount);
       return (
@@ -144,13 +194,21 @@ let dueAmount=parseInt(statusPaidbase-totalReceiveBase)
             <h4>Total Delivered</h4>
             <div className="sub-cat">
             <div className='flex'>
-              <p>Pending Delivery:</p>
+              <p>Total Pending:</p>
               <span style={{color:"orange",fontSize:'16px'}}>{pendingstatusCount} </span>
              
               </div>
                <div className='flex'>
               <p>Total Returned:</p>
               <span style={{color:"orange",fontSize:'16px'}}>{returnedstatusCount} </span>
+             
+              </div><div className='flex'>
+              <p>Total On Hold:</p>
+              <span style={{color:"orange",fontSize:'16px'}}>{totalHold} </span>
+             
+              </div><div className='flex'>
+              <p>Total Delivered:</p>
+              <span style={{color:"orange",fontSize:'16px'}}>{deliveredstatusCount} </span>
              
               </div>
              
@@ -179,17 +237,13 @@ let dueAmount=parseInt(statusPaidbase-totalReceiveBase)
               </div> 
               <div className='flex'>
               <p>Return Value:  </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{parseInt()} Tk </span>
+              <span style={{color:"orange",fontSize:'16px'}}>{parseInt(totalReturnAmmountBase)} Tk </span>
              
               </div> 
-              <div className='flex'>
-              <p>Total Payment Receive:  </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{parseInt()} Tk </span>
              
-              </div>
                <div className='flex'>
               <p>Due Amount: </p>
-              <span style={{color:"orange",fontSize:'16px'}}> {dueAmount>=0 && dueAmount }</span>
+              <span style={{color:"orange",fontSize:'16px'}}> {dueAmount} TK</span>
              
               </div>
 

@@ -20,6 +20,7 @@ import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSup
     const [shownPopupTicketId, setShownPopupTicketId] = useState(null);
     const [usersStoredTickets, setUsersStoredTickets] = useState([]);
     const [getSpecificOrderById, setGetSpecificOrderById] = useState();
+    const [showTicket, setShowTicket] = useState(false);
     const [show,setShow]=useState(false)
     const target = useRef(null);
     const location = useLocation();
@@ -41,7 +42,7 @@ useEffect(()=>{
 
       },[])
       console.log("getSpecificOrderById",getSpecificOrderById);
-const closePopup = () => {setShowTicketPopUp(false);};
+const closePopup = () => {setShowTicketPopUp(false);setShow(false)};
 
 useEffect(() => {
   // Function to handle fetching
@@ -132,6 +133,7 @@ const generateId = () => {
 
 const handleShowTicketPopUp=()=>{
   fetchAllTicketData()
+  setShowTicket(true)
   setShowTicketPopUp(true)
 
   setPopupId(generateId()); // Set the generated ID
@@ -217,9 +219,22 @@ const copyOrderId = () => {
                   </div>
               
          
-   
+                  <div className="   font-weight-bold col-lg-2 "
+                        style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
+                      >
+                        <div style={{display:""}}>
+                         
+                        <Button  className='btn-success' onClick={handleShowTicketPopUp}>Create A Support Ticket</Button>
+                     
+                       
+                        </div>
+                        
+                       
+               
+
+                      </div> 
   
-                  <div className="   font-weight-bold col-lg-3 "
+                  <div className="   font-weight-bold col-lg-2 "
                         style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
                       >
                         <div style={{display:""}}>
@@ -234,7 +249,7 @@ const copyOrderId = () => {
 
                       </div> 
                       
-                      <div className="   font-weight-bold col-lg-3 "
+                      <div className="   font-weight-bold col-lg-2 "
                         style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
                       >
                         <div style={{display:""}}>
@@ -257,6 +272,77 @@ const copyOrderId = () => {
             
               </div>
             </div>
+            {
+              showTicketPopUp &&
+              <div className="row">
+              <div className="col-12">
+                <div className="order-id bg-white p-3  shadow-sm">
+                {/* <Button  className='btn-success' onClick={handleShowTicketPopUp}>Create A Support Ticket</Button> */}
+                {
+          
+            <SupportTicketPopUp
+            userOrderId={getSpecificOrderById?._id}
+            setShow={setShow}
+            onClose={closePopup}
+            ticketId={popupId}
+            fetchTickets={fetchChatLog}
+            userEmail={getSpecificOrderById?.userMail}
+            userName={getSpecificOrderById?.username}
+            
+            />
+            
+     }
+
+<hr />
+     {/* <h4 style={{marginTop:"20px"}}>All Support Tickets</h4>
+     {
+   usersTickets?.map(tickets =>
+  
+       <Accordion defaultActiveKey="0">
+     
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>
+         Ticket Id:  <span style={{color:"blue",fontWeight:"bold",marginLeft:"10px"}}>{ tickets?.ticketId}</span> 
+         
+      {
+         tickets?.ticketStatus==="open" &&
+         <span style={{marginLeft:"10px",color:"purple",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      }  
+       {
+         tickets?.ticketStatus==="replied" &&
+         <span style={{marginLeft:"10px",color:"green",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      } 
+       {
+         tickets?.ticketStatus==="pending" &&
+         <span style={{marginLeft:"10px",color:"orange",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      }  {
+         tickets?.ticketStatus==="close" &&
+         <span style={{marginLeft:"10px",color:"red",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
+      }
+         </Accordion.Header>
+        <Accordion.Body>
+        <UsersStoredSupportTickets
+                   userOrderId={getSpecificOrderById?._id}
+                   
+                   onClose={() => setShownPopupTicketId(null)}
+                   ticketId={tickets?.ticketId}
+                   ticketIssue={tickets?.ticketIssue}
+                   adminUser={tickets?.adminUser}
+                   userEmail={getSpecificOrderById?.userMail}
+                   userName={getSpecificOrderById?.name}
+               />
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+   )} */}
+    
+      
+
+                </div>
+              </div>
+            </div>
+            }
+           
             <div className="row">
               <div className="col-12">
                 <div className="trak-info bg-white p-4 my-3 shadow-sm">
@@ -323,71 +409,7 @@ const copyOrderId = () => {
                 </div>
               </div>
             </div>
-              <div className="row">
-              <div className="col-12">
-                <div className="order-id bg-white p-3 my-3 shadow-sm">
-                <Button  className='btn-success' onClick={handleShowTicketPopUp}>Create A Support Ticket</Button>
-                {
-         showTicketPopUp &&  (
-            <SupportTicketPopUp
-            userOrderId={getSpecificOrderById?._id}
-            onClose={closePopup}
-            ticketId={popupId}
-            fetchTickets={fetchChatLog}
-            userEmail={getSpecificOrderById?.userMail}
-            userName={getSpecificOrderById?.username}
-            
-            />
-            )
-     }
-
-<hr />
-     <h4 style={{marginTop:"20px"}}>All Support Tickets</h4>
-     {
-   usersTickets?.map(tickets =>
-  
-       <Accordion defaultActiveKey="0">
-     
-      <Accordion.Item eventKey="1">
-        <Accordion.Header>
-         Ticket Id:  <span style={{color:"blue",fontWeight:"bold",marginLeft:"10px"}}>{ tickets?.ticketId}</span> 
-         
-      {
-         tickets?.ticketStatus==="open" &&
-         <span style={{marginLeft:"10px",color:"purple",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      }  
-       {
-         tickets?.ticketStatus==="replied" &&
-         <span style={{marginLeft:"10px",color:"green",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      } 
-       {
-         tickets?.ticketStatus==="pending" &&
-         <span style={{marginLeft:"10px",color:"orange",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      }  {
-         tickets?.ticketStatus==="close" &&
-         <span style={{marginLeft:"10px",color:"red",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      }
-         </Accordion.Header>
-        <Accordion.Body>
-        <UsersStoredSupportTickets
-                   userOrderId={getSpecificOrderById?._id}
-                   onClose={() => setShownPopupTicketId(null)}
-                   ticketId={tickets?.ticketId}
-                   ticketIssue={tickets?.ticketIssue}
-                   adminUser={tickets?.adminUser}
-                   userEmail={getSpecificOrderById?.userMail}
-                   userName={getSpecificOrderById?.name}
-               />
-        </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
-   )}
-    
-      
-
-                </div>
-              </div>
-            </div>
+              
             <div className="row">
             <div className="col-lg-4 col-md-12 mb-3">
                

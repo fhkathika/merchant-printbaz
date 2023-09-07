@@ -1,10 +1,13 @@
-import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import ReqPaymentTIcketPopup from '../alertBox/ReqPaymentTIcketPopup';
 import Footer from '../Component/footer/Footer';
 import Login from '../Component/login/Login';
 import Register from '../Component/login/Register';
 import NavigationBar from '../Component/Navbar/NavigationBar';
+import SupportTicketPopUp from '../Component/supportTicketPopUp/SupportTicketPopUp';
 import YoutubeEmbed from '../Component/youtubeEmbaded/YoutubeEmbaded';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
 import  "../css/styles.css"
@@ -18,16 +21,45 @@ const DashBoard = () => {
   const [dbData, setDbData] = useState({});
   // const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
   // const resellerOrdersFromDb=fetchedData?.orders
+  console.log("user",user);
   const {info}=useGetMongoData()
-
+  const [usersTickets, setUsersTickets] = useState([]);
     const [activeTab, setActiveTab] = useState("Dashboard");
     const [dropdownOpen, setDropdownOpen] = useState(false);
-  
-    function closePopup() {
-      document.getElementById("popup1").style.display = "none";
-    }
-   
+    const [showPopup, setShowPopup] = useState(false);
+    const[fetchAllTicket,setFetchAllTicket]=useState([])
+    const [popupId, setPopupId] = useState('');
+    const [createTicket, setCreateTicket] = useState(false);
+    const [reqBtnStatus, setReqBtnStatus] = useState(true);
+    const closePopup = () => {setShowPopup(false);};
+    // function closePopup() {
+    //   document.getElementById("popup1").style.display = "none";
+    // }
+   useEffect(()=>{
+    fetchAllTicketData()
+   },[])
+    const fetchAllTicketData = async () => {
+      try {
+        // const response = await axios.get('http://localhost:5000/allTicketIds');
+        const response = await axios.get('https://mserver.printbaz.com/allTicketIds');
+        setFetchAllTicket(response.data);
+     
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    let idCounter = 1; // Initialize a counter for the IDs
+    const generateId = () => {
+      const paddedId = String(idCounter).padStart(6, '0'); // Convert counter to string and pad with leading zeros
     
+      if (fetchAllTicket?.filter(ticketId => ticketId === paddedId).length > 0){
+        idCounter++; // Increment the counter
+        return generateId(); // Recursively call the function to generate the next ID
+      }
+    
+      idCounter++; // Increment the counter
+      return paddedId;
+    };
     const [display, setDisplay] = useState('flex');
     const [displayNone, setDisplayNone] = useState('none');
     const showRegister = () => {
@@ -39,8 +71,41 @@ const DashBoard = () => {
       setDisplayNone('none')
     }
   
+    
+    const [countdown, setCountdown] = useState(null);
+
+    // Check if 24 hours have passed since the last click
+    const lastClickTimestamp = localStorage.getItem('lastClickTimestamp');
+    const currentTime = new Date().getTime();
+    const timeDifference = currentTime - (lastClickTimestamp ? parseInt(lastClickTimestamp, 10) : 0);
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+
+    useEffect(() => {
+      // If not 24 hours yet, start countdown
+      if (timeDifference < oneDayInMilliseconds) {
+        setCountdown(oneDayInMilliseconds - timeDifference);
   
-  // console.log("user",user);
+        const timer = setInterval(() => {
+          setCountdown(prevCountdown => {
+            if (prevCountdown <= 1000) {
+              clearInterval(timer);
+              return null;
+            }
+            return prevCountdown - 1000;
+          });
+        }, 1000);
+      }
+    }, []);  // Empty dependency array to run this effect only once when the component mounts
+  
+    const formatTime = (milliseconds) => {
+      const hours = Math.floor(milliseconds / (60 * 60 * 1000));
+      const minutes = Math.floor((milliseconds % (60 * 60 * 1000)) / (60 * 1000));
+      const seconds = Math.floor((milliseconds % (60 * 1000)) / 1000);
+    
+      return `${hours}h ${minutes}m ${seconds}s`;
+    };
+    
+
   // pending delivery
   const orderStatusPending=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="Pending" )
@@ -89,11 +154,20 @@ const DashBoard = () => {
     onHoldoutofstockCount++
 
   }
-console.log("onHoldArtWorkstatusCount",onHoldArtWorkstatusCount);
-console.log("onHoldBillingstatusCount",onHoldBillingstatusCount);
+const handleCreateTicket=(e)=>{
+ e.preventDefault()
+ console.log("handleCreateTicket");
+ localStorage.setItem('lastClicked', Date.now());
+  setCreateTicket(true)
+ 
+  fetchAllTicketData()
+  setShowPopup(true)
+  setPopupId(generateId()); // Set the generated ID
 
+}
+console.log("createTicket",createTicket);
   const totalHold=Number(onHoldArtWorkstatusCount+onHoldBillingstatusCount+onHoldoutofstockCount)
-  console.log("totalHold",totalHold);
+ 
   // console.log("returnstatusCount",returnedstatusCount);  
   
   // Payment Released
@@ -116,15 +190,15 @@ for(let i=0;i<orderStatusPaymentReleased?.length;i++){
 for(let i=0;i<orderSatatusReturned?.length;i++){
   let totalReturn=orderSatatusReturned[i]?.returnedAmount;
   totalReturnAmmountBase +=totalReturn;
-console.log("totalReturnAmmountBase",totalReturnAmmountBase);
+
 }
 
 //patmnet status =paid,orderstatus :delivered
 const PaymentStausPaid=info
 ?.filter(order => order.userMail === user?.email && order.paymentStatus==="paid" && order?.orderStatus==="delivered")
-console.log("PaymentStausPaid",PaymentStausPaid);
+
 const returnValueFilter=info?.filter(order => order.userMail === user?.email && order?.orderStatus==="returned")
-console.log("returnValueFilter",returnValueFilter);
+
 
 let statusPaidbase=0;
 for(let i=0;i<PaymentStausPaid?.length;i++){
@@ -141,10 +215,7 @@ for(let i=0;i<returnValueFilter?.length;i++){
 }
 
 let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
-console.log("statusPaidbase",statusPaidbase);
-console.log("totalReceiveBase",totalReceiveBase);
-console.log("totalReturnAmmountBase",totalReturnAmmountBase);
-console.log("dueAmount",dueAmount);
+
 // let dueAmount=statusPaidbase-(totalReceiveBase-)
 // console.log("dueAmount",dueAmount);
       return (
@@ -221,9 +292,27 @@ console.log("dueAmount",dueAmount);
             <div className="d-flex justify-content-between align-items-center">
               <h4>Payments</h4>
             </div>
-            <div className="Payment-btn">
-              <button className="btn btn-sm btn-primary mr-2">Request</button>
+            
+           
+              <div className="Payment-btn">
+                {timeDifference < oneDayInMilliseconds || reqBtnStatus===false ?
+                   <div>
+                   <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }} disabled onClick={handleCreateTicket}>
+                     Request
+                   </button>
+                   <span style={{color:"red",marginLeft:"10px"}}>{countdown !== null ? formatTime(countdown) : "You can request now!"}</span>
+                 </div>
+                   
+                   :
+                  <button className="btn btn-sm btn-primary mr-2" style={{backgroundColor:"#001846",color:"orange"}} onClick={handleCreateTicket}>Request</button>
+                 
+                }
+             
             </div>
+            
+            
+            
+           
             <div className="sub-cat">
               <div className='flex'>
               <p>Total Payment Received: {/* Add payment in process value */}</p>
@@ -264,7 +353,22 @@ console.log("dueAmount",dueAmount);
 
    
     </div>
-
+{
+  showPopup===true &&
+  <ReqPaymentTIcketPopup
+  showPopup={showPopup}
+  userId={user?.phone}
+  setShowPopup={setShowPopup}
+  onClose={closePopup}
+  ticketId={popupId}
+  setReqBtnStatus={setReqBtnStatus}
+  reqBtnStatus={reqBtnStatus}
+  userEmail={user?.email}
+  userName={user?.name}
+  createTicket={createTicket}
+  setCreateTicket={setCreateTicket}
+  />
+}
     <Footer ></Footer>
 
 

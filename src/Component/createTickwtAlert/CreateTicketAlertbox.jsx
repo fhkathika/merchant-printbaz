@@ -6,12 +6,16 @@ import PropTypes from 'prop-types';
 
 const CreateTicketAlertbox = ({ message, onClose,closeCreateTicketPopup }) => {
   useEffect(() => {
+    console.log("Running effect");
     const timeoutId = setTimeout(() => {
+      console.log("Running setTimeout");
       onClose();
-      closeCreateTicketPopup()
-    }, 1000); // Hide the alert box after 1 seconds
-
-    return () => clearTimeout(timeoutId);
+    }, 1000);
+  
+    return () => {
+      console.log("Running cleanup");
+      clearTimeout(timeoutId);
+    };
   }, [onClose]);
 
   return (

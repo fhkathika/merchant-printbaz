@@ -29,8 +29,8 @@ const viewOrder = location.state ? location?.state?.orderInfo : null;
 useEffect(()=>{
   const getOrderById=async()=>{
            // Fetch the updated order details
-  // await fetch(`https://mserver.printbaz.com/getorder/${id}`)
-  await fetch(`http://localhost:5000/getorder/${viewOrder?._id}`)
+  await fetch(`https://mserver.printbaz.com/getorder/${id}`)
+  // await fetch(`http://localhost:5000/getorder/${viewOrder?._id}`)
   .then(res=>res.json())
   .then(data => {setGetSpecificOrderById(data)
   })
@@ -55,7 +55,8 @@ console.log("orderReturmed",orderReturmed);
 if(orderReturmed===true){
   try {
     const response = await fetch(
-      `http://localhost:5000/returnOrderAddition/${viewOrder?._id}`,
+      // `http://localhost:5000/returnOrderAddition/${viewOrder?._id}`,
+      `https://mserver.printbaz.com/returnOrderAddition/${viewOrder?._id}`,
       {
         method: "PUT",
         headers: {

@@ -416,8 +416,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
  
     const response = await
-    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-     fetch("http://localhost:5000/submitorder", //add this when work local server
+     fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
+    //  fetch("http://localhost:5000/submitorder", //add this when work local server
      
      {
       method: "POST",
@@ -630,31 +630,32 @@ const handleSubmit = async (e) => {
                       >
                         <option value="">select tee shirt size</option>
                        
-                        {
-                          item.color==="black"?
-                          <>
-                           <option value="m">M</option>
-                              <option value="L"  disabled>L (out of stock)</option>
-                              <option value="XL">XL</option>
-                          <option value="XXL" disabled>XXL (out of stock)</option>
-                          </>
-                      
-                         
-                          :
-                          item.color==="white"?
-                          <>
-                           <option value="m">M</option>
-                           <option value="L"  disabled>L (out of stock)</option>
-                           <option value="XL" disabled>XL (out of stock)</option>
-                           <option value="XXL" disabled>XXL (out of stock)</option>
-                          </>
-                          :
-                          <>
                           <option value="m">M</option>
                          <option value="L">L</option>
                          <option value="XL">XL</option>
                           <option value="XXL" >XXL</option>
-                         </> 
+                        
+                       
+                        {
+                          // item.color==="black"?
+                          // <>
+                          //  <option value="m">M</option>
+                          //     <option value="L"  disabled>L (out of stock)</option>
+                          //     <option value="XL">XL</option>
+                          // <option value="XXL" disabled>XXL (out of stock)</option>
+                          // </>
+                      
+                         
+                          // :
+                          // item.color==="white"?
+                          // <>
+                          //  <option value="m">M</option>
+                          //  <option value="L"  disabled>L (out of stock)</option>
+                          //  <option value="XL" disabled>XL (out of stock)</option>
+                          //  <option value="XXL" disabled>XXL (out of stock)</option>
+                          // </>
+                          // :
+                        
                         } 
                         
                      

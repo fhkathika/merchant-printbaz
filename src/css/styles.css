@@ -629,6 +629,9 @@ transform: translate(-50%, -50%); */
   height: 50px;
   width: 50px;
 }
+
+
+
 .test{
   color: #06D85F ;
 }
@@ -912,4 +915,8 @@ font-size: 16px !important;
 
 .diplay_none{
   display: none !important;
+}
+
+.whiteColor{
+  color: white !important;
 }

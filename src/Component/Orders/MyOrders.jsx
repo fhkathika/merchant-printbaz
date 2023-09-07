@@ -310,14 +310,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <button style={{lineHeight: '15px',color: '#fff', border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
-                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
+                                ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</button>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p className='whiteColor' style={{lineHeight: '15px',color:'#fff !important', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -354,14 +354,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -417,14 +417,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -460,14 +460,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -503,14 +503,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -546,14 +546,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block',color:"#fff", borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -589,14 +589,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px', color:"#fff",border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -632,14 +632,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow', color:"#fff",backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -675,14 +675,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -718,14 +718,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -761,14 +761,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -804,7 +804,7 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
@@ -847,14 +847,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
@@ -889,14 +889,14 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{lineHeight: '15px'}}>{orderInfo?.phone}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: getViewClientColor(
+               <p style={{lineHeight: '15px',color:"#fff", border: '5px greenyellow', backgroundColor: getViewClientColor(
                                 orderInfo?.orderStatus
                                 ), padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.orderStatus}</p>
                <p style={{fontSize: '14px'}}>Updated on {orderInfo?.statusDate}   </p>
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
                <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>

@@ -24,7 +24,7 @@ const Ticket = () => {
       console.error(err);
     }
   };
-  // console.log("fetchAllTicket",fetchAllTicket);
+  console.log("fetchAllTicket",fetchAllTicket);
 
 
 
@@ -55,7 +55,17 @@ const Ticket = () => {
     }
     return Math.floor(seconds) + " seconds ago";
   }
-
+  const sortedTickets = [...fetchAllTicket].sort((a, b) => {
+    const lastMessageA = a.messages[a.messages.length - 1]?.timestamp;
+    const lastMessageB = b.messages[b.messages.length - 1]?.timestamp;
+  
+    // Parse the timestamps to Date objects
+    const dateA = new Date(lastMessageA);
+    const dateB = new Date(lastMessageB);
+  
+    // Sort in descending order to have the most recent first
+    return dateB - dateA;
+  });
 
 
   return (
@@ -82,7 +92,7 @@ const Ticket = () => {
       <div className="row">
         <div className="col-12">
           {
-            fetchAllTicket?.map((allTicket,index)=>{ 
+            sortedTickets?.map((allTicket,index)=>{ 
               let lastTimestamp = null;
               let exactTime=null
               let lastUser=null
@@ -123,8 +133,13 @@ const Ticket = () => {
                <h3 className='' >{user?.name} </h3>
              
               
-                        
-                        <h4>Order ID: {allTicket?.orderId}</h4>
+                       {
+                         allTicket?.orderId?
+                         <h4>Order ID: {allTicket?.orderId}</h4>
+                         :
+                         <h4>User ID: {allTicket?.userId}</h4>
+                       } 
+                     
                         <h5>Ticket ID: {allTicket?.ticketId}</h5>
                        
                         <span>

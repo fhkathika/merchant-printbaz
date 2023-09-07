@@ -15,9 +15,11 @@ const ViewTicket = () => {
     const [newMsg, setNewMsg] = useState('');
     const viewTicketDetail = location.state ? location?.state?.allTicket : null;
     const [usersStoredTickets, setUsersStoredTickets] = useState([]);
+   
     const [selectedFiles, setSelectedFiles] = useState([]);
     const {user}=useContext(AuthContext);
-  
+  console.log("viewTicketDetail",viewTicketDetail);
+  console.log("usersStoredTickets",usersStoredTickets);
     const { quill, quillRef, Quill } = useQuill({
       modules: { blotFormatter: {} }
     });
@@ -88,13 +90,14 @@ useEffect(() => {
     useEffect(() => {
       // Fetch the chat log from the server when the component mounts
       fetchOrderIddata();
-    
+      fetchUserIddata()
       // Scroll to the bottom of the chat log on initial load
      
     
       // Fetch the chat log every 10 seconds
       const intervalId = setInterval(() => {
         fetchOrderIddata();
+        fetchUserIddata()
     
       }, 10000);
     
@@ -105,6 +108,17 @@ useEffect(() => {
       const fetchOrderIddata = async () => {
         try {
           // const response = await axios.get(`http://localhost:5000/getOrderIdmessages/${viewTicketDetail?.orderId}`);
+          const response = await axios.get(`https://mserver.printbaz.com/getOrderIdmessages/${viewTicketDetail?.orderId}`);
+ 
+          setUsersStoredTickets(response.data.messages);
+       
+        } catch (err) {
+          console.error(err);
+        }
+      }; 
+      const fetchUserIddata = async () => {
+        try {
+          // const response = await axios.get(`http://localhost:5000/getuesrIdmessages/${viewTicketDetail?.userId}`);
           const response = await axios.get(`https://mserver.printbaz.com/getOrderIdmessages/${viewTicketDetail?.orderId}`);
  
           setUsersStoredTickets(response.data.messages);
@@ -193,7 +207,7 @@ useEffect(() => {
           }
           setNewMsg('');
           fetchOrderIddata()
-        
+          fetchUserIddata()
         } catch (err) {
           console.error(err);
         }
@@ -225,7 +239,7 @@ useEffect(() => {
         }
         return Math.floor(seconds) + " seconds ago";
       }
-      
+      console.log("filterByTicketId",filterByTicketId);
     return (
     <div>
     <meta charSet="UTF-8" />
@@ -278,7 +292,13 @@ useEffect(() => {
                "General Query"
                 
                 }</h2>
-                <p>Order ID: {viewTicketDetail?.orderId}</p>
+                {
+                  viewTicketDetail?.orderId ?
+                     <p>Order ID: {viewTicketDetail?.orderId}</p>
+                     :
+                     <p> ID: {viewTicketDetail?.userId}</p>
+                }
+             
                 <p>Ticket ID: {viewTicketDetail?.ticketId}</p>
               </div>
             </div>

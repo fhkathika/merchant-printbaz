@@ -304,7 +304,15 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
                  </div>
                    
                    :
-                  <button className="btn btn-sm btn-primary mr-2" style={{backgroundColor:"#ff4400",color:"#fff"}} onClick={handleCreateTicket}>Request</button>
+                   
+                    statusPaidbase<=0?
+                    <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }} disabled onClick={handleCreateTicket}>
+                     Request
+                   </button>
+                    :
+                    <button className="btn btn-sm btn-primary mr-2" style={{backgroundColor:"#ff4400",color:"#fff"}} onClick={handleCreateTicket}>Request</button>
+                   
+                 
                  
                 }
              

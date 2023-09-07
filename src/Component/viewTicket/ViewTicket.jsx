@@ -119,7 +119,7 @@ useEffect(() => {
       const fetchUserIddata = async () => {
         try {
           // const response = await axios.get(`http://localhost:5000/getuesrIdmessages/${viewTicketDetail?.userId}`);
-          const response = await axios.get(`https://mserver.printbaz.com/getOrderIdmessages/${viewTicketDetail?.userId}`);
+          const response = await axios.get(`https://mserver.printbaz.com/getuesrIdmessages/${viewTicketDetail?.userId}`);
  
           setUsersStoredTickets(response.data.messages);
        

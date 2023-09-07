@@ -300,11 +300,11 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
                    <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }} disabled onClick={handleCreateTicket}>
                      Request
                    </button>
-                   <span style={{color:"red",marginLeft:"10px"}}>{countdown !== null ? formatTime(countdown) : "You can request now!"}</span>
+                   <span style={{color:"red",marginLeft:"10px"}}>{countdown !== null ? formatTime(countdown) : ""}</span>
                  </div>
                    
                    :
-                  <button className="btn btn-sm btn-primary mr-2" style={{backgroundColor:"#001846",color:"orange"}} onClick={handleCreateTicket}>Request</button>
+                  <button className="btn btn-sm btn-primary mr-2" style={{backgroundColor:"#ff4400",color:"#fff"}} onClick={handleCreateTicket}>Request</button>
                  
                 }
              

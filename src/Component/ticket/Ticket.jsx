@@ -137,7 +137,7 @@ const Ticket = () => {
                          allTicket?.orderId?
                          <h4>Order ID: {allTicket?.orderId}</h4>
                          :
-                         <h4>User ID: {allTicket?.userId}</h4>
+                         <h4>Phone Number: {allTicket?.userId}</h4>
                        } 
                      
                         <h5>Ticket ID: {allTicket?.ticketId}</h5>

@@ -5,6 +5,7 @@ const useGetMongoData = () => {
     const [info,setInfo]=useState([])
     const {user}=useContext(AuthContext);
     const userEmail=user?.email;
+    console.log("userEmail",userEmail);
     useEffect(()=>{
         const getOrders = async () => {
          await fetch('https://mserver.printbaz.com/allorder') //for main site

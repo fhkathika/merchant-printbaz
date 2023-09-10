@@ -31,10 +31,13 @@ const DashBoard = () => {
     const [popupId, setPopupId] = useState('');
     const [createTicket, setCreateTicket] = useState(false);
     const [reqBtnStatus, setReqBtnStatus] = useState(true);
+    const [totalBill, setTotalBill] = useState(0);
     const closePopup = () => {setShowPopup(false);};
     // function closePopup() {
     //   document.getElementById("popup1").style.display = "none";
     // }
+
+    
    useEffect(()=>{
     fetchAllTicketData()
    },[])
@@ -177,7 +180,7 @@ console.log("createTicket",createTicket);
     const orderSatatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
   // console.log("orderStatus pament released",orderStatusPaymentReleased);
-
+console.log("orderSatatusReturned",orderSatatusReturned);
 
 
   
@@ -189,7 +192,10 @@ for(let i=0;i<orderStatusPaymentReleased?.length;i++){
 }
 for(let i=0;i<orderSatatusReturned?.length;i++){
   let totalReturn=orderSatatusReturned[i]?.returnedAmount;
-  totalReturnAmmountBase +=totalReturn;
+  if(totalReturn){
+    totalReturnAmmountBase +=totalReturn;
+  }
+
 
 }
 
@@ -204,17 +210,21 @@ let statusPaidbase=0;
 for(let i=0;i<PaymentStausPaid?.length;i++){
   let totalpaid=PaymentStausPaid[i]?.recvMoney;
   statusPaidbase =statusPaidbase+totalpaid;
+  console.log("totalpaid",totalpaid);
+  // setTotalBill(totalBill+totalpaid);
 
 }
+// console.log("totalBill",totalBill);
 // returned amount 
 let returnAmountBase=0;
 for(let i=0;i<returnValueFilter?.length;i++){
   let totalreturned=returnValueFilter[i]?.recvMoney;
-  statusPaidbase =returnAmountBase+totalreturned;
+  // returnAmountBase =returnAmountBase+totalreturned;
 
 }
 
 let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
+console.log("totalReturnAmmountBase",totalReturnAmmountBase);
 
 // let dueAmount=statusPaidbase-(totalReceiveBase-)
 // console.log("dueAmount",dueAmount);
@@ -305,7 +315,7 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
                    
                    :
                    
-                    statusPaidbase<=0?
+                    statusPaidbase<=1000?
                     <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }} disabled onClick={handleCreateTicket}>
                      Request
                    </button>
@@ -334,7 +344,7 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
               </div> 
               <div className='flex'>
               <p>Return Value:  </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{parseInt(totalReturnAmmountBase)} Tk </span>
+              <span style={{color:"orange",fontSize:'16px'}}>{Number(totalReturnAmmountBase)} Tk </span>
              
               </div> 
              

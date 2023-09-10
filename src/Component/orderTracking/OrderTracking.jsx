@@ -85,9 +85,6 @@ if(orderReturmed===true){
   fetchData();
 }, [getSpecificOrderById, viewOrder]);
 
-
- 
-
 useEffect(() => {
   // Fetch the chat log from the server when the component mounts
   fetchChatLog();

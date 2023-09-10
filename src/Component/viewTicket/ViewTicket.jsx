@@ -296,7 +296,7 @@ useEffect(() => {
                   viewTicketDetail?.orderId ?
                      <p>Order ID: {viewTicketDetail?.orderId}</p>
                      :
-                     <p> ID: {viewTicketDetail?.userId}</p>
+                     <p> Phone Number: {viewTicketDetail?.userId}</p>
                 }
              
                 <p>Ticket ID: {viewTicketDetail?.ticketId}</p>

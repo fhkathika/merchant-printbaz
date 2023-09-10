@@ -321,8 +321,8 @@ let updatedPrintbazcost=0
     recvMoneyWithouthandling = Number(
       Math.ceil(formData.collectAmount - (printbazcost + deliveryFee))
     );
-    // costHandlingfee = recvMoneyWithouthandling * 0.02;
-    costHandlingfee = Number(formData.collectAmount * 0.02);
+    // costHandlingfee = recvMoneyWithouthandling * 0.03;
+    costHandlingfee = Number(formData.collectAmount * 0.03);
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
    
     let suggestedCollectAmount = Math.ceil((1 + printbazcost + deliveryFee) / 0.98);

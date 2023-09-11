@@ -32,6 +32,7 @@ const DashBoard = () => {
     const [createTicket, setCreateTicket] = useState(false);
     const [reqBtnStatus, setReqBtnStatus] = useState(true);
     const [totalBill, setTotalBill] = useState(0);
+    const [reqAlert, setReqAlert] = useState('');
     const closePopup = () => {setShowPopup(false);};
     // function closePopup() {
     //   document.getElementById("popup1").style.display = "none";
@@ -167,6 +168,14 @@ const handleCreateTicket=(e)=>{
   setShowPopup(true)
   setPopupId(generateId()); // Set the generated ID
 
+}
+const handleRequestAlert=(e)=>{
+  e.preventDefault()
+  setReqAlert("your total bill must be 1000/- or more")
+  setTimeout(()=>{
+    setReqAlert("");
+
+  },2000)
 }
 console.log("createTicket",createTicket);
   const totalHold=Number(onHoldArtWorkstatusCount+onHoldBillingstatusCount+onHoldoutofstockCount)
@@ -316,9 +325,17 @@ console.log("totalReturnAmmountBase",totalReturnAmmountBase);
                    :
                    
                     statusPaidbase<=1000?
-                    <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }} disabled onClick={handleCreateTicket}>
+                    <>
+                     <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }}  onClick={handleRequestAlert}>
                      Request
                    </button>
+                   {
+                     reqAlert &&
+                     <p style={{color:"red",marginTop:"5px"}}>{reqAlert}</p>
+                   }
+   
+                    </>
+                   
                     :
                     <button className="btn btn-sm btn-primary mr-2" style={{backgroundColor:"#ff4400",color:"#fff"}} onClick={handleCreateTicket}>Request</button>
                    

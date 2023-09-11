@@ -215,15 +215,16 @@ const PaymentStausPaid=info
 const returnValueFilter=info?.filter(order => order.userMail === user?.email && order?.orderStatus==="returned")
 
 
-let statusPaidbase=0;
+let statusPaidbase=0; let totalpaid
 for(let i=0;i<PaymentStausPaid?.length;i++){
-  let totalpaid=PaymentStausPaid[i]?.recvMoney;
+   totalpaid=Number(PaymentStausPaid[i]?.recvMoney);
   statusPaidbase =statusPaidbase+totalpaid;
-  console.log("totalpaid",totalpaid);
+ 
   // setTotalBill(totalBill+totalpaid);
 
 }
-// console.log("totalBill",totalBill);
+console.log("statusPaidbase",statusPaidbase);
+console.log("totalpaid",totalpaid);
 // returned amount 
 let returnAmountBase=0;
 for(let i=0;i<returnValueFilter?.length;i++){
@@ -316,7 +317,7 @@ console.log("totalReturnAmmountBase",totalReturnAmmountBase);
               <div className="Payment-btn">
                 {timeDifference < oneDayInMilliseconds || reqBtnStatus===false ?
                    <div>
-                   <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }} disabled onClick={handleCreateTicket}>
+                   <button  style={{ backgroundColor: "#817f7f", color: "white" }} disabled onClick={handleCreateTicket}>
                      Request
                    </button>
                    <span style={{color:"red",marginLeft:"10px"}}>{countdown !== null ? formatTime(countdown) : ""}</span>
@@ -324,7 +325,7 @@ console.log("totalReturnAmmountBase",totalReturnAmmountBase);
                    
                    :
                    
-                    statusPaidbase<=1000?
+                    statusPaidbase<=1000 ?
                     <>
                      <button className="btn btn-sm btn-primary mr-2" style={{ backgroundColor: "#817f7f", color: "white" }}  onClick={handleRequestAlert}>
                      Request
@@ -367,7 +368,7 @@ console.log("totalReturnAmmountBase",totalReturnAmmountBase);
              
                <div className='flex'>
               <p>Due Amount: </p>
-              <span style={{color:"orange",fontSize:'16px'}}> {dueAmount} TK</span>
+              <span style={{color:"orange",fontSize:'16px'}}> {dueAmount.toFixed(2)} TK</span>
              
               </div>
 

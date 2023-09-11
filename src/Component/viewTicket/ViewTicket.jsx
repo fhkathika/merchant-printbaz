@@ -161,6 +161,7 @@ useEffect(() => {
              userName:user?.name,
              userEmail:viewTicketDetail?.userEmail,
              adminUser:adminUser,
+             userId:viewTicketDetail?.userId,
               user: user?.name,
                content: newMsg };
       
@@ -172,6 +173,7 @@ useEffect(() => {
             userName: newMessage.userName,
             userEmail: newMessage.userEmail,
             admin: newMessage.user,
+            userId:newMessage.userId && newMessage.userId,
             adminUser: newMessage.adminUser,
             orderId:newMessage.userOrderId,
             timestamp: new Date().toISOString(), // this won't be the exact timestamp saved in the DB

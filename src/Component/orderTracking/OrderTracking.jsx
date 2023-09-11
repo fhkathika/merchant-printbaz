@@ -482,7 +482,7 @@ getSpecificOrderById?.orderStatus==="returned"?
 <>
 
 <h6>Receivable Amount</h6>
-<p>{getSpecificOrderById?.recvMoney}</p>
+<p>{parseInt(getSpecificOrderById?.recvMoney)}</p>
 </>
                       }
                       

@@ -320,7 +320,7 @@ const filerByOrderDate=info.filter(order=>{
                <p className='whiteColor' style={{lineHeight: '15px',color:'#fff !important', border: '5px greenyellow', backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
              <div className="col-md-2 col-sm-12">
-               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
+               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{parseInt(orderInfo?.recvMoney)}</span></p>
              </div>
              <div className="col-md-1 col-sm-12">
              <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}

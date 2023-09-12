@@ -18,8 +18,6 @@ const ViewTicket = () => {
    
     const [selectedFiles, setSelectedFiles] = useState([]);
     const {user}=useContext(AuthContext);
-  console.log("viewTicketDetail",viewTicketDetail);
-  console.log("usersStoredTickets",usersStoredTickets);
     const { quill, quillRef, Quill } = useQuill({
       modules: { blotFormatter: {} }
     });
@@ -33,15 +31,12 @@ const ViewTicket = () => {
 useEffect(() => {
   // mark as read message 
   const markAsRead = async (messageId) => {
-    console.log("click mark as read function");
     try {
-      console.log("click mark as read function from try");
         const response = await axios.post('https://mserver.printbaz.com/markAsRead', {
         // const response = await axios.post('http://localhost:5000/markAsRead', {
             messageId: messageId
         });
         if (response?.data?.success) {
-            console.log(' mark message as read');
         }
     } catch (err) {
       console.log("click mark as read function from catch");
@@ -59,23 +54,23 @@ useEffect(() => {
          
           delta.ops.forEach((op) => {
             if (typeof op.insert === 'string') {
-              console.log('Inserted text:', op.insert);
-              console.log('Applied formats:', op.attributes);
+              // console.log('Inserted text:', op.insert);
+              // console.log('Applied formats:', op.attributes);
             } else if (op.insert && typeof op.insert === 'object') {
               // handle embeds like images, video etc.
               Object.keys(op.insert).forEach((key) => {
-                console.log('Inserted object of type:', key);
-                console.log('Object value:', op.insert[key]);
-                console.log('Applied formats:', op.attributes);
+                // console.log('Inserted object of type:', key);
+                // console.log('Object value:', op.insert[key]);
+                // console.log('Applied formats:', op.attributes);
               });
             }
           });
           const currentContents = quill.getContents();
-          console.log(currentContents.diff(oldContents));
+          // console.log(currentContents.diff(oldContents));
   
           const text = quill.getText();
           const format=quill.getFormat();
-          console.log('Typed text:', format);
+          // console.log('Typed text:', format);
           // setNewMsg(text)
           setNewMsg(quill.root.innerHTML);
         });
@@ -86,7 +81,7 @@ useEffect(() => {
     const adminUser = filterByTicketId?.adminUser
 
 
-    console.log("adminUser from client",adminUser);
+    // console.log("adminUser from client",adminUser);
     useEffect(() => {
       // Fetch the chat log from the server when the component mounts
       fetchOrderIddata();
@@ -134,7 +129,7 @@ useEffect(() => {
 
     ///input text
       const handleNewMessageChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setNewMsg(e.target.value);
     };
     //upload files
@@ -241,7 +236,6 @@ useEffect(() => {
         }
         return Math.floor(seconds) + " seconds ago";
       }
-      console.log("filterByTicketId",filterByTicketId);
     return (
     <div>
     <meta charSet="UTF-8" />

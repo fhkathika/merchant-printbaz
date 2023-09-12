@@ -21,7 +21,7 @@ const DashBoard = () => {
   const [dbData, setDbData] = useState({});
   // const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
   // const resellerOrdersFromDb=fetchedData?.orders
-  console.log("user",user);
+
   const {info}=useGetMongoData()
   const [usersTickets, setUsersTickets] = useState([]);
     const [activeTab, setActiveTab] = useState("Dashboard");
@@ -160,7 +160,6 @@ const DashBoard = () => {
   }
 const handleCreateTicket=(e)=>{
  e.preventDefault()
- console.log("handleCreateTicket");
  localStorage.setItem('lastClicked', Date.now());
   setCreateTicket(true)
  
@@ -177,7 +176,6 @@ const handleRequestAlert=(e)=>{
 
   },2000)
 }
-console.log("createTicket",createTicket);
   const totalHold=Number(onHoldArtWorkstatusCount+onHoldBillingstatusCount+onHoldoutofstockCount)
  
   // console.log("returnstatusCount",returnedstatusCount);  
@@ -189,7 +187,7 @@ console.log("createTicket",createTicket);
     const orderSatatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
   // console.log("orderStatus pament released",orderStatusPaymentReleased);
-console.log("orderSatatusReturned",orderSatatusReturned);
+
 
 
   
@@ -223,8 +221,7 @@ for(let i=0;i<PaymentStausPaid?.length;i++){
   // setTotalBill(totalBill+totalpaid);
 
 }
-console.log("statusPaidbase",statusPaidbase);
-console.log("totalpaid",totalpaid);
+
 // returned amount 
 let returnAmountBase=0;
 for(let i=0;i<returnValueFilter?.length;i++){
@@ -234,7 +231,7 @@ for(let i=0;i<returnValueFilter?.length;i++){
 }
 
 let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
-console.log("totalReturnAmmountBase",totalReturnAmmountBase);
+// console.log("totalReturnAmmountBase",totalReturnAmmountBase);
 
 // let dueAmount=statusPaidbase-(totalReceiveBase-)
 // console.log("dueAmount",dueAmount);

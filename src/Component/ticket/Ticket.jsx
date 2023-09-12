@@ -24,7 +24,6 @@ const Ticket = () => {
       console.error(err);
     }
   };
-  console.log("fetchAllTicket",fetchAllTicket);
 
 
 

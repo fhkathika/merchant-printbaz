@@ -630,31 +630,31 @@ const handleSubmit = async (e) => {
                       >
                         <option value="">select tee shirt size</option>
                        
-                          <option value="m">M</option>
-                         <option value="L">L</option>
-                         <option value="XL">XL</option>
-                          <option value="XXL" >XXL</option>
-                        
+                          {/* <option value="m">M ( will 1week)</option>
+                         <option value="L">L (1week)</option>
+                         <option value="XL">XL (1week)</option>
+                          <option value="XXL" >XXL (1week)</option>
+                         */}
                        
                         {
-                          // item.color==="black"?
-                          // <>
-                          //  <option value="m">M</option>
-                          //     <option value="L"  disabled>L (out of stock)</option>
-                          //     <option value="XL">XL</option>
-                          // <option value="XXL" disabled>XXL (out of stock)</option>
-                          // </>
+                          item.color==="black"?
+                          <>
+                           <option value="m">M</option>
+                              <option value="L"  >L </option>
+                              <option value="XL">XL</option>
+                          <option value="XXL" >XXL (will take 1 week)</option>
+                          </>
                       
                          
-                          // :
-                          // item.color==="white"?
-                          // <>
-                          //  <option value="m">M</option>
-                          //  <option value="L"  disabled>L (out of stock)</option>
-                          //  <option value="XL" disabled>XL (out of stock)</option>
-                          //  <option value="XXL" disabled>XXL (out of stock)</option>
-                          // </>
-                          // :
+                          :
+                          item.color==="white"&&
+                          <>
+                           <option value="m">M</option>
+                           <option value="L"  >L (will take 1 week)</option>
+                           <option value="XL" >XL (will take 1 week)</option>
+                           <option value="XXL" >XXL (will take 1 week)</option>
+                          </>
+                          
                         
                         } 
                         

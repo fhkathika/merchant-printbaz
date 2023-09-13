@@ -206,6 +206,19 @@ for(let i=0;i<orderSatatusReturned?.length;i++){
 
 }
 
+// Check if orderStatusReturned is an array before looping
+// if (Array.isArray(orderSatatusReturned)) {
+//   for (let i = 0; i < orderSatatusReturned.length; i++) {
+//     const totalReturn = Number(orderSatatusReturned[i]?.returnedAmount);
+//     const deliveryFee = Number(orderSatatusReturned[i]?.deliveryFee);
+    
+//     // If totalReturn and deliveryFee exist and are numbers, add them to totalReturnAmountBase
+   
+//       totalReturnAmmountBase += (totalReturn + deliveryFee);
+    
+//   }
+// }
+
 //patmnet status =paid,orderstatus :delivered
 const PaymentStausPaid=info
 ?.filter(order => order.userMail === user?.email && order.paymentStatus==="paid" && order?.orderStatus==="delivered")

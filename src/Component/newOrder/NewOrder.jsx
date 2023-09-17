@@ -325,7 +325,7 @@ let updatedPrintbazcost=0
     costHandlingfee = Number(formData.collectAmount * 0.03);
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
    
-    let suggestedCollectAmount = Math.ceil((1 + printbazcost + deliveryFee) / 0.98);
+    let suggestedCollectAmount = Math.ceil((1 + printbazcost + deliveryFee) / 0.97);
     // console.log("recvMoney",recvMoney)
     // console.log("suggestedCollectAmount",suggestedCollectAmount)
     const validateForm = () => {

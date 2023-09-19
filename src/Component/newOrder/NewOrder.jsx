@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
 import { useGetData } from "../../hooks/useGetData";
@@ -20,6 +20,9 @@ const NewOrder = () => {
     instruction: '',
     collectAmount: '',
     area: '',
+    districts:'',
+    zones:'',
+    areas:'',
     orderDetailArr: [
       {
         color: '',
@@ -38,6 +41,9 @@ const NewOrder = () => {
    let collections = "resellerInfo";
    let idPrice = "teeShirtCampingId";
    let collectionsPrice = "productValues";
+   const [districts, setDistricts] = useState([]);
+   const [zones, setZones] = useState([]);
+   const [areas, setAreas] = useState([]);
    const [fileprogress, setFileProgress] = useState(0);
    const [imageprogress, setImageProgress] = useState(0);
    const [showAlert, setShowAlert] = useState(false);
@@ -55,6 +61,50 @@ const NewOrder = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
+// fetch location dropdown data 
+  // Fetch unique districts when the component mounts
+  useEffect(() => {
+    axios.get('http://localhost:5000/unique-districts')
+      .then(response => {
+        setDistricts(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching unique districts:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (formData?.districts) {
+      axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(formData?.districts)}`)
+        .then(response => {
+          setZones(response.data);
+          console.log("response.data", response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching zones:', error);
+          setZones([]);  // Optionally, clear zones if the fetch fails
+        });
+    } else {
+      setZones([]); // Clear zones if the district is not selected
+      setAreas([]); // Clear areas as well, as they depend on the zone
+    }
+  }, [formData?.districts]);
+  
+    // Fetch areas based on selected zone
+    useEffect(() => {
+      if (formData?.zones) {
+        axios.get(`http://localhost:5000/areas/${encodeURIComponent(formData?.zones)}`)
+          .then(response => {
+            setAreas(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching areas:', error);
+            setAreas([]);  // Optionally, clear areas if the fetch fails
+          });
+      } else {
+        setAreas([]); // Clear areas if the zone is not selected
+      }
+    }, [formData?.zones]);
 
 
   const d = new Date();
@@ -400,6 +450,9 @@ const handleSubmit = async (e) => {
     formData2.append('address', formData.address);
     formData2.append('instruction', formData.instruction);
     formData2.append('area', formData.area);
+    formData2.append('districts', formData.districts);
+    formData2.append('zones', formData.zones);
+    formData2.append('areas', formData.areas);
     formData2.append('collectAmount', formData.collectAmount);
     formData2.append('printbazcost', printbazcost);
     formData2.append('deliveryFee', deliveryFee);
@@ -416,8 +469,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
  
     const response = await
-     fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-    //  fetch("http://localhost:5000/submitorder", //add this when work local server
+    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
+     fetch("http://localhost:5000/submitorder", //add this when work local server
      
      {
       method: "POST",
@@ -526,7 +579,61 @@ const handleSubmit = async (e) => {
                         <option value="inside dhaka">Inside Dhaka</option>
                         <option value="outside dhaka">Outside Dhaka</option>
                       </Form.Control>
+                    </Form.Group> 
+                    <Form.Group
+                      className="mb-3 Print Side w-100"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">District</Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="districts"
+                        value={formData.districts}
+                        onChange={(e) =>  handleInputChange(e)}
+                        required
+                      >
+                       
+        <option value="">Select District</option>
+        {districts.map(d => <option key={d} value={d}>{d}</option>)}
+                      </Form.Control>
                     </Form.Group>
+           <Form.Group
+                      className="mb-3 Print Side w-100"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">Zone</Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="zones"
+                        value={formData.zones}
+                        onChange={(e) =>  handleInputChange(e)}
+                        required
+                      >
+                       
+        <option value="">Select District</option>
+        {zones.map(d => <option key={d} value={d}>{d}</option>)}
+                      </Form.Control>
+                    </Form.Group>
+<Form.Group
+                      className="mb-3 Print Side w-100"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">Area</Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="areas"
+                        value={formData.areas}
+                        onChange={(e) =>  handleInputChange(e)}
+                        required
+                      >
+                       
+        <option value="">Select District</option>
+        {areas.map(d => <option key={d} value={d}>{d}</option>)}
+                      </Form.Control>
+                    </Form.Group>
+
+
+
                     <Form.Group className="mb-3 ">
                       <Form.Label>Recipient's/Delivery Address</Form.Label>
                       <Form.Control
@@ -797,9 +904,7 @@ const handleSubmit = async (e) => {
                     {fileprogress === 0 ? null : (
          <ProgressBar now={fileprogress} label={`${fileprogress}%`} />
           )}
-         
-                    
-                    <Form.Group controlId="formFile" className="mb-3">
+           <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Upload Mockup/T-Shirt Demo Picture</Form.Label>
                       <Form.Control
                         type="file"

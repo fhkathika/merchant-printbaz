@@ -33,6 +33,7 @@ import Footer from "./Component/footer/Footer";
 import Ticket from "./Component/ticket/Ticket";
 import ViewTicket from "./Component/viewTicket/ViewTicket";
 import ScreenShot from "./Component/screenShot/ScreenShot";
+import LocationTest from "./Component/automaticLocationTest/LocationTest";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -214,6 +215,14 @@ function App() {
           element={
             <PrivateRoute>
               <ResellerForm />
+            </PrivateRoute>
+          }
+        /> 
+           <Route
+          path="/automaticLocationTest"
+          element={
+            <PrivateRoute>
+              <LocationTest />
             </PrivateRoute>
           }
         />

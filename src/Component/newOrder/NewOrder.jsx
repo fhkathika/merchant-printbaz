@@ -19,7 +19,7 @@ const NewOrder = () => {
     address: '',
     instruction: '',
     collectAmount: '',
-    area: '',
+    
     districts:'',
     zones:'',
     areas:'',
@@ -65,7 +65,8 @@ const NewOrder = () => {
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   useEffect(() => {
-    axios.get('http://localhost:5000/unique-districts')
+    // axios.get('http://localhost:5000/unique-districts')
+    axios.get('https://mserver.printbaz.com/unique-districts')
       .then(response => {
         setDistricts(response.data);
       })
@@ -76,7 +77,8 @@ const NewOrder = () => {
 
   useEffect(() => {
     if (formData?.districts) {
-      axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(formData?.districts)}`)
+      // axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(formData?.districts)}`)
+      axios.get(`https://mserver.printbaz.com/zones?district=${encodeURIComponent(formData?.districts)}`)
         .then(response => {
           setZones(response.data);
           console.log("response.data", response.data);
@@ -94,7 +96,8 @@ const NewOrder = () => {
     // Fetch areas based on selected zone
     useEffect(() => {
       if (formData?.zones) {
-        axios.get(`http://localhost:5000/areas/${encodeURIComponent(formData?.zones)}`)
+        // axios.get(`http://localhost:5000/areas/${encodeURIComponent(formData?.zones)}`)
+        axios.get(`https://mserver.printbaz.com/areas/${encodeURIComponent(formData?.zones)}`)
           .then(response => {
             setAreas(response.data);
           })
@@ -112,7 +115,8 @@ const NewOrder = () => {
     // fetch delievryArea 
     useEffect(() => {
       if (formData?.districts && formData?.zones && formData?.areas) {
-        axios.get(`http://localhost:5000/deliveryAreaByLocation?District=${formData?.districts}&Zone=${formData?.zones}&Area=${formData?.areas}`)
+        // axios.get(`http://localhost:5000/deliveryAreaByLocation?District=${formData?.districts}&Zone=${formData?.zones}&Area=${formData?.areas}`)
+        axios.get(`https://mserver.printbaz.com/deliveryAreaByLocation?District=${formData?.districts}&Zone=${formData?.zones}&Area=${formData?.areas}`)
           .then((res) => setDeliveryAreas(res.data.deliveryArea))
           .catch((error) => console.error('Error fetching deliveryArea:', error));
       }
@@ -468,7 +472,7 @@ const handleSubmit = async (e) => {
     formData2.append('phone', formData.phone);
     formData2.append('address', formData.address);
     formData2.append('instruction', formData.instruction);
-    formData2.append('area', formData.area);
+    // formData2.append('area', formData.area);
     formData2.append('districts', formData.districts);
     formData2.append('zones', formData.zones);
     formData2.append('areas', formData.areas);
@@ -488,8 +492,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
  
     const response = await
-    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-     fetch("http://localhost:5000/submitorder", //add this when work local server
+     fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
+    //  fetch("http://localhost:5000/submitorder", //add this when work local server
      
      {
       method: "POST",
@@ -582,23 +586,7 @@ const handleSubmit = async (e) => {
                         placeholder="Enter recipient number"
                       />
                     </Form.Group>
-                    <Form.Group
-                      className="mb-3 Print Side w-100"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Delivery Area</Form.Label>
-                      <Form.Control
-                        as="select"
-                        name="area"
-                        value={formData.area}
-                        onChange={(e) =>  handleInputChange(e)}
-                        // required
-                      >
-                        <option value="">select area</option>
-                        <option value="inside dhaka">Inside Dhaka</option>
-                        <option value="outside dhaka">Outside Dhaka</option>
-                      </Form.Control>
-                    </Form.Group> 
+                   
                     <Form.Group
                       className="mb-3 Print Side w-100"
                       controlId="wccalcPrintSide"
@@ -1049,7 +1037,7 @@ const handleSubmit = async (e) => {
                     
                     <div className="costOrder_Style">
                       <label htmlFor="printbazCost">Cash Handling fee</label>{" "}
-                      <h3> 2%</h3>
+                      <h3> 3%</h3>
                     </div>
       
                     {formData?.orderDetailArr[0]?.quantity && formData?.orderDetailArr[0]?.printSize && formData?.collectAmount && (

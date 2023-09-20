@@ -617,7 +617,7 @@ const handleSubmit = async (e) => {
                         required
                       >
                        
-        <option value="">Select District</option>
+        <option value="">Select Zone</option>
         {zones.map(d => <option key={d} value={d}>{d}</option>)}
                       </Form.Control>
                     </Form.Group>
@@ -634,7 +634,7 @@ const handleSubmit = async (e) => {
                         required
                       >
                        
-        <option value="">Select District</option>
+        <option value="">Select Area</option>
         {areas.map(d => <option key={d} value={d}>{d}</option>)}
                       </Form.Control>
                     </Form.Group>

@@ -34,6 +34,7 @@ import Ticket from "./Component/ticket/Ticket";
 import ViewTicket from "./Component/viewTicket/ViewTicket";
 import ScreenShot from "./Component/screenShot/ScreenShot";
 import LocationTest from "./Component/automaticLocationTest/LocationTest";
+import NewOrdersWithOption from "./Component/newOrdersWithOption/NewOrdersWithOption";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -223,6 +224,14 @@ function App() {
           element={
             <PrivateRoute>
               <LocationTest />
+            </PrivateRoute>
+          }
+        /> 
+         <Route
+          path="/newOrdersWithOption"
+          element={
+            <PrivateRoute>
+              <NewOrdersWithOption />
             </PrivateRoute>
           }
         />

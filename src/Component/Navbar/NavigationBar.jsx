@@ -106,9 +106,9 @@ let msgCount=0;
    }
         
           </li> 
-          {/* <li className="nav-item">
-            <Link className="nav-link" to="/automaticLocationTest">test location</Link>
-          </li>   */}
+          <li className="nav-item">
+            <Link className="nav-link" to="/newOrdersWithOption">New Orders WithOption</Link>
+          </li>  
         </ul>
         <div className="navbar-dropdown mt-2 dropdownMobile" >
           <button className="navbar-dropdown-toggle dropdownButtonMobile" onClick={handleDropdownClick} >

@@ -74,7 +74,7 @@ const NewOrder = () => {
         console.error('Error fetching unique districts:', error);
       });
   }, []);
-
+console.log(formData?.districts);
   useEffect(() => {
     if (formData?.districts) {
       // axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(formData?.districts)}`)

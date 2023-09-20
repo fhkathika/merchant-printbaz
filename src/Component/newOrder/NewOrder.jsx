@@ -51,6 +51,7 @@ const NewOrder = () => {
    const [dbData, setDbData] = useState({});
    const [printSide, setPrintSide] = useState('');
    const [addbrandLogo, setAddBrandLogo] = useState(false);
+   const [deliveryAreas, setDeliveryAreas] = useState('');
    const { fetchedData, searchProduct, setSearchProduct } = useGetData(
      idPrice,
      collectionsPrice,
@@ -105,6 +106,20 @@ const NewOrder = () => {
         setAreas([]); // Clear areas if the zone is not selected
       }
     }, [formData?.zones]);
+
+   
+
+    // fetch delievryArea 
+    useEffect(() => {
+      if (formData?.districts && formData?.zones && formData?.areas) {
+        axios.get(`http://localhost:5000/deliveryAreaByLocation?District=${formData?.districts}&Zone=${formData?.zones}&Area=${formData?.areas}`)
+          .then((res) => setDeliveryAreas(res.data.deliveryArea))
+          .catch((error) => console.error('Error fetching deliveryArea:', error));
+      }
+    }, [formData?.districts ,formData?.zones , formData?.areas]);
+  
+  
+    console.log("deliveryAreas", deliveryAreas);
 
 
   const d = new Date();
@@ -359,10 +374,14 @@ let updatedPrintbazcost=0
     }
     }
     let deliveryFee;
-    if (formData.area === "outside dhaka") {
+    if (deliveryAreas === "outsideDhaka") {
+      console.log("from deliveryAreas",deliveryAreas);
       deliveryFee = deliveryFeeOutSideDhaka;
+      console.log("deliveryFee outsideDhaka ",deliveryFee);
     } else {
+      console.log("from deliveryAreas others",deliveryAreas);
       deliveryFee = deliveryFeeInsideDhaka;
+      console.log("deliveryFee inside ",deliveryFee);
     }
   
     let recvMoney = 0;
@@ -573,7 +592,7 @@ const handleSubmit = async (e) => {
                         name="area"
                         value={formData.area}
                         onChange={(e) =>  handleInputChange(e)}
-                        required
+                        // required
                       >
                         <option value="">select area</option>
                         <option value="inside dhaka">Inside Dhaka</option>
@@ -963,7 +982,7 @@ const handleSubmit = async (e) => {
                       <h3>
                         {" "}
                         <span style={{ fontSize: "" }}>&#2547;</span>{" "}
-                        {formData.area === "outside dhaka"
+                        {deliveryAreas === "outsideDhaka"
                           ? deliveryFeeOutSideDhaka
                           : deliveryFeeInsideDhaka}
                       </h3>

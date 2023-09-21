@@ -4,7 +4,12 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Button, Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 const NewOrdersWithOption = () => {
+  const navigate=useNavigate()
+  const handleClickNeworder=()=>{
+    navigate("/newOrder")
+  }
     return (
         <div>
             <NavigationBar/>
@@ -25,7 +30,7 @@ const NewOrdersWithOption = () => {
             <Card.Body>
               <Card.Title>Custom Round Neck</Card.Title>
               
-              <Button style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+              <Button onClick={handleClickNeworder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
             </Card.Body>
           </Card>
         </Col>    <Col >

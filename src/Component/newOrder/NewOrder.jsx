@@ -1,6 +1,6 @@
 
 import React, { useContext, useEffect, useState } from 'react';
-import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner} from 'react-bootstrap';
+import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner, Row, Col, Card, ListGroup, Container} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
 import { useGetData } from "../../hooks/useGetData";
 import teeShirtFormula from "../../Formulas/teeShirtFormula";
@@ -23,14 +23,60 @@ const NewOrder = () => {
     districts:'',
     zones:'',
     areas:'',
+    quantity:0,
     orderDetailArr: [
       {
-        color: '',
-        teshirtSize: '',
-        quantity: '',
-        printSide:'',
+        color: 'Black',
+        teshirtSize: {},
+        quantityM: '',
+        quantityL: '',
+        quantityXL: '',
+        quantityXXL: '',
+       
+        printSide: '',
         printSize: '',
-        printSizeBack:'',
+        printSizeBack: '',
+        file: null,
+        image: null,
+        brandLogo: null,
+      },
+      {
+        color: 'White',
+        teshirtSize: {},
+        quantityM: '',
+        quantityL: '',
+        quantityXL: '',
+        quantityXXL: '',
+        printSide: '',
+        printSize: '',
+        printSizeBack: '',
+        file: null,
+        image: null,
+        brandLogo: null,
+      },
+      {
+        color: 'Light Blue',
+        teshirtSize: {},
+        quantityM: '',
+        quantityL: '',
+        quantityXL: '',
+        quantityXXL: '',
+        printSide: '',
+        printSize: '',
+        printSizeBack: '',
+        file: null,
+        image: null,
+        brandLogo: null,
+      },  {
+        color: 'Brown',
+        teshirtSize: {},
+        quantityM: '',
+        quantityL: '',
+        quantityXL: '',
+        quantityXXL: '',
+        printSide: '',
+        printSize: '',
+        printSizeBack: '',
         file: null,
         image: null,
         brandLogo: null,
@@ -74,14 +120,13 @@ const NewOrder = () => {
         console.error('Error fetching unique districts:', error);
       });
   }, []);
-console.log(formData?.districts);
   useEffect(() => {
     if (formData?.districts) {
       // axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(formData?.districts)}`)
       axios.get(`https://mserver.printbaz.com/zones?district=${encodeURIComponent(formData?.districts)}`)
         .then(response => {
           setZones(response.data);
-          console.log("response.data", response.data);
+          // console.log("response.data", response.data);
         })
         .catch(error => {
           console.error('Error fetching zones:', error);
@@ -123,7 +168,6 @@ console.log(formData?.districts);
     }, [formData?.districts ,formData?.zones , formData?.areas]);
   
   
-    console.log("deliveryAreas", deliveryAreas);
 
 
   const d = new Date();
@@ -166,24 +210,47 @@ console.log(formData?.districts);
     const navigate=useNavigate()
     const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);
-
+    const safeParseInt = (str) => {
+      const value = parseInt(str);
+      return isNaN(value) ? 0 : value;
+  };
+  
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
-    if (name==="color" || name==="teshirtSize" || name==="quantity" || name==="printSize"|| name==="printSide" || name==="printSizeBack") {
-     
-      // const fieldName = name.split('.')[1];
-      const newOrderDetailArr = [...formData.orderDetailArr];
-      newOrderDetailArr[index][event.target.name]=event.target.value;
-      setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
-   
-      }
-   else {
+    const color = event.target.getAttribute('data-color');
+    const size = event.target.getAttribute('data-size');
+    const newOrderDetailArr = [...formData.orderDetailArr];
+
+    let itemIndex = newOrderDetailArr.findIndex(item => item.color === color);
+
+    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
+        if (size) {
+            newOrderDetailArr[itemIndex].teshirtSize = { ...newOrderDetailArr[itemIndex].teshirtSize, [size]: value };
+        }
+        newOrderDetailArr[itemIndex][name] = value;
+    } else {
         setFormData({ ...formData, [name]: value });
-        // setSum(formData.reduce((total, input) => total + Number(input.value), 0));
-   
-      }
-    } 
-   
+        return;
+    }
+  
+    // Compute grand total based on the newOrderDetailArr
+    const newGrandQuantity = newOrderDetailArr.reduce((acc, item) => 
+  acc + safeParseInt(item.quantityM) + 
+        safeParseInt(item.quantityL) + 
+        safeParseInt(item.quantityXL) + 
+        safeParseInt(item.quantityXXL), 
+0);
+    
+    // Update state
+    setFormData(prevState => ({
+        ...prevState,
+        orderDetailArr: newOrderDetailArr,
+        quantity: parseInt(newGrandQuantity)
+    }));
+}
+
+  
+   console.log("formData",formData);
   const handleFileChange = (event, index) => {
     const { name, files } = event.target;
     if (name==="file" || name==="image") {
@@ -212,12 +279,19 @@ const removeField = (index) => {
     orderDetailArr: formData.orderDetailArr.filter((_, i) => i !== index),
   });
 };
+formData?.orderDetailArr.forEach(item => {
+  item.totalQuantity = parseInt(item.quantityM) + 
+                       parseInt(item.quantityL) + 
+                       parseInt(item.quantityXL) + 
+                       parseInt(item.quantityXXL);
+});
+
 let updatedPrintbazcost=0
   let printbazcost=0;
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (
-      formData?.orderDetailArr[i]?.quantity &&
+      formData?.quantity &&
       formData?.orderDetailArr[i]?.printSize &&
       price1to9_10x14 &&
       price10to19_10x14 &&
@@ -252,7 +326,7 @@ let updatedPrintbazcost=0
     ) 
     {
       const totalPrice = teeShirtFormula(
-        formData?.orderDetailArr[i]?.quantity,
+        formData?.quantity,
         formData?.orderDetailArr[i]?.printSize,
         price1to9_10x14,
         price10to19_10x14,
@@ -455,7 +529,12 @@ const handleSubmit = async (e) => {
 
       formData2.append(`color${index}`, item.color);
       formData2.append(`teshirtSize${index}`, item.teshirtSize);
-      formData2.append(`quantity${index}`, item.quantity);
+      // Handle different sizes for quantity
+  formData2.append(`quantityM${index}`, item.quantityM);
+  formData2.append(`quantityL${index}`, item.quantityL);
+  formData2.append(`quantityXL${index}`, item.quantityXL);
+  formData2.append(`quantityXXL${index}`, item.quantityXXL);
+  
       formData2.append(`printSize${index}`, item.printSize);
       formData2.append(`printSide${index}`, item.printSide);
   
@@ -477,6 +556,7 @@ const handleSubmit = async (e) => {
     formData2.append('zones', formData.zones);
     formData2.append('areas', formData.areas);
     formData2.append('collectAmount', formData.collectAmount);
+    formData2.append('quantity', formData.quantity);
     formData2.append('printbazcost', printbazcost);
     formData2.append('deliveryFee', deliveryFee);
     formData2.append('recvMoney', recvMoney);
@@ -492,8 +572,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
  
     const response = await
-     fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-    //  fetch("http://localhost:5000/submitorder", //add this when work local server
+    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
+     fetch("http://localhost:5000/submitorder", //add this when work local server
      
      {
       method: "POST",
@@ -546,16 +626,226 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
-            <div className="new-order" style={{marginBottom:"50px"}}>
-              <div className="row mt-5">
-                <div className="col-12">
-                  <h1>New Order</h1>
-                </div>
-              </div>
-              <Form onSubmit={handleSubmit}  className="mb-4">
-                <div className="row mt-5">
-                  {/* 1st Column */}
-                  <div className="col-md-4">
+ <Form onSubmit={handleSubmit}  className="mb-4">
+<Row xs={1} md={4} className="g-3 m-5">
+
+{formData.orderDetailArr.map((item, index) => (
+   <Card style={{ width: '18rem' }} className="">
+       <Card.Title className='m-auto p-3'>{item.color}
+           <input data-color={item.color} name="color" type="hidden" value={item.color} />
+       </Card.Title>
+       <Card.Img variant="top" src="/images/customPrinted.jpg" />
+       <ListGroup className="list-group-flush pl-0 pr-0">
+           <ListGroup.Item className="d-flex align-items-center">
+               <span value="m">M</span>
+               <input 
+                   data-size="m"
+                   data-color={item.color}
+                   name="quantityM"
+                   type="number"
+                   value={item.quantityM}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+           </ListGroup.Item>
+           <ListGroup.Item className="d-flex align-items-center">
+               <span value="L">L</span>
+               <input 
+                   data-size="L"
+                   data-color={item.color}
+                   name="quantityL"
+                   type="number"
+                   value={item.quantityL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+           </ListGroup.Item> 
+            <ListGroup.Item className="d-flex align-items-center">
+               <span value="XL">XL</span>
+               <input 
+                   data-size="XL"
+                   data-color={item.color}
+                   name="quantityXL"
+                   type="number"
+                   value={item.quantityXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+           </ListGroup.Item>
+           <ListGroup.Item className="d-flex align-items-center">
+               <span value="XXL">XXL</span>
+               <input 
+                   data-size="XXL"
+                   data-color={item.color}
+                   name="quantityXXL"
+                   type="number"
+                   value={item.quantityXXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+           </ListGroup.Item>  
+       </ListGroup>
+       <Card.Body>
+       <Form.Group
+                      className="mb-3 Print Side w-100 m-auto"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">Print side</Form.Label>
+                      <Form.Control
+                        as="select"
+                        data-color={item.color}
+                        value={item.printSide}
+                        onChange={(e) => {
+                           handleInputChange(e,index);
+                        }}
+                        name="printSide"
+                        required
+                      >
+                       <option value="">select print side</option> 
+                        <option value="frontSide">Front Side</option>
+                        <option value="backSide">Back Side</option>
+                        <option value="bothSide">Both Side</option>
+                      </Form.Control>
+                    </Form.Group>
+                    {
+                     ( item.printSide==="frontSide" || item.printSide==="backSide") &&
+                      <Form.Group
+                      className="mb-3 Print Side w-100 m-auto"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">Print Size</Form.Label>
+                      <Form.Control
+                        as="select"
+                        data-color={item.color}
+                        value={item.printSize}
+                        onChange={(e) => {
+                           handleInputChange(e,index);
+                        }}
+                        name="printSize"
+                        required
+                      >
+                       <option value="">select print size</option> 
+                        <option value="10 x 14">10″ x 14″</option>
+                        <option value="10 x 10">10″ x 10″</option>
+                        <option value="10 x 5">10″ x 5″</option>
+                        <option value="5 X 5">5″ x 5″</option>
+                        <option value="2.5 X 5">2.5″ x 5″</option>
+                      </Form.Control>
+                    </Form.Group>
+}
+                    {
+                      item.printSide==="bothSide" && 
+                      <>
+
+<Form.Group
+                      className="mb-3 Print Side w-100 m-auto"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">Print Size front</Form.Label>
+                      <Form.Control
+                        as="select"
+                        data-color={item.color}
+                        value={item.printSize}
+                        onChange={(e) => {
+                           handleInputChange(e,index);
+                        }}
+                        name="printSize"
+                        required
+                      >
+                       <option value="">select print size</option> 
+                        <option value="10 x 14">10″ x 14″</option>
+                        <option value="10 x 10">10″ x 10″</option>
+                        <option value="10 x 5">10″ x 5″</option>
+                        <option value="5 X 5">5″ x 5″</option>
+                        <option value="2.5 X 5">2.5″ x 5″</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group
+                    className="mb-3 Print Side w-100 m-auto"
+                    controlId="wccalcPrintSide"
+                  >
+                    <Form.Label className="pr-2">Print Size back</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={item.printSizeBack}
+                      onChange={(e) => {
+                         handleInputChange(e,index);
+                      }}
+                      name="printSizeBack"
+                      required
+                    >
+                     <option value="">select print size</option> 
+                      <option value="10 x 14">10″ x 14″</option>
+                      <option value="10 x 10">10″ x 10″</option>
+                      <option value="10 x 5">10″ x 5″</option>
+                      <option value="5 X 5">5″ x 5″</option>
+                      <option value="2.5 X 5">2.5″ x 5″</option>
+                    </Form.Control>
+                  </Form.Group>
+                      </>
+                     
+                    }
+                   
+       <Form.Group controlId="formFile" className="mb-3">
+                 <Form.Label>Upload Main File</Form.Label>
+                 <Form.Control
+                   type="file"
+                   name="file"
+                  
+                   onChange={(e) => handleFileChange(e, index)} 
+                   required
+                   accept=".ai,.eps,.psd,.pdf,.svg,.png"
+                   multiple
+                 />
+                 <span style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</span>
+               </Form.Group>
+               {fileprogress === 0 ? null : (
+    <ProgressBar now={fileprogress} label={`${fileprogress}%`} />
+     )}
+               <Form.Group controlId="formFile" className="mb-3">
+                 <Form.Label>Upload Mockup/T-Shirt Demo Picture</Form.Label>
+                 <Form.Control
+                   type="file"
+                   name="image"
+                  
+                   required
+                   accept="image/*"
+                   onChange={(e) => handleFileChange(e, index)}
+                   multiple
+                 />
+               </Form.Group>
+               {imageprogress === 0 ? null : (
+    <ProgressBar now={imageprogress} label={`${imageprogress}%`} />
+     )}
+     <Form.Group controlId="formBrandLogo" className="mb-3">
+<Form.Label>Upload Your Brand Logo (optional)</Form.Label>
+<Form.Control
+type="file"
+name="brandLogo"
+accept="image/jpeg, image/png"
+onChange={(e) => {
+ const orderDetailArrCopy = [...formData.orderDetailArr];
+ orderDetailArrCopy[0].brandLogo = e.target.files[0];  // Change 0 with the index of the order detail item being updated
+ const hasBrandLogo = e.target.files.length > 0;
+ if(hasBrandLogo){
+   setAddBrandLogo(true)
+ }
+
+
+ setFormData({ ...formData, orderDetailArr: orderDetailArrCopy });
+}}
+/>
+</Form.Group>
+       </Card.Body>
+   </Card>
+
+))}
+
+
+</Row>
+<hr />
+<div className='row m-5'>
+<div className="col-md-6">
                     <h3>Recipient Details</h3>
       
                     <Form.Group className="mb-3">
@@ -692,267 +982,9 @@ const handleSubmit = async (e) => {
                         placeholder=""
                       />
                     </Form.Group>
-                  </div>
-                  {/* 2nd Column */}
-                  <div className="col-md-4">
-                    <div className="costOrder_Style">
-                    <h3>Order Details</h3>
-                    <Button onClick={addField} className="addButtonStyle">+</Button>
-                    </div>
-                 
-                    {formData.orderDetailArr.map((item, index) => (
-                      <>
-                      
-                      {
-                        index !==0 && <div className='flex'> 
-                        <h5 style={{color:"orange"}}>0 {index+1}</h5>
-                          <Button className="addButtonStyle" onClick={() => removeField(index)}>-</Button>
-                          </div>
-                      }
-                     
-                     
-                      <hr style={{color:"orang !important"}} />
-                    <Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Color</Form.Label>
-                      <Form.Control
-                        as="select"
-                        name="color"
-                        required
-                        value={item.color}
-                        onChange={(e) =>  handleInputChange(e,index)}
-                      >
-                        <option value="">select color</option>
-                        <option value="black">Black</option>
-                        <option value="white">White</option>
-                      </Form.Control>
-                    </Form.Group>
-      
-                    <Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Tee Shirt Size</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={item.teshirtSize}
-                        required
-                        onChange={(e) =>  handleInputChange(e,index)}
-                        name="teshirtSize"
-                      >
-                        <option value="">select tee shirt size</option>
-                       
-                          {/* <option value="m">M ( will 1week)</option>
-                         <option value="L">L (1week)</option>
-                         <option value="XL">XL (1week)</option>
-                          <option value="XXL" >XXL (1week)</option>
-                         */}
-                       
-                        {
-                          item.color==="black"?
-                          <>
-                           <option value="m">M</option>
-                              <option value="L"  >L </option>
-                              <option value="XL">XL</option>
-                          <option value="XXL" >XXL (will take 1 week)</option>
-                          </>
-                      
-                         
-                          :
-                          item.color==="white"&&
-                          <>
-                           <option value="m">M</option>
-                           <option value="L"  >L (will take 1 week)</option>
-                           <option value="XL" >XL (will take 1 week)</option>
-                           <option value="XXL" >XXL (will take 1 week)</option>
-                          </>
-                          
-                        
-                        } 
-                        
-                     
-                     
-                        
-                     
-                    
-                      </Form.Control>
-                    </Form.Group>
-      
-                    <Form.Group
-                      className="mb-3 Quantity w-100 m-auto"
-                      controlId="wccalcQuantity"
-                    >
-                      <Form.Label>Quantity</Form.Label>
-      
-                      <Form.Control
-                        name="quantity"
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) => {
-                           handleInputChange(e,index)
-                        }}
-                        required
-                        placeholder="Enter Quantity"
-                        min="1"
-                      />
-                    </Form.Group>
-                    <Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print side</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={item.printSide}
-                        onChange={(e) => {
-                           handleInputChange(e,index);
-                        }}
-                        name="printSide"
-                        required
-                      >
-                       <option value="">select print side</option> 
-                        <option value="frontSide">Front Side</option>
-                        <option value="backSide">Back Side</option>
-                        <option value="bothSide">Both Side</option>
-                      </Form.Control>
-                    </Form.Group>
-                    {
-                     ( item.printSide==="frontSide" || item.printSide==="backSide") &&
-                      <Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print Size</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={item.printSize}
-                        onChange={(e) => {
-                           handleInputChange(e,index);
-                        }}
-                        name="printSize"
-                        required
-                      >
-                       <option value="">select print size</option> 
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                      </Form.Control>
-                    </Form.Group>
-}
-                    {
-                      item.printSide==="bothSide" && 
-                      <>
-
-<Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print Size front</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={item.printSize}
-                        onChange={(e) => {
-                           handleInputChange(e,index);
-                        }}
-                        name="printSize"
-                        required
-                      >
-                       <option value="">select print size</option> 
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group
-                    className="mb-3 Print Side w-100 m-auto"
-                    controlId="wccalcPrintSide"
-                  >
-                    <Form.Label className="pr-2">Print Size back</Form.Label>
-                    <Form.Control
-                      as="select"
-                      value={item.printSizeBack}
-                      onChange={(e) => {
-                         handleInputChange(e,index);
-                      }}
-                      name="printSizeBack"
-                      required
-                    >
-                     <option value="">select print size</option> 
-                      <option value="10 x 14">10″ x 14″</option>
-                      <option value="10 x 10">10″ x 10″</option>
-                      <option value="10 x 5">10″ x 5″</option>
-                      <option value="5 X 5">5″ x 5″</option>
-                      <option value="2.5 X 5">2.5″ x 5″</option>
-                    </Form.Control>
-                  </Form.Group>
-                      </>
-                     
-                    }
-                   
-                    <Form.Group controlId="formFile" className="mb-3">
-                      <Form.Label>Upload Main File</Form.Label>
-                      <Form.Control
-                        type="file"
-                        name="file"
-                       
-                        onChange={(e) => handleFileChange(e, index)} 
-                        required
-                        accept=".ai,.eps,.psd,.pdf,.svg,.png"
-                        multiple
-                      />
-                      <span style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</span>
-                    </Form.Group>
-                    {fileprogress === 0 ? null : (
-         <ProgressBar now={fileprogress} label={`${fileprogress}%`} />
-          )}
-           <Form.Group controlId="formFile" className="mb-3">
-                      <Form.Label>Upload Mockup/T-Shirt Demo Picture</Form.Label>
-                      <Form.Control
-                        type="file"
-                        name="image"
-                       
-                        required
-                        accept="image/*"
-                        onChange={(e) => handleFileChange(e, index)}
-                        multiple
-                      />
-                    </Form.Group>
-                    {imageprogress === 0 ? null : (
-         <ProgressBar now={imageprogress} label={`${imageprogress}%`} />
-          )}
-
-<Form.Group controlId="formBrandLogo" className="mb-3">
-  <Form.Label>Upload Your Brand Logo (optional)</Form.Label>
-  <Form.Control
-    type="file"
-    name="brandLogo"
-    accept="image/jpeg, image/png"
-    onChange={(e) => {
-      const orderDetailArrCopy = [...formData.orderDetailArr];
-      orderDetailArrCopy[0].brandLogo = e.target.files[0];  // Change 0 with the index of the order detail item being updated
-      const hasBrandLogo = e.target.files.length > 0;
-      if(hasBrandLogo){
-        setAddBrandLogo(true)
-      }
-     
-   
-      setFormData({ ...formData, orderDetailArr: orderDetailArrCopy });
-    }}
-  />
-</Form.Group>
-
-         
-                     </>
-                     ))}
-                  </div>
-                  {/* 3rd Column */}
-                  <div className="col-md-4">
+                  </div> 
+                  <div className="col-md-6 d-flex flex-column align-items-center ">            
+<div style={{ width: '100%' }}>
                     <h3>Cost Of Order</h3>
                     <div className="costOrder_Style">
                       <label htmlFor="printbazCost">Printbaz Cost</label>
@@ -1055,41 +1087,12 @@ const handleSubmit = async (e) => {
                       </div>
                     )}
                   </div>
-                </div>
-                <div className="row mt-5">{/* 1st Column */}</div>
-      
-                <div className="row mt-5">
-                  <div className="col-12">
-                    <Button type="submit" style={{ backgroundColor: "#124" }}>
-                      Submit
-                    </Button>
-      
-                    <Button
-                      type="reset"
-                      style={{ backgroundColor: "gray", marginLeft: "10px" }}
-                    >
-                      Cancel
-                    </Button> 
-                
-                    {
-  isLoading===true &&(
-    <>
-     <div className="alert-overlay"  />
-       <div className="alert-box" >
-     
-         <Spinner  style={{padding:"20px"}} animation="grow" variant="warning" />
-         
-         <h2>Please wait!</h2>
-       </div>
-    </>
-  )
-  
-}
                   </div>
-                </div>
-              </Form>
-      
-              <div className="row mt-5">
+</div>
+
+
+</Form>            
+<div className="row m-5">
                 <div className="col-12">
                   <h3>Terms and Conditions</h3>
                   <ul>
@@ -1139,7 +1142,8 @@ const handleSubmit = async (e) => {
                   </span>
                 </div>
               </div>
-            </div>
+ 
+          {/* new order all design will be here  */}
             {showAlert===true && (
           
 <CustomAlert

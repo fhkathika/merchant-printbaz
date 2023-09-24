@@ -55,7 +55,7 @@ const NewOrder = () => {
         brandLogo: null,
       },
       {
-        color: 'Light Blue',
+        color: 'Blue',
         teshirtSize: {},
         quantityM: '',
         quantityL: '',
@@ -173,40 +173,13 @@ const NewOrder = () => {
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-  
-    const price1to9_10x14 = fetchedData?.printSize10x14?.price1to9_10x14;
-    const price10to19_10x14 = fetchedData?.printSize10x14?.price10to19_10x14;
-    const price20to29_10x14 = fetchedData?.printSize10x14?.price20to29_10x14;
-    const price30to40_10x14 = fetchedData?.printSize10x14?.price30to40_10x14;
-    const price41to49_10x14 = fetchedData?.printSize10x14?.price41to49_10x14;
-    const price50Plus_10x14 = fetchedData?.printSize10x14?.price50Plus_10x14;
-    const price1to9_10x10 = fetchedData?.printSize_10x10?.price1to9_10x10;
-    const price10to19_10x10 = fetchedData?.printSize_10x10?.price10to19_10x10;
-    const price20to29_10x10 = fetchedData?.printSize_10x10?.price20to29_10x10;
-    const price30to40_10x10 = fetchedData?.printSize_10x10?.price30to40_10x10;
-    const price41to49_10x10 = fetchedData?.printSize_10x10?.price41to49_10x10;
-    const price50Plus_10x10 = fetchedData?.printSize_10x10?.price50Plus_10x10;
-    const price1to9_10x5 = fetchedData?.printSize_10x5?.price1to9_10x5;
-    const price10to19_10x5 = fetchedData?.printSize_10x5?.price10to19_10x5;
-    const price20to29_10x5 = fetchedData?.printSize_10x5?.price20to29_10x5;
-    const price30to40_10x5 = fetchedData?.printSize_10x5?.price30to40_10x5;
-    const price41to49_10x5 = fetchedData?.printSize_10x5?.price41to49_10x5;
-    const price50Plus_10x5 = fetchedData?.printSize_10x5?.price50Plus_10x5;
-  
-    const price1to9_5X5 = fetchedData?.printSize_5x5?.price1to9_5X5;
-    const price10to19_5X5 = fetchedData?.printSize_5x5?.price10to19_5X5;
-    const price20to29_5X5 = fetchedData?.printSize_5x5?.price20to29_5X5;
-    const price30to40_5X5 = fetchedData?.printSize_5x5?.price30to40_5X5;
-    const price41to49_5X5 = fetchedData?.printSize_5x5?.price41to49_5X5;
-    const price50Plus_5X5 = fetchedData?.printSize_5x5?.price50Plus_5X5;
-  
-    const price1to9_2p5X5 = fetchedData?.printSize2p5X5?.price1to9_2p5X5;
-    const price10to19_2p5X5 = fetchedData?.printSize2p5X5?.price10to19_2p5X5;
-    const price20to29_2p5X5 = fetchedData?.printSize2p5X5?.price20to29_2p5X5;
-    const price30to40_2p5X5 = fetchedData?.printSize2p5X5?.price30to40_2p5X5;
-    const price41to49_2p5X5 = fetchedData?.printSize2p5X5?.price41to49_2p5X5;
-    const price50Plus_2p5X5 = fetchedData?.printSize2p5X5?.price50Plus_2p5X5;
-  
+    const price_10x14=358
+    const price_10x10=301
+    const price_10x5=272
+    const price_5X5=257
+    const price_2p5X5=250
+    const price_2p5X2p5=247
+
     const navigate=useNavigate()
     const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);
@@ -263,27 +236,12 @@ const NewOrder = () => {
     }
   };
 
-  const addField = () => {
-    setFormData({
-      ...formData,
-      orderDetailArr: [
-        ...formData.orderDetailArr,
-        { color: null, teshirtSize: null, quantity: null, printSize: null,printSizeBack:"", file: null, image: null },
-      ],
-    });
-  };
-// remove field
-const removeField = (index) => {
-  setFormData({
-    ...formData,
-    orderDetailArr: formData.orderDetailArr.filter((_, i) => i !== index),
-  });
-};
+
 formData?.orderDetailArr.forEach(item => {
-  item.totalQuantity = parseInt(item.quantityM) + 
-                       parseInt(item.quantityL) + 
-                       parseInt(item.quantityXL) + 
-                       parseInt(item.quantityXXL);
+  item.totalQuantity = safeParseInt(item.quantityM) + 
+                       safeParseInt(item.quantityL) + 
+                       safeParseInt(item.quantityXL) + 
+                       safeParseInt(item.quantityXXL);
 });
 
 let updatedPrintbazcost=0
@@ -292,125 +250,93 @@ let updatedPrintbazcost=0
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (
       formData?.quantity &&
+      formData?.orderDetailArr[i]?.totalQuantity &&
       formData?.orderDetailArr[i]?.printSize &&
-      price1to9_10x14 &&
-      price10to19_10x14 &&
-      price20to29_10x14 &&
-      price30to40_10x14 &&
-      price41to49_10x14 &&
-      price50Plus_10x14 &&
-      price1to9_10x10 &&
-      price10to19_10x10 &&
-      price20to29_10x10 &&
-      price30to40_10x10 &&
-      price41to49_10x10 &&
-      price50Plus_10x10 &&
-      price1to9_10x5 &&
-      price10to19_10x5 &&
-      price20to29_10x5 &&
-      price30to40_10x5 &&
-      price41to49_10x5 &&
-      price50Plus_10x5 &&
-      price1to9_5X5 &&
-      price10to19_5X5 &&
-      price20to29_5X5 &&
-      price30to40_5X5 &&
-      price41to49_5X5 &&
-      price50Plus_5X5 &&
-      price1to9_2p5X5 &&
-      price10to19_2p5X5 &&
-      price20to29_2p5X5 &&
-      price30to40_2p5X5 &&
-      price41to49_2p5X5 &&
-      price50Plus_2p5X5
+      price_10x14 &&
+      price_10x10 &&
+      price_10x5 &&
+      price_5X5 &&
+      price_2p5X5 &&
+      price_2p5X2p5 
+     
     ) 
     {
       const totalPrice = teeShirtFormula(
         formData?.quantity,
+        formData?.orderDetailArr[i]?.totalQuantity,
         formData?.orderDetailArr[i]?.printSize,
-        price1to9_10x14,
-        price10to19_10x14,
-        price20to29_10x14,
-        price30to40_10x14,
-        price41to49_10x14,
-        price50Plus_10x14,
-        price1to9_10x10,
-        price10to19_10x10,
-        price20to29_10x10,
-        price30to40_10x10,
-        price41to49_10x10,
-        price50Plus_10x10,
-        price1to9_10x5,
-        price10to19_10x5,
-        price20to29_10x5,
-        price30to40_10x5,
-        price41to49_10x5,
-        price50Plus_10x5,
-        price1to9_5X5,
-        price10to19_5X5,
-        price20to29_5X5,
-        price30to40_5X5,
-        price41to49_5X5,
-        price50Plus_5X5,
-        price1to9_2p5X5,
-        price10to19_2p5X5,
-        price20to29_2p5X5,
-        price30to40_2p5X5,
-        price41to49_2p5X5,
-        price50Plus_2p5X5
+        price_10x14,
+        price_10x10,
+        price_10x5,
+        price_5X5,
+        price_2p5X5,
+        price_2p5X2p5
       ).totalPrice;
-      let backSidePrintCost=0
-      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14"){
-        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 130
+      let backSidePrintCost = 0;
+      let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
+      // backSidePrintCost += totalQuantity * 130;
+      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 130
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"){
-        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 100
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"){
-        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 50
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"){
-        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 30
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 100
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 50
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 30
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"){
-        backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 15
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 15
       }
-      console.log("formData?.orderDetailArr[i]?.printSizeBack",(formData?.orderDetailArr[i]?.quantity * 80));
+      
+      // At this point, backSidePrintCost contains the total cost for the current item's back side print
+      
       if(addbrandLogo===true){
         // printbazcost=parseInt(printbazcostbase+5)
-        printbazcostbase = Number(totalPrice)+backSidePrintCost+5;
+        
+        printbazcostbase = Number(totalPrice)+backSidePrintCost+(5*formData?.orderDetailArr[i]?.totalQuantity);
         printbazcost += printbazcostbase;
+        const test=printbazcost+backSidePrintCost
+        console.log("printbazcost",printbazcost)
+        console.log("backSidePrintCost",backSidePrintCost)
+        console.log("test",test)
       }
       else{
-        printbazcostbase = Number(totalPrice)+backSidePrintCost;
-        printbazcost += printbazcostbase;
+        printbazcostbase = Number(totalPrice) + backSidePrintCost;
+        printbazcost = (printbazcostbase+printbazcost);
+      
+        console.log("printbazcost",printbazcost)
+        console.log("backSidePrintCost",backSidePrintCost)
       }
 
-  // console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
-    } else {
-      if(printbazcostbase){
-      
-        printbazcost= printbazcostbase;
-      }
-      else{
-        printbazcost=0;
-      }
-      // or any default value you want to set
+ 
     }
+    //  else {
+    //   if(printbazcostbase){
+      
+    //     printbazcost= printbazcostbase;
+    //   }
+    //   else{
+    //     printbazcost=0;
+    //   }
+    //   // or any default value you want to set
+    // }
   }
     let deliveryFeeInsideDhaka = 0;
     const baseDeliveryFee = 70;
     const additionalDeliveryFee = 15;
     let QuantityBase=0
-    let totalQuantity=0;
 
     let deliveryFeeOutSideDhaka = 0;
     const baseDeliveryFeeOutSideDhaka = 100;
     const additionalDeliveryFeeOutSideDhaka = 25;
-    for  (var j = 0; j < formData?.orderDetailArr?.length; j++) {
-      QuantityBase=Number( formData?.orderDetailArr[j]?.quantity)
-      totalQuantity =Number(QuantityBase+totalQuantity)
-   
-   
-    if (formData?.orderDetailArr[j]?.quantity > 0) {
+    let totalQuantity = 0;
+    for (var j = 0; j < formData?.orderDetailArr?.length; j++) {
+      totalQuantity += Number(formData?.orderDetailArr[j]?.totalQuantity);
+    }
+    
+    // inside dhaka 
+    if (totalQuantity > 0) {
       // Calculate the number of groups of 5 items in the order
       const groups = Math.floor(totalQuantity/ 5);
   
@@ -427,10 +353,10 @@ let updatedPrintbazcost=0
         deliveryFeeInsideDhaka = baseDeliveryFee + groups * additionalDeliveryFee;
       }
     }
-  
+  console.log("deliveryFeeInsideDhaka",deliveryFeeInsideDhaka);
   // outside dhaka
   
-    if (formData?.orderDetailArr[j]?.quantity > 0) {
+    if (formData?.quantity > 0) {
       // Calculate the number of groups of 5 items in the order
       const groups = Math.floor(totalQuantity / 5);
   
@@ -450,7 +376,8 @@ let updatedPrintbazcost=0
           groups * additionalDeliveryFeeOutSideDhaka;
       }
     }
-    }
+   
+    console.log("deliveryFeeOutSideDhaka",deliveryFeeOutSideDhaka);
     let deliveryFee;
     if (deliveryAreas === "outsideDhaka") {
       console.log("from deliveryAreas",deliveryAreas);
@@ -699,11 +626,13 @@ const handleSubmit = async (e) => {
                            handleInputChange(e,index);
                         }}
                         name="printSide"
-                        required
+                        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
+                        
+                        
                       >
                        <option value="">select print side</option> 
                         <option value="frontSide">Front Side</option>
-                        <option value="backSide">Back Side</option>
+                        {/* <option value="backSide">Back Side</option> */}
                         <option value="bothSide">Both Side</option>
                       </Form.Control>
                     </Form.Group>
@@ -722,7 +651,7 @@ const handleSubmit = async (e) => {
                            handleInputChange(e,index);
                         }}
                         name="printSize"
-                        required
+                        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
                        <option value="">select print size</option> 
                         <option value="10 x 14">10″ x 14″</option>
@@ -750,7 +679,7 @@ const handleSubmit = async (e) => {
                            handleInputChange(e,index);
                         }}
                         name="printSize"
-                        required
+                        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
                        <option value="">select print size</option> 
                         <option value="10 x 14">10″ x 14″</option>
@@ -767,12 +696,14 @@ const handleSubmit = async (e) => {
                     <Form.Label className="pr-2">Print Size back</Form.Label>
                     <Form.Control
                       as="select"
-                      value={item.printSizeBack}
+                      data-color={item.color}
+                      name="printSizeBack"
+                      value={item?.printSizeBack}
                       onChange={(e) => {
                          handleInputChange(e,index);
                       }}
-                      name="printSizeBack"
-                      required
+                     
+                      required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                     >
                      <option value="">select print size</option> 
                       <option value="10 x 14">10″ x 14″</option>
@@ -793,7 +724,7 @@ const handleSubmit = async (e) => {
                    name="file"
                   
                    onChange={(e) => handleFileChange(e, index)} 
-                   required
+                   required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                    accept=".ai,.eps,.psd,.pdf,.svg,.png"
                    multiple
                  />
@@ -808,7 +739,7 @@ const handleSubmit = async (e) => {
                    type="file"
                    name="image"
                   
-                   required
+                   required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                    accept="image/*"
                    onChange={(e) => handleFileChange(e, index)}
                    multiple
@@ -987,6 +918,14 @@ onChange={(e) => {
 <div style={{ width: '100%' }}>
                     <h3>Cost Of Order</h3>
                     <div className="costOrder_Style">
+                      <label htmlFor="printbazCost">Total Quantity</label>
+      
+                      <h3>
+                        {" "}
+                        {/* <span style={{ fontSize: "" }}>&#2547;</span> {addbrandLogo ?parseInt(printbazcost+5):printbazcost} */}
+                        <span style={{ fontSize: "" }}>{formData?.quantity}</span> 
+                      </h3>
+                    </div> <div className="costOrder_Style">
                       <label htmlFor="printbazCost">Printbaz Cost</label>
       
                       <h3>
@@ -1003,8 +942,8 @@ onChange={(e) => {
                         {" "}
                         <span style={{ fontSize: "" }}>&#2547;</span>{" "}
                         {deliveryAreas === "outsideDhaka"
-                          ? deliveryFeeOutSideDhaka
-                          : deliveryFeeInsideDhaka}
+                          ? Number(deliveryFeeOutSideDhaka)
+                          : Number(deliveryFeeInsideDhaka)}
                       </h3>
                     </div>
                     <div>
@@ -1072,11 +1011,11 @@ onChange={(e) => {
                       <h3> 3%</h3>
                     </div>
       
-                    {formData?.orderDetailArr[0]?.quantity && formData?.orderDetailArr[0]?.printSize && formData?.collectAmount && (
+                    {/* {formData?.quantity && formData?.orderDetailArr[0]?.printSize && formData?.collectAmount && ( */}
                       <div >
                         <div className="costOrder_Style">
                         <label htmlFor="printbazCost">You will receive</label>
-                        <h3> {parseInt(recvMoney)}</h3>
+                        <h3> {recvMoney>0 && parseInt(recvMoney)}</h3>
                         </div>
                        
                       
@@ -1085,8 +1024,32 @@ onChange={(e) => {
   }
                        
                       </div>
-                    )}
+                    {/* )} */}
                   </div>
+                  <Button  className='orderSubmit_btn' type="submit">
+        Submit
+      </Button>
+
+      {/* <Button
+                      type="reset"
+                      style={{ backgroundColor: "gray", marginLeft: "10px" }}
+                    >
+                      Cancel
+                    </Button> */}
+                    {
+  isLoading===true &&(
+    <>
+     <div className="alert-overlay"  />
+       <div className="alert-box" >
+     
+         <Spinner  style={{padding:"20px"}} animation="grow" variant="warning" />
+         
+         <h2>Please wait!</h2>
+       </div>
+    </>
+  )
+  
+} 
                   </div>
 </div>
 

@@ -12,14 +12,13 @@ import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderCon
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
-const NewOrder = () => {
+const BlankRoundNeck = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     address: '',
     instruction: '',
     collectAmount: '',
-    
     districts:'',
     zones:'',
     areas:'',
@@ -28,13 +27,12 @@ const NewOrder = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Black Custom.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Black.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
-       
-        printSide: '',
+       printSide: '',
         printSize: '',
         printSizeBack: '',
         file: null,
@@ -44,7 +42,7 @@ const NewOrder = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck White Custom.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck White.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -59,7 +57,7 @@ const NewOrder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Bottle Green Custom.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Bottle Green.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -73,7 +71,7 @@ const NewOrder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Maroon Custom.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Maroon.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -177,13 +175,7 @@ const NewOrder = () => {
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-    const price_10x14=358
-    const price_10x10=301
-    const price_10x5=272
-    const price_5X5=257
-    const price_2p5X5=250
-    const price_2p5X2p5=247
-
+ 
     const navigate=useNavigate()
     const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);
@@ -228,17 +220,6 @@ const NewOrder = () => {
 
   
    console.log("formData",formData);
-  const handleFileChange = (event, index) => {
-    const { name, files } = event.target;
-    if (name==="file" || name==="image" || name==="brandLogo") {
-      // const fieldName = name.split('.')[1];
-      const newOrderDetailArr = [...formData.orderDetailArr];
-       // Change from a single file to an array of files
-      newOrderDetailArr[index][[event.target.name]] =Array.from(files);
-      setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
-    
-    }
-  };
 
 
 formData?.orderDetailArr.forEach(item => {
@@ -248,73 +229,19 @@ formData?.orderDetailArr.forEach(item => {
                        safeParseInt(item.quantityXXL);
 });
 
-let updatedPrintbazcost=0
+let perCategoryCost=0
   let printbazcost=0;
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
-    if (
-      formData?.quantity &&
-      formData?.orderDetailArr[i]?.totalQuantity &&
-      formData?.orderDetailArr[i]?.printSize &&
-      price_10x14 &&
-      price_10x10 &&
-      price_10x5 &&
-      price_5X5 &&
-      price_2p5X5 &&
-      price_2p5X2p5 
-     
-    ) 
-    {
-      const totalPrice = teeShirtFormula(
-        formData?.quantity,
-        formData?.orderDetailArr[i]?.totalQuantity,
-        formData?.orderDetailArr[i]?.printSize,
-        price_10x14,
-        price_10x10,
-        price_10x5,
-        price_5X5,
-        price_2p5X5,
-        price_2p5X2p5
-      ).totalPrice;
-      let backSidePrintCost = 0;
-      let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
-      // backSidePrintCost += totalQuantity * 130;
-      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 130
+    if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 220
+        console.log("perCategoryCost",perCategoryCost);
+        printbazcost +=perCategoryCost
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 100
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 50
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 30
-      }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 15
-      }
-      
-      // At this point, backSidePrintCost contains the total cost for the current item's back side print
-      
-      if(addbrandLogo===true){
-        // printbazcost=parseInt(printbazcostbase+5)
-        
-        printbazcostbase = Number(totalPrice)+backSidePrintCost+(5*formData?.orderDetailArr[i]?.totalQuantity);
-        printbazcost += printbazcostbase;
-        const test=printbazcost+backSidePrintCost
-        console.log("printbazcost",printbazcost)
-        console.log("backSidePrintCost",backSidePrintCost)
-        console.log("test",test)
-      }
-      else{
-        printbazcostbase = Number(totalPrice) + backSidePrintCost;
-        printbazcost = (printbazcostbase+printbazcost);
-      
-        console.log("printbazcost",printbazcost)
-        console.log("backSidePrintCost",backSidePrintCost)
-      }
+   
 
- 
     }
+    console.log("printbazCost",printbazcost);
     //  else {
     //   if(printbazcostbase){
       
@@ -325,7 +252,7 @@ let updatedPrintbazcost=0
     //   }
     //   // or any default value you want to set
     // }
-  }
+  
     let deliveryFeeInsideDhaka = 0;
     const baseDeliveryFee = 70;
     const additionalDeliveryFee = 15;
@@ -432,35 +359,10 @@ const handleSubmit = async (e) => {
   try {
     const formData2 = new FormData();
     const orderDetailArr = formData.orderDetailArr || [];
-    const filesAndImagesArr = [];
+   
 
     orderDetailArr?.forEach((item, index) => {
-      const fileAndImageData = {};
-      // console.log("item.brandLogo",item.brandLogo);
-      if (item.file) {
-        item.file.forEach((file, fileIndex) => {
-          formData2.append(`file${index}_${fileIndex}`, file); // Append each file
-        });
-      }
-      
-      if (item.image) {
-        item.image.forEach((image, imageIndex) => {
-          formData2.append(`image${index}_${imageIndex}`, image); // Append each image
-        });
-      }    if (item.brandLogo) {
-        item.brandLogo.forEach((brandLogo, brandLogoIndex) => {
-          formData2.append(`brandLogo${index}_${brandLogoIndex}`, brandLogo); // Append each image
-        });
-      }
-        // Append brandLogo
-
-//   if (item.brandLogo) {
-//     formData2.append(`brandLogo${index}`, item.brandLogo);
-// }
-  if (Object.keys(fileAndImageData).length) {
-        filesAndImagesArr.push(fileAndImageData);
-      }
-
+  
       formData2.append(`color${index}`, item.color);
       formData2.append(`teshirtSize${index}`, item.teshirtSize);
       // Handle different sizes for quantity
@@ -469,15 +371,15 @@ const handleSubmit = async (e) => {
   formData2.append(`quantityXL${index}`, item.quantityXL);
   formData2.append(`quantityXXL${index}`, item.quantityXXL);
   
-      formData2.append(`printSize${index}`, item.printSize);
-      formData2.append(`printSide${index}`, item.printSide);
+      formData2.append(`printSize${index}`, "disabled");
+      formData2.append(`printSide${index}`, "disabled");
   
 
 
       return item;
     });
 
-    formData2.append('filesAndImages', JSON.stringify(filesAndImagesArr)); // Append the filesAndImagesArr as a JSON string
+    // formData2.append('filesAndImages', JSON.stringify(filesAndImagesArr)); // Append the filesAndImagesArr as a JSON string
 
     // Append the remaining form data
     formData2.append('orderDetailArr', JSON.stringify(orderDetailArr));
@@ -485,7 +387,7 @@ const handleSubmit = async (e) => {
     formData2.append('phone', formData.phone);
     formData2.append('address', formData.address);
     formData2.append('instruction', formData.instruction);
-    formData2.append('category', "customDropSholder");
+    formData2.append('category', "blankRoundNeck");
     formData2.append('districts', formData.districts);
     formData2.append('zones', formData.zones);
     formData2.append('areas', formData.areas);
@@ -506,9 +408,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
  
     const response = await
-    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-    //  fetch("http://localhost:5000/submitorder", //add this when work local server
-     fetch("https://mserver.printbaz.com/testsubmitorder", //add this when work local server
+     fetch("https://mserver.printbaz.com/blankRoundNeckOrder",  //add this when upload  in main server 
+    //  fetch("http://localhost:5000/blankRoundNeckOrder", //add this when work local server
      
      {
       method: "POST",
@@ -561,13 +462,13 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
- <h3 className='m-4'><span style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
+ <h3 className='m-4'  style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/>   Blank Round Neck T-Shirt</h3>
  <Form onSubmit={handleSubmit}  className="mb-4">
 
-<Row xs={1} md={4} className="g-3 m-5">
-
+<Row xs={1} md={4} className="g-4 m-3">
+ 
 {formData.orderDetailArr.map((item, index) => (
-  <Col>
+    <Col>
    <Card >
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
@@ -623,156 +524,10 @@ const handleSubmit = async (e) => {
                />
            </ListGroup.Item>  
        </ListGroup>
-       <Card.Body>
-       <Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print side</Form.Label>
-                      <Form.Control
-                        as="select"
-                        data-color={item.color}
-                        value={item.printSide}
-                        onChange={(e) => {
-                           handleInputChange(e,index);
-                        }}
-                        name="printSide"
-                        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
-                        
-                        
-                      >
-                       <option value="">select print side</option> 
-                        <option value="frontSide">Front Side</option>
-                        {/* <option value="backSide">Back Side</option> */}
-                        <option value="bothSide">Both Side</option>
-                      </Form.Control>
-                    </Form.Group>
-                    {
-                     ( item.printSide==="frontSide" || item.printSide==="backSide") &&
-                      <Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print Size</Form.Label>
-                      <Form.Control
-                        as="select"
-                        data-color={item.color}
-                        value={item.printSize}
-                        onChange={(e) => {
-                           handleInputChange(e,index);
-                        }}
-                        name="printSize"
-                        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
-                      >
-                       <option value="">select print size</option> 
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 2.5">2.5″ x 2.5″</option>
-                      </Form.Control>
-                    </Form.Group>
-}
-                    {
-                      item.printSide==="bothSide" && 
-                      <>
-
-<Form.Group
-                      className="mb-3 Print Side w-100 m-auto"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print Size front</Form.Label>
-                      <Form.Control
-                        as="select"
-                        data-color={item.color}
-                        value={item.printSize}
-                        onChange={(e) => {
-                           handleInputChange(e,index);
-                        }}
-                        name="printSize"
-                        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
-                      >
-                       <option value="">select print size</option> 
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 2.5">2.5″ x 2.5″</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group
-                    className="mb-3 Print Side w-100 m-auto"
-                    controlId="wccalcPrintSide"
-                  >
-                    <Form.Label className="pr-2">Print Size back</Form.Label>
-                    <Form.Control
-                      as="select"
-                      data-color={item.color}
-                      name="printSizeBack"
-                      value={item?.printSizeBack}
-                      onChange={(e) => {
-                         handleInputChange(e,index);
-                      }}
-                     
-                      required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
-                    >
-                     <option value="">select print size</option> 
-                      <option value="10 x 14">10″ x 14″</option>
-                      <option value="10 x 10">10″ x 10″</option>
-                      <option value="10 x 5">10″ x 5″</option>
-                      <option value="5 X 5">5″ x 5″</option>
-                      <option value="2.5 X 5">2.5″ x 5″</option>
-                    </Form.Control>
-                  </Form.Group>
-                      </>
-                     
-                    }
-                   
-       <Form.Group controlId="formFile" className="mb-3">
-                 <Form.Label>Upload Main File</Form.Label>
-                 <Form.Control
-                   type="file"
-                   name="file"
-                  
-                   onChange={(e) => handleFileChange(e, index)} 
-                   required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
-                   accept=".ai,.eps,.psd,.pdf,.svg,.png"
-                   multiple
-                 />
-                 <span style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</span>
-               </Form.Group>
-               {fileprogress === 0 ? null : (
-    <ProgressBar now={fileprogress} label={`${fileprogress}%`} />
-     )}
-               <Form.Group controlId="formFile" className="mb-3">
-                 <Form.Label>Upload Mockup/T-Shirt Demo Picture</Form.Label>
-                 <Form.Control
-                   type="file"
-                   name="image"
-                  
-                   required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
-                   accept="image/*"
-                   onChange={(e) => handleFileChange(e, index)}
-                   multiple
-                 />
-               </Form.Group>
-               {imageprogress === 0 ? null : (
-    <ProgressBar now={imageprogress} label={`${imageprogress}%`} />
-     )}
-     <Form.Group controlId="formBrandLogo" className="mb-3">
-<Form.Label>Upload Your Brand Logo (optional)</Form.Label>
-<Form.Control
-type="file"
-name="brandLogo"
-accept="image/jpeg, image/png"
-onChange={(e) => handleFileChange(e, index)}
-/>
-</Form.Group>
-       </Card.Body>
+       
    </Card>
    </Col>
+
 ))}
 
 
@@ -1132,5 +887,5 @@ onClose={() => setShowAlert(false)}
       );
 };
 
-export default NewOrder;
+export default BlankRoundNeck;
 

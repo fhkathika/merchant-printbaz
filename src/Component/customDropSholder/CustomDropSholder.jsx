@@ -17,7 +17,6 @@ const CustomDropSholder = () => {
     address: '',
     instruction: '',
     collectAmount: '',
-    
     districts:'',
     zones:'',
     areas:'',
@@ -31,8 +30,7 @@ const CustomDropSholder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
-       
-        printSide: '',
+       printSide: '',
         printSize: '',
         printSizeBack: '',
         file: null,
@@ -169,18 +167,16 @@ const CustomDropSholder = () => {
       }
     }, [formData?.districts ,formData?.zones , formData?.areas]);
   
-  
-
-
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-    const price_10x14=358
-    const price_10x10=301
-    const price_10x5=272
-    const price_5X5=257
-    const price_2p5X5=250
-    const price_2p5X2p5=247
+    const price_11p7x16p5=433
+    const price_10x14=398
+    const price_10x10=341
+    const price_10x5=312
+    const price_5X5=297
+    const price_2p5X5=290
+    const price_2p5X2p5=287
 
     const navigate=useNavigate()
     const location=useLocation()
@@ -254,6 +250,7 @@ let updatedPrintbazcost=0
       formData?.quantity &&
       formData?.orderDetailArr[i]?.totalQuantity &&
       formData?.orderDetailArr[i]?.printSize &&
+      price_11p7x16p5 &&
       price_10x14 &&
       price_10x10 &&
       price_10x5 &&
@@ -267,6 +264,7 @@ let updatedPrintbazcost=0
         formData?.quantity,
         formData?.orderDetailArr[i]?.totalQuantity,
         formData?.orderDetailArr[i]?.printSize,
+        price_11p7x16p5,
         price_10x14,
         price_10x10,
         price_10x5,
@@ -504,8 +502,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
  
     const response = await
-    //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-     fetch("http://localhost:5000/customDropSholderOrder", //add this when work local server
+     fetch("https://mserver.printbaz.com/customDropSholderOrder",  //add this when upload  in main server 
+    //  fetch("http://localhost:5000/customDropSholderOrder", //add this when work local server
      
      {
       method: "POST",
@@ -565,7 +563,7 @@ const handleSubmit = async (e) => {
 
 {formData.orderDetailArr.map((item, index) => (
    <Card style={{ width: '18rem' }} className="">
-       <Card.Title className='m-auto p-3'>{item.color}
+       <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
        </Card.Title>
        <Card.Img variant="top" src={item?.categoryImg} />
@@ -660,12 +658,14 @@ const handleSubmit = async (e) => {
                         name="printSize"
                         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
-                       <option value="">select print size</option> 
+                        <option value="">select print size</option> 
+                        <option value="11.7 x 16.5">11.7″ x 16.5″</option>
                         <option value="10 x 14">10″ x 14″</option>
                         <option value="10 x 10">10″ x 10″</option>
                         <option value="10 x 5">10″ x 5″</option>
                         <option value="5 X 5">5″ x 5″</option>
                         <option value="2.5 X 5">2.5″ x 5″</option>
+                        <option value="2.5 X 2.5">2.5″ x 2.5″</option>
                       </Form.Control>
                     </Form.Group>
 }
@@ -689,11 +689,13 @@ const handleSubmit = async (e) => {
                         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
                        <option value="">select print size</option> 
+                       <option value="11.7 x 16.5">11.7″ x 16.5″</option>
                         <option value="10 x 14">10″ x 14″</option>
                         <option value="10 x 10">10″ x 10″</option>
                         <option value="10 x 5">10″ x 5″</option>
                         <option value="5 X 5">5″ x 5″</option>
                         <option value="2.5 X 5">2.5″ x 5″</option>
+                        <option value="2.5 X 5">2.5″ x 2.5″</option>
                       </Form.Control>
                     </Form.Group>
                     <Form.Group

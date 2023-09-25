@@ -36,6 +36,8 @@ import ScreenShot from "./Component/screenShot/ScreenShot";
 import LocationTest from "./Component/automaticLocationTest/LocationTest";
 import NewOrdersWithOption from "./Component/newOrdersWithOption/NewOrdersWithOption";
 import CustomDropSholder from "./Component/customDropSholder/CustomDropSholder";
+import BlankRoundNeck from "./Component/blankRoundNeck/BlankRoundNeck";
+import BlankDropSholder from "./Component/blankDropSholder/BlankDropSholder";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -241,6 +243,21 @@ function App() {
           element={
             <PrivateRoute>
               <CustomDropSholder />
+            </PrivateRoute>
+          }
+        /> 
+        <Route
+          path="/blankRoundNeck"
+          element={
+            <PrivateRoute>
+              <BlankRoundNeck />
+            </PrivateRoute>
+          }
+        /><Route
+          path="/blankDropSholder"
+          element={
+            <PrivateRoute>
+              <BlankDropSholder />
             </PrivateRoute>
           }
         />

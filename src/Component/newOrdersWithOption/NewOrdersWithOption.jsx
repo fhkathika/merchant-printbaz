@@ -12,6 +12,12 @@ const NewOrdersWithOption = () => {
   } 
    const handleClickCustomDropSholder=()=>{
     navigate("/customDropSholder")
+  } 
+   const handleClickBlankRoundNeck=()=>{
+    navigate("/blankRoundNeck")
+  }
+   const handleClickBlankDropSholder=()=>{
+    navigate("/blankDropSholder")
   }
     return (
         <div>
@@ -19,44 +25,48 @@ const NewOrdersWithOption = () => {
          
             <Row xs={1} md={4} className="g-4 m-3">
         <Col >
-          <Card>
-            <Card.Img variant="top" src="/images/categoryImgs/Round Neck Black.jpg" />
+          <Card onClick={handleClickBlankRoundNeck}> 
+            <Card.Img variant="top" src="/images/categoryImgs/Round Neck White.jpg" />
             <Card.Body>
-              <Card.Title>Black Round Neck</Card.Title>
+              <Card.Title>Blank Round Neck</Card.Title>
               
-              <Button style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+              <Button   style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
             </Card.Body>
           </Card>
-        </Col>    <Col >
-          <Card>
-            <Card.Img variant="top" src="/images/categoryImgs/Round Neck Bottle Green Custom.jpg" />
+        </Col>   
+         <Col >
+          <Card onClick={handleClickNeworder}>
+            <Card.Img variant="top" src="/images/categoryImgs/Round Neck Black Custom.jpg" />
             <Card.Body>
               <Card.Title>Custom Round Neck</Card.Title>
               
-              <Button onClick={handleClickNeworder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+              <Button  style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
             </Card.Body>
           </Card>
-        </Col>    <Col >
-          <Card>
-            <Card.Img variant="top" src="/images/categoryImgs/Drop Shoulder Black.jpg" />
+        </Col>  
+          <Col >
+          <Card onClick={handleClickBlankDropSholder}>
+            <Card.Img variant="top" src="/images/categoryImgs/Drop Shoulder Bottle Green.jpg" />
             <Card.Body>
               <Card.Title>Blank Drop Sholder</Card.Title>
               
               <Button  style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
-        </Col>    <Col >
-          <Card>
+        </Col>  
+          <Col >
+          <Card onClick={handleClickCustomDropSholder}>
             <Card.Img variant="top" src="/images/categoryImgs/Drop Shoulder Maroon Custom.jpg" />
             <Card.Body>
               <Card.Title>custom Drop Sholder</Card.Title>
             
-              <Button onClick={handleClickCustomDropSholder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor">Buy Now</Button>
+              <Button  style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
-        </Col>    <Col >
+        </Col>   
+         <Col >
           <Card>
-            <Card.Img variant="top" src="/images/categoryImgs/Hoodies Nevy Blue.jpg" />
+            <Card.Img variant="top" src="/images/categoryImgs/Hoodies Red.jpg" />
             <Card.Body>
               <Card.Title>Blank hoodie</Card.Title>
              

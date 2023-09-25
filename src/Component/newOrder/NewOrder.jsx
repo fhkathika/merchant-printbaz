@@ -507,8 +507,8 @@ const handleSubmit = async (e) => {
  
     const response = await
     //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-    //  fetch("http://localhost:5000/submitorder", //add this when work local server
-     fetch("https://mserver.printbaz.com/testsubmitorder", //add this when work local server
+     fetch("http://localhost:5000/testsubmitorder", //add this when work local server
+    //  fetch("https://mserver.printbaz.com/testsubmitorder", //add this when work local server
      
      {
       method: "POST",

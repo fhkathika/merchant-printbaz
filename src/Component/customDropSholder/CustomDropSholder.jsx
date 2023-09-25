@@ -10,6 +10,7 @@ import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderCon
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
+import tshirtFormulaCustomDropSholder from '../../Formulas/tshirtFormulaCustomDropSholder';
 const CustomDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -244,7 +245,7 @@ formData?.orderDetailArr.forEach(item => {
 
 let updatedPrintbazcost=0
   let printbazcost=0;
-  let printbazcostbase;
+  let printbazcostbase=0;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (
       formData?.quantity &&
@@ -260,7 +261,7 @@ let updatedPrintbazcost=0
      
     ) 
     {
-      const totalPrice = teeShirtFormula(
+      const totalPrice = tshirtFormulaCustomDropSholder(
         formData?.quantity,
         formData?.orderDetailArr[i]?.totalQuantity,
         formData?.orderDetailArr[i]?.printSize,
@@ -303,7 +304,7 @@ let updatedPrintbazcost=0
       }
       else{
         printbazcostbase = Number(totalPrice) + backSidePrintCost;
-        printbazcost = (printbazcostbase+printbazcost);
+        printbazcost +=printbazcostbase;
       
         console.log("printbazcost",printbazcost)
         console.log("backSidePrintCost",backSidePrintCost)

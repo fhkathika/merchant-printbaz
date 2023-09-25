@@ -1,9 +1,8 @@
 import React from 'react';
 
-const teeShirtFormula = (
-    quantity,
-    totalQuantity,
+const tshirtFormulaCustomDropSholder = (quantity,totalQuantity,
     printSize,
+    price_11p7x16p5,
     price_10x14,
     price_10x10,
     price_10x5,
@@ -18,13 +17,19 @@ const teeShirtFormula = (
         };
 let selectedSizes = [];    
 let totalPrice=0
+let totalPrice11p7x16p5=0
 let totalPrice10x14=0
 let totalPrice10x10=0
 let totalPrice10x5=0
 let totalPrice5X5=0
 let totalPrice2p5X5=0
 let totalPrice2p5X2p5=0
- // 10 x 14
+// 10 x 14
+    if(printSize==="11.7 x 16.5"){
+        console.log("  totalPrice=totalQuantity*price_10x14;",  totalPrice,"=",totalQuantity,"*",price_10x14);
+        totalPrice11p7x16p5=safeParseInt(totalQuantity*price_11p7x16p5);
+
+} // 10 x 14
     if(printSize==="10 x 14"){
         console.log("  totalPrice=totalQuantity*price_10x14;",  totalPrice,"=",totalQuantity,"*",price_10x14);
         totalPrice10x14=safeParseInt(totalQuantity*price_10x14);
@@ -58,13 +63,7 @@ if(printSize==="2.5 X 5"){
     totalPrice2p5X2p5=safeParseInt(totalQuantity*price_2p5X2p5);
 
 }
-totalPrice=
-totalPrice10x14+
-totalPrice10x10+
-totalPrice10x5+
-totalPrice5X5+
-totalPrice2p5X5+
-totalPrice2p5X2p5
+totalPrice=Number(totalPrice11p7x16p5+totalPrice10x14+totalPrice10x10+totalPrice10x5+totalPrice5X5+totalPrice2p5X5+totalPrice2p5X2p5)
 console.log("totalPrice=totalPrice10x14+totalPrice10x10+totalPrice10x5+totalPrice5X5+totalPrice2p5X5+totalPrice2p5X2p5",totalPrice,"=",totalPrice10x14,"+",totalPrice10x10,"+",totalPrice10x5,"+",totalPrice5X5,"+",totalPrice2p5X5,"+",totalPrice2p5X2p5);
 const uPrice = totalPrice / quantity;
 let unitPrice = 0;
@@ -79,4 +78,4 @@ if (uPrice % 1 === 0) {
   return ({ totalPrice: totalPrice ,unitPrice: unitPrice });
 };
 
-export default teeShirtFormula;
+export default tshirtFormulaCustomDropSholder;

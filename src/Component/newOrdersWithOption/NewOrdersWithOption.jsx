@@ -9,6 +9,9 @@ const NewOrdersWithOption = () => {
   const navigate=useNavigate()
   const handleClickNeworder=()=>{
     navigate("/newOrder")
+  } 
+   const handleClickCustomDropSholder=()=>{
+    navigate("/customDropSholder")
   }
     return (
         <div>
@@ -17,7 +20,7 @@ const NewOrdersWithOption = () => {
             <Row xs={1} md={4} className="g-4 m-3">
         <Col >
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src="/images/categoryImgs/Round Neck Black.jpg" />
             <Card.Body>
               <Card.Title>Black Round Neck</Card.Title>
               
@@ -26,7 +29,7 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>    <Col >
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src="/images/categoryImgs/Round Neck Bottle Green Custom.jpg" />
             <Card.Body>
               <Card.Title>Custom Round Neck</Card.Title>
               
@@ -35,25 +38,25 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>    <Col >
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src="/images/categoryImgs/Drop Shoulder Black.jpg" />
             <Card.Body>
               <Card.Title>Blank Drop Sholder</Card.Title>
               
-              <Button style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
+              <Button  style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
         </Col>    <Col >
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src="/images/categoryImgs/Drop Shoulder Maroon Custom.jpg" />
             <Card.Body>
               <Card.Title>custom Drop Sholder</Card.Title>
             
-              <Button style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor">Buy Now</Button>
+              <Button onClick={handleClickCustomDropSholder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
         </Col>    <Col >
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src="/images/categoryImgs/Hoodies Nevy Blue.jpg" />
             <Card.Body>
               <Card.Title>Blank hoodie</Card.Title>
              
@@ -62,7 +65,7 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>    <Col >
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src="/images/categoryImgs/Hoodies Nevy Blue Custom.jpg" />
             <Card.Body>
               <Card.Title>Custom Hoodie</Card.Title>
               

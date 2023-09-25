@@ -1,5 +1,3 @@
-
-
 import React, { useContext, useEffect, useState } from 'react';
 import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner, Row, Col, Card, ListGroup, Container} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
@@ -12,7 +10,7 @@ import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderCon
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
-const NewOrder = () => {
+const CustomDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -28,7 +26,7 @@ const NewOrder = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Black Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Black Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -44,7 +42,7 @@ const NewOrder = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck White Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder White Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -59,7 +57,7 @@ const NewOrder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Bottle Green Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -73,7 +71,7 @@ const NewOrder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Maroon Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -507,7 +505,7 @@ const handleSubmit = async (e) => {
  
     const response = await
     //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-     fetch("http://localhost:5000/submitorder", //add this when work local server
+     fetch("http://localhost:5000/customDropSholderOrder", //add this when work local server
      
      {
       method: "POST",
@@ -560,7 +558,7 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
- <h3 className='m-4'><span style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
+ <h3 className='m-4'><span style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom DropSholder</h3>
  <Form onSubmit={handleSubmit}  className="mb-4">
 
 <Row xs={1} md={4} className="g-3 m-5">
@@ -1128,5 +1126,5 @@ onClose={() => setShowAlert(false)}
       );
 };
 
-export default NewOrder;
+export default CustomDropSholder;
 

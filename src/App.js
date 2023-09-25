@@ -35,6 +35,7 @@ import ViewTicket from "./Component/viewTicket/ViewTicket";
 import ScreenShot from "./Component/screenShot/ScreenShot";
 import LocationTest from "./Component/automaticLocationTest/LocationTest";
 import NewOrdersWithOption from "./Component/newOrdersWithOption/NewOrdersWithOption";
+import CustomDropSholder from "./Component/customDropSholder/CustomDropSholder";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -232,6 +233,14 @@ function App() {
           element={
             <PrivateRoute>
               <NewOrdersWithOption />
+            </PrivateRoute>
+          }
+        />  
+         <Route
+          path="/customDropSholder"
+          element={
+            <PrivateRoute>
+              <CustomDropSholder />
             </PrivateRoute>
           }
         />

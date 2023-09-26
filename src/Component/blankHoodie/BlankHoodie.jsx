@@ -233,13 +233,11 @@ let perCategoryCost=0
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 400
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 500
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }
-   
-
-    }
+   }
     console.log("printbazCost",printbazcost);
     //  else {
     //   if(printbazcostbase){

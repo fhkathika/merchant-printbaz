@@ -499,8 +499,7 @@ const handleSubmit = async (e) => {
     formData2.append('createdAt', formattedDate);
     // formData2.append('id',orderId);
     formData2.append('userMail', userEmail);
-
-    formData2.append('clientName', user?.name);
+formData2.append('clientName', user?.name);
     formData2.append('clientbrandName', user?.brandName);
     // formData2.append('clientbrandLogoURL', user?.brandLogoURL);
     formData2.append('clientPhone', user?.phone);

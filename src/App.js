@@ -38,6 +38,8 @@ import NewOrdersWithOption from "./Component/newOrdersWithOption/NewOrdersWithOp
 import CustomDropSholder from "./Component/customDropSholder/CustomDropSholder";
 import BlankRoundNeck from "./Component/blankRoundNeck/BlankRoundNeck";
 import BlankDropSholder from "./Component/blankDropSholder/BlankDropSholder";
+import CustomHoodie from "./Component/custonHoodie/CustomHoodie";
+import BlankHoodie from "./Component/blankHoodie/BlankHoodie";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -253,11 +255,28 @@ function App() {
               <BlankRoundNeck />
             </PrivateRoute>
           }
-        /><Route
+        />
+        <Route
           path="/blankDropSholder"
           element={
             <PrivateRoute>
               <BlankDropSholder />
+            </PrivateRoute>
+          }
+        /> 
+        <Route
+          path="/custonHoodie"
+          element={
+            <PrivateRoute>
+              <CustomHoodie />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/blankHoodie"
+          element={
+            <PrivateRoute>
+              <BlankHoodie />
             </PrivateRoute>
           }
         />

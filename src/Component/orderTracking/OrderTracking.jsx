@@ -1,5 +1,4 @@
-
- import axios from 'axios';
+import axios from 'axios';
 import React, { useEffect, useRef,useState } from 'react'
 import { Accordion, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
@@ -29,9 +28,9 @@ const viewOrder = location.state ? location?.state?.orderInfo : null;
 useEffect(()=>{
   const getOrderById=async()=>{
            // Fetch the updated order details
-  // await fetch(`https://mserver.printbaz.com/getorder/${viewOrder?._id}`)
-  await fetch(`http://localhost:5000/getorder/${viewOrder?._id}`)
-  await fetch(`https://mserver.printbaz.com/testgetorder/${viewOrder?._id}`)
+  await fetch(`https://mserver.printbaz.com/getorder/${viewOrder?._id}`)
+  // await fetch(`http://localhost:5000/getorder/${viewOrder?._id}`)
+  // await fetch(`https://mserver.printbaz.com/testgetorder/${viewOrder?._id}`)
   .then(res=>res.json())
   .then(data => {setGetSpecificOrderById(data)
   })
@@ -202,39 +201,33 @@ const copyOrderId = () => {
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
           <title>Order Tracking</title>
-          <style dangerouslySetInnerHTML={{__html: "\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f8f9fa;\n        }\n\n        .navbar {\n        background-color: #001846 !important;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n        padding: 20px;\n        padding-left: 40px !important;\n    }\n\n    .navbar-brand img {\n        width: 150px;\n    }\n\n    .nav-link {\n        color: #ffffff !important;\n        font-size: 16px;\n        font-weight: 600;\n    }\n\n    .nav-link:hover {\n        background-color: #ffffff;\n        color: #001846 !important;\n    }\n\n    .dropdown {\n        padding-left: 1200px;\n    }\n\n    .dropdown-menu {\n        margin-left: 1120px;\n    }\n    \n    .all-content {\n    padding-left: 50px;\n    padding-right: 50px;\n}\n\n    .all-title {\n        font-weight: 700;\n    }\n\n    .rec-title h5 {\n        margin-top: 40px;\n        font-weight: 600;\n    }\n\n    .rec-title p {\n        font-size: 18px;\n    }\n\n    .amu-title h3 {\n        margin-bottom: 15px;\n    }\n\n    .amu-title h6 {\n        display: inline-block;\n        width: 75%;\n        font-weight: 700;\n        margin: 0;\n        margin-top: 10px;\n    }\n\n    .amu-title p {\n        display: inline-block;\n        width: 20%;\n        float: right;\n        margin: 0;\n    }\n\n    .trak-info h3 {\n        font-weight: 700;\n    }\n\n    .trak-status .col-3 {\n        text-align: center;\n    }\n\n    .trak-status p {\n        font-weight: 600;\n        margin-top: 10px;\n    }\n\n    @media (max-width: 480px) {\n        .all-content {\n    padding-left: 20px !important;\n    padding-right: 20px !important;\n}\n}\n\n" }} />
+          <style dangerouslySetInnerHTML={{__html: "\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f8f9fa;\n        }\n\n        .navbar {\n        background-color: #001846 !important;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n        padding: 20px;\n        padding-left: 40px !important;\n    }\n\n    .navbar-brand img {\n        width: 150px;\n    }\n\n    .nav-link {\n        color: #ffffff !important;\n        font-size: 16px;\n        font-weight: 600;\n    }\n\n    .nav-link:hover {\n        background-color: #ffffff;\n        color: #001846 !important;\n    }\n\n    .dropdown {\n        padding-left: 1200px;\n    }\n\n    .dropdown-menu {\n        margin-left: 1120px;\n    }\n    \n    .all-content {\n    padding-left: 50px;\n    padding-right: 50px;\n}\n\n    .all-title {\n        font-weight: 700;\n    }\n\n    .rec-title h5 {\n        margin-top: 40px;\n        font-weight: 600;\n    }\n\n    .rec-title p {\n        font-size: 18px;\n    }\n\n    .amu-title h3 {\n        margin-bottom: 15px;\n    }\n\n    .amu-title h6 {\n        display: inline-block;\n        width: 75%;\n        font-weight: 700;\n        margin: 0;\n        margin-top: 10px;\n    }\n\n    .amu-title p {\n        display: inline-block;\n        width: 20%;\n        float: right;\n        margin: 0;\n    }\n\n    .trak-info h3 {\n        font-weight: 700;\n    }\n\n    .trak-status .col-3 {\n        text-align: center;\n    }\n\n    .trak-status p {\n        font-weight: 600;\n        margin-top: 10px;\n    }\n\n    @media (max-width: 480px) {\n        .all-content {\n    padding-left: 5px !important;\n    padding-right: 5px !important;\n}\n}\n\n" }} />
           
           <NavigationBar/>
-          <div className="all-content">
+          <div className="all-content ">
           <div className="row mt-5">
               <div className="col-12">
                 <div className="order-id bg-white p-4  shadow-sm" >
                 <div style={{display:""}} className="row">
-                  <div className='col-lg-6'>
+                  <div className='col-lg-5'>
                   <h3 className=" font-weight-bold col-lg-12 font_16" onClick={copyOrderId}>ORDER ID: {viewOrder?._id} &nbsp;<span style={{cursor:"pointer",padding:"5px",fontSize:"16px"}} ref={target}  onClick={copyOrderId}><i class="fa fa-copy ml-2 mt-1 text-green cursor-pointer text-sm"></i></span> 
                 <h5 className='font_16' style={{marginTop:"10px"}}>{formattedDate}</h5>
                 </h3>
                   
                   </div>
               
+         <div  className="font-weight-bold col-lg-5  mt-2" >
          
-                  <div className="   font-weight-bold col-lg-2 "
-                        style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
+           <Button  className='btn-success' onClick={handleShowTicketPopUp}>Create A Support Ticket</Button>
+       
+         </div>
+                  <div className="font-weight-bold col-lg-2 mt-2 "
+                        style={{ marginBottom: "20px",display:"flex",justifyContent:"space-between" }}
                       >
-                        <div style={{display:""}}>
-                         
-                        <Button  className='btn-success' onClick={handleShowTicketPopUp}>Create A Support Ticket</Button>
-                     
                        
-                        </div>
-                        
-                       
-               
-
-                      </div> 
-  
-                  <div className="   font-weight-bold col-lg-2 "
-                        style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
+                        <div style={{display:"flex"}} >
+  <div className="   font-weight-bold  "
+                        style={{ marginBottom: "20px",display:"flex"}}
                       >
                         <div style={{display:""}}>
                          
@@ -242,14 +235,10 @@ const copyOrderId = () => {
                      
                        
                         </div>
-                        
-                       
-               
-
-                      </div> 
+                         </div> 
                       
-                      <div className="   font-weight-bold col-lg-2 "
-                        style={{ marginBottom: "20px",display:"flex",justifyContent:"flex-end" }}
+                      <div className="   font-weight-bold "
+                        style={{ marginBottom: "20px",marginLeft:"10px",display:"flex",justifyContent:"flex-end" }}
                       >
                         <div style={{display:""}}>
                          
@@ -259,11 +248,13 @@ const copyOrderId = () => {
                      
                         <p className='text_Align_Left' style={{textAlign:"center",marginTop:'10px'}}>Status changed at: {getSpecificOrderById?.statusDate}</p>
                         </div>
-                        
                        
-               
-
                       </div>
+
+  </div>
+                        </div> 
+ 
+                  
                 </div>
               
                      
@@ -552,23 +543,46 @@ getSpecificOrderById?.orderStatus==="returned"?
       </div> */}
     </div>
     {
-      getSpecificOrderById?.orderDetailArr?.map((orderDetail,orderIndex)=><>
-        <div className="row order-tab d-none-phone " key={orderIndex}>
+      getSpecificOrderById?.orderDetailArr?.map((orderDetail,orderIndex)=>{ 
+      
+        return(
+          
+          orderDetail?.printSide  &&
+          
+        <>
+        <div className="row order-tab  " key={orderIndex}>
         <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
         
       <div className="col-3">
         <p>{orderDetail?.color}</p>
       </div>
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        {orderDetail?.teshirtSize}
+    
+      <ul>
+      {typeof orderDetail.teshirtSize === 'string' ? (
+        <li>
+          {orderDetail.teshirtSize}- {orderDetail.quantity}
+        </li>
+      ) : (
+        Object.entries(orderDetail.teshirtSize || {}).map(
+          ([size, quantity]) => (
+            <li key={size}>
+              {size}- {quantity}
+            </li>
+          )
+        )
+      )}
+    </ul>
+       
+        
       </div>
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
       {orderDetail?.quantity}
       </div>
  
     
-      <div className="col-lg-2" style={{display:"flex",justifyContent:"right"}}>
-      <div className="card file">
+      <div className="col-lg-2" style={{display:"flex",justifyContent:"center"}}>
+      <div className="">
 {
 orderDetail?.image?.map(imageUrl => {
 // Extract the file ID from the URL
@@ -614,7 +628,7 @@ return (
     
      <div className="col-lg-12" >
      <h4>Main File :</h4>
-      <div className="card file">
+      <div className='phone_flex_center' style={{display:"flex"}}>
 {
 orderDetail?.file?.map((fileUrl,fileIndex) => {
 // Extract the file ID from the URL
@@ -632,6 +646,7 @@ const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
 //  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 let dropdownId = `dropdown${orderIndex}-${fileIndex}`;
 return (
+  <>
 <div key={fileIndex} style={{display:"flex"}}>
 
 <div className="file-info" style={{marginLeft:"15px",border:"none"}}>
@@ -640,6 +655,7 @@ return (
 
 </div>
 </div>
+</>
 )
 })
 }
@@ -658,7 +674,7 @@ return (
 orderDetail?.brandLogo &&
 <>
 <h4>Brang Logo :</h4>
-<div className="card file">
+<div className="">
       {
 (() => {
 // Extract the file ID from the URL
@@ -679,7 +695,7 @@ return (
 orderDetail?.brandLogo &&
 <>
 
-<div className="card file">
+<div className="">
       {
 (() => {
 // Extract the file ID from the URL
@@ -694,15 +710,18 @@ const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
 const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 
 return (
-<div >
-
-<div className="card-body file-info">
+<div>
+<div className="card-body file-info phone_flex_center" style={{display:"flex"}}>
 {
 orderDetail?.brandLogo ?
+<>
 <div>
 <iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
 <a className="dropdown-item" href={downloadUrl} download> <p>Brand Logo</p></a>
 </div>
+
+</>
+
 :
 ""
 }
@@ -742,7 +761,21 @@ orderDetail?.brandLogo ?
       <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
       <div className="col-12 "  key={orderIndex}>
      <p >Color:  <span className='bold'>{orderDetail?.color}</span></p>
-     <p >T-shirt Size : <span className='bold'> {orderDetail?.teshirtSize}</span></p>
+     <ul>
+      {typeof orderDetail.teshirtSize === 'string' ? (
+        <li>
+          {orderDetail.teshirtSize}- {orderDetail.quantity}
+        </li>
+      ) : (
+        Object.entries(orderDetail.teshirtSize || {}).map(
+          ([size, quantity]) => (
+            <li key={size}>
+              {size}- {quantity}
+            </li>
+          )
+        )
+      )}
+    </ul>
      <p >Quantity : <span className='bold'> {orderDetail?.quantity}</span></p>
      <p >Print Size : <span className='bold'>{orderDetail?.printSize}</span></p>
      <div className="col-lg-12" >
@@ -856,7 +889,8 @@ orderDetail?.brandLogo ?
       </div>
       <hr />
     </div>
-      </>)
+    </>
+       ) })
     }
   
    

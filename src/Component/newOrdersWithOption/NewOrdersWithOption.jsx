@@ -18,6 +18,12 @@ const NewOrdersWithOption = () => {
   }
    const handleClickBlankDropSholder=()=>{
     navigate("/blankDropSholder")
+  }  
+  const handleClickCustonHoodie=()=>{
+    navigate("/custonHoodie")
+  }
+  const handleClickBlankHoodie=()=>{
+    navigate("/blankHoodie")
   }
     return (
         <div>
@@ -65,7 +71,7 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>   
          <Col >
-          <Card>
+          <Card onClick={handleClickBlankHoodie}>
             <Card.Img variant="top" src="/images/categoryImgs/Hoodies Red.jpg" />
             <Card.Body>
               <Card.Title>Blank hoodie</Card.Title>
@@ -73,12 +79,12 @@ const NewOrdersWithOption = () => {
               <Button style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
-        </Col>    <Col >
-          <Card>
+        </Col>   
+         <Col >
+          <Card onClick={handleClickCustonHoodie}>
             <Card.Img variant="top" src="/images/categoryImgs/Hoodies Nevy Blue Custom.jpg" />
             <Card.Body>
               <Card.Title>Custom Hoodie</Card.Title>
-              
               <Button style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
             </Card.Body>
            

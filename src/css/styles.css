@@ -866,7 +866,9 @@ color: #bababa !important;
 
 
 @media only screen and (max-width: 600px) {
-        
+      .phone_flex_center{
+        justify-content: center;
+      }  
   /* .d-none{
     display: block;
   } */

@@ -85,7 +85,7 @@ let msgCount=0;
             <Link className="nav-link" to="/invoice">Invoice</Link>
           </li> */}
           <li className="nav-item">
-            <Link className="nav-link" to="/newOrder">New Order</Link>
+            <Link className="nav-link" to="/newOrdersWithOption">New Order</Link>
           </li>  
            {/* <li className="nav-item">
             <Link className="nav-link" to="/screenshot">Screenshots</Link>
@@ -106,9 +106,9 @@ let msgCount=0;
    }
         
           </li> 
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link" to="/newOrdersWithOption">New Orders WithOption</Link>
-          </li>  
+          </li>   */}
         </ul>
         <div className="navbar-dropdown mt-2 dropdownMobile" >
           <button className="navbar-dropdown-toggle dropdownButtonMobile" onClick={handleDropdownClick} >

@@ -11,8 +11,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
 import tshirtFormulaCustomDropSholder from '../../Formulas/tshirtFormulaCustomDropSholder';
-const CustomDropSholder = () => {
-  const [formData, setFormData] = useState({
+const CustomHoodie = () => {
+const [formData, setFormData] = useState({
     name: '',
     phone: '',
     address: '',
@@ -171,13 +171,13 @@ const CustomDropSholder = () => {
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-    const price_11p7x16p5=433
-    const price_10x14=398
-    const price_10x10=341
-    const price_10x5=312
-    const price_5X5=297
-    const price_2p5X5=290
-    const price_2p5X2p5=287
+    const price_11p7x16p5=568
+     const price_10x14=533
+    const price_10x10=476
+    const price_10x5=447
+    const price_5X5=432
+    const price_2p5X5=425
+    const price_2p5X2p5=422
 
     const navigate=useNavigate()
     const location=useLocation()
@@ -192,7 +192,6 @@ const CustomDropSholder = () => {
     const color = event.target.getAttribute('data-color');
     const size = event.target.getAttribute('data-size');
     const newOrderDetailArr = [...formData.orderDetailArr];
-
     let itemIndex = newOrderDetailArr.findIndex(item => item.color === color);
 
     if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
@@ -503,8 +502,8 @@ const handleSubmit = async (e) => {
     formData2.append('clientPhone', user?.phone);
  
     const response = await
-     fetch("https://mserver.printbaz.com/customDropSholderOrder",  //add this when upload  in main server 
-    //  fetch("http://localhost:5000/customDropSholderOrder", //add this when work local server
+     fetch("https://mserver.printbaz.com/submitCustomHoodieOrder",  //add this when upload  in main server 
+    //  fetch("http://localhost:5000/submitCustomHoodieOrder", //add this when work local server
      
      {
       method: "POST",
@@ -557,14 +556,13 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
- <h3 className='m-4'><span style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom DropSholder</h3>
+ <h3 className='m-4'><span style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Hoodie</h3>
  <Form onSubmit={handleSubmit}  className="mb-4">
 
 <Row xs={1} md={4} className="g-3 m-2">
 
 {formData.orderDetailArr.map((item, index) => (
-  <Col >
-  
+    <Col>
    <Card  className="">
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
@@ -1131,5 +1129,5 @@ onClose={() => setShowAlert(false)}
       );
 };
 
-export default CustomDropSholder;
+export default CustomHoodie;
 

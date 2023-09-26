@@ -507,8 +507,8 @@ const handleSubmit = async (e) => {
  
     const response = await
     //  fetch("https://mserver.printbaz.com/submitorder",  //add this when upload  in main server 
-     fetch("http://localhost:5000/testsubmitorder", //add this when work local server
-    //  fetch("https://mserver.printbaz.com/testsubmitorder", //add this when work local server
+    //  fetch("http://localhost:5000/testsubmitorder", //add this when work local server
+     fetch("https://mserver.printbaz.com/testsubmitorder", //add this when work local server
      
      {
       method: "POST",
@@ -564,7 +564,7 @@ const handleSubmit = async (e) => {
  <h3 className='m-4'><span style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
  <Form onSubmit={handleSubmit}  className="mb-4">
 
-<Row xs={1} md={4} className="g-3 m-5">
+<Row xs={1} md={4} className="g-3 m-2">
 
 {formData.orderDetailArr.map((item, index) => (
   <Col>

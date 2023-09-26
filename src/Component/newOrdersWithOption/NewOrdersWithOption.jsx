@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavigationBar from '../Navbar/NavigationBar';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -25,67 +25,260 @@ const NewOrdersWithOption = () => {
   const handleClickBlankHoodie=()=>{
     navigate("/blankHoodie")
   }
+    // Define a state variable to hold the current color
+    const [customforRoundNeck, setCustomforRoundNeck] = useState('customRoundNeckBlack');
+    const [forRoundNeck, setForRoundNeck] = useState('blankRoundNeckwhite');
+    const [customDrop, setCustomDrop] = useState('customDropSholderbottleGreen');
+    const [blankDropSholder, setBlankDropSholder] = useState('blankDropSholderMaroon');
+    const [customHoodie, setCustomHoodie] = useState('customHoodieNevyBlue');
+    const [blankHoodie, setBlankHoodie] = useState('BlankHoodieRed');
+  
+    // Define your color options with their corresponding image URLs
+    const colorsBlankRoundNeck = {
+      blankRoundNeckwhite: '/images/categoryImgs/Round Neck White.jpg',
+      blankRoundNeckblack: '/images/categoryImgs/Round Neck Black.jpg',
+      blankRoundNeckmaroon: '/images/categoryImgs/Round Neck Maroon.jpg',
+      blankRoundNeckbottleGreen: '/images/categoryImgs/Round Neck Bottle Green.jpg',
+    }; 
+    
+    const colorsCustomRoundNeck = {
+      customRoundNeckBlack: '/images/categoryImgs/Round Neck Black Custom.jpg',
+      customRoundNeckWhite: '/images/categoryImgs/Round Neck White Custom.jpg',
+      customRoundNeckbottleGreen: '/images/categoryImgs/Round Neck Bottle Green Custom.jpg',
+      customRoundNeckMaroon: '/images/categoryImgs/Round Neck Maroon Custom.jpg',
+
+
+    }; 
+     const colorsBlankDropSholder = {
+      blankDropSholderBlack: '/images/categoryImgs/Drop Shoulder Black.jpg',
+      blankDropSholderWhite: '/images/categoryImgs/Drop Shoulder White.jpg',
+      blankDropSholderbottleGreen: '/images/categoryImgs/Drop Shoulder Bottle Green.jpg',
+      blankDropSholderMaroon: '/images/categoryImgs/Drop Shoulder Maroon.jpg',
+
+
+    }; 
+      const colorsCustomDropSholder = {
+      customDropSholderBlack: '/images/categoryImgs/Drop Shoulder Black Custom.jpg',
+      customDropSholderWhite: '/images/categoryImgs/Drop Shoulder White Custom.jpg',
+      customDropSholderbottleGreen: '/images/categoryImgs/Drop Shoulder Bottle Green Custom.jpg',
+      customDropSholderMaroon: '/images/categoryImgs/Drop Shoulder Maroon Custom.jpg',
+
+
+    }; 
+       const colorsCustomHoodie = {
+      customHoodieNevyBlue: '/images/categoryImgs/Hoodies Nevy Blue Custom.jpg',
+      customHoodieBlack: '/images/categoryImgs/Hoodies Black Custom.jpg',
+      customHoodieGray: '/images/categoryImgs/Hoodies Gray Custom.jpg',
+      customHoodieRed: '/images/categoryImgs/Hoodies Red Custom.jpg',
+      customHoodieNeonGreen: '/images/categoryImgs/Hoodies Neon Green Custom.jpg',
+};  
+     const colorsBlankHoodie = {
+      BlankHoodieBlue: '/images/categoryImgs/Hoodies Nevy Blue.jpg',
+      BlankHoodieBlack: '/images/categoryImgs/Hoodies Black.jpg',
+      BlankHoodieGray: '/images/categoryImgs/Hoodies Gray.jpg',
+      BlankHoodieRed: '/images/categoryImgs/Hoodies Red.jpg',
+      BlankHoodieNeonGreen: '/images/categoryImgs/Hoodies Neon Green.jpg',
+
+
+    };
+    
+     // Color mapping to valid CSS color values
+  const colorMappingBlankRoundNeck = {
+    blankRoundNeckwhite: 'white',
+    blankRoundNeckblack: 'black',
+    blankRoundNeckmaroon: 'maroon',
+    blankRoundNeckbottleGreen: 'green',
+   
+  };
+  const colorMappingCustomRoundNeck = {
+    customRoundNeckBlack: 'black',
+    customRoundNeckWhite: 'white',
+    customRoundNeckbottleGreen: 'green',
+    customRoundNeckMaroon: 'maroon', // You might want to find a more accurate color representation
+   
+  };
+    const colorMappingBlankDropSholder = {
+    blankDropSholderBlack: 'black',
+    blankDropSholderWhite: 'white',
+    blankDropSholderbottleGreen: 'green',
+    blankDropSholderMaroon: 'maroon', // You might want to find a more accurate color representation
+   
+  };
+    const colorMappingCustomDropSholder = {
+    customDropSholderBlack: 'black',
+    customDropSholderWhite: 'white',
+    customDropSholderbottleGreen: 'green',
+    customDropSholderMaroon: 'maroon', // You might want to find a more accurate color representation
+   
+  }; 
+   const colorMappingCustomHoodie= {
+   customHoodieNevyBlue:'blue',
+    customHoodieBlack:'black',
+    customHoodieGray:'gray',
+    customHoodieRed:'red',
+    customHoodieNeonGreen:'green'
+  };
+    const colorMappingBlankHoodie= {
+    BlankHoodieBlue:'blue',
+    BlankHoodieBlack:'black',
+    BlankHoodieGray:'gray',
+    BlankHoodieRed:'red',
+    BlankHoodieNeonGreen:'green'
+  };
+
     return (
         <div>
             <NavigationBar/>
          
             <Row xs={1} md={4} className="g-4 m-3">
+          
         <Col >
-          <Card onClick={handleClickBlankRoundNeck}> 
-            <Card.Img variant="top" src="/images/categoryImgs/Round Neck White.jpg" />
-            <Card.Body>
-              <Card.Title>Blank Round Neck</Card.Title>
-              
-              <Button   style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
-            </Card.Body>
-          </Card>
+        <Card >
+        <Card.Img variant="top" src={colorsBlankRoundNeck[forRoundNeck]} />
+        <Card.Body>
+          <Card.Title style={{textAlign:"center"}}>Blank Round Neck</Card.Title>
+          <div style={{display: 'flex', marginTop: '10px'}}>
+            {/* Render color boxes */}
+            {Object.keys(colorsBlankRoundNeck).map(color => (
+              <div 
+                key={color}
+                onClick={() => setForRoundNeck(color)}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  backgroundColor: colorMappingBlankRoundNeck[color], // use colorMapping here
+                  margin: '5px',
+                  cursor: 'pointer'
+                }}
+              ></div>
+            ))}
+          </div>
+          <Button onClick={handleClickBlankRoundNeck} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+        </Card.Body>
+      </Card>
         </Col>   
          <Col >
-          <Card onClick={handleClickNeworder}>
-            <Card.Img variant="top" src="/images/categoryImgs/Round Neck Black Custom.jpg" />
+          <Card >
+            <Card.Img variant="top" src={colorsCustomRoundNeck[customforRoundNeck]} />
             <Card.Body>
-              <Card.Title>Custom Round Neck</Card.Title>
-              
-              <Button  style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+              <Card.Title style={{textAlign:"center"}}>Custom Round Neck</Card.Title>
+              <div style={{display: 'flex', marginTop: '10px'}}>
+            {/* Render color boxes */}
+            {Object.keys(colorsCustomRoundNeck).map(color => (
+              <div 
+                key={color}
+                onClick={() => setCustomforRoundNeck(color)}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  backgroundColor: colorMappingCustomRoundNeck[color], // use colorMapping here
+                  margin: '5px',
+                  cursor: 'pointer'
+                }}
+              ></div>
+            ))}
+          </div>
+              <Button onClick={handleClickNeworder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
             </Card.Body>
           </Card>
         </Col>  
           <Col >
-          <Card onClick={handleClickBlankDropSholder}>
-            <Card.Img variant="top" src="/images/categoryImgs/Drop Shoulder Bottle Green.jpg" />
+          <Card >
+            <Card.Img variant="top" src={colorsBlankDropSholder[blankDropSholder]}/>
             <Card.Body>
               <Card.Title>Blank Drop Sholder</Card.Title>
-              
-              <Button  style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
+              <div style={{display: 'flex', marginTop: '10px'}}>
+            {/* Render color boxes */}
+            {Object.keys(colorsBlankDropSholder).map(color => (
+              <div 
+                key={color}
+                onClick={() => setBlankDropSholder(color)}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  backgroundColor: colorMappingBlankDropSholder[color], // use colorMapping here
+                  margin: '5px',
+                  cursor: 'pointer'
+                }}
+              ></div>
+            ))}
+          </div>
+              <Button onClick={handleClickBlankDropSholder} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
         </Col>  
           <Col >
-          <Card onClick={handleClickCustomDropSholder}>
-            <Card.Img variant="top" src="/images/categoryImgs/Drop Shoulder Maroon Custom.jpg" />
+          <Card >
+            <Card.Img variant="top" src={colorsCustomDropSholder[customDrop]} />
             <Card.Body>
-              <Card.Title>custom Drop Sholder</Card.Title>
-            
-              <Button  style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor">Buy Now</Button>
+              <Card.Title style={{textAlign:"center"}}>custom Drop Sholder</Card.Title>
+              <div style={{display: 'flex', marginTop: '10px'}}>
+            {/* Render color boxes */}
+            {Object.keys(colorsCustomDropSholder).map(color => (
+              <div 
+                key={color}
+                onClick={() => setCustomDrop(color)}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  backgroundColor: colorMappingCustomDropSholder[color], // use colorMapping here
+                  margin: '5px',
+                  cursor: 'pointer'
+                }}
+              ></div>
+            ))}
+          </div>
+              <Button onClick={handleClickCustomDropSholder}  style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
         </Col>   
          <Col >
-          <Card onClick={handleClickBlankHoodie}>
-            <Card.Img variant="top" src="/images/categoryImgs/Hoodies Red.jpg" />
+          <Card >
+            <Card.Img variant="top" src={colorsBlankHoodie[blankHoodie]} />
             <Card.Body>
-              <Card.Title>Blank hoodie</Card.Title>
-             
-              <Button style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
+              <Card.Title style={{textAlign:"center"}}>Blank hoodie</Card.Title>
+              <div style={{display: 'flex', marginTop: '10px'}}>
+            {/* Render color boxes */}
+            {Object.keys(colorsBlankHoodie).map(color => (
+              <div 
+                key={color}
+                onClick={() => setBlankHoodie(color)}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  backgroundColor: colorMappingBlankHoodie[color], // use colorMapping here
+                  margin: '5px',
+                  cursor: 'pointer'
+                }}
+              ></div>
+            ))}
+          </div>
+              <Button onClick={handleClickBlankHoodie} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
             </Card.Body>
           </Card>
         </Col>   
          <Col >
-          <Card onClick={handleClickCustonHoodie}>
-            <Card.Img variant="top" src="/images/categoryImgs/Hoodies Nevy Blue Custom.jpg" />
+          <Card >
+            <Card.Img variant="top" src={colorsCustomHoodie[customHoodie]} />
             <Card.Body>
-              <Card.Title>Custom Hoodie</Card.Title>
-              <Button style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+              <Card.Title style={{textAlign:"center"}}>Custom Hoodie</Card.Title>
+              <div style={{display: 'flex', marginTop: '10px'}}>
+            {/* Render color boxes */}
+            {Object.keys(colorsCustomHoodie).map(color => (
+              <div 
+                key={color}
+                onClick={() => setCustomHoodie(color)}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  backgroundColor: colorMappingCustomHoodie[color], // use colorMapping here
+                  margin: '5px',
+                  cursor: 'pointer'
+                }}
+              ></div>
+            ))}
+          </div>
+              <Button onClick={handleClickCustonHoodie} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
             </Card.Body>
            
           </Card>

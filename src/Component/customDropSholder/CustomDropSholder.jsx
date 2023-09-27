@@ -331,10 +331,12 @@ let updatedPrintbazcost=0
   }
   //  delivery fee functions 
   // charge based on weight 
+  // inside dhaka 
   const chargeForInSideZeroToP5=70;
   const chargeForInSidep5To1=80;
   const chargeForInSideoneTo2=90;
   const chargeForInSidetwoTo3=115;
+  // outside dhaka 
   const chargeForOutSideZeroToP5=100;
   const chargeForOutSidep5To1=120;
   const chargeForOutSideoneTo2=150;

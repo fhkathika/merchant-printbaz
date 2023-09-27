@@ -12,6 +12,7 @@ import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderCon
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
+import deliveryCharge from '../../Formulas/deliveryCharge';
 const BlankRoundNeck = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -105,11 +106,52 @@ const BlankRoundNeck = () => {
      collectionsPrice,
      dbData
    );
+     // Define state variables here if needed
+  // const [deliveryFee, setDeliveryFee] = useState(0);
+  // const [newFee, setNewFee] = useState({deliveryFee:0});
   const {user}=useContext(AuthContext);
   const userEmail=user?.email
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
+  // charge based on weight 
+  const chargeForInSideZeroToP5=70;
+  const chargeForInSidep5To1=80;
+  const chargeForInSideoneTo2=90;
+  const chargeForInSidetwoTo3=115;
+  const chargeForOutSideZeroToP5=100;
+  const chargeForOutSidep5To1=120;
+  const chargeForOutSideoneTo2=150;
+  const chargeForOutSidetwoTo3=175;
+  const weightPerShirt=0.18;
+  const extraInSideDhakaChange=15
+  const extraOutSideDhakaChange=25
+  let grandQuantity=formData?.quantity
+
+  let deliveryFee = 0; // Initialize fees as 0
+
+  // Check if grandQuantity is defined and greater than 0
+  if (grandQuantity && grandQuantity > 0) {
+    deliveryFee = deliveryCharge({
+      grandQuantity: grandQuantity,
+      weightPerShirt: weightPerShirt,
+      chargeForInSideZeroToP5: chargeForInSideZeroToP5,
+      chargeForInSidep5To1: chargeForInSidep5To1,
+      chargeForInSideoneTo2: chargeForInSideoneTo2,
+      chargeForInSidetwoTo3: chargeForInSidetwoTo3,
+      chargeForOutSideZeroToP5: chargeForOutSideZeroToP5,
+      chargeForOutSidep5To1: chargeForOutSidep5To1,
+      chargeForOutSideoneTo2: chargeForOutSideoneTo2,
+      chargeForOutSidetwoTo3: chargeForOutSidetwoTo3,
+      extraInSideDhakaChange: extraInSideDhakaChange,
+      extraOutSideDhakaChange: extraOutSideDhakaChange,
+      deliveryAreas: deliveryAreas
+    }).deliveryFee;
+  }
+  
+  console.log("updated deliveryFee", deliveryFee);
+  
+  
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   useEffect(() => {
@@ -156,9 +198,6 @@ const BlankRoundNeck = () => {
         setAreas([]); // Clear areas if the zone is not selected
       }
     }, [formData?.zones]);
-
-   
-
     // fetch delievryArea 
     useEffect(() => {
       if (formData?.districts && formData?.zones && formData?.areas) {
@@ -169,8 +208,6 @@ const BlankRoundNeck = () => {
       }
     }, [formData?.districts ,formData?.zones , formData?.areas]);
   
-  
-
 
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
@@ -252,74 +289,74 @@ let perCategoryCost=0
     //   }
     //   // or any default value you want to set
     // }
-  
-    let deliveryFeeInsideDhaka = 0;
-    const baseDeliveryFee = 70;
-    const additionalDeliveryFee = 15;
-    let QuantityBase=0
+  ////////////////////      prev delivery fee calculaton start //////////////////////////////////////////
+  //   let deliveryFeeInsideDhaka = 0;
+  //   const baseDeliveryFee = 70;
+  //   const additionalDeliveryFee = 15;
+  //   let QuantityBase=0
 
-    let deliveryFeeOutSideDhaka = 0;
-    const baseDeliveryFeeOutSideDhaka = 100;
-    const additionalDeliveryFeeOutSideDhaka = 25;
-    let totalQuantity = 0;
-    for (var j = 0; j < formData?.orderDetailArr?.length; j++) {
-      totalQuantity += Number(formData?.orderDetailArr[j]?.totalQuantity);
-    }
+  //   let deliveryFeeOutSideDhaka = 0;
+  //   const baseDeliveryFeeOutSideDhaka = 100;
+  //   const additionalDeliveryFeeOutSideDhaka = 25;
+  //   let totalQuantity = 0;
+  //   for (var j = 0; j < formData?.orderDetailArr?.length; j++) {
+  //     totalQuantity += Number(formData?.orderDetailArr[j]?.totalQuantity);
+  //   }
     
-    // inside dhaka 
-    if (totalQuantity > 0) {
-      // Calculate the number of groups of 5 items in the order
-      const groups = Math.floor(totalQuantity/ 5);
+  //   // inside dhaka 
+  //   if (totalQuantity > 0) {
+  //     // Calculate the number of groups of 5 items in the order
+  //     const groups = Math.floor(totalQuantity/ 5);
   
-      // Calculate the remainder
-      const remainder = totalQuantity % 5;
+  //     // Calculate the remainder
+  //     const remainder = totalQuantity % 5;
   
-      // Calculate the delivery fee
-      if (groups === 0) {
-        deliveryFeeInsideDhaka = baseDeliveryFee;
-      } else if (remainder === 0) {
-        deliveryFeeInsideDhaka =
-          baseDeliveryFee + (groups - 1) * additionalDeliveryFee;
-      } else {
-        deliveryFeeInsideDhaka = baseDeliveryFee + groups * additionalDeliveryFee;
-      }
-    }
-  console.log("deliveryFeeInsideDhaka",deliveryFeeInsideDhaka);
-  // outside dhaka
+  //     // Calculate the delivery fee
+  //     if (groups === 0) {
+  //       deliveryFeeInsideDhaka = baseDeliveryFee;
+  //     } else if (remainder === 0) {
+  //       deliveryFeeInsideDhaka =
+  //         baseDeliveryFee + (groups - 1) * additionalDeliveryFee;
+  //     } else {
+  //       deliveryFeeInsideDhaka = baseDeliveryFee + groups * additionalDeliveryFee;
+  //     }
+  //   }
+  // console.log("deliveryFeeInsideDhaka",deliveryFeeInsideDhaka);
+  // // outside dhaka
   
-    if (formData?.quantity > 0) {
-      // Calculate the number of groups of 5 items in the order
-      const groups = Math.floor(totalQuantity / 5);
+  //   if (formData?.quantity > 0) {
+  //     // Calculate the number of groups of 5 items in the order
+  //     const groups = Math.floor(totalQuantity / 5);
   
-      // Calculate the remainder
-      const remainder = totalQuantity % 5;
+  //     // Calculate the remainder
+  //     const remainder = totalQuantity % 5;
   
-      // Calculate the delivery fee
-      if (groups === 0) {
-        deliveryFeeOutSideDhaka = baseDeliveryFeeOutSideDhaka;
-      } else if (remainder === 0) {
-        deliveryFeeOutSideDhaka =
-          baseDeliveryFeeOutSideDhaka +
-          (groups - 1) * additionalDeliveryFeeOutSideDhaka;
-      } else {
-        deliveryFeeOutSideDhaka =
-          baseDeliveryFeeOutSideDhaka +
-          groups * additionalDeliveryFeeOutSideDhaka;
-      }
-    }
+  //     // Calculate the delivery fee
+  //     if (groups === 0) {
+  //       deliveryFeeOutSideDhaka = baseDeliveryFeeOutSideDhaka;
+  //     } else if (remainder === 0) {
+  //       deliveryFeeOutSideDhaka =
+  //         baseDeliveryFeeOutSideDhaka +
+  //         (groups - 1) * additionalDeliveryFeeOutSideDhaka;
+  //     } else {
+  //       deliveryFeeOutSideDhaka =
+  //         baseDeliveryFeeOutSideDhaka +
+  //         groups * additionalDeliveryFeeOutSideDhaka;
+  //     }
+  //   }
    
-    console.log("deliveryFeeOutSideDhaka",deliveryFeeOutSideDhaka);
-    let deliveryFee;
-    if (deliveryAreas === "outsideDhaka") {
-      console.log("from deliveryAreas",deliveryAreas);
-      deliveryFee = deliveryFeeOutSideDhaka;
-      console.log("deliveryFee outsideDhaka ",deliveryFee);
-    } else {
-      console.log("from deliveryAreas others",deliveryAreas);
-      deliveryFee = deliveryFeeInsideDhaka;
-      console.log("deliveryFee inside ",deliveryFee);
-    }
-  
+  //   console.log("deliveryFeeOutSideDhaka",deliveryFeeOutSideDhaka);
+  //   let deliveryFee;
+  //   if (deliveryAreas === "outsideDhaka") {
+  //     console.log("from deliveryAreas",deliveryAreas);
+  //     deliveryFee = deliveryFeeOutSideDhaka;
+  //     console.log("deliveryFee outsideDhaka ",deliveryFee);
+  //   } else {
+  //     console.log("from deliveryAreas others",deliveryAreas);
+  //     deliveryFee = deliveryFeeInsideDhaka;
+  //     console.log("deliveryFee inside ",deliveryFee);
+  //   }
+  /////////////////////////////////////     prev delivery fee calculaton    //////////////////////////////
     let recvMoney = 0;
     let costHandlingfee;
     let recvMoneyWithouthandling = 0;
@@ -701,9 +738,10 @@ const handleSubmit = async (e) => {
                       <h3>
                         {" "}
                         <span style={{ fontSize: "" }}>&#2547;</span>{" "}
-                        {deliveryAreas === "outsideDhaka"
+                        {/* {deliveryAreas === "outsideDhaka"
                           ? Number(deliveryFeeOutSideDhaka)
-                          : Number(deliveryFeeInsideDhaka)}
+                          : Number(deliveryFeeInsideDhaka)} */}
+                          {deliveryFee}
                       </h3>
                     </div>
                     <div>
@@ -755,7 +793,7 @@ const handleSubmit = async (e) => {
                            <Form.Control
                              type="number"
                              name="collectAmount"
-                             value={ printbazcost && ( deliveryFeeOutSideDhaka ||deliveryFeeInsideDhaka) && suggestedCollectAmount ?suggestedCollectAmount : '' }
+                             value={ printbazcost && ( deliveryFee) && suggestedCollectAmount ?suggestedCollectAmount : '' }
                              readOnly
                            />
                          </Form.Group>

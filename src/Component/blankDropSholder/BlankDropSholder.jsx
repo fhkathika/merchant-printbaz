@@ -566,7 +566,7 @@ const handleSubmit = async (e) => {
                         placeholder="Enter recipient number"
                       />
                     </Form.Group>
-                   
+                   <Row xs={1} md={3}>
                     <Form.Group
                       className="mb-3 Print Side w-100"
                       controlId="wccalcPrintSide"
@@ -618,7 +618,7 @@ const handleSubmit = async (e) => {
         {areas.map(d => <option key={d} value={d}>{d}</option>)}
                       </Form.Control>
                     </Form.Group>
-
+                    </Row>
 
 
                     <Form.Group className="mb-3 ">

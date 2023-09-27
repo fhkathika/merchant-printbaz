@@ -276,18 +276,23 @@ let updatedPrintbazcost=0
       let backSidePrintCost = 0;
       let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
       // backSidePrintCost += totalQuantity * 130;
+      if(formData?.orderDetailArr[i]?.printSizeBack==="11.7 x 16.5" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="11.7 x 16.5")){
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 160
+      } 
       if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 130
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 125
       }
       else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 100
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 68
       } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 50
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 39
       } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 30
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 25
       }
       else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 15
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 18
+      }  else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 2.5")){
+        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 14
       }
       
       // At this point, backSidePrintCost contains the total cost for the current item's back side print
@@ -662,9 +667,9 @@ const handleSubmit = async (e) => {
                         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
                         <option value="">select print size</option> 
-                        <option value="11.7 x 16.5">11.7″ x 16.5″</option>
+                        <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
                         <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
+                        <option value="10 x 10">10″ x 10″(A4)</option>
                         <option value="10 x 5">10″ x 5″</option>
                         <option value="5 X 5">5″ x 5″</option>
                         <option value="2.5 X 5">2.5″ x 5″</option>
@@ -692,13 +697,13 @@ const handleSubmit = async (e) => {
                         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
                        <option value="">select print size</option> 
-                       <option value="11.7 x 16.5">11.7″ x 16.5″</option>
+                       <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
                         <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
+                        <option value="10 x 10">10″ x 10″(A4)</option>
                         <option value="10 x 5">10″ x 5″</option>
                         <option value="5 X 5">5″ x 5″</option>
                         <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 2.5″</option>
+                        <option value="2.5 X 2.5">2.5″ x 2.5″</option>
                       </Form.Control>
                     </Form.Group>
                     <Form.Group
@@ -718,11 +723,13 @@ const handleSubmit = async (e) => {
                       required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                     >
                      <option value="">select print size</option> 
+                     <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
                       <option value="10 x 14">10″ x 14″</option>
-                      <option value="10 x 10">10″ x 10″</option>
+                      <option value="10 x 10">10″ x 10″(A4)</option>
                       <option value="10 x 5">10″ x 5″</option>
                       <option value="5 X 5">5″ x 5″</option>
                       <option value="2.5 X 5">2.5″ x 5″</option>
+                      <option value="2.5 X 2.5">2.5″ x 2.5″</option>
                     </Form.Control>
                   </Form.Group>
                       </>
@@ -809,7 +816,7 @@ onChange={(e) => handleFileChange(e, index)}
                         placeholder="Enter recipient number"
                       />
                     </Form.Group>
-                   
+                   <Row xs={1} md={3} >
                     <Form.Group
                       className="mb-3 Print Side w-100"
                       controlId="wccalcPrintSide"
@@ -862,7 +869,7 @@ onChange={(e) => handleFileChange(e, index)}
                       </Form.Control>
                     </Form.Group>
 
-
+                    </Row>
 
                     <Form.Group className="mb-3 ">
                       <Form.Label>Recipient's/Delivery Address</Form.Label>

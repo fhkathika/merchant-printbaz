@@ -26,7 +26,7 @@ const BlankHoodie = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Black.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Black.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -39,9 +39,9 @@ const BlankHoodie = () => {
         brandLogo: null,
       },
       {
-        color: 'White',
+        color: 'Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck White.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Neon Green.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -54,9 +54,9 @@ const BlankHoodie = () => {
         brandLogo: null,
       },
       {
-        color: 'Bottle Green',
+        color: 'Nevy Blue',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Bottle Green.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -70,7 +70,21 @@ const BlankHoodie = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Maroon.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Gray.jpg",
+        quantityM: '',
+        quantityL: '',
+        quantityXL: '',
+        quantityXXL: '',
+        printSide: '',
+        printSize: '',
+        printSizeBack: '',
+        file: null,
+        image: null,
+        brandLogo: null,
+      },{
+        color: 'Maroon',
+        teshirtSize: {},
+        categoryImg:"/images/categoryImgs/Hoodies Red.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -462,7 +476,7 @@ const handleSubmit = async (e) => {
  <h3 className='m-4'  style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/>   Blank Hoodie</h3>
  <Form onSubmit={handleSubmit}  className="mb-4">
 
-<Row xs={1} md={4} className="g-4 m-3">
+<Row xs={1} md={5} className="g-4 m-3">
  
 {formData.orderDetailArr.map((item, index) => (
     <Col>
@@ -562,7 +576,7 @@ const handleSubmit = async (e) => {
                         placeholder="Enter recipient number"
                       />
                     </Form.Group>
-                   
+                   <Row xs={1} md={3}>
                     <Form.Group
                       className="mb-3 Print Side w-100"
                       controlId="wccalcPrintSide"
@@ -614,7 +628,7 @@ const handleSubmit = async (e) => {
         {areas.map(d => <option key={d} value={d}>{d}</option>)}
                       </Form.Control>
                     </Form.Group>
-
+                    </Row>
 
 
                     <Form.Group className="mb-3 ">

@@ -35,8 +35,8 @@ const NewOrdersWithOption = () => {
   
     // Define your color options with their corresponding image URLs
     const colorsBlankRoundNeck = {
-      blankRoundNeckwhite: '/images/categoryImgs/Round Neck White.jpg',
       blankRoundNeckblack: '/images/categoryImgs/Round Neck Black.jpg',
+      blankRoundNeckwhite: '/images/categoryImgs/Round Neck White.jpg',
       blankRoundNeckmaroon: '/images/categoryImgs/Round Neck Maroon.jpg',
       blankRoundNeckbottleGreen: '/images/categoryImgs/Round Neck Bottle Green.jpg',
     }; 
@@ -137,7 +137,7 @@ const NewOrdersWithOption = () => {
         <Card.Img variant="top" src={colorsBlankRoundNeck[forRoundNeck]} />
         <Card.Body>
           <Card.Title style={{textAlign:"center"}}>Blank Round Neck</Card.Title>
-          <div style={{display: 'flex', marginTop: '10px'}}>
+          <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsBlankRoundNeck).map(color => (
               <div 
@@ -162,7 +162,7 @@ const NewOrdersWithOption = () => {
             <Card.Img variant="top" src={colorsCustomRoundNeck[customforRoundNeck]} />
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>Custom Round Neck</Card.Title>
-              <div style={{display: 'flex', marginTop: '10px'}}>
+               <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsCustomRoundNeck).map(color => (
               <div 
@@ -186,8 +186,8 @@ const NewOrdersWithOption = () => {
           <Card >
             <Card.Img variant="top" src={colorsBlankDropSholder[blankDropSholder]}/>
             <Card.Body>
-              <Card.Title>Blank Drop Sholder</Card.Title>
-              <div style={{display: 'flex', marginTop: '10px'}}>
+              <Card.Title style={{textAlign:"center"}}>Blank Drop Sholder</Card.Title>
+               <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsBlankDropSholder).map(color => (
               <div 
@@ -212,7 +212,7 @@ const NewOrdersWithOption = () => {
             <Card.Img variant="top" src={colorsCustomDropSholder[customDrop]} />
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>custom Drop Sholder</Card.Title>
-              <div style={{display: 'flex', marginTop: '10px'}}>
+               <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsCustomDropSholder).map(color => (
               <div 
@@ -237,7 +237,7 @@ const NewOrdersWithOption = () => {
             <Card.Img variant="top" src={colorsBlankHoodie[blankHoodie]} />
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>Blank hoodie</Card.Title>
-              <div style={{display: 'flex', marginTop: '10px'}}>
+               <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsBlankHoodie).map(color => (
               <div 
@@ -262,7 +262,7 @@ const NewOrdersWithOption = () => {
             <Card.Img variant="top" src={colorsCustomHoodie[customHoodie]} />
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>Custom Hoodie</Card.Title>
-              <div style={{display: 'flex', marginTop: '10px'}}>
+               <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsCustomHoodie).map(color => (
               <div 

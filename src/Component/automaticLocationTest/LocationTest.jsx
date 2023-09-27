@@ -1230,7 +1230,8 @@ const handleSubmit = async (e) => {
             {showAlert===true && (
           
 <CustomAlert
-message="Your order has been submitted successfully."
+message="Your order has been submitted"
+message2="Please keep an eye on the order for further development."
 onClose={() => setShowAlert(false)}
 
 

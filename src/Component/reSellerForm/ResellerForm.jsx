@@ -382,6 +382,7 @@ const showNagad= () => {
             {showAlert && (
   <CustomAlert
     message="Your request has been received successfully. We will verify the info and get back to you within 48 hours."
+    message2=""
     onClose={() => setShowAlert(false)}
   />
 )}

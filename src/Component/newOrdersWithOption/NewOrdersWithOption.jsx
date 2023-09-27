@@ -112,14 +112,14 @@ const NewOrdersWithOption = () => {
    
   }; 
    const colorMappingCustomHoodie= {
-   customHoodieNevyBlue:'blue',
+   customHoodieNevyBlue:'#000080',
     customHoodieBlack:'black',
     customHoodieGray:'gray',
     customHoodieRed:'red',
     customHoodieNeonGreen:'green'
   };
     const colorMappingBlankHoodie= {
-    BlankHoodieBlue:'blue',
+    BlankHoodieBlue:'#000080',
     BlankHoodieBlack:'black',
     BlankHoodieGray:'gray',
     BlankHoodieRed:'red',
@@ -146,6 +146,7 @@ const NewOrdersWithOption = () => {
                 style={{
                   width: '30px',
                   height: '30px',
+                  border:"2px solid #e4e1e1",
                   backgroundColor: colorMappingBlankRoundNeck[color], // use colorMapping here
                   margin: '5px',
                   cursor: 'pointer'
@@ -153,7 +154,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-          <Button onClick={handleClickBlankRoundNeck} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+          <Button onClick={handleClickBlankRoundNeck} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Order Now</Button>
         </Card.Body>
       </Card>
         </Col>   
@@ -170,7 +171,7 @@ const NewOrdersWithOption = () => {
                 onClick={() => setCustomforRoundNeck(color)}
                 style={{
                   width: '30px',
-                  height: '30px',
+                  height: '30px', border:"2px solid #e4e1e1",
                   backgroundColor: colorMappingCustomRoundNeck[color], // use colorMapping here
                   margin: '5px',
                   cursor: 'pointer'
@@ -178,7 +179,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickNeworder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+              <Button onClick={handleClickNeworder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Order Now</Button>
             </Card.Body>
           </Card>
         </Col>  
@@ -195,7 +196,7 @@ const NewOrdersWithOption = () => {
                 onClick={() => setBlankDropSholder(color)}
                 style={{
                   width: '30px',
-                  height: '30px',
+                  height: '30px', border:"2px solid #e4e1e1",
                   backgroundColor: colorMappingBlankDropSholder[color], // use colorMapping here
                   margin: '5px',
                   cursor: 'pointer'
@@ -203,7 +204,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickBlankDropSholder} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
+              <Button onClick={handleClickBlankDropSholder} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor"> Order Now</Button>
             </Card.Body>
           </Card>
         </Col>  
@@ -220,7 +221,7 @@ const NewOrdersWithOption = () => {
                 onClick={() => setCustomDrop(color)}
                 style={{
                   width: '30px',
-                  height: '30px',
+                  height: '30px', border:"2px solid #e4e1e1",
                   backgroundColor: colorMappingCustomDropSholder[color], // use colorMapping here
                   margin: '5px',
                   cursor: 'pointer'
@@ -228,7 +229,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickCustomDropSholder}  style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor">Buy Now</Button>
+              <Button onClick={handleClickCustomDropSholder}  style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor"> Order Now</Button>
             </Card.Body>
           </Card>
         </Col>   
@@ -245,7 +246,7 @@ const NewOrdersWithOption = () => {
                 onClick={() => setBlankHoodie(color)}
                 style={{
                   width: '30px',
-                  height: '30px',
+                  height: '30px', border:"2px solid #e4e1e1",
                   backgroundColor: colorMappingBlankHoodie[color], // use colorMapping here
                   margin: '5px',
                   cursor: 'pointer'
@@ -253,7 +254,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickBlankHoodie} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor">Buy Now</Button>
+              <Button onClick={handleClickBlankHoodie} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor"> Order Now</Button>
             </Card.Body>
           </Card>
         </Col>   
@@ -270,7 +271,7 @@ const NewOrdersWithOption = () => {
                 onClick={() => setCustomHoodie(color)}
                 style={{
                   width: '30px',
-                  height: '30px',
+                  height: '30px', border:"2px solid #e4e1e1",
                   backgroundColor: colorMappingCustomHoodie[color], // use colorMapping here
                   margin: '5px',
                   cursor: 'pointer'
@@ -278,7 +279,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickCustonHoodie} style={{backgroundColor:"#07183e",border:"none"}} className="w-100">Buy Now</Button>
+              <Button onClick={handleClickCustonHoodie} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Order Now</Button>
             </Card.Body>
            
           </Card>

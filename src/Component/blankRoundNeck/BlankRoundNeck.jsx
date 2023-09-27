@@ -536,7 +536,7 @@ const handleSubmit = async (e) => {
 <div className='row m-5'>
 <div className="col-md-6">
                     <h3>Recipient Details</h3>
-      
+      <Row xs={1} md={2}>
                     <Form.Group className="mb-3">
                       <Form.Label>Recipient's Name</Form.Label>
                       <Form.Control
@@ -565,6 +565,7 @@ const handleSubmit = async (e) => {
                         placeholder="Enter recipient number"
                       />
                     </Form.Group>
+</Row>
                    <Row xs={1} md={3}>
                     <Form.Group
                       className="mb-3 Print Side w-100"
@@ -671,6 +672,7 @@ const handleSubmit = async (e) => {
                         placeholder=""
                       />
                     </Form.Group>
+                   
                   </div> 
                   <div className="col-md-6 d-flex flex-column align-items-center ">            
 <div style={{ width: '100%' }}>
@@ -868,7 +870,8 @@ const handleSubmit = async (e) => {
             {showAlert===true && (
           
 <CustomAlert
-message="Your order has been submitted successfully."
+message="Your order has been submitted"
+message2="Please keep an eye on the order for further development."
 onClose={() => setShowAlert(false)}
 
 

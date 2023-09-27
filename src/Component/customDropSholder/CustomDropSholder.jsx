@@ -562,7 +562,7 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
- <h3 className='m-4'><span style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom DropSholder</h3>
+ <h3 className='m-4'  style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom DropSholder</h3>
  <Form onSubmit={handleSubmit}  className="mb-4">
 
 <Row xs={1} md={4} className="g-3 m-2">
@@ -787,7 +787,9 @@ onChange={(e) => handleFileChange(e, index)}
 <div className='row m-5'>
 <div className="col-md-6">
                     <h3>Recipient Details</h3>
-      
+      <Row xs={1} md={2}>
+
+    
                     <Form.Group className="mb-3">
                       <Form.Label>Recipient's Name</Form.Label>
                       <Form.Control
@@ -816,6 +818,7 @@ onChange={(e) => handleFileChange(e, index)}
                         placeholder="Enter recipient number"
                       />
                     </Form.Group>
+                    </Row>
                    <Row xs={1} md={3} >
                     <Form.Group
                       className="mb-3 Print Side w-100"
@@ -1119,7 +1122,8 @@ onChange={(e) => handleFileChange(e, index)}
             {showAlert===true && (
           
 <CustomAlert
-message="Your order has been submitted successfully."
+message="Your order has been submitted"
+message2="Please keep an eye on the order for further development."
 onClose={() => setShowAlert(false)}
 
 

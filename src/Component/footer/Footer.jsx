@@ -223,6 +223,19 @@ const Footer = () => {
                      
                       </span>
                     </p>
+                  </div>    
+                      <div className="footer1stElement">
+                    <p className=" firstElementAlign  elelment_text">
+                    
+
+                      <span
+                        className="firstElementAlign_text m_left25P m_0"
+                        style={{ color: "#f5f5f5" }}
+                      >
+                             <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/newOrder">Blog</Link> 
+                     
+                      </span>
+                    </p>
                   </div> 
                 
                  

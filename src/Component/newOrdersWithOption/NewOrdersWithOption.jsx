@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import NavigationBar from '../Navbar/NavigationBar';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Overlay, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 const NewOrdersWithOption = () => {
   const navigate=useNavigate()
@@ -26,13 +26,14 @@ const NewOrdersWithOption = () => {
     navigate("/blankHoodie")
   }
     // Define a state variable to hold the current color
+    const target = useRef(null);
     const [customforRoundNeck, setCustomforRoundNeck] = useState('customRoundNeckBlack');
     const [forRoundNeck, setForRoundNeck] = useState('blankRoundNeckwhite');
     const [customDrop, setCustomDrop] = useState('customDropSholderbottleGreen');
     const [blankDropSholder, setBlankDropSholder] = useState('blankDropSholderMaroon');
     const [customHoodie, setCustomHoodie] = useState('customHoodieNevyBlue');
     const [blankHoodie, setBlankHoodie] = useState('BlankHoodieRed');
-  
+    const [show, setShow] = useState(false);
     // Define your color options with their corresponding image URLs
     const colorsBlankRoundNeck = {
       blankRoundNeckblack: '/images/categoryImgs/Round Neck Black.jpg',
@@ -125,6 +126,26 @@ const NewOrdersWithOption = () => {
     BlankHoodieRed:'red',
     BlankHoodieNeonGreen:'green'
   };
+  const [activeTooltipId, setActiveTooltipId] = useState(null);
+
+  function copyText(event, id) {
+    const cardBack = event.currentTarget.closest('.card-back');
+    
+    if (!cardBack) return;
+    
+    const textToCopy = cardBack.querySelector('ul').innerText;
+    navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          setActiveTooltipId(id);
+          setTimeout(() => {
+            setActiveTooltipId(null);
+          }, 1000);
+        })
+        .catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+}
+
 
     return (
         <div>
@@ -132,9 +153,37 @@ const NewOrdersWithOption = () => {
          
             <Row xs={1} md={4} className="g-4 m-3">
           
-        <Col >
-        <Card >
-        <Card.Img variant="top" src={colorsBlankRoundNeck[forRoundNeck]} />
+        <Col>
+        <Card className="baseCard">
+        <div class="card_newOrder">
+        <div class="card-inner">
+            <div class="card-front">
+               <Card.Img   src={colorsBlankRoundNeck[forRoundNeck]} />
+            </div>
+            <div class="card-back">
+            {/* <div class="blurred-bg" ></div>  */}
+    <ul>
+        <li><span>Fabric Quality:</span> Knitted and Dyed, Cotton</li>
+        <li><span>GSM:</span> 180</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Regular fit</li>
+        <li>No print</li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+    <button onClick={(e)=>copyText(e,"copyButton1")} ref={target} id="copyButton1">📋</button>
+             
+    <Overlay target={target.current} show={activeTooltipId === "copyButton1"} placement="top">
+        {(props) => (
+          <Tooltip id="tooltip" {...props}>
+           copied!
+          </Tooltip>
+        )}
+      </Overlay> 
+  
+</div>
+
+        </div>
+    </div>
         <Card.Body>
           <Card.Title style={{textAlign:"center"}}>Blank Round Neck</Card.Title>
           <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
@@ -159,8 +208,29 @@ const NewOrdersWithOption = () => {
       </Card>
         </Col>   
          <Col >
-          <Card >
+          <Card className="baseCard" >
+          <div class="card_newOrder">
+        <div class="card-inner">
+            <div class="card-front">
             <Card.Img variant="top" src={colorsCustomRoundNeck[customforRoundNeck]} />
+            </div>
+            <div class="card-back">
+            {/* <div class="blurred-bg" ></div>  */}
+    <ul>
+        <li><span>Fabric Quality:</span> Knitted and Dyed, Cotton</li>
+        <li><span>GSM:</span> 180</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Regular fit</li>
+        <li>Custom high-quality DTF print available</li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+    <button onClick={copyText} ref={target} id="copyButton2">📋</button>
+
+  
+</div>
+        </div>
+    </div>
+            
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>Custom Round Neck</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
@@ -184,8 +254,27 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>  
           <Col >
-          <Card >
+          <Card className="baseCard">
+          <div class="card_newOrder">
+        <div class="card-inner">
+            <div class="card-front">
             <Card.Img variant="top" src={colorsBlankDropSholder[blankDropSholder]}/>
+            </div>
+            <div class="card-back">
+            {/* <div class="blurred-bg" ></div>  */}
+    <ul>
+        <li><span>Fabric Quality:</span>Knitted and Dyed, Cotton</li>
+        <li><span>GSM:</span> 190+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Regular fit</li>
+        <li>No print</li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+    <button onClick={copyText} ref={target} id="copyButton3">📋</button>
+</div>
+        </div>
+    </div>
+            
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>Blank Drop Sholder</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
@@ -209,8 +298,29 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>  
           <Col >
-          <Card >
+
+          <Card className="baseCard">
+          <div class="card_newOrder">
+        <div class="card-inner">
+            <div class="card-front">
             <Card.Img variant="top" src={colorsCustomDropSholder[customDrop]} />
+            </div>
+             <div class="card-back">
+            {/* <div class="blurred-bg" ></div>  */}
+    <ul>
+        <li><span>Fabric Quality:</span> Knitted and Dyed, Cotton</li>
+        <li><span>GSM:</span> 190+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Regular fit</li>
+        <li>Custom high-quality DTF print available</li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+    <button onClick={copyText} ref={target} id="copyButton4">📋</button>
+</div>
+        </div>
+    </div>
+            
+            
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>custom Drop Sholder</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
@@ -234,8 +344,28 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>   
          <Col >
-          <Card >
+          <Card className="baseCard">
+           
+            <div class="card_newOrder">
+        <div class="card-inner">
+            <div class="card-front">
             <Card.Img variant="top" src={colorsBlankHoodie[blankHoodie]} />
+            </div>
+            <div class="card-back">
+            {/* <div class="blurred-bg" ></div>  */}
+    <ul>
+        <li><span>Fabric Quality:</span>  Knitted and Dyed, Cotton Fleece</li>
+        <li><span>GSM:</span> 300+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Pullover Regular fit </li>
+        <li>Kangaroo Pocket </li>
+        <li>No Print </li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+    <button onClick={copyText} ref={target} id="copyButton5">📋</button>
+</div>
+        </div>
+    </div>
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>Blank hoodie</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
@@ -259,8 +389,29 @@ const NewOrdersWithOption = () => {
           </Card>
         </Col>   
          <Col >
-          <Card >
+          <Card className="baseCard">
+          <div class="card_newOrder">
+        <div class="card-inner">
+            <div class="card-front">
             <Card.Img variant="top" src={colorsCustomHoodie[customHoodie]} />
+            </div>
+            <div class="card-back">
+            {/* <div class="blurred-bg" ></div>  */}
+    <ul>
+        <li><span>Fabric Quality:</span>  Knitted and Dyed, Cotton Fleece</li>
+        <li><span>GSM:</span> 300+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Pullover Regular fit </li>
+        <li>Kangaroo Pocket </li>
+        <li>Custom high-quality DTF print available </li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+    <button onClick={copyText} ref={target} id="copyButton6">📋</button>
+</div>
+        </div>
+    </div>
+            
+           
             <Card.Body>
               <Card.Title style={{textAlign:"center"}}>Custom Hoodie</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
@@ -284,10 +435,9 @@ const NewOrdersWithOption = () => {
            
           </Card>
         </Col>
-     
+    
     </Row>
-           
-          
+  
         </div>
     );
 };

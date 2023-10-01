@@ -9,6 +9,8 @@ import Register from "./Register";
 import ResetPasswordMail from "../resetPasswordMail/ResetPasswordMail";
 import ResetPasswordField from "../resetPasswordFIeld/ResetPasswordField";
 import ReactGA from 'react-ga';
+import Footer from "../footer/Footer";
+import HomeSlider from "../homeSlider/HomeSlider";
 const Login = () => {
   const {user,loading,loginUser,currentUser}=useContext(AuthContext);
   const navigate=useNavigate();
@@ -106,15 +108,25 @@ const handleSubmit = async (e) => {
         <title>Printbaz</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <style dangerouslySetInnerHTML={{__html: "\n        .form-group .form-control {\n            margin-bottom: 15px;\n        }\n\n        body {\n  font-family: 'Arial', sans-serif;\n  background-color: #f4f4f4;\n}\n\nh2, h4, h5 {\n  font-weight: bold;\n  color: #333;\n}\n\nh5 {\n  margin-top: 20px;\n  margin-bottom: 10px;\n}\n\ni.fa {\n  color: #333;\n  margin-right: 5px;\n}\n\n.form-group label {\n  font-weight: bold;\n  color: #333;\n}\n\n.btn-primary {\n  background-color: #012652;\n  border-color: #012652;\n}\n\n.btn-secondary {\n  background-color: #6c757d;\n  border-color: #6c757d;\n}\n\n.btn-link {\n  color: #012652;\n}\n\n.modal-header {\n  background-color: #012652;\n  color: #fff;\n}\n\n.modal-title {\n  font-weight: bold;\n  color: #fff;\n}\n\n.close {\n  color: #fff;\n  opacity: 1;\n}\n\n.modal-body {\n  background-color: #f4f4f4;\n}\n\n.modal-content {\n  border-radius: 0;\n}\n\n.modal .form-control {\n  background-color: #fff;\n  border-color: #ccc;\n}\n\n.left-side {\n  margin-top: 5%;\n}\n\n.left-side h2 {\n  padding-bottom: 30px;\n  color: #012652;\n  font-weight: 700;\n  font-size: 40px;\n}\n\n.left-side p i {\n  font-size: 20px;\n}\n\n.nav-logo img {\n  width: 15%;\n  display: inline-block;\n}\n\n.navbar1 {\n  margin-bottom: 20%;\n}\n\n.nav-logo i {\n  margin-left: 60%;\n  font-size: 20px;\n}\n\n@media only screen and (max-width: 600px) {\n  .help-line {\n    display: block;\n    margin-left: 0% !important;\n  }\n\n  .nav-logo img {\n    width: 35%;\n    margin-bottom: 20px;\n  }\n\n}\n    " }} />
-        <div className="container mt-5">
+        <style dangerouslySetInnerHTML={{__html: "\n        .form-group .form-control {\n            margin-bottom: 15px;\n        }\n\n        body {\n  font-family: 'Arial', sans-serif;\n  background-color: #f4f4f4;\n}\n\nh2, h4, h5 {\n  font-weight: bold;\n  color: #333;\n}\n\nh5 {\n  margin-top: 20px;\n  margin-bottom: 10px;\n}\n\ni.fa {\n  color: #333;\n  margin-right: 5px;\n}\n\n.form-group label {\n  font-weight: bold;\n  color: #333;\n}\n\n.btn-primary {\n  background-color: #012652;\n  border-color: #012652;\n}\n\n.btn-secondary {\n  background-color: #6c757d;\n  border-color: #6c757d;\n}\n\n.btn-link {\n  color: #012652;\n}\n\n.modal-header {\n  background-color: #012652;\n  color: #fff;\n}\n\n.modal-title {\n  font-weight: bold;\n  color: #fff;\n}\n\n.close {\n  color: #fff;\n  opacity: 1;\n}\n\n.modal-body {\n  background-color: #f4f4f4;\n}\n\n.modal-content {\n  border-radius: 0;\n}\n\n.modal .form-control {\n  background-color: #fff;\n  border-color: #ccc;\n}\n\n.left-side {\n  margin-top: 5%;\n}\n\n.left-side h2 {\n  padding-bottom: 30px;\n  color: #012652;\n  font-weight: 700;\n  font-size: 40px;\n}\n\n.left-side p i {\n  font-size: 20px;\n}\n\n.nav-logo img {\n  width: 15%;\n  display: inline-block;\n}\n\n.navbar1 {\n  margin-bottom: 10%;\n}\n\n.nav-logo i {\n  margin-left: 60%;\n  font-size: 20px;\n}\n\n@media only screen and (max-width: 600px) {\n  .help-line {\n    display: block;\n    margin-left: 0% !important;\n  }\n\n  .nav-logo img {\n    width: 35%;\n    margin-bottom: 20px;\n  }\n\n}\n    " }} />
+        <div className="container mt-5 mb-5">
           <div className="row">
-            <div className="col-md-12 navbar1">
+          <div className="col-md-12 navbar1">
               <div className="nav-logo">
                 <img src="https://media.discordapp.net/attachments/1069579536842379305/1102149480284962938/Logo-01.png?width=1440&height=392" alt="Logo" className="img-fluid" />
                 <i className="fa fa-phone help-line">  Help Line: 01927-854949</i>
               </div>
             </div>
+          </div> 
+          
+        <div className="mb-5">
+        <HomeSlider/>
+        </div>
+         
+           
+         
+          <div className="row">
+         
             <div className="col-md-6 left-side">
               <h2>আপনার শুধু ডিজাইনের কাজ,<br /> বাকি দ্বায়িত্বে প্রিন্টবাজ!</h2>
               <p><i className="fa fa-info-circle" />  <b>সাইন ইন করুন</b></p>
@@ -294,7 +306,7 @@ const handleSubmit = async (e) => {
             </div>
           </div>
         </div>
-      
+        <Footer />
           
         </div>
     );

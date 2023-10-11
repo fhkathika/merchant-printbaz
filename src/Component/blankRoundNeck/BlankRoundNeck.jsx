@@ -501,10 +501,38 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
- <h3 className='m-4'  style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/>   Blank Round Neck T-Shirt</h3>
+ <h3 className='m-5'  style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/>   Blank Round Neck T-Shirt</h3>
  <Form onSubmit={handleSubmit}  className="mb-4">
 
-<Row xs={1} md={4} className="g-4 m-3">
+ <table class="size_table">
+<thead>
+  <tr>
+    <th class="tg-0lax_title tg-0lax">SIZE</th>
+    <th class="tg-0lax_title tg-0lax">M</th>
+    <th class="tg-0lax_title tg-0lax">L</th>
+    <th class="tg-0lax_title tg-0lax">XL</th>
+    <th class="tg-0lax_title tg-0lax">XXL</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax">CHEST</td>
+    <td class="tg-0lax">38</td>
+    <td class="tg-0lax">40</td>
+    <td class="tg-0lax">42</td>
+    <td class="tg-0lax">44</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">LENGHT</td>
+    <td class="tg-0lax">27</td>
+    <td class="tg-0lax">28</td>
+    <td class="tg-0lax">29</td>
+    <td class="tg-0lax">30</td>
+  </tr>
+</tbody>
+</table>
+
+<Row xs={1} md={4} className="g-4 m-5">
  
 {formData.orderDetailArr.map((item, index) => (
     <Col>
@@ -573,7 +601,7 @@ const handleSubmit = async (e) => {
 </Row>
 <hr />
 <div className='row m-5'>
-<div className="col-md-6">
+<div className="col-md-12">
                     <h3>Recipient Details</h3>
       <Row xs={1} md={2}>
                     <Form.Group className="mb-3">
@@ -713,7 +741,7 @@ const handleSubmit = async (e) => {
                     </Form.Group>
                    
                   </div> 
-                  <div className="col-md-6 d-flex flex-column align-items-center ">            
+                  <div className="col-md-12 d-flex flex-column align-items-center ">            
 <div style={{ width: '100%' }}>
                     <h3>Cost Of Order</h3>
                     <div className="costOrder_Style">
@@ -863,22 +891,8 @@ const handleSubmit = async (e) => {
                       সকাল ১১ টার পরে প্লেইস করা অর্ডার পরের দিন থেকে শিডিউল করা হবে।
                     </li>
                     <li>
-                      ঢাকার ভিতরে ৫ পিসের বেশি ডেলিভারি এর ক্ষেত্রে পরবর্তী প্রতি ৫
-                      পিসে ১৫ টাকা করে ডেলিভারি ফি যোগ হবে। (যেমনঃ ঢাকার ভিতরে ৫ পিসের
-                      ডেলিভারি ফি ৭০ টাকা, ১০ পিসের ডেলিভারি ফি ৮৫ টাকা, ১৫ পিসের ১০০
-                      টাকা ইত্যাদি)
-                    </li>
-                    <li>
-                      ঢাকার বাহিরে ৫ পিসের বেশি ডেলিভারির ক্ষেত্রে পরবর্তী প্রতি ৫
-                      পিসে ২৫ টাকা করে ডেলিভারি ফি যোগ হবে।{" "}
-                    </li>
-                    <li>
                       ভিন্ন ডেলিভারি এড্রেসে ডেলিভারি এর জন্য অবশ্যই “New Order”
                       ক্রিয়েট করতে হবে।{" "}
-                    </li>
-                    <li>
-                      একই ডেলিভারি এড্রেসে একের অধিক কাস্টম টিশার্ট ডেলিভারি এর জন্য
-                      “+” বাটন ব্যবহার করা যাবে।{" "}
                     </li>
                     <li>
                       প্রোমোশনাল এড অন্সঃ হ্যাংটাগ, ব্র্যান্ড লেবেল, থ্যাংক ইউ কার্ড,
@@ -897,11 +911,11 @@ const handleSubmit = async (e) => {
                       জানাতে হবে। ৪। বিল এডজাস্ট করে নিতে হবে।
                     </li>
                   </ul>
-                  <span>
+                  <span style={{fontWeight:"bold"}}>
                     {" "}
-                    *** ফেইক কাস্টোমার অথবা রিটার্নের ব্যপারে সতর্ক থাকুন। রিটার্নের
+                    ফেইক কাস্টোমার অথবা রিটার্নের ব্যপারে সতর্ক থাকুন। রিটার্নের
                     খরচ ব্র্যান্ডকেই বিয়ার করতে হবে এবং অত্যাধিক (৩ পিস+) আনপেইড
-                    রিটার্নের ক্ষেত্রে একাউন্ট সাস্পেন্ডেড হতে পারে***
+                    রিটার্নের ক্ষেত্রে একাউন্ট সাস্পেন্ডেড হতে পারে
                   </span>
                 </div>
               </div>

@@ -263,7 +263,7 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
 
     <div className="container mt-5 " style={{marginBottom:"50px"}}>
       <h1 className="text-center mb-4 dashboard-title test">Dashboard</h1>
-      <div className="mb-3 mt-5">
+      <div className="mb-3 mt-5 ml-5">
         <HomeSlider/>
         </div>
 
@@ -379,7 +379,7 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
         <div className="col-md-4 mb-4">
           <div className="dashboard-card dashboard-card-img">
             <a href="#">
-              <img src="https://media.discordapp.net/attachments/1069579536842379305/1097079998336204800/20.jpg?width=616&height=616" alt="Clickable Image" className="img-fluid" />
+              <img src="https://media.discordapp.net/attachments/1128921638977683526/1159425964829315112/DM.png?ex=6530fa93&is=651e8593&hm=9895ffdd69c36ae7ad87502701c34bba005054a691b5536ad8106d91fad72b86&=&width=612&height=612" alt="Clickable Image" className="img-fluid" />
             </a>
           </div>
         </div>

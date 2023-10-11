@@ -170,8 +170,7 @@ const NewOrdersWithOption = () => {
         <li>No print</li>
         <li className="highlight">NO MINIMUM</li>
     </ul>
-    <button onClick={(e)=>copyText(e,"copyButton1")} ref={target} id="copyButton1">📋</button>
-             
+    <button onClick={(e)=>copyText(e,"copyButton1")} ref={target} id="copyButton1">
     <Overlay target={target.current} show={activeTooltipId === "copyButton1"} placement="top">
         {(props) => (
           <Tooltip id="tooltip" {...props}>
@@ -179,6 +178,9 @@ const NewOrdersWithOption = () => {
           </Tooltip>
         )}
       </Overlay> 
+    </button>
+             
+    
   
 </div>
 
@@ -224,7 +226,7 @@ const NewOrdersWithOption = () => {
         <li>Custom high-quality DTF print available</li>
         <li className="highlight">NO MINIMUM</li>
     </ul>
-    <button onClick={copyText} ref={target} id="copyButton2">📋</button>
+    <button onClick={copyText} ref={target} id="copyButton2"></button>
 
   
 </div>
@@ -270,7 +272,7 @@ const NewOrdersWithOption = () => {
         <li>No print</li>
         <li className="highlight">NO MINIMUM</li>
     </ul>
-    <button onClick={copyText} ref={target} id="copyButton3">📋</button>
+    <button onClick={copyText} ref={target} id="copyButton3"></button>
 </div>
         </div>
     </div>
@@ -315,7 +317,7 @@ const NewOrdersWithOption = () => {
         <li>Custom high-quality DTF print available</li>
         <li className="highlight">NO MINIMUM</li>
     </ul>
-    <button onClick={copyText} ref={target} id="copyButton4">📋</button>
+    <button onClick={copyText} ref={target} id="copyButton4"></button>
 </div>
         </div>
     </div>
@@ -362,7 +364,7 @@ const NewOrdersWithOption = () => {
         <li>No Print </li>
         <li className="highlight">NO MINIMUM</li>
     </ul>
-    <button onClick={copyText} ref={target} id="copyButton5">📋</button>
+    <button onClick={copyText} ref={target} id="copyButton5"></button>
 </div>
         </div>
     </div>
@@ -406,7 +408,7 @@ const NewOrdersWithOption = () => {
         <li>Custom high-quality DTF print available </li>
         <li className="highlight">NO MINIMUM</li>
     </ul>
-    <button onClick={copyText} ref={target} id="copyButton6">📋</button>
+    <button onClick={copyText} ref={target} id="copyButton6"></button>
 </div>
         </div>
     </div>

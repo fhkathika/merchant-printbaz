@@ -391,7 +391,7 @@ const filerByOrderDate=info.filter(order=>{
                </p></div>
                <div className="col-md-2 col-sm-12">
                 <p
-                  style={{ lineHeight: "15px" }}
+                  style={{ lineHeight: "15px", cursor:"pointer" }}
                   ref={refs.current[index]}
                   // onClick={() => copyOrderId(orderInfo?._id, index)}
                 >

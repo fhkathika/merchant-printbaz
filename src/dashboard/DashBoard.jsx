@@ -188,16 +188,28 @@ const handleRequestAlert=(e)=>{
     const orderSatatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
   // console.log("orderStatus pament released",orderStatusPaymentReleased);
-
-
-
-  
+console.log("user",user);
+// if (!user?.payments || user.payments.length === 0) {
+//   // This merchant has no payments, so return null or a placeholder row
+//   return 0;
+// }
+const lastPayment = user.payments && user.payments.length > 0 ? user.payments[user.payments.length - 1] : null;
   let totalReceiveBase=0,totalReturnAmmountBase=0;
-for(let i=0;i<orderStatusPaymentReleased?.length;i++){
-  let totalReceive=orderStatusPaymentReleased[i]?.recvMoney;
+  if (lastPayment) {
+    for(let i=0;i<user.payments?.length;i++){
+  let totalReceive=user.payments[i]?.paymentReleasedAmount;
+  // totalReceiveBase = lastPayment?.paymentReleasedAmount;
   totalReceiveBase +=totalReceive;
 // console.log("totalReceiveBase",totalReceiveBase);
 }
+   
+    // ... any other logic related to lastPayment.
+}
+// for(let i=0;i<orderStatusPaymentReleased?.length;i++){
+//   let totalReceive=orderStatusPaymentReleased[i]?.recvMoney;
+//   totalReceiveBase +=totalReceive;
+// // console.log("totalReceiveBase",totalReceiveBase);
+// }
 for(let i=0;i<orderSatatusReturned?.length;i++){
   let totalReturn=orderSatatusReturned[i]?.returnedAmount;
   if(totalReturn){
@@ -355,18 +367,18 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
               </div>
                <div className='flex'>
               <p>Total Bill:  </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{parseInt(statusPaidbase)} Tk </span>
+              <span style={{color:"orange",fontSize:'16px'}}>{parseInt(lastPayment?.totalBill?lastPayment?.totalBill :statusPaidbase)} Tk </span>
              
               </div> 
               <div className='flex'>
               <p>Return Value:  </p>
-              <span style={{color:"orange",fontSize:'16px'}}>{Number(totalReturnAmmountBase)} Tk </span>
+              <span style={{color:"orange",fontSize:'16px'}}>{Number(lastPayment?.totalReturnAmmountBase?lastPayment?.totalReturnAmmountBase :totalReturnAmmountBase)} Tk </span>
              
               </div> 
              
                <div className='flex'>
               <p>Due Amount: </p>
-              <span style={{color:"orange",fontSize:'16px'}}> {dueAmount.toFixed(2)} TK</span>
+              <span style={{color:"orange",fontSize:'16px'}}> {lastPayment?.dueAmountNow?lastPayment?.dueAmountNow:dueAmount.toFixed(2)} TK</span>
              
               </div>
 

@@ -23,6 +23,7 @@ const [formData, setFormData] = useState({
     zones:'',
     areas:'',
     quantity:0,
+    productType:'Blank hoodie',
     orderDetailArr: [
       {
         color: 'Black',
@@ -475,7 +476,7 @@ const handleSubmit = async (e) => {
     formData2.append('phone', formData.phone);
     formData2.append('address', formData.address);
     formData2.append('instruction', formData.instruction);
-    formData2.append('category', "customDropSholder");
+    formData2.append('category', "Custom Hoodie");
     formData2.append('districts', formData.districts);
     formData2.append('zones', formData.zones);
     formData2.append('areas', formData.areas);

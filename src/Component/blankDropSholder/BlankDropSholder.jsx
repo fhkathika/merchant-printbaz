@@ -24,6 +24,7 @@ const BlankDropSholder = () => {
     zones:'',
     areas:'',
     quantity:0,
+    productType:'Blank Drop Sholder',
     orderDetailArr: [
       {
         color: 'Black',
@@ -360,12 +361,13 @@ const handleSubmit = async (e) => {
     formData2.append('phone', formData.phone);
     formData2.append('address', formData.address);
     formData2.append('instruction', formData.instruction);
-    formData2.append('category', "blankRoundNeck");
+    formData2.append('category', "Blank Drop Sholder");
     formData2.append('districts', formData.districts);
     formData2.append('zones', formData.zones);
     formData2.append('areas', formData.areas);
     formData2.append('collectAmount', formData.collectAmount);
     formData2.append('quantity', formData.quantity);
+    formData2.append('productType', formData.productType);
     formData2.append('printbazcost', printbazcost);
     formData2.append('deliveryFee', deliveryFee);
     formData2.append('recvMoney', recvMoney);

@@ -127,9 +127,9 @@ let msgCount=0;
                 <li className="navbar-dropdown-item">
                 <Link className='navbar-dropdown-item-Link' to="/payment">Payment</Link> 
               </li>  
-              <li className="navbar-dropdown-item">
+              {/* <li className="navbar-dropdown-item">
                 <Link className='navbar-dropdown-item-Link'  to="/teeShrtCapming">Calculator</Link> 
-              </li>     
+              </li>      */}
                     <li className="navbar-dropdown-item">
                 <Link className='navbar-dropdown-item-Link'  to="/printSizeDemo">Print Size Demo</Link> 
               </li>     

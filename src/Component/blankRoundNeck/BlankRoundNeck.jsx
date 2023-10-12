@@ -59,7 +59,7 @@ const BlankRoundNeck = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Bottle Green.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Bottle Green N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -73,7 +73,7 @@ const BlankRoundNeck = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Maroon.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Maroon N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -540,6 +540,10 @@ const handleSubmit = async (e) => {
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
        </Card.Title>
+       {/* <div style={{position: 'relative'}}> 
+                <Card.Img variant="top" src={item?.categoryImg} />
+                {(index === 2 || index === 3) && <div className="overlay"></div>} 
+            </div> */}
        <Card.Img variant="top" src={item?.categoryImg} />
        <ListGroup className="list-group-flush pl-0 pr-0">
            <ListGroup.Item className="d-flex align-items-center">

@@ -284,13 +284,12 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
         <div className="col-12 mb-4">
           <div className="dashboard-card brief-stats-card">
             <div className="d-flex justify-content-between align-items-center">
-              <h3>Brief Stats</h3>
-              {/* <input type="date" className="form-control" style={{width: 'auto'}} /> */}
+              {/* <h3>Brief Stats</h3> */}
             </div>
           </div>
         </div>
         {/* Second row */}
-        <div className="col-md-4 mb-4">
+        {/* <div className="col-md-4 mb-4">
           <div className="dashboard-card">
             <h4>Total Delivered</h4>
             <div className="sub-cat">
@@ -316,8 +315,8 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
             
             </div>
           </div>
-        </div>
-        <div className="col-md-4 mb-4">
+        </div> */}
+        {/* <div className="col-md-4 mb-4">
           <div className="dashboard-card">
             <div className="d-flex justify-content-between align-items-center">
               <h4>Payments</h4>
@@ -361,7 +360,7 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
            
             <div className="sub-cat">
               <div className='flex'>
-              <p>Total Payment Received: {/* Add payment in process value */}</p>
+              <p>Total Payment Received: </p>
               <span style={{color:"orange",fontSize:'16px'}}>{totalReceiveBase} </span>
              
               </div>
@@ -387,14 +386,14 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
              
             </div>
           </div>
-        </div>
-        <div className="col-md-4 mb-4">
+        </div> */}
+        {/* <div className="col-md-4 mb-4">
           <div className="dashboard-card dashboard-card-img">
             <a href="#">
               <img src="https://media.discordapp.net/attachments/1128921638977683526/1159425964829315112/DM.png?ex=6530fa93&is=651e8593&hm=9895ffdd69c36ae7ad87502701c34bba005054a691b5536ad8106d91fad72b86&=&width=612&height=612" alt="Clickable Image" className="img-fluid" />
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="row mt-5 ">

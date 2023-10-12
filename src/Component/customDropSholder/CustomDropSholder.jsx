@@ -58,7 +58,7 @@ const CustomDropSholder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -72,7 +72,7 @@ const CustomDropSholder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

@@ -60,7 +60,7 @@ const NewOrder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Bottle Green Custom.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Bottle Green Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -74,7 +74,7 @@ const NewOrder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Maroon Custom.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Maroon Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -470,7 +470,7 @@ const handleSubmit = async (e) => {
     formData2.append('productType', formData.productType);
     formData2.append('printbazcost', printbazcost);
     formData2.append('deliveryFee', deliveryFee);
-    formData2.append('recvMoney', recvMoney);
+    formData2.append('recvMoney', Math.floor(recvMoney));
     formData2.append('orderStatus', 'Pending');
     formData2.append('paymentStatus', 'Unpaid');
     formData2.append('createdAt', formattedDate);
@@ -1024,7 +1024,7 @@ onChange={(e) => handleFileChange(e, index)}
                       <div >
                         <div className="costOrder_Style">
                         <label htmlFor="printbazCost">You will receive</label>
-                        <h3> {recvMoney>0 && parseInt(recvMoney)}</h3>
+                        <h3> {recvMoney>0 && Math.floor(recvMoney)}</h3>
                         </div>
                        
                       

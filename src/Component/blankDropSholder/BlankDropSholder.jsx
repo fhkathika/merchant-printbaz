@@ -59,7 +59,7 @@ const BlankDropSholder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -73,7 +73,7 @@ const BlankDropSholder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

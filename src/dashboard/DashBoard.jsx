@@ -283,9 +283,10 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
         {/* First row */}
         <div className="col-12 mb-4">
           <div className="dashboard-card brief-stats-card">
-            <div className="d-flex justify-content-between align-items-center">
-              {/* <h3>Brief Stats</h3> */}
-            </div>
+           
+              <h1 style={{textAlign:"center"}}>Dashboard will be back </h1>
+              <h1 style={{textAlign:"center"}}>on 16th October </h1>
+            
           </div>
         </div>
         {/* Second row */}
@@ -396,7 +397,7 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
         </div> */}
       </div>
 
-      <div className="row mt-5 ">
+      {/* <div className="row mt-5 ">
       <div className="col-md-6 mb-5">
           <div className="dashboard-card dashboard-card-img">
           <YoutubeEmbed embedId="3mrzJ2fKims" />
@@ -407,7 +408,7 @@ let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
           <YoutubeEmbed embedId="ffo850LL9Y4" />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
 {
   showPopup===true &&

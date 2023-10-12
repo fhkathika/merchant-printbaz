@@ -29,7 +29,7 @@ const BlankDropSholder = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Black.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Black N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -44,7 +44,7 @@ const BlankDropSholder = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder White.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder White N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

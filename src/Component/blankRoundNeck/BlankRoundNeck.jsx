@@ -29,7 +29,7 @@ const BlankRoundNeck = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Black.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Black N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -44,7 +44,7 @@ const BlankRoundNeck = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck White.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck White N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

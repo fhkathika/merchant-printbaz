@@ -28,7 +28,7 @@ const BlankHoodie = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Black.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Black N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -43,7 +43,7 @@ const BlankHoodie = () => {
       {
         color: 'Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Neon Green.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Neon Green N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -58,7 +58,7 @@ const BlankHoodie = () => {
       {
         color: 'Nevy Blue',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -70,9 +70,9 @@ const BlankHoodie = () => {
         image: null,
         brandLogo: null,
       },  {
-        color: 'Maroon',
+        color: 'Gray',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Gray.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Gray N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -84,9 +84,9 @@ const BlankHoodie = () => {
         image: null,
         brandLogo: null,
       },{
-        color: 'Maroon',
+        color: 'Red',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Red.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Red N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

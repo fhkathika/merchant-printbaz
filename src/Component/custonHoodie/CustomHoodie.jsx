@@ -28,7 +28,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Black Custom.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Black Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -43,7 +43,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Neon Green Custom.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Neon Green Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -58,7 +58,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Nevy Blue',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue Custom.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -72,7 +72,7 @@ const [formData, setFormData] = useState({
       },  {
         color: 'Gray',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Gray.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Gray N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -87,7 +87,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Red',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Red.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Red Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

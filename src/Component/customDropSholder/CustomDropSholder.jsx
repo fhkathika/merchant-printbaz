@@ -28,7 +28,7 @@ const CustomDropSholder = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Black Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Black Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -43,7 +43,7 @@ const CustomDropSholder = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder White Custom.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder White Custom N.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

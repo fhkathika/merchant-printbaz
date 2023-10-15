@@ -567,7 +567,7 @@ getSpecificOrderById?.orderStatus==="returned"?
         Object.entries(orderDetail.teshirtSize || {}).map(
           ([size, quantity]) => (
             <li key={size}>
-              {size}- {quantity}
+             {size}- {quantity}
             </li>
           )
         )
@@ -577,7 +577,7 @@ getSpecificOrderById?.orderStatus==="returned"?
         
       </div>
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-      {orderDetail?.quantity}
+      {orderDetail?.totalQuantity} 
       </div>
  
     

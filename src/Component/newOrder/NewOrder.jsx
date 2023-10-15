@@ -227,17 +227,21 @@ const NewOrder = () => {
     }));
 }
 
-  
-   console.log("formData",formData);
+const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
   const handleFileChange = (event, index) => {
     const { name, files } = event.target;
+    const updatedBrandLogoArray = [...addBrandLogoArray];
     if (name==="file" || name==="image" || name==="brandLogo") {
+      if (name === "brandLogo") {
+        updatedBrandLogoArray[index] = files && files.length > 0;;
+        setAddBrandLogoArray(updatedBrandLogoArray);
+    }
       // const fieldName = name.split('.')[1];
       const newOrderDetailArr = [...formData.orderDetailArr];
        // Change from a single file to an array of files
       newOrderDetailArr[index][[event.target.name]] =Array.from(files);
       setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
-    
+  
     }
   };
 
@@ -251,7 +255,7 @@ formData?.orderDetailArr.forEach(item => {
 
 let updatedPrintbazcost=0
   let printbazcost=0;
-  let printbazcostbase;
+  let printbazcostbase=0;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (
       formData?.quantity &&
@@ -299,15 +303,15 @@ let updatedPrintbazcost=0
       
       // At this point, backSidePrintCost contains the total cost for the current item's back side print
       
-      if(addbrandLogo===true){
+      if(addBrandLogoArray[i]){
         // printbazcost=parseInt(printbazcostbase+5)
-        
-        printbazcostbase = Number(totalPrice)+backSidePrintCost+(5*formData?.orderDetailArr[i]?.totalQuantity);
+        let brandLogoCost=5*formData?.orderDetailArr[i]?.totalQuantity
+        printbazcostbase = Number(totalPrice)+backSidePrintCost+brandLogoCost;
+        console.log("brandLogoCost",brandLogoCost);
+        console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
         printbazcost += printbazcostbase;
         const test=printbazcost+backSidePrintCost
-        console.log("printbazcost",printbazcost)
-        console.log("backSidePrintCost",backSidePrintCost)
-        console.log("test",test)
+      console.log("addbrandLogo",addbrandLogo);
       }
       else{
         printbazcostbase = Number(totalPrice) + backSidePrintCost;
@@ -367,8 +371,7 @@ let updatedPrintbazcost=0
     }).deliveryFee;
   }
   
-  console.log("updated deliveryFee", deliveryFee);
-  
+ 
     let recvMoney = 0;
     let costHandlingfee;
     let recvMoneyWithouthandling = 0;
@@ -531,7 +534,7 @@ formData2.append('clientName', user?.name);
 <>
 <div className="alert-overlay"  />
 <div className="alert-box" >
-  <Spinner  style={{padding:"20px"}} animation="grow" variant="warning" />
+  <Spinner  style={{padding:"10px"}} animation="grow" variant="warning" />
  
   <h2>Please wait!</h2>
 </div>

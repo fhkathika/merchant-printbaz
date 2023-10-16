@@ -149,7 +149,9 @@ a[x-apple-data-detectors] {
 .navbar-dropdown-item-Link:hover {
   color: #fff !important;
 }
-
+.m45 {
+  margin: 45px !important;
+}
 @media (max-width: 767px) { 
   .dropdown-menu-mobile {
     width: 100vw;
@@ -251,6 +253,15 @@ a[x-apple-data-detectors] {
 }
 
 @media screen and (max-width: 700px){
+  .m_1responsive700 {
+    margin: 8px;
+  }
+   .m_12responsive700 {
+    margin: 12px;
+  }
+  .m45  {
+    margin: 0px !important;
+  }
   .box{
     width: 80%;
   }

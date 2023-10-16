@@ -44,7 +44,7 @@ const Register = ({closePopup}) => {
   const [showAlert, setShowAlert] = useState(false);
   const [prevRegisterAlert, setPrevRegisterAlert] = useState(false);
   const [error, SetError] = useState('');
-  const [display, setDisplay] = useState('block');
+  const [display, setDisplay] = useState('none');
   const [displayNone, setDisplayNone] = useState('none');
   const [displayRocketNone, setDisplayRocketNone] = useState('none');
   const [displayNagadNone, setDisplayNagadNone] = useState('none');
@@ -471,7 +471,7 @@ const handleChange=(e)=>{
                       <h3>Payment Information</h3>
                     </div>
  
-  <DropdownButton  id="dropdown-basic-button" title="Payment Method">
+  <DropdownButton  id="dropdown-basic-button" title="Select Payment Method" className='mb-3'>
 <Dropdown.Item onClick={showForm}>Bank</Dropdown.Item>
 <Dropdown.Item onClick={showBkash}>Bkash</Dropdown.Item>
 <Dropdown.Item onClick={showRocket}>Rocket</Dropdown.Item>

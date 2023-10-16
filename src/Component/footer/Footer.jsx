@@ -1,4 +1,5 @@
 import React from "react";
+import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -6,9 +7,10 @@ const Footer = () => {
     <div className="footer_div">
       <div className="fotter2nd_Layer ">
         <div className="fotter3rd_Layer">
-          <section className="footer_Section_Layer mb-4">
-            <div className="flex block padding_5">
-              <div className="col_30 col_100   ">
+          <section className="footer_Section_Layer mb-4 p-4 ">
+         
+              <Row className="">
+              <Col xs={12} md={3}>
                 <div className="elementDiv1">
                   <div className="footerIcon">
                     <div className="footerImg_container">
@@ -177,8 +179,8 @@ const Footer = () => {
                     </a>
                   </div>
                 </div>
-              </div>
-              <div className="col_25 col_100 " >
+              </Col>
+              <Col xs={12} md={3} >
               <div className="elementDiv1">
                   <div style={{marginTop:"35px"}} className="m_left25P m_0">
                    
@@ -240,8 +242,8 @@ const Footer = () => {
                 
                  
                 </div>
-              </div>
-              <div className="col_30 col_100 ">
+              </Col>
+              <Col xs={12} md={3}>
               <div className="elementDiv1">
                   <div style={{marginTop:"35px"}} className="m_L15P m_0">
                    
@@ -314,36 +316,32 @@ const Footer = () => {
                   </div> 
                  
                 </div>
-              </div>
-           <div className="col_15 col_100  margin_left20">
+              </Col>
+              <Col xs={12} md={3}>
 
-           <div className="footer1stElemnet  " style={{marginTop:"37px"}} >
-                  <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>ACCEPTED PAYMENT</p>
-              <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/Bkash-01.svg"alt="Youtube"/>
-              <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/Nagad-01.svg"alt="Youtube"/>
-              <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}} className="" src="/images/Rocket-01.svg"alt="Youtube"/>
-              <img style={{width: "55px",height: "auto",marginRight: "12px",  marginTop:""}} className="margin_bottom12" src="/images/Mastercard-01.svg"alt="Youtube"/>
-              <img style={{width: "55px",height: "auto",marginRight: "12px", marginTop:""}}className="margin_bottom12" src="/images/Visa-01.svg"alt="Youtube"/>
-            
-              </div>
-              <div className="footer1stElemnet " style={{marginTop:"20px"}}>
-                  <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>SECURED BY</p>
-              <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/DMCA-01-01.png"alt="Youtube"/>
-              <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/SSL-01-01.png"alt="Youtube"/>
+<div className="footer1stElemnet  " style={{marginTop:"37px"}} >
+       <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>ACCEPTED PAYMENT</p>
+   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/Bkash-01.svg"alt="Youtube"/>
+   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/Nagad-01.svg"alt="Youtube"/>
+   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}} className="" src="/images/Rocket-01.svg"alt="Youtube"/>
+   <img style={{width: "55px",height: "auto",marginRight: "12px",  marginTop:""}} className="margin_bottom12" src="/images/Mastercard-01.svg"alt="Youtube"/>
+   <img style={{width: "55px",height: "auto",marginRight: "12px", marginTop:""}}className="margin_bottom12" src="/images/Visa-01.svg"alt="Youtube"/>
  
-            
-              </div>
-           </div>
-            
-            
+   </div>
+   <div className="footer1stElemnet " style={{marginTop:"20px"}}>
+       <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>SECURED BY</p>
+   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/DMCA-01-01.png"alt="Youtube"/>
+   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/SSL-01-01.png"alt="Youtube"/>
 
-            
-        
-             
-            </div>
+ 
+   </div>
+</Col>
+              </Row>
+       
+ 
           </section>
           <div style={{backgroundColor:"#001846",borderTop:"1px solid gray"}}>
-          <div className="footer_Section_Layer">
+          <div className="footer_Section_Layer ">
             <div className="copyRight_Style copyRight_Style_For_mobile">
 <span >© 2023 printbaz.com All rights reserved</span>
             </div>

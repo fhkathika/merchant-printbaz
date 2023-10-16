@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Button, Container, Overlay, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../footer/Footer';
 const NewOrdersWithOption = () => {
   const navigate=useNavigate()
   const handleClickNeworder=()=>{
@@ -439,7 +440,7 @@ const NewOrdersWithOption = () => {
         </Col>
     
     </Row>
-  
+    <Footer/>
         </div>
     );
 };

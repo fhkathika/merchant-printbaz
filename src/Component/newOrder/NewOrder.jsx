@@ -540,7 +540,13 @@ formData2.append('clientName', user?.name);
 </div>
 </>
 )}
- <h3 className='m-5'  style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
+<Row className='m-auto'>
+  <Col xs={12} md={12} className='mt-5  mb-2'>
+
+  <h3   style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
+  </Col>
+</Row>
+
  <Form onSubmit={handleSubmit}  className="mb-4">
 
 <table class="size_table">
@@ -571,10 +577,10 @@ formData2.append('clientName', user?.name);
 </tbody>
 </table>
 
-<Row xs={1} md={4} className="g-3 m-5">
+<Row  className="g-2 m45 m_1responsive700">
 
 {formData.orderDetailArr.map((item, index) => (
-  <Col>
+  <Col xs={12} md={3}>
    <Card >
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
@@ -785,10 +791,10 @@ onChange={(e) => handleFileChange(e, index)}
 
 
 </Row>
-<div className='row m-5'>
+<div className='row m45 m_12responsive700'>
 <div className="col-md-12">
                     <h3>Recipient Details</h3>
-      <Row xs={1} md={2}>
+      <Row xs={12} md={2}>
                     <Form.Group className="mb-3">
                       <Form.Label>Recipient's Name</Form.Label>
                       <Form.Control
@@ -818,7 +824,7 @@ onChange={(e) => handleFileChange(e, index)}
                       />
                     </Form.Group>
                     </Row>
-                   <Row xs={1} md={3} >
+                   <Row xs={12} md={3} >
                    <Form.Group
                       className="mb-3 Print Side w-100"
                       controlId="wccalcPrintSide"
@@ -927,7 +933,7 @@ onChange={(e) => handleFileChange(e, index)}
                       />
                     </Form.Group>
                   </div> 
-                  <hr />
+                  {/* <hr /> */}
                   <div className="col-md-12 d-flex flex-column align-items-center ">            
 <div style={{ width: '100%' }}>
                     <h3>Cost Of Order</h3>
@@ -960,7 +966,8 @@ onChange={(e) => handleFileChange(e, index)}
                     </div>
                     <div>
 
-                    <div  className="costOrder_Style">
+                    <Row  className="costOrder_Style">
+                      <Col xs={12} md={6}>
                     <Form.Group className="mb-3 ">
                       <Form.Label>Amount to Collect</Form.Label>
                       {["bottom"].map((placement) => (
@@ -1000,7 +1007,8 @@ onChange={(e) => handleFileChange(e, index)}
                         placeholder=""
                       />
                     </Form.Group>
-                   
+                    </Col>
+                    <Col xs={12} md={6}>
                            <Form.Group className="mb-3 ">
                            <Form.Label>Minimum Amount to Collect</Form.Label>
                           
@@ -1011,11 +1019,11 @@ onChange={(e) => handleFileChange(e, index)}
                              readOnly
                            />
                          </Form.Group>
-                        
+                         </Col>
                     
                    
                      
-                      </div>
+                      </Row>
                     </div>
                     
                     <div className="costOrder_Style">
@@ -1071,7 +1079,7 @@ onChange={(e) => handleFileChange(e, index)}
 
 
 </Form>            
-<div className="row m-5">
+<div className="row m45 m_1responsive700 mb-3">
                 <div className="col-12">
                   <h3>Terms and Conditions</h3>
                   <ul>

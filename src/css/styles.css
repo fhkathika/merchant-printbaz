@@ -163,7 +163,8 @@ a[x-apple-data-detectors] {
     background-color: #001846 !important;
     color: White !important;
    
-  }
+  }  
+
   .dropdownMobile{
     background-color: #001846 !important;
     color: White !important;
@@ -896,6 +897,7 @@ color: #bababa !important;
 .nav-item {
   position: relative !important;
   display: inline-block;
+  width: 100% !important;
 }
 
 .notification-badge {

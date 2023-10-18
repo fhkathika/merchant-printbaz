@@ -314,11 +314,13 @@ let updatedPrintbazcost=0
       console.log("addbrandLogo",addbrandLogo);
       }
       else{
-        printbazcostbase = Number(totalPrice) + backSidePrintCost;
-        printbazcost = (printbazcostbase+printbazcost);
+        printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
+        printbazcost += printbazcostbase;
       
         console.log("printbazcost",printbazcost)
+        console.log("printbazcostbase",printbazcostbase)
         console.log("backSidePrintCost",backSidePrintCost)
+        console.log("totalPrice",totalPrice)
       }
 
  

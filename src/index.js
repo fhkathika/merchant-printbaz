@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider/AuthProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'aos/dist/aos.css';
 import ReactGA from "react-ga4";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 //Initialize GA4

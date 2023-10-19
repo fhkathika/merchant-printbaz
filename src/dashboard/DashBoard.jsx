@@ -11,24 +11,321 @@ import 'swiper/swiper-bundle.css';
 import { Accordion } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
-
+import axios from 'axios';
+import useGetMongoData from '../hooks/useGetMongoData';
 const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
-//   useEffect(() => {
-//     new Swiper('.swiper', {
-//       autoplay: {
-//         delay: 2500,
-//         disableOnInteraction: false
-//       },
-//       pagination: {
-//         el: '.swiper-pagination',
-//         clickable: true
-//       }
-//     });
-//   }, []);
+  let id = "resellerOrdersId";
+  let collections = "resellerInfo";
+  const [dbData, setDbData] = useState({});
+  // const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
+  // const resellerOrdersFromDb=fetchedData?.orders
+console.log("user",user);
+  const {info}=useGetMongoData()
+  const [usersTickets, setUsersTickets] = useState([]);
+    const [activeTab, setActiveTab] = useState("Dashboard");
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+    const[fetchAllTicket,setFetchAllTicket]=useState([])
+    const [popupId, setPopupId] = useState('');
+    const [createTicket, setCreateTicket] = useState(false);
+    const [reqBtnStatus, setReqBtnStatus] = useState(true);
+    const [totalBill, setTotalBill] = useState(0);
+    const [reqAlert, setReqAlert] = useState('');
+    const closePopup = () => {setShowPopup(false);};
+    // function closePopup() {
+    //   document.getElementById("popup1").style.display = "none";
+    // }
 
-// AOS.init();
+    
+   useEffect(()=>{
+    fetchAllTicketData()
+   },[])
+    const fetchAllTicketData = async () => {
+      try {
+        // const response = await axios.get('http://localhost:5000/allTicketIds');
+        const response = await axios.get('https://mserver.printbaz.com/allTicketIds');
+        setFetchAllTicket(response.data);
+     
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    let idCounter = 1; // Initialize a counter for the IDs
+    const generateId = () => {
+      const paddedId = String(idCounter).padStart(6, '0'); // Convert counter to string and pad with leading zeros
+    
+      if (fetchAllTicket?.filter(ticketId => ticketId === paddedId).length > 0){
+        idCounter++; // Increment the counter
+        return generateId(); // Recursively call the function to generate the next ID
+      }
+    
+      idCounter++; // Increment the counter
+      return paddedId;
+    };
+    const [display, setDisplay] = useState('flex');
+    const [displayNone, setDisplayNone] = useState('none');
+    const showRegister = () => {
+      setDisplay('none');
+      setDisplayNone('block')
+    }
+     const showLogin = () => {
+      setDisplay('block');
+      setDisplayNone('none')
+    }
+  
+    
+    const [countdown, setCountdown] = useState(null);
+
+    // Check if 24 hours have passed since the last click
+    const lastClickTimestamp = localStorage.getItem('lastClickTimestamp');
+    const currentTime = new Date().getTime();
+    const timeDifference = currentTime - (lastClickTimestamp ? parseInt(lastClickTimestamp, 10) : 0);
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+
+    useEffect(() => {
+      // If not 24 hours yet, start countdown
+      if (timeDifference < oneDayInMilliseconds) {
+        setCountdown(oneDayInMilliseconds - timeDifference);
+  
+        const timer = setInterval(() => {
+          setCountdown(prevCountdown => {
+            if (prevCountdown <= 1000) {
+              clearInterval(timer);
+              return null;
+            }
+            return prevCountdown - 1000;
+          });
+        }, 1000);
+      }
+    }, []);  // Empty dependency array to run this effect only once when the component mounts
+  
+    const formatTime = (milliseconds) => {
+      const hours = Math.floor(milliseconds / (60 * 60 * 1000));
+      const minutes = Math.floor((milliseconds % (60 * 60 * 1000)) / (60 * 1000));
+      const seconds = Math.floor((milliseconds % (60 * 1000)) / 1000);
+    
+      return `${hours}h ${minutes}m ${seconds}s`;
+    };
+    
+
+  // pending delivery
+  const orderStatusPending=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="Pending" )
+  // console.log("orderStatus pending",orderStatusPending);
+  let pendingstatusCount=0
+  for(let i=1;i<=orderStatusPending?.length;i++){
+     pendingstatusCount++
+
+  } 
+  // Returned
+   const orderStatusReturned=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
+  // console.log("orderStatus return",orderStatusReturned);
+   const orderStatusDelivered=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="delivered" ) 
+  // on hold artwork issue
+  const orderStatusonHoldartworkissue=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="on hold artwork issue" )
+    // on hold billing issue
+  const orderStatusonHoldbillingissue=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="on hold billing issue" )
+    // on hold out of stock
+  const orderStatusonHoldoutofstock=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="on hold out of stock" )
+  let returnedstatusCount=0
+  for(let i=1;i<=orderStatusReturned?.length;i++){
+    returnedstatusCount++
+
+  }
+  let deliveredstatusCount=0
+  for(let i=1;i<=orderStatusDelivered?.length;i++){
+    deliveredstatusCount++
+
+  }let onHoldArtWorkstatusCount=0
+  for(let i=1;i<=orderStatusonHoldartworkissue?.length;i++){
+    onHoldArtWorkstatusCount++
+
+  }let onHoldBillingstatusCount=0
+  for(let i=1;i<=orderStatusonHoldbillingissue?.length;i++){
+    onHoldBillingstatusCount++
+
+  }let onHoldoutofstockCount=0
+  for(let i=1;i<=orderStatusonHoldoutofstock?.length;i++){
+    onHoldoutofstockCount++
+
+  }
+const handleCreateTicket=(e)=>{
+ e.preventDefault()
+ localStorage.setItem('lastClicked', Date.now());
+  setCreateTicket(true)
  
+  fetchAllTicketData()
+  setShowPopup(true)
+  setPopupId(generateId()); // Set the generated ID
+
+}
+const handleRequestAlert=(e)=>{
+  e.preventDefault()
+  setReqAlert("your total bill must be 1000/- or more")
+  setTimeout(()=>{
+    setReqAlert("");
+
+  },2000)
+}
+  const totalHold=Number(onHoldArtWorkstatusCount+onHoldBillingstatusCount+onHoldoutofstockCount)
+ 
+  console.log("returnstatusCount",returnedstatusCount);  
+  
+  // Payment Released
+   const orderStatusPaymentReleased=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="payment-released" ) 
+  //return amount
+    const orderSatatusReturned=info
+  ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
+  // console.log("orderStatus pament released",orderStatusPaymentReleased);
+console.log("user",user);
+// if (!user?.payments || user.payments.length === 0) {
+//   // This merchant has no payments, so return null or a placeholder row
+//   return 0;
+// }
+const lastPayment = user.payments && user.payments.length > 0 ? user.payments[user.payments.length - 1] : null;
+  let totalReceiveBase=0,totalReturnAmmountBase=0;
+  if (lastPayment) {
+    for(let i=0;i<user.payments?.length;i++){
+  let totalReceive=Number(user.payments[i]?.paymentReleasedAmount?user.payments[i]?.paymentReleasedAmount:0);
+  // totalReceiveBase = lastPayment?.paymentReleasedAmount;
+  totalReceiveBase +=totalReceive;
+// console.log("totalReceiveBase",totalReceiveBase);
+}
+   
+    // ... any other logic related to lastPayment.
+}
+// for(let i=0;i<orderStatusPaymentReleased?.length;i++){
+//   let totalReceive=orderStatusPaymentReleased[i]?.recvMoney;
+//   totalReceiveBase +=totalReceive;
+// // console.log("totalReceiveBase",totalReceiveBase);
+// }
+for(let i=0;i<orderSatatusReturned?.length;i++){
+  let totalReturn=Number(orderSatatusReturned[i]?.returnedAmount);
+  if(totalReturn){
+    // totalReturnAmmountBase +=totalReturn;
+    const deliveryFee = Number(orderSatatusReturned[i]?.deliveryFee);
+    
+    // If totalReturn and deliveryFee exist and are numbers, add them to totalReturnAmountBase
+   
+      totalReturnAmmountBase += (totalReturn + deliveryFee+deliveryFee/2);
+    
+  }
+
+
+}
+
+// Check if orderStatusReturned is an array before looping
+// if (Array.isArray(orderSatatusReturned)) {
+//   for (let i = 0; i < orderSatatusReturned.length; i++) {
+//     const totalReturn = Number(orderSatatusReturned[i]?.returnedAmount);
+//     const deliveryFee = Number(orderSatatusReturned[i]?.deliveryFee);
+    
+//     // If totalReturn and deliveryFee exist and are numbers, add them to totalReturnAmountBase
+   
+//       totalReturnAmmountBase += (totalReturn + deliveryFee);
+    
+//   }
+// }
+
+//patmnet status =paid,orderstatus :delivered
+const PaymentStausPaid=info
+?.filter(order => order.userMail === user?.email && order.paymentStatus==="paid" && order?.orderStatus==="delivered")
+
+const returnValueFilter=info?.filter(order => order.userMail === user?.email && order?.orderStatus==="returned")
+
+
+let statusPaidbase=0; let totalpaid
+for(let i=0;i<PaymentStausPaid?.length;i++){
+   totalpaid=Number(PaymentStausPaid[i]?.recvMoney);
+  statusPaidbase =Number(statusPaidbase+totalpaid);
+ 
+  // setTotalBill(totalBill+totalpaid);
+
+}
+
+// returned amount 
+let returnAmountBase=0;
+for(let i=0;i<returnValueFilter?.length;i++){
+  let totalreturned=returnValueFilter[i]?.recvMoney;
+  // returnAmountBase =returnAmountBase+totalreturned;
+
+}
+
+let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
+// console.log("totalReturnAmmountBase",totalReturnAmmountBase);
+
+// let dueAmount=statusPaidbase-(totalReceiveBase-)
+// console.log("dueAmount",dueAmount);
+ // Fetch the latest payment made by user
+let lastPayementDetail = user?.payments?.length > 0 ? 
+user.payments[user.payments.length-1] : null;
+
+// Calculate the grand due amount
+let grandDueNow = dueAmount;
+
+// if (lastPayementDetail && lastPayementDetail.paymentReleasedAmount) {
+// grandDueNow -= lastPayementDetail.totalReleasedAmount;
+// }
+
+console.log("Initial dueAmount:", dueAmount);
+console.log("Last payment amount:", lastPayementDetail?.paymentReleasedAmount);
+console.log("Grand Due Amount:", grandDueNow);
+
+console.log("totalReturnAmmountBase test",totalReturnAmmountBase);
+useEffect(() => {
+  const getOrderById = async () => {
+      // Ensure there's an ID before making a request
+      console.log("totalBill test",statusPaidbase);
+      console.log("dueAmount test",dueAmount);
+      console.log("totalReceiveBase test",totalReceiveBase);
+      console.log("totalReturnAmmountBase test",totalReturnAmmountBase);
+      if (user?._id) {
+          try {
+        
+              const response = await fetch(
+                  `https://mserver.printbaz.com/updateBill/${user._id}`,
+                  // `http://localhost:5000/updateBill/${viewClient._id}`,
+                  {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ 
+                        totalBill: statusPaidbase, 
+                        totalReceiveBase: totalReceiveBase?totalReceiveBase:0,
+                        totalReturnAmmountBase: totalReturnAmmountBase,
+                        dueAmount:  grandDueNow 
+                    }),
+                }
+              );
+
+              const data = await response.json();
+              if (response.status === 200) {
+                  // Handle success, for instance:
+                  console.log("Total bill updated successfully:", data);
+              } else {
+                  // Handle error
+                  console.error("Error updating the bill:", data.message);
+              }
+
+          } catch (error) {
+              console.error("Network or server error:", error);
+          }
+      }
+  };
+
+  getOrderById();
+
+}, [user?._id,statusPaidbase, totalReceiveBase, totalReturnAmmountBase, dueAmount]);
+
+
 useEffect(() => {
   const navbarlinks = document.querySelectorAll('#navbar .scrollto');
 
@@ -339,7 +636,7 @@ const handleLogOut=()=>{
             <div className="delivery-box">
               <i className="ri-projector-2-line" />
               <div>
-                <span className='text_center'>2</span>
+                <span className='text_center'>{pendingstatusCount}</span>
                 <p>Total Pending</p>
               </div>
             </div>
@@ -348,7 +645,7 @@ const handleLogOut=()=>{
             <div className="delivery-box">
               <i className="ri-text-wrap" style={{ color: "#ee6c20" }} />
               <div>
-              <span className='text_center'>2</span>
+              <span className='text_center'>{returnedstatusCount}</span>
                
                 <p>Total Returned</p>
               </div>
@@ -358,7 +655,7 @@ const handleLogOut=()=>{
             <div className="delivery-box">
               <i className="bi bi-headset" style={{ color: "#15be56" }} />
               <div>
-              <span className='text_center'>2</span>
+              <span className='text_center'>{totalHold}</span>
                 <p>Total On Hold</p>
               </div>
             </div>
@@ -367,7 +664,7 @@ const handleLogOut=()=>{
             <div className="delivery-box">
               <i className="ri-truck-line" style={{ color: "#bb0852" }} />
               <div>
-              <span className='text_center'>2</span>
+              <span className='text_center'>{deliveredstatusCount}</span>
                 <p>Total Delivered</p>
               </div>
             </div>
@@ -392,7 +689,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#07d5c0" }}>Total Payment Received</h3>
               <div className="payments">
-                <sup>৳</sup>2000
+                <sup>৳</sup>{lastPayment?.totalReleasedAmount}
               </div>
             </div>
           </div>
@@ -404,7 +701,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#65c600" }}>Total Bill</h3>
               <div className="payments">
-                <sup>৳</sup>3500
+                <sup>৳</sup>{lastPayment?.totalBill}
               </div>
             </div>
           </div>
@@ -416,7 +713,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#ff901c" }}>Return Value</h3>
               <div className="payments">
-                <sup>৳</sup>500
+                <sup>৳</sup>{lastPayment?.totalReturnAmmountBase}
               </div>
             </div>
           </div>
@@ -428,7 +725,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#ff0071" }}>Due Amount</h3>
               <div className="payments">
-                <sup>৳</sup>1000
+                <sup>৳</sup>{user?.dueAmountNow}
               </div>
             </div>
           </div>

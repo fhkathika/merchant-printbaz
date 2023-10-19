@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Overlay, Tooltip } from 'react-bootstrap';
+import { Button, Container, Overlay, Tooltip } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
@@ -8,6 +8,7 @@ import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import '../../css/dashboardStyles.css'
 
 const MyOrders = () => {
     let id = "resellerOrdersId";
@@ -156,21 +157,17 @@ const filerByOrderDate=info.filter(order=>{
     
     return (
         <div className='payment_container'>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-          <title>Order</title>
-          <style dangerouslySetInnerHTML={{__html: "\n        \n      /* General styles */\n      body {\n        font-family: Arial, sans-serif;\n        background-color: #f8f9fa;\n      }\n      \n      .navbar {\n        background-color: #001846 !important;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n        padding: 20px;\n        padding-left: 40px !important;\n      }\n      \n      .navbar-brand img {\n        width: 150px;\n      }\n      \n      .nav-link {\n        color: #ffffff !important;\n        font-size: 16px;\n        font-weight: 600;\n      }\n      \n      .nav-link:hover {\n        background-color: #ffffff;\n        color: #001846 !important;\n      }\n      .dropdown{\n        padding-left: 1200px;\n      }\n      \n      .dropdown-menu {\n        margin-left: 1120px;\n        \n      }\n      \n      .main-div {\n        padding-left: 50px;\n        padding-right: 50px;\n      }\n\nh1 {\n  font-size: 2rem;\n  font-weight: 700;\n  color: #001846;\n}\n\nh4 {\n  font-size: 1.2rem;\n  font-weight: 600;\n  color: #001846;\n  margin-bottom: 0;\n}\n\n/* Order List */\n#newOrderBtn {\n  font-weight: 600;\n}\n\n#orderStatus {\n    display: block;\n    width: 100%;\n    height: calc(1.5em + .75rem + 2px);\n    padding: .375rem .75rem;\n    font-size: 1rem;\n    font-weight: 400;\n    line-height: 1.5;\n    color: #495057;\n    background-color: #fff;\n    background-clip: padding-box;\n    border: 1px solid #ced4da;\n    border-radius: .25rem;\n    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;\n}\n\n.nav-tabs .nav-item .nav-link {\n  font-size: 1.1rem;\n}\n\n.nav-tabs .nav-item .nav-link.active {\n  font-weight: 600;\n  color: #001846 !important;\n  background-color: #f8f9fa;\n  border-color: #dee2e6 #dee2e6 #f8f9fa;\n}\n\n/* Filter Form */\n#filter-form {\n  margin-top: 2rem;\n}\n\n#filter-form label {\n  font-weight: 600;\n}\n\n#filter-form input,\n#filter-form select {\n  margin-top: 0.5rem;\n}\n\n/* Order Header */\n.order-header {\n  border-top: 2px solid #001846;\n  padding-top: 1rem;\n  margin-top: 2rem;\n}\n\n@media (max-width: 991.98px) {\n  .order-header .col-md-2 {\n    margin-bottom: 1rem;\n  }\n}\n\n/* Mobile View Styles */\n@media (max-width: 767.98px) {\n  .navbar-brand img {\n    width: 120px;\n    height: auto;\n  }\n\n  h1 {\n    font-size: 1.5rem;\n  }\n\n  h4 {\n    font-size: 0.5rem;\n  }\n\n  /* Order List */\n  .nav-tabs .nav-item .nav-link {\n    font-size: 1rem;\n  }\n\n  /* Filter Form */\n  #filter-form {\n    margin-top: 1rem;\n  }\n\n  #filter-form label {\n    display: block;\n    margin-top: 1rem;\n  }\n\n  /* Order Header */\n  .order-header {\n    margin-top: 1rem;\n  }\n\n  .order-header {\n    opacity: 0;\n  }\n\n  .order-list {\n    flex-direction: column;\n    padding: 20px 10px;\n  }\n\n  .order-list .col-2,\n  .order-list .col-1 {\n    margin-bottom: 10px;\n    text-align: center;\n  }\n\n  .order-list p {\n    font-size: 0.85rem;\n    line-height: 1.2;\n  }\n\n  .order-list button {\n    font-size: 0.8rem;\n    padding: 5px 10px;\n  }\n}\n\n    " }} />
-         
+       
           <NavigationBar/>
-          <div className="main-div" style={{marginBottom:"50px"}}>
+       
+          <div className="main-div" style={{margin:"50px"}}>
             <div className="row mt-4">
               <div className="col-sm-6">
                 <h1>Order List</h1>
               </div>
-              <div className="col-sm-6 text-right">
+              {/* <div className="col-sm-6 text-right">
                 <button onClick={handlePage} className="btn btn-primary" id="newOrderBtn">New Order</button>
-              </div>
+              </div> */}
             </div>
             {/* Order tabs */} 
             {/* <ul className="nav nav-tabs mt-4" id="orderTabs">
@@ -211,7 +208,7 @@ const filerByOrderDate=info.filter(order=>{
                   <input type="text" onChange={(e) =>  handleInputChange(e)} className="form-control" id="orderID" placeholder="Enter Order ID" />
                 </div>
                 <div className="col-lg-2 col-sm-12 col-md-4">
-                <label htmlFor="status-filter">Status:</label>
+                <label htmlFor="status-filter" className='mb-2'>Status:</label>
                 <select id="status-filter" className="form-control" onChange={(e) =>  handleInputChange(e)}>
                   <option value="all">All</option>
                   <option value="Pending">Pending</option>
@@ -916,6 +913,7 @@ const filerByOrderDate=info.filter(order=>{
               {/* Tab content */}
    
           </div>
+          
           <Footer/>
         </div>
       );

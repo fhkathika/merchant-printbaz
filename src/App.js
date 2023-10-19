@@ -191,11 +191,10 @@ function App() {
         />
 
         <Route
-          path="/teeShrtCapming"
+          path="/calculator"
           element={
-            <PrivateRoute>
               <TeeShirtCapingCalcForm />
-            </PrivateRoute>
+           
           }
         />
 

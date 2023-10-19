@@ -6,13 +6,15 @@ import Swiper from 'swiper';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
 // Import Swiper styles
-// import 'swiper/css';
+import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import { Accordion } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
 import axios from 'axios';
 import useGetMongoData from '../hooks/useGetMongoData';
+import ReqPaymentTIcketPopup from '../alertBox/ReqPaymentTIcketPopup';
+import Footer from '../Component/footer/Footer';
 const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
   let id = "resellerOrdersId";
@@ -215,7 +217,7 @@ for(let i=0;i<orderSatatusReturned?.length;i++){
     
     // If totalReturn and deliveryFee exist and are numbers, add them to totalReturnAmountBase
    
-      totalReturnAmmountBase += (totalReturn + deliveryFee+deliveryFee/2);
+      totalReturnAmmountBase += (totalReturn +deliveryFee/2);
     
   }
 
@@ -324,7 +326,7 @@ useEffect(() => {
 
   getOrderById();
 
-}, [user?._id,statusPaidbase, totalReceiveBase, totalReturnAmmountBase, dueAmount]);
+}, [user,statusPaidbase, totalReceiveBase, totalReturnAmmountBase, dueAmount]);
 
 
 useEffect(() => {
@@ -382,8 +384,8 @@ useEffect(() => {
     window.removeEventListener('scroll', toggleBacktotop);
   };
 }, []);
-
 useEffect(() => {
+  // Initialize AOS
   AOS.init({
     duration: 1000,
     easing: "ease-in-out",
@@ -392,7 +394,7 @@ useEffect(() => {
   });
 
   // Initialize Swiper
-new Swiper('.Hero-slider', {
+  new Swiper('.Hero-slider', {
     speed: 600,
     loop: true,
     autoplay: {
@@ -410,13 +412,13 @@ new Swiper('.Hero-slider', {
         slidesPerView: 1,
         spaceBetween: 40
       },
-
       1200: {
         slidesPerView: 3,
       }
     }
   });
-;
+
+
 }, []);
 const handleLogOut=()=>{
   logoutUser();
@@ -737,12 +739,53 @@ const handleLogOut=()=>{
             </div>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-12" style={{ textAlign: "center" }}>
             <a href="#" style={{textDecoration:"none"}} className="btn-buy">
               Request
             </a>
           </div>
+           
+            
+        </div>  */}
+        <div className="row">
+          <div className="col-12" style={{ textAlign: "center" }}>
+         
+                {timeDifference < oneDayInMilliseconds || reqBtnStatus===false ?
+                  <>
+                    <button  style={{textDecoration:"none"}} className="btn-buydisabled" disabled onClick={handleCreateTicket}>
+                     Request
+                   </button>
+                    <p style={{color:"red",marginTop:"10px"}}>{countdown !== null ? formatTime(countdown) : ""}</p>
+                   
+                  </>
+                 
+                   :
+                   
+                    statusPaidbase<=1000 ?
+                    <>
+                     <p  style={{textDecoration:"none"}} className="btn-buy"  onClick={handleRequestAlert}>
+                     Request
+                   </p>
+                   {
+                     reqAlert &&
+                     <p style={{color:"red",marginTop:"5px"}}>{reqAlert}</p>
+                   }
+   
+                    </>
+                   
+                    :
+                    <p style={{textDecoration:"none"}} className="btn-buy" onClick={handleCreateTicket}>Request</p>
+                   
+                 
+                 
+                }
+            
+            
+            
+          </div>
+           
+            
         </div>
       </div>
     </section>
@@ -821,12 +864,28 @@ const handleLogOut=()=>{
     </Accordion>
         </div>
       </div>
+      {
+  showPopup===true &&
+  <ReqPaymentTIcketPopup
+  showPopup={showPopup}
+  userId={user?.phone}
+  setShowPopup={setShowPopup}
+  onClose={closePopup}
+  ticketId={popupId}
+  setReqBtnStatus={setReqBtnStatus}
+  reqBtnStatus={reqBtnStatus}
+  userEmail={user?.email}
+  userName={user?.name}
+  createTicket={createTicket}
+  setCreateTicket={setCreateTicket}
+  />
+}
     </section>
     {/* End F.A.Q Section */}
   </main>
   {/* End #main */}
   {/* ======= Footer ======= */}
-  <footer id="footer" className="footer">
+  {/* <footer id="footer" className="footer">
     <div className="footer-top">
       <div className="container">
         <div className="row gy-4">
@@ -949,7 +1008,8 @@ const handleLogOut=()=>{
         . All Rights Reserved
       </div>
     </div>
-  </footer>
+  </footer> */}
+  <Footer/>
   {/* End Footer */}
   <a
     href="#"

@@ -113,8 +113,7 @@ if (updateData.brandLogo) {
           <title>Responsive Form</title>
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-          <style dangerouslySetInnerHTML={{__html: "\n      /* General styles */\n      body {\n        font-family: Arial, sans-serif;\n        background-color: #f8f9fa;\n      }\n      \n      .navbar {\n        background-color: #001846 !important;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n        padding: 20px;\n        padding-left: 40px !important;\n      }\n      \n      .navbar-brand img {\n        width: 150px;\n      }\n      \n      .nav-link {\n        color: #ffffff !important;\n        font-size: 16px;\n        font-weight: 600;\n      }\n      \n      .nav-link:hover {\n        background-color: #ffffff;\n        color: #001846 !important;\n      }\n      .dropdown{\n        padding-left: 1200px;\n      }\n      \n      .dropdown-menu {\n        margin-left: 1120px;\n        \n      }\n\n      .profile-info {\n        padding: 50px;\n      }\n      \n      .form-group h2 {\n        font-weight: 700;\n      }\n\n        .upload-btn {\n            display: flex;\n            align-items: center;\n            gap: 5px;\n        }\n\n        /* Mobile View Styles */\n@media (max-width: 767.98px) {\n      .profile-info {\n        padding: 20px;\n      }\n\n}\n\n    " }} />
-         
+        
           <NavigationBar/>
           {
                loggedUser?.map(resellerInfo=> 

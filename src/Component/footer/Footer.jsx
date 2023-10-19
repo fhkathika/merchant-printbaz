@@ -1,355 +1,136 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import '../../css/dashboardStyles.css'
 const Footer = () => {
   return (
-    <div className="footer_div">
-      <div className="fotter2nd_Layer ">
-        <div className="fotter3rd_Layer">
-          <section className="footer_Section_Layer mb-4 p-4 ">
-         
-              <Row className="">
-              <Col xs={12} md={3}>
-                <div className="elementDiv1">
-                  <div className="footerIcon">
-                    <div className="footerImg_container">
-                      <img src="/images/Logo-02.svg" alt="logo" />
-                    </div>
-                  </div>
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign">
-                      <img
-                        style={{ width: "25px", height: "auto" }}
-                        src="/images/Call-01.svg"
-                        alt="contact"
-                      />
-
-                      <span
-                        className="firstElementAlign_text"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                        01927854949
-                      </span>
-                    </p>
-                  </div>
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign">
-                      <img
-                        style={{ width: "25px", height: "auto" }}
-                        src="/images/Email-01.svg"
-                        alt="contact"
-                      />
-
-                      <span
-                        className="firstElementAlign_text"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                       merchants@printbaz.com
-                      </span>
-                    </p>
-                  </div>  
-                 
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign">
-                      <img
-                        style={{ width: "25px", height: "auto" ,marginBottom:"22px" }}
-                        src="/images/Location-01.svg"
-                        alt="contact"
-                      />
-
-                      <span
-                        className="firstElementAlign_text"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                        Banani Breeze, Block- F, House # 76, Road # 2,
-                        Charimanbari, Banani, Dhaka, Bangladesh
-                      </span>
-                    </p>
-                  </div>
-               
-                  <div className="footer1stElement">
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ textDecoration: "none" }}
-                      href="https://wa.me/+8801927854949"
-                    >
-                      <img
-                      className="w35px socialMedia_icon_size"
-                        style={{
-                          height: "auto",
-                          marginRight: "8px",
-                          marginTop:"10px"
-                        }}
-                        src="/images/Whatsapp-01.svg"
-                        alt="Whatsapp"
-                      />
-                    </a>
-
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ textDecoration: "none" }}
-                      href="https://www.facebook.com/Printbaz/"
-                    >
-                      {" "}
-                      <img
-                       className="w35px socialMedia_icon_size"
-                        style={{
-                          height: "auto",
-                          marginRight: "8px",
-                          marginTop:"10px"
-                        }}
-                        src="/images/Facebook-01.svg"
-                        alt="Facebook"
-                      />
-                    </a>
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ textDecoration: "none" }}
-                      href="https://www.instagram.com/printbaz.com.bd/"
-                    >
-                      {" "}
-                      <img
-                       className="w35px socialMedia_icon_size"
-                        style={{
-                          height: "auto",
-                          marginRight: "8px",
-                          marginTop:"10px"
-                        }}
-                        src="/images/Instagram-01.svg"
-                        alt="Instagram"
-                      />
-                    </a>
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ textDecoration: "none" }}
-                      href="https://www.linkedin.com/company/printbaz/"
-                    >
-                      {" "}
-                      <img
-                       className="w35px socialMedia_icon_size"
-                        style={{
-                          height: "auto",
-                          marginRight: "8px",
-                          marginTop:"10px"
-                        }}
-                        src="/images/Linkedin-01.svg"
-                        alt="Linkedin"
-                      />
-                    </a>
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ textDecoration: "none" }}
-                      href="https://www.behance.net/printbaz"
-                    >
-                      {" "}
-                      <img
-                       className="w35px socialMedia_icon_size"
-                        style={{
-                          height: "auto",
-                          marginRight: "8px",
-                          marginTop:"10px"
-                        }}
-                        src="/images/Behance-01.svg"
-                        alt="Behance"
-                      />
-                    </a>
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ textDecoration: "none" }}
-                      href="https://www.youtube.com/@printbaz"
-                    >
-                      {" "}
-                      <img
-                       className="w35px socialMedia_icon_size"
-                        style={{
-                          height: "auto",
-                          marginRight: "12px",
-                          marginTop:"10px"
-                        }}
-                        src="/images/Youtube-01.svg"
-                        alt="Youtube"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </Col>
-              <Col xs={12} md={3} >
-              <div className="elementDiv1">
-                  <div style={{marginTop:"35px"}} className="m_left25P m_0">
-                   
-                      <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>USEFULL LINKS</p>
-                  
-                  </div>
-                  <div className="footer1stElement" >
-                    <p className=" firstElementAlign  elelment_text">
-                    
-
-                      <span
-                        className="firstElementAlign_text m_left25P m_0"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                           <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/dashboard"> Dashboard</Link> 
-                        
-                      </span>
-                    </p>
-                  </div>
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign  elelment_text">
-                   
-
-                      <span
-                        className="firstElementAlign_text m_left25P m_0"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                  
-                      <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/myorders"> Order</Link> 
-                      </span>
-                    </p>
-                  </div>
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign  elelment_text">
-                    
-
-                      <span
-                        className="firstElementAlign_text m_left25P m_0"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                             <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/newOrder">New Order</Link> 
-                     
-                      </span>
-                    </p>
-                  </div>    
-                      <div className="footer1stElement">
-                    <p className=" firstElementAlign  elelment_text">
-                    
-
-                      <span
-                        className="firstElementAlign_text m_left25P m_0"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                             <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/newOrder">Blog</Link> 
-                     
-                      </span>
-                    </p>
-                  </div> 
-                
-                 
-                </div>
-              </Col>
-              <Col xs={12} md={3}>
-              <div className="elementDiv1">
-                  <div style={{marginTop:"35px"}} className="m_L15P m_0">
-                   
-                      <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>USEFULL LINKS</p>
-                  
-                  </div>
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign elelment_text">
-                    
-
-                      <span
-                        className="firstElementAlign_text m_L15P m_0"
-                        style={{ color: "#f5f5f5"}}
-                      >
-                                  <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/profile">Profile</Link> 
-                      </span>
-                    </p>
-                  </div>
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign elelment_text">
-                   
-
-                      <span
-                        className="firstElementAlign_text m_L15P m_0"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                             <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/payment">Payment</Link> 
-                      
-                      </span>
-                    </p>
-                  </div>
-                  <div className="footer1stElement">
-                    <p className=" firstElementAlign elelment_text">
-                    
-
-                      <span
-                        className="firstElementAlign_text m_L15P m_0"
-                        style={{ color: "#f5f5f5"}}
-                      >
-                             <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/teeShrtCapming">Calculator</Link> 
-                     
-                      </span>
-                    </p>
-                  </div> 
-                   <div className="footer1stElement">
-                    <p className=" firstElementAlign elelment_text">
-                    
-
-                      <span
-                        className="firstElementAlign_text m_L15P m_0"
-                        style={{ color: "#f5f5f5" }}
-                      >
-                                 <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/printSizeDemo">Print Size Demo</Link> 
-                    
-                      </span>
-                    </p>
-                  </div>     
-                     <div className="footer1stElement">
-                    <p className=" firstElementAlign elelment_text">
-                    
-
-                      <span
-                        className="firstElementAlign_text m_L15P m_0"
-                        style={{ color: "#f5f5f5"}}
-                      >
-                            <Link className='' style={{textDecoration:"none", color: "#f5f5f5"}} to="/termsConditions"> Terms & Conditions</Link> 
-                   
-                      </span>
-                    </p>
-                  </div> 
-                 
-                </div>
-              </Col>
-              <Col xs={12} md={3}>
-
-<div className="footer1stElemnet  " style={{marginTop:"37px"}} >
-       <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>ACCEPTED PAYMENT</p>
-   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/Bkash-01.svg"alt="Youtube"/>
-   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/Nagad-01.svg"alt="Youtube"/>
-   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}} className="" src="/images/Rocket-01.svg"alt="Youtube"/>
-   <img style={{width: "55px",height: "auto",marginRight: "12px",  marginTop:""}} className="margin_bottom12" src="/images/Mastercard-01.svg"alt="Youtube"/>
-   <img style={{width: "55px",height: "auto",marginRight: "12px", marginTop:""}}className="margin_bottom12" src="/images/Visa-01.svg"alt="Youtube"/>
- 
-   </div>
-   <div className="footer1stElemnet " style={{marginTop:"20px"}}>
-       <p style={{color:"#f5f5f5",fontSize:"20px",fontWeight:"700"}}>SECURED BY</p>
-   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/DMCA-01-01.png"alt="Youtube"/>
-   <img style={{width: "55px",height: "auto",marginRight: "12px",marginBottom:"12px", marginTop:""}}src="/images/SSL-01-01.png"alt="Youtube"/>
-
- 
-   </div>
-</Col>
-              </Row>
-       
- 
-          </section>
-          <div style={{backgroundColor:"#001846",borderTop:"1px solid gray"}}>
-          <div className="footer_Section_Layer ">
-            <div className="copyRight_Style copyRight_Style_For_mobile">
-<span >© 2023 printbaz.com All rights reserved</span>
+    <div >
+     {/* ======= Footer ======= */}
+  <footer id="footer" className="footer">
+    <div className="footer-top">
+      <div className="container">
+        <div className="row gy-4">
+          <div className="col-lg-5 col-md-12 footer-info">
+            <a href="index.html" className="logo d-flex align-items-center">
+              <img
+                src="https://media.discordapp.net/attachments/1128921638977683526/1163815250013978686/Logo-01.png?ex=6540f26a&is=652e7d6a&hm=1628865bf04319b5155b3e0c730e5c3225436817412a8ed31018437d696bd53e&=&width=1440&height=392"
+                alt=""
+              />
+            </a>
+            <p style={{ fontWeight: "bold" }}>
+              বিনা পুজিতে টিশার্ট ব্যবসা করুন। <br />
+              আপনার শুধু ডিজাইনের কাজ, বাকি দ্বায়িত্বে প্রিন্টবাজ
+            </p>
+            <div className="social-links mt-3">
+              <a
+                href="https://api.whatsapp.com/send/?phone=%2B8801927854949&text&type=phone_number&app_absent=0"
+                className="twitter"
+              >
+                <i className="bi bi-whatsapp" />
+              </a>
+              <a href="https://www.facebook.com/Printbaz/" className="facebook">
+                <i className="bi bi-facebook" />
+              </a>
+              <a
+                href="https://www.instagram.com/printbaz.com.bd/"
+                className="instagram"
+              >
+                <i className="bi bi-instagram" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/printbaz/"
+                className="linkedin"
+              >
+                <i className="bi bi-linkedin" />
+              </a>
+              <a href="https://www.behance.net/printbaz" className="instagram">
+                <i className="bi bi-behance" />
+              </a>
+              <a href="https://www.youtube.com/@printbaz" className="linkedin">
+                <i className="bi bi-youtube" />
+              </a>
             </div>
           </div>
+          <div className="col-lg-2 col-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li>
+                <i className="bi bi-chevron-right" /> <a href="#">Blogs</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" /> <a href="/myorders">Orders</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" /> <a href="/newOrdersWithOption">New Order</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" /> <a href="/calculator">Calculator</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/printSizeDemo">Print Size Demo</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/termsConditions">Terms &amp; Conditions</a>
+              </li>
+            </ul>
+          </div>
+          <div className="col-lg-2 col-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/blankRoundNeck">Blank Round Neck</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/newOrder">Custom Round Neck</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/blankDropSholder">Blank Drop Shoulder</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/customDropSholder">Custom Drop Shoulder</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/blankHoodie">Blank Hoodies</a>
+              </li>
+              <li>
+                <i className="bi bi-chevron-right" />{" "}
+                <a href="/custonHoodie">Custom Hoodies</a>
+              </li>
+            </ul>
+          </div>
+          <div className="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Contact Us</h4>
+            <p>
+              Block- F, House # 76, Road # 2, Charimanbari, Banani, Dhaka,
+              Bangladesh <br />
+              <br />
+              <strong>Phone:</strong> +8801927-854949
+              <br />
+              <strong>Email:</strong> merchants@printbaz.com
+              <br />
+            </p>
+          </div>
         </div>
-        </div>
-      
       </div>
+    </div>
+    <div className="container">
+      <div className="copyright">
+        © Copyright{" "}
+        <strong>
+          <span>Printbaz</span>
+        </strong>
+        . All Rights Reserved
+      </div>
+    </div>
+  </footer>
+  {/* End Footer */}
     </div>
   );
 };

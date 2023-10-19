@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 import teeshirtCalcultorPrice from '../../Formulas/teeshirtCalcultorPrice';
 import NavigationBar from '../Navbar/NavigationBar';
+import Footer from '../footer/Footer';
 const TeeShirtCapingCalcForm = () => {
     let id = "teeShirtCampingId";
     let collections = "productValues";
@@ -1110,6 +1111,7 @@ const [printSide, setPrintSide] = useState('frontSide');
        
           
         </Container>
+        <Footer/>
         </div>  
     );
 };

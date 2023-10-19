@@ -197,14 +197,9 @@ const copyOrderId = () => {
 };
      return (
         <div>
-          <meta charSet="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-          <title>Order Tracking</title>
-          <style dangerouslySetInnerHTML={{__html: "\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f8f9fa;\n        }\n\n        .navbar {\n        background-color: #001846 !important;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n        padding: 20px;\n        padding-left: 40px !important;\n    }\n\n    .navbar-brand img {\n        width: 150px;\n    }\n\n    .nav-link {\n        color: #ffffff !important;\n        font-size: 16px;\n        font-weight: 600;\n    }\n\n    .nav-link:hover {\n        background-color: #ffffff;\n        color: #001846 !important;\n    }\n\n    .dropdown {\n        padding-left: 1200px;\n    }\n\n    .dropdown-menu {\n        margin-left: 1120px;\n    }\n    \n    .all-content {\n    padding-left: 50px;\n    padding-right: 50px;\n}\n\n    .all-title {\n        font-weight: 700;\n    }\n\n    .rec-title h5 {\n        margin-top: 40px;\n        font-weight: 600;\n    }\n\n    .rec-title p {\n        font-size: 18px;\n    }\n\n    .amu-title h3 {\n        margin-bottom: 15px;\n    }\n\n    .amu-title h6 {\n        display: inline-block;\n        width: 75%;\n        font-weight: 700;\n        margin: 0;\n        margin-top: 10px;\n    }\n\n    .amu-title p {\n        display: inline-block;\n        width: 20%;\n        float: right;\n        margin: 0;\n    }\n\n    .trak-info h3 {\n        font-weight: 700;\n    }\n\n    .trak-status .col-3 {\n        text-align: center;\n    }\n\n    .trak-status p {\n        font-weight: 600;\n        margin-top: 10px;\n    }\n\n    @media (max-width: 480px) {\n        .all-content {\n    padding-left: 5px !important;\n    padding-right: 5px !important;\n}\n}\n\n" }} />
-          
-          <NavigationBar/>
-          <div className="all-content ">
+        
+          <NavigationBar />
+          <div className="all-content mt-5">
           <div className="row mt-5">
               <div className="col-12">
                 <div className="order-id bg-white p-4  shadow-sm" >

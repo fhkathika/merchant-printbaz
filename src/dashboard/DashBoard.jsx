@@ -9,7 +9,7 @@ import AOS from 'aos';
 // import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import { Accordion } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
 import axios from 'axios';
 import useGetMongoData from '../hooks/useGetMongoData';
@@ -17,6 +17,7 @@ const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
   let id = "resellerOrdersId";
   let collections = "resellerInfo";
+  const navigate=useNavigate()
   const [dbData, setDbData] = useState({});
   // const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
   // const resellerOrdersFromDb=fetchedData?.orders
@@ -419,7 +420,7 @@ new Swiper('.Hero-slider', {
 }, []);
 const handleLogOut=()=>{
   logoutUser();
-  // navigate('/login')
+  navigate('/login')
 }
 
 // new PureCounter();
@@ -526,7 +527,7 @@ const handleLogOut=()=>{
           </li>
           <li className="dropdown">
             <a href="#">
-              <span>ABIR ALI KHAN</span> <i className="bi bi-chevron-down" />
+              <span>{user?.name}</span> <i className="bi bi-chevron-down" />
             </a>
             <ul>
               <li>
@@ -544,16 +545,22 @@ const handleLogOut=()=>{
               <li>
               <Link className='' to="/termsConditions">Terms &amp; Conditions</Link> 
               </li>
-              <li>
+              {/* <li>
                 <a href="#">Log Out f</a>
-              </li>
-              {/* {user ? (
-                <li onClick={handleLogOut} className="" >
-                  Log Out
-                </li> 
+              </li> */}
+              {user ? (
+                // <li onClick={handleLogOut} className="" >
+                //   Log Out
+                // </li> 
+                  <li  onClick={handleLogOut} style={{cursor:"pointer"}}>
+                 <p style={{marginLeft:"20px"}}> Log Out </p>
+                  </li>
               ) : (
-                <Link to="/login">Login</Link>
-              )} */}
+                <li   >
+                 <Link to="/login">Login</Link>
+              </li> 
+              
+              )}
             </ul>
           </li>
         </ul>

@@ -201,7 +201,8 @@
   */
   .navbar {
     padding: 0;
-    box-shadow:none !important
+    box-shadow: none !important;
+    background-color: transparent !important;
   }
   
   .navbar ul {

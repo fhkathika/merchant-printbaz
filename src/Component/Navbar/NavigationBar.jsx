@@ -212,7 +212,7 @@ let msgCount=0;
               <Link className='' to="/payment">Payment</Link> 
               </li>
               <li>
-                <Link className=''  to="/teeShrtCapming">Calculator</Link> 
+                <Link className=''  to="/calculator">Calculator</Link> 
               </li>
               <li>
               <Link className=''  to="/printSizeDemo">Print Size Demo</Link> 

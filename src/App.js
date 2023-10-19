@@ -202,9 +202,8 @@ function App() {
         <Route
           path="/printSizeDemo"
           element={
-            <PrivateRoute>
               <PrintSizeDemo />
-            </PrivateRoute>
+           
           }
         />
         <Route

@@ -77,7 +77,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="col-lg-2 col-6 footer-links">
-            <h4>Our Services</h4>
+            <h4>Our Product</h4>
             <ul>
               <li>
                 <i className="bi bi-chevron-right" />{" "}

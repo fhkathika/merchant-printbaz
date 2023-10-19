@@ -8,7 +8,7 @@ import AOS from 'aos';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
-import { Accordion } from 'react-bootstrap';
+import { Accordion, Container, Nav, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
 import axios from 'axios';
@@ -40,7 +40,9 @@ console.log("user",user);
     //   document.getElementById("popup1").style.display = "none";
     // }
 
-    
+    const handleDropdownClick = () => {
+      setDropdownOpen(!dropdownOpen);
+    };
    useEffect(()=>{
     fetchAllTicketData()
    },[])
@@ -352,6 +354,34 @@ useEffect(() => {
     window.removeEventListener('scroll', navbarlinksActive);
   };
 }, []);
+  const [isMobileNavActive, setIsMobileNavActive] = useState(false);
+
+  useEffect(() => {
+    const handleMobileNavToggle = (e) => {
+      if (e.target.matches('.mobile-nav-toggle')) {
+        setIsMobileNavActive((prev) => !prev);
+      }
+    };
+
+    const handleDropdownClick = (e) => {
+      if (e.target.matches('.navbar .dropdown > a')) {
+        if (document.querySelector('#navbar').classList.contains('navbar-mobile')) {
+          e.preventDefault();
+          e.target.nextElementSibling.classList.toggle('dropdown-active');
+        }
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener('click', handleMobileNavToggle);
+    document.addEventListener('click', handleDropdownClick, true);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('click', handleMobileNavToggle);
+      document.removeEventListener('click', handleDropdownClick, true);
+    };
+  }, []);
 
 useEffect(() => {
   const selectHeader = document.querySelector('#header');
@@ -539,7 +569,7 @@ const handleLogOut=()=>{
               <Link className='' to="/payment">Payment</Link> 
               </li>
               <li>
-                <Link className=''  to="/teeShrtCapming">Calculator</Link> 
+                <Link className=''  to="/calculator">Calculator</Link> 
               </li>
               <li>
               <Link className=''  to="/printSizeDemo">Print Size Demo</Link> 
@@ -568,9 +598,13 @@ const handleLogOut=()=>{
         </ul>
         <i className="bi bi-list mobile-nav-toggle" />
       </nav>
+      </div>
+
       {/* .navbar */}
-    </div>
+    
   </header>
+
+  
   {/* End Header */}
   {/* ======= Hero Section ======= */}
  
@@ -638,7 +672,7 @@ const handleLogOut=()=>{
       <div className="container" data-aos="fade-up">
         <header className="section-header">
           <h2>BRIEF STATS</h2>
-          <p>TOTAL DELIVERED</p>
+          <p>YOUR ORDER STATS</p>
         </header>
         <div className="row gy-4">
           <div className="col-lg-3 col-md-6">
@@ -687,7 +721,7 @@ const handleLogOut=()=>{
       <div className="container" data-aos="fade-up">
         <header className="section-header">
           <h2>BRIEF STATS</h2>
-          <p>PAYMENTS INFORMATION</p>
+          <p>PAYMENT INFORMATION</p>
         </header>
         <div className="row gy-4" data-aos="fade-left">
           <div
@@ -754,7 +788,7 @@ const handleLogOut=()=>{
                 {timeDifference < oneDayInMilliseconds || reqBtnStatus===false ?
                   <>
                     <button  style={{textDecoration:"none"}} className="btn-buydisabled" disabled onClick={handleCreateTicket}>
-                     Request
+                     Request for Payment
                    </button>
                     <p style={{color:"red",marginTop:"10px"}}>{countdown !== null ? formatTime(countdown) : ""}</p>
                    

@@ -15,6 +15,7 @@ import axios from 'axios';
 import useGetMongoData from '../hooks/useGetMongoData';
 import ReqPaymentTIcketPopup from '../alertBox/ReqPaymentTIcketPopup';
 import Footer from '../Component/footer/Footer';
+import NavigationBar from '../Component/Navbar/NavigationBar';
 const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
   let id = "resellerOrdersId";
@@ -524,87 +525,7 @@ const handleLogOut=()=>{
  
   
   {/* ======= Header ======= */}
-  <header id="header" className="header fixed-top">
-    <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-      <a href="index.html" className="logo d-flex align-items-center">
-        <img
-          src="https://media.discordapp.net/attachments/1128921638977683526/1163815250013978686/Logo-01.png?ex=6540f26a&is=652e7d6a&hm=1628865bf04319b5155b3e0c730e5c3225436817412a8ed31018437d696bd53e&=&width=1440&height=392"
-          alt=""
-        />
-      </a>
-      <nav id="navbar" className="navbar">
-        <ul>
-          <li>
-           
-            <Link className="nav-link scrollto active" to="/dashboard">DASHBOARD</Link>
-          </li>
-          <li>
-           
-            <Link className="nav-link scrollto " to="/myorders">ORDER</Link>
-          </li>
-          <li>
-          <Link className="nav-link scrollto " to="/newOrdersWithOption">
-              NEW ORDER
-            </Link>
-          </li>
-          <li>
-          <Link className="nav-link scrollto " to="/ticket">
-              TICKET
-            </Link>
-          </li>
-          <li>
-            <a className="nav-link scrollto" href="#">
-              BLOGS
-            </a>
-          </li>
-          <li className="dropdown">
-            <a href="#">
-              <span>{user?.name}</span> <i className="bi bi-chevron-down" />
-            </a>
-            <ul>
-              <li>
-              <Link className=''  to="/profile">Profile</Link> 
-              </li>
-              <li>
-              <Link className='' to="/payment">Payment</Link> 
-              </li>
-              <li>
-                <Link className=''  to="/calculator">Calculator</Link> 
-              </li>
-              <li>
-              <Link className=''  to="/printSizeDemo">Print Size Demo</Link> 
-              </li>
-              <li>
-              <Link className='' to="/termsConditions">Terms &amp; Conditions</Link> 
-              </li>
-              {/* <li>
-                <a href="#">Log Out f</a>
-              </li> */}
-              {user ? (
-                // <li onClick={handleLogOut} className="" >
-                //   Log Out
-                // </li> 
-                  <li  onClick={handleLogOut} style={{cursor:"pointer"}}>
-                 <p style={{marginLeft:"20px"}}> Log Out </p>
-                  </li>
-              ) : (
-                <li   >
-                 <Link to="/login">Login</Link>
-              </li> 
-              
-              )}
-            </ul>
-          </li>
-        </ul>
-        <i className="bi bi-list mobile-nav-toggle" />
-      </nav>
-      </div>
-
-      {/* .navbar */}
-    
-  </header>
-
-  
+ <NavigationBar/>
   {/* End Header */}
   {/* ======= Hero Section ======= */}
  

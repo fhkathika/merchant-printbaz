@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
@@ -68,6 +68,30 @@ const NavigationBar = () => {
     };
   }, []);
   
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const toggleDropdown = () => {
+    setShowDropdown(prevShow => !prevShow);
+  };
+  
+    const [isNavbarMobile, setIsNavbarMobile] = useState(false);
+    const navbarRef = useRef(null);
+    console.log("isNavbarMobile",)
+    const toggleMobileNav = (e) => {
+      console.log(e.currentTarget.nextElementSibling);
+      setIsNavbarMobile(!isNavbarMobile);
+    };
+    
+    const handleDropdownClick = (e) => {
+      if (isNavbarMobile) {
+        e.preventDefault();
+        const dropdownContent = e.currentTarget.nextElementSibling;
+        if (dropdownContent) {
+          dropdownContent.classList.toggle('dropdown-active');
+        }
+      }
+    };
+
   const fetchOrderIddata = async () => {
     try {
         // const response = await axios.get(`http://localhost:5000/myTicket/${user?.email}`);
@@ -92,9 +116,7 @@ const NavigationBar = () => {
     setActiveTab(tab);
   };
 
-  const handleDropdownClick = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+
 let msgCount=0;
     return (<>
    <meta charSet="utf-8" />
@@ -175,8 +197,16 @@ let msgCount=0;
           alt=""
         />
       </a>
-      <nav id="navbar" className="navbar">
-        <ul>
+      <div className="navbar">
+      <nav ref={navbarRef} id="navbar" className={isNavbarMobile ? 'navbar-mobile' : ''}>
+      <button 
+        className={`mobile-nav-toggle ${isNavbarMobile ? 'bi-x' : 'bi-list'}`} 
+        onClick={toggleMobileNav}
+      ></button>
+      
+     
+   
+      <ul>
           <li>
            
             <Link className="nav-link scrollto " to="/dashboard">DASHBOARD</Link>
@@ -200,11 +230,11 @@ let msgCount=0;
               BLOGS
             </a>
           </li>
-          <li className="dropdown">
+          <li className="dropdown" onClick={toggleDropdown}>
             <a href="#">
               <span>{user?.name}</span> <i className="bi bi-chevron-down" />
             </a>
-            <ul>
+            <ul className={showDropdown ? 'dropdown-content' : ''}>
               <li>
               <Link className=''  to="/profile">Profile</Link> 
               </li>
@@ -239,8 +269,9 @@ let msgCount=0;
             </ul>
           </li>
         </ul>
-        <i className="bi bi-list mobile-nav-toggle" />
-      </nav>
+     
+    </nav>
+    </div>
       {/* .navbar */}
     </div>
   </header>

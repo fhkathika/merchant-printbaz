@@ -209,9 +209,9 @@ function App() {
         <Route
           path="/termsConditions"
           element={
-            <PrivateRoute>
+           
               <TermsConditions />
-            </PrivateRoute>
+         
           }
         />
         <Route

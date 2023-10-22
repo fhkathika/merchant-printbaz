@@ -253,23 +253,48 @@ a[x-apple-data-detectors] {
   overflow-x: hidden;
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
   .m_1responsive700 {
     margin: 8px;
   }
-   .m_12responsive700 {
+
+  .m_12responsive700 {
     margin: 12px;
   }
-  .m45  {
+
+  .m45 {
     margin: 0px !important;
   }
-  .box{
-    width: 80%;
+.jb{
+  justify-content: space-between;
+}
+  /* Adjusting the input fields for responsiveness */
+  input[type="number"] {
+    /* width: 100%; */
+    max-width: 80%;
+    box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
   }
-  .popup{
+  select.form-control {
+    /* width: 100%; */
+    max-width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
+  }
+
+
+  /* Increase width for cards for better visibility on smaller screens */
+  .card {
+    width: 98%;
+  margin: 2px;
+  }
+
+  /* Adjusting the popup for responsiveness */
+  .popup {
     width: 80%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
+
 .text_brandColor{
   color: #012652 !important;
 }
@@ -1152,11 +1177,14 @@ font-size: 16px !important;
   height: 100%;
   /* Add additional styles as needed */
 }
-
+.headerName{
+  margin-left: 25px;
+  
+}
 /* Size Table */
 .size_table{
-  margin-left: 60px;
-  width: 93%;
+  margin: auto;
+  width: 95%;
 }
 
 .tg-0lax_title{
@@ -1254,7 +1282,12 @@ font-size: 16px !important;
   
 /* Size Table */
 .size_table{
-  margin: 15px;
+  /* margin: 15px; */
+  margin: auto;
+  width:95.5%;
+}
+.headerName{margin-left:0px
+  
 }
 
 .tg-0lax_title{

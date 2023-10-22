@@ -538,9 +538,9 @@ formData2.append('clientName', user?.name);
 </>
 )}
 <Row className='m-auto'>
-  <Col xs={12} md={12} className='mt-5  mb-2'>
+  <Col xs={12} md={12} className='mt-5  mb-2 '>
 
-  <h3   style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
+  <h3 className='headerName'  style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
   </Col>
 </Row>
 
@@ -577,14 +577,14 @@ formData2.append('clientName', user?.name);
 <Row  className="g-2 m45 m_1responsive700">
 
 {formData.orderDetailArr.map((item, index) => (
-  <Col xs={12} md={3}>
+  <Col xs={6} md={3}>
    <Card >
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
        </Card.Title>
        <Card.Img variant="top" src={item?.categoryImg} />
        <ListGroup className="list-group-flush pl-0 pr-0">
-           <ListGroup.Item className="d-flex align-items-center">
+           <ListGroup.Item className="d-flex align-items-center  ">
                <span value="m">M</span>
                <input 
                    data-size="m"
@@ -639,7 +639,8 @@ formData2.append('clientName', user?.name);
                       controlId="wccalcPrintSide"
                     >
                       <Form.Label className="pr-2">Print side</Form.Label>
-                      <Form.Control
+                    
+                      <Form.Control  
                         as="select"
                         data-color={item.color}
                         value={item.printSide}
@@ -656,7 +657,9 @@ formData2.append('clientName', user?.name);
                         {/* <option value="backSide">Back Side</option> */}
                         <option value="bothSide">Both Side</option>
                       </Form.Control>
+                    
                     </Form.Group>
+                   
                     {
                      ( item.printSide==="frontSide" || item.printSide==="backSide") &&
                       <Form.Group

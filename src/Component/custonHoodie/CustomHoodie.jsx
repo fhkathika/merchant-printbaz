@@ -28,7 +28,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Black Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Black Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -43,7 +43,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Neon Green Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Neon Green Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -58,7 +58,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Nevy Blue',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -72,7 +72,7 @@ const [formData, setFormData] = useState({
       },  {
         color: 'Gray',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Gray N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Gray.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -87,7 +87,7 @@ const [formData, setFormData] = useState({
       {
         color: 'Red',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Red Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Red Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -545,7 +545,14 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
- <h3 className='m-5' style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Hoodie</h3>
+
+<Row className='m-auto'>
+  <Col xs={12} md={12} className='mt-5  mb-2 '>
+
+  <h3 className='headerName'  style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Hoodie</h3>
+  </Col>
+</Row>
+
  <Form onSubmit={handleSubmit}  className="mb-4">
 
  <table class="size_table">
@@ -579,10 +586,10 @@ const handleSubmit = async (e) => {
 </tbody>
 </table>
 
-<Row xs={1} md={5} className="g-3 m-5">
+<Row className="g-2 m45 m_1responsive700">
 
 {formData.orderDetailArr.map((item, index) => (
-    <Col>
+    <Col xs={6} md={3}>
    <Card  className="">
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
@@ -797,7 +804,7 @@ onChange={(e) => handleFileChange(e, index)}
 
 </Row>
 <hr />
-<div className='row m-5'>
+<div className='row m45 m_12responsive700'>
 <div className="col-md-12">
                     <h3>Recipient Details</h3>
       <Row xs={1} md={2}>
@@ -970,7 +977,8 @@ onChange={(e) => handleFileChange(e, index)}
                     </div>
                     <div>
 
-                    <div  className="costOrder_Style">
+                    <Row  className="costOrder_Style">
+                    <Col xs={12} md={6}>
                     <Form.Group className="mb-3 ">
                       <Form.Label>Amount to Collect</Form.Label>
                       {["bottom"].map((placement) => (
@@ -1010,7 +1018,8 @@ onChange={(e) => handleFileChange(e, index)}
                         placeholder=""
                       />
                     </Form.Group>
-                   
+                   </Col>
+                   <Col xs={12} md={6}>
                            <Form.Group className="mb-3 ">
                            <Form.Label>Minimum Amount to Collect</Form.Label>
                           
@@ -1022,10 +1031,10 @@ onChange={(e) => handleFileChange(e, index)}
                            />
                          </Form.Group>
                         
-                    
+                    </Col>
                    
                      
-                      </div>
+                      </Row>
                     </div>
                     
                     <div className="costOrder_Style">
@@ -1077,7 +1086,7 @@ onChange={(e) => handleFileChange(e, index)}
 
 
 </Form>            
-<div className="row m-5">
+<div className="row m45 m_1responsive700 mb-3">
                 <div className="col-12">
                   <h3>Terms and Conditions</h3>
                   <ul>

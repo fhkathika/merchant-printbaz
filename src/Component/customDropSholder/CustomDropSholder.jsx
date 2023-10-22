@@ -28,7 +28,7 @@ const CustomDropSholder = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Black Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Black Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -43,7 +43,7 @@ const CustomDropSholder = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder White Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder White Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -58,7 +58,7 @@ const CustomDropSholder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -72,7 +72,7 @@ const CustomDropSholder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -532,9 +532,9 @@ const handleSubmit = async (e) => {
 </>
 )}
 <Row className='m-auto'>
-  <Col xs={12} md={12} className='mt-5  mb-2'>
+  <Col xs={12} md={12} className='mt-5  mb-2  '>
 
-  <h3   style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Drop Sholder</h3>
+  <h3 className='headerName'   style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Drop Sholder</h3>
   </Col>
 </Row>
 
@@ -582,10 +582,10 @@ const handleSubmit = async (e) => {
 </tbody>
 </table>
 
-<Row xs={1} md={4} className="g-3  m45 m_1responsive700">
+<Row className="g-2 m45 m_1responsive700">
 
 {formData.orderDetailArr.map((item, index) => (
-  <Col >
+  <Col xs={6} md={3}>
   
    <Card  className="">
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}

@@ -1042,7 +1042,8 @@ font-size: 16px !important;
 /* home slider end  */
 
 .baseCard{
-  box-shadow: 0px 0px 5px 5px rgb(235, 235, 235);
+  box-shadow: 0px 0px 5px 5px rgb(240, 240, 240);
+
 }
 
 /* new order flip cards style  */
@@ -1083,7 +1084,7 @@ font-size: 16px !important;
 /* Style the image to fit the card */
 .card-front img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: fill; /* This will prevent the image from getting stretched */
 }
 
@@ -1171,10 +1172,7 @@ font-size: 16px !important;
 
 
 @media (max-width: 600px) {
-  .baseCard{
-    box-shadow: 0px 0px 5px 5px rgb(235, 235, 235);
-    height: 399px;
-  }
+ 
   .cardImg{
 /* max-height: 300px !important; */
   }
@@ -1246,6 +1244,7 @@ font-size: 16px !important;
   }
   .mobile-col-adjustment {
       padding-left: 0.5rem !important; /* Default Bootstrap column gap */
+      padding-top: 0.5rem !important; /* Default Bootstrap column gap */
       padding-right: 0.5rem !important; /* Default Bootstrap column gap */
   }
 }

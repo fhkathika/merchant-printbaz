@@ -29,7 +29,7 @@ const BlankRoundNeck = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Black N.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Black.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -44,7 +44,7 @@ const BlankRoundNeck = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck White N.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck White.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -59,7 +59,7 @@ const BlankRoundNeck = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Bottle Green N.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Bottle Green.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -73,7 +73,7 @@ const BlankRoundNeck = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Maroon N.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Maroon.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -495,7 +495,14 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
- <h3 className='m-5'  style={{cursor:"pointer"}} onClick={handleBack}> <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/>   Blank Round Neck T-Shirt</h3>
+
+ <Row className='m-auto'>
+  <Col xs={12} md={12} className='mt-5  mb-2 '>
+
+  <h3 className='headerName'  style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span> Blank Round Neck T-Shirt</h3>
+  </Col>
+</Row>
+
  <Form onSubmit={handleSubmit}  className="mb-4">
 
  <table class="size_table">
@@ -526,10 +533,10 @@ const handleSubmit = async (e) => {
 </tbody>
 </table>
 
-<Row xs={1} md={4} className="g-4 m-5">
+<Row className="g-2 m45 m_1responsive700">
  
 {formData.orderDetailArr.map((item, index) => (
-    <Col>
+    <Col xs={6} md={3}>
    <Card >
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
@@ -598,7 +605,7 @@ const handleSubmit = async (e) => {
 
 </Row>
 <hr />
-<div className='row m-5'>
+<div className='row m45 m_12responsive700'>
 <div className="col-md-12">
                     <h3>Recipient Details</h3>
       <Row xs={1} md={2}>
@@ -774,7 +781,8 @@ const handleSubmit = async (e) => {
                     </div>
                     <div>
 
-                    <div  className="costOrder_Style">
+                    <Row  className="costOrder_Style">
+                    <Col xs={12} md={6}>
                     <Form.Group className="mb-3 ">
                       <Form.Label>Amount to Collect</Form.Label>
                       {["bottom"].map((placement) => (
@@ -814,7 +822,8 @@ const handleSubmit = async (e) => {
                         placeholder=""
                       />
                     </Form.Group>
-                   
+                   </Col>
+                   <Col xs={12} md={6}>
                            <Form.Group className="mb-3 ">
                            <Form.Label>Minimum Amount to Collect</Form.Label>
                           
@@ -825,11 +834,11 @@ const handleSubmit = async (e) => {
                              readOnly
                            />
                          </Form.Group>
-                        
+                        </Col>
                     
                    
                      
-                      </div>
+                      </Row>
                     </div>
                     
                     <div className="costOrder_Style">
@@ -881,7 +890,7 @@ const handleSubmit = async (e) => {
 
 
 </Form>            
-<div className="row m-5">
+<div className="row m45 m_1responsive700 mb-3">
                 <div className="col-12">
                   <h3>Terms and Conditions</h3>
                   <ul>

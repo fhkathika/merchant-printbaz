@@ -81,9 +81,9 @@ const Ticket = () => {
     <style dangerouslySetInnerHTML={{__html: "\n        * {\n            box-sizing: border-box;\n            margin: 0;\n            padding: 0;\n        }\n\n        ul,\n        li,\n        a {\n            text-decoration: none;\n        }\n\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n            background-color: #f4f4f4;\n        }\n\n              /* Ticket System CSS Start */\n\n        .ticket-system {\n            margin: 50px;\n        }\n\n        .ticket-header {}\n\n        .ticket-header h1 {\n            background: #ffffff;\n            padding: 20px;\n            font-size: 30px;\n            font-weight: 700;\n            margin: 0;\n        }\n\n        .ticket-top-menu {\n            background: #F5F7F9;\n            padding: 20px;\n            margin: 0;\n            box-shadow: 0 2px 4px 0 rgba(24, 50, 71, .08);\n        }\n\n        .ttm-button {\n            margin-right: 10px;\n            padding: 5px 10px 5px 10px;\n            border-radius: 5px;\n            border: 1px #cfd7df solid;\n            background: #ffffff;\n        }\n\n        .ttm-button:hover {\n            border: 1px solid #cfd7df;\n            color: #12344d;\n            background: #EBEDF0;\n            transition: .1s ease-in;\n        }\n\n        .ticket-top-menu .sort-by {\n            display: inline-block;\n            float: right;\n        }\n\n        /* Ticket Display */\n\n        .ticket-display {\n            margin-top: 20px;\n            padding: 25px 20px 20px 20px;\n            background-color: #fff;\n            box-shadow: 0 1px 0 0 #cfd7df;\n            display: table;\n            width: 100%;\n            box-sizing: border-box;\n            cursor: pointer;\n        }\n\n        .td-box1 {\n            position: relative;\n        }\n\n        .box1-left {\n            display: inline-block;\n            position: absolute;\n            top: 25%;\n        }\n\n        .box1-right {\n            display: inline-block;\n            margin-left: 100px;\n        }\n\n        .box1-left img {\n            width: 70px;\n            border-radius: 5px;\n        }\n\n        .box1-right h3 {\n            font-size: 18px;\n            font-weight: 600;\n        }\n\n        .box1-right h4 {\n            font-size: 14px;\n            font-weight: 600;\n            color: #4d4d4d;\n        }\n\n        .box1-right h5 {\n            font-size: 14px;\n            font-weight: 600;\n            color: #4d4d4d;\n        }\n\n        .box1-right h6 {\n            font-size: 12px;\n            font-weight: 600;\n            color: #ffffff;\n            background-color: red;\n            display: inline-block;\n            padding: 5px 10px 5px 10px;\n            border-radius: 5px;\n            margin-bottom: 15px;\n        }\n\n        .box1-right p {\n            font-size: 14px;\n            font-weight: 400;\n            color: #4d4d4d;\n            margin: 0;\n        }\n\n        .td-box2 {}\n\n        .td-box2 .box-text {\n            margin-top: 10px;\n        }\n\n        .td-box2 .box-text p {\n            font-size: 14px;\n            color: #4d4d4d;\n        }\n\n        .td-box2 .box-text i {\n            margin-right: 10px;\n        }\n\n        /* finter Section */\n\n        .filter-section {\n            margin-top: 20px;\n            padding: 25px 20px 20px 20px;\n            background-color: #fff;\n            box-shadow: 0 1px 0 0 #cfd7df;\n            display: table;\n            width: 100%;\n            box-sizing: border-box;\n        }\n\n        .filter-dropdown {\n            margin-bottom: 30px;\n        }\n\n        .filter-dropdown .dropdown-menu {\n            width: 100%;\n        }\n\n        .dropdown-toggle::after {\n            float: right;\n            margin-top: 10px;\n        }\n\n    " }} />
     
     <NavigationBar/>
-    <section className="ticket-system">
+    <section className="m45 m_1responsive700">
       <div className="row">
-        <div className="col-12">
+        <div className="col-md-12 col-sm-12">
           <div className="ticket-header">
             <h1>All Tickets </h1>
           </div>
@@ -91,7 +91,7 @@ const Ticket = () => {
         </div>
       </div>
       <div className="row">
-        <div className="col-12">
+        <div className="col-md-12 col-sm-12">
           {
             sortedTickets?.map((allTicket,index)=>{ 
               let lastTimestamp = null;
@@ -143,7 +143,7 @@ const Ticket = () => {
                      
                         <h5>Ticket ID: {allTicket?.ticketId}</h5>
                        
-                        <span>
+                        <span className='timeStampDesignMobile'>
                              {lastTimestamp && <p>{exactTime} {lastTimestamp}</p>}
   
                         </span>

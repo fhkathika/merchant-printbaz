@@ -160,8 +160,8 @@ a[x-apple-data-detectors] {
     top: 230px; 
   }
   .nav-link{
-    background-color: #001846 !important;
-    color: White !important;
+    background-color: none !important;
+    color: #001846 !important;
    
   }  
 
@@ -265,6 +265,9 @@ a[x-apple-data-detectors] {
   .m45 {
     margin: 0px !important;
   }
+  
+  
+
 .jb{
   justify-content: space-between;
 }
@@ -275,9 +278,13 @@ a[x-apple-data-detectors] {
     box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
   }
   select.form-control {
-    /* width: 100%; */
+    width: 100%;
     max-width: 100%;
     box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
+  }
+
+  .uploadFilePlaceholder {
+    font-size: 9px !important;
   }
 
 
@@ -298,6 +305,8 @@ a[x-apple-data-detectors] {
 .text_brandColor{
   color: #012652 !important;
 }
+
+
 @media screen and (min-width:360px   ) and  (max-width:660px){ 
   .bg_gray{
     background-color: #555 !important;
@@ -749,6 +758,7 @@ cursor: pointer;
     padding-left: 10px !important;
    
   } */
+ 
 }
 @media only screen and (max-width: 991.98px) {
   .my-2.my-lg-0 {
@@ -1300,5 +1310,51 @@ font-size: 16px !important;
   border: 2px black solid;
   padding: 0px 0px;
 }
+.timeStampDesignMobile{
+  font-size: 10px;
+}
   
 }
+
+
+.custom-file-label-mobile {
+  display: inline-block;
+  padding: 0.5em 1em;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+/* .custom-file-label-mobile{
+  width: 100%;
+} */
+/* Assuming the breakpoint for mobile view is 768px */
+/* @media (min-width: 769px) {
+  .custom-file-label-mobile::before {
+
+      content: "Choose File";
+  }
+
+ 
+}
+.custom-file-label-mobile::before {
+
+  content: "";
+} */
+
+.custom-file-input-wrapper .custom-file-input-label {
+  display: inline-block;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #f8f8f8;
+  transition: background-color 0.3s;
+}
+
+.custom-file-input-wrapper .custom-file-input-label:hover {
+  background-color: #e0e0e0;
+}
+
+
+

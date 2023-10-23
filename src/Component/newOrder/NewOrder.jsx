@@ -60,7 +60,7 @@ const NewOrder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Bottle Green Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Bottle Green Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -74,7 +74,7 @@ const NewOrder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Round Neck Maroon Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Round Neck Maroon Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -538,9 +538,9 @@ formData2.append('clientName', user?.name);
 </>
 )}
 <Row className='m-auto'>
-  <Col xs={12} md={12} className='mt-5  mb-2 '>
+  <Col xs={12} md={12} className='mt-5  mb-2'>
 
-  <h3 className='headerName'  style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
+  <h3   style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Round Neck</h3>
   </Col>
 </Row>
 
@@ -755,7 +755,7 @@ formData2.append('clientName', user?.name);
                    accept=".ai,.eps,.psd,.pdf,.svg,.png"
                    multiple
                  />
-                 <span style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</span>
+                 <p className='uploadFilePlaceholder' style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</p>
                </Form.Group>
                {fileprogress === 0 ? null : (
     <ProgressBar now={fileprogress} label={`${fileprogress}%`} />

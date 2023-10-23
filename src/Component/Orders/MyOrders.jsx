@@ -160,7 +160,7 @@ const filerByOrderDate=info.filter(order=>{
        
           <NavigationBar/>
        
-          <div className="main-div" style={{margin:"50px"}}>
+          <div className="main-div " style={{margin:"45px"}}>
             <div className="row mt-4">
               <div className="col-sm-6">
                 <h1>Order List</h1>
@@ -226,17 +226,17 @@ const filerByOrderDate=info.filter(order=>{
                   
                 </select>
               </div>
-                <div className="col-md-2 ">
-                  <label htmlFor="startDate" className="form-label">Start Date</label>
-                  <DatePicker className='form-control' selected={startDate} onChange={handleChangeStartDate} selectsStart startDate={startDate} endDate={endDate} />
+                <div className="col-lg-2 col-sm-12 col-md-4">
+                  <label htmlFor="startDate" className="form-label mb-2">Start Date</label>
+                  <input type='date' className='form-control' selected={startDate} onChange={handleChangeStartDate} selectsStart startDate={startDate} endDate={endDate} />
                  
                 
                   </div>   
-                   <div className="col-md-2 ">
+                   <div className="col-lg-2 col-sm-12 col-md-4">
                
                  
                   <label style={{textAlign:"start"}} htmlFor="endDate" className="form-label">End Date</label>
-                  <DatePicker className='form-control' selected={endDate} onChange={handleChangeEndDate} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
+                  <input type='date' className='form-control' selected={endDate} onChange={handleChangeEndDate} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
                   </div>
              
                  

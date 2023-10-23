@@ -199,7 +199,7 @@ let msgCount=0;
       </a>
       <div className="navbar">
       <nav ref={navbarRef} id="navbar" className={isNavbarMobile ? 'navbar-mobile' : ''}>
-      <button 
+      <button style={{border:"none",background:"none"}}
         className={`mobile-nav-toggle ${isNavbarMobile ? 'bi-x' : 'bi-list'}`} 
         onClick={toggleMobileNav}
       ></button>

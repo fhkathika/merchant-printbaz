@@ -767,7 +767,7 @@ const handleSubmit = async (e) => {
                    accept=".ai,.eps,.psd,.pdf,.svg,.png"
                    multiple
                  />
-                 <span style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</span>
+                 <p className='uploadFilePlaceholder' style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</p>
                </Form.Group>
                {fileprogress === 0 ? null : (
     <ProgressBar now={fileprogress} label={`${fileprogress}%`} />

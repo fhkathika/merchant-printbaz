@@ -28,7 +28,7 @@ const BlankHoodie = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Black N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Black.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -43,7 +43,7 @@ const BlankHoodie = () => {
       {
         color: 'Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Neon Green N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Neon Green.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -58,7 +58,7 @@ const BlankHoodie = () => {
       {
         color: 'Nevy Blue',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -72,7 +72,7 @@ const BlankHoodie = () => {
       },  {
         color: 'Gray',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Gray N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Gray.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -86,7 +86,7 @@ const BlankHoodie = () => {
       },{
         color: 'Red',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Red N.jpg",
+        categoryImg:"/images/categoryImgs/Hoodies Red.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -249,7 +249,7 @@ let perCategoryCost=0
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 500
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 400
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }

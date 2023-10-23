@@ -223,17 +223,22 @@ const CustomDropSholder = () => {
     }));
 }
 
-  
+const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
    console.log("formData",formData);
   const handleFileChange = (event, index) => {
     const { name, files } = event.target;
+    const updatedBrandLogoArray = [...addBrandLogoArray];
     if (name==="file" || name==="image" || name==="brandLogo") {
+      if (name === "brandLogo") {
+        updatedBrandLogoArray[index] = files && files.length > 0;
+        setAddBrandLogoArray(updatedBrandLogoArray);
+    }
       // const fieldName = name.split('.')[1];
       const newOrderDetailArr = [...formData.orderDetailArr];
        // Change from a single file to an array of files
       newOrderDetailArr[index][[event.target.name]] =Array.from(files);
       setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
-    
+  
     }
   };
 
@@ -278,46 +283,64 @@ let updatedPrintbazcost=0
       let backSidePrintCost = 0;
       let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
       // backSidePrintCost += totalQuantity * 130;
-      if(formData?.orderDetailArr[i]?.printSizeBack==="11.7 x 16.5" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="11.7 x 16.5")){
+      if(formData?.orderDetailArr[i]?.printSizeBack==="11.7 x 16.5" || (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="11.7 x 16.5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 160
       } 
-      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
+      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 125
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 68
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 39
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 25
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 18
-      }  else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 2.5")){
+      }  else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 2.5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 14
       }
       
       // At this point, backSidePrintCost contains the total cost for the current item's back side print
       
-      if(addbrandLogo===true){
-        // printbazcost=parseInt(printbazcostbase+5)
+      // if(addbrandLogo===true){
+      //   // printbazcost=parseInt(printbazcostbase+5)
         
-        printbazcostbase = Number(totalPrice)+backSidePrintCost+(5*formData?.orderDetailArr[i]?.totalQuantity);
+      //   printbazcostbase = Number(totalPrice)+backSidePrintCost+(5*formData?.orderDetailArr[i]?.totalQuantity);
+      //   printbazcost += printbazcostbase;
+      //   const test=printbazcost+backSidePrintCost
+      //   console.log("printbazcost",printbazcost)
+      //   console.log("backSidePrintCost",backSidePrintCost)
+      //   console.log("test",test)
+      // }
+      // else{
+      //   printbazcostbase = Number(totalPrice) + backSidePrintCost;
+      //   printbazcost +=printbazcostbase;
+      
+      //   console.log("printbazcost",printbazcost)
+      //   console.log("backSidePrintCost",backSidePrintCost)
+      // }
+
+      if(addBrandLogoArray[i]){
+        // printbazcost=parseInt(printbazcostbase+5)
+        let brandLogoCost=5*formData?.orderDetailArr[i]?.totalQuantity
+        printbazcostbase = Number(totalPrice)+backSidePrintCost+brandLogoCost;
+        console.log("brandLogoCost",brandLogoCost);
+        console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
         printbazcost += printbazcostbase;
         const test=printbazcost+backSidePrintCost
-        console.log("printbazcost",printbazcost)
-        console.log("backSidePrintCost",backSidePrintCost)
-        console.log("test",test)
+      console.log("addbrandLogo",addbrandLogo);
       }
       else{
-        printbazcostbase = Number(totalPrice) + backSidePrintCost;
-        printbazcost +=printbazcostbase;
+        printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
+        printbazcost += printbazcostbase;
       
         console.log("printbazcost",printbazcost)
+        console.log("printbazcostbase",printbazcostbase)
         console.log("backSidePrintCost",backSidePrintCost)
+        console.log("totalPrice",totalPrice)
       }
-
- 
     }
     //  else {
     //   if(printbazcostbase){
@@ -662,7 +685,7 @@ const handleSubmit = async (e) => {
                       >
                        <option value="">select print side</option> 
                         <option value="frontSide">Front Side</option>
-                        {/* <option value="backSide">Back Side</option> */}
+                        <option value="backSide">Back Side</option>
                         <option value="bothSide">Both Side</option>
                       </Form.Control>
                     </Form.Group>

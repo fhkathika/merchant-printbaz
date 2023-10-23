@@ -200,7 +200,7 @@ const NewOrder = () => {
     const newOrderDetailArr = [...formData.orderDetailArr];
 
     let itemIndex = newOrderDetailArr.findIndex(item => item.color === color);
-
+console.log("printSIde",value)
     if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
         if (size) {
             newOrderDetailArr[itemIndex].teshirtSize = { ...newOrderDetailArr[itemIndex].teshirtSize, [size]: value };
@@ -284,20 +284,20 @@ let updatedPrintbazcost=0
       let backSidePrintCost = 0;
       let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
       // backSidePrintCost += totalQuantity * 130;
-      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
+      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 125
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 68
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 39
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
+      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 25
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
+      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 18
       }
-        else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 2.5")){
+        else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 2.5")){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 14
       }
       
@@ -654,14 +654,13 @@ formData2.append('clientName', user?.name);
                       >
                        <option value="">select print side</option> 
                         <option value="frontSide">Front Side</option>
-                        {/* <option value="backSide">Back Side</option> */}
+                        <option value="backSide">Back Side</option>
                         <option value="bothSide">Both Side</option>
                       </Form.Control>
                     
                     </Form.Group>
-                   
-                    {
-                     ( item.printSide==="frontSide" || item.printSide==="backSide") &&
+                   {
+                      item.printSide === "backSide" &&
                       <Form.Group
                       className="mb-3 Print Side w-100 m-auto"
                       controlId="wccalcPrintSide"
@@ -687,6 +686,35 @@ formData2.append('clientName', user?.name);
                       </Form.Control>
                     </Form.Group>
 }
+                    {
+                      item.printSide==="frontSide"  &&
+                      <Form.Group
+                      className="mb-3 Print Side w-100 m-auto"
+                      controlId="wccalcPrintSide"
+                    >
+                      <Form.Label className="pr-2">Print Size</Form.Label>
+                      <Form.Control
+                        as="select"
+                        data-color={item.color}
+                        value={item.printSize}
+                        onChange={(e) => {
+                           handleInputChange(e,index);
+                        }}
+                        name="printSize"
+                        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
+                      >
+                       <option value="">select print size</option> 
+                        <option value="10 x 14">10″ x 14″</option>
+                        <option value="10 x 10">10″ x 10″</option>
+                        <option value="10 x 5">10″ x 5″</option>
+                        <option value="5 X 5">5″ x 5″</option>
+                        <option value="2.5 X 5">2.5″ x 5″</option>
+                        <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                      </Form.Control>
+                    </Form.Group>
+}
+
+
                     {
                       item.printSide==="bothSide" && 
                       <>

@@ -288,7 +288,7 @@ const [printSide, setPrintSide] = useState('frontSide');
 
                             }}
                         >
-                            <Form.Group className="mb-3 Quantity w-75 m-auto" controlId="wccalcQuantity">
+                            <Form.Group className="mb-3 Quantity w-100 " controlId="wccalcQuantity">
                                 <Form.Label >Quantity</Form.Label>
                              
                                 <Form.Control
@@ -304,7 +304,7 @@ const [printSide, setPrintSide] = useState('frontSide');
                             
                             </Form.Group>
                             <Form.Group
-                      className="mb-3 Print Side w-75 m-auto"
+                      className="mb-3 Print Side w-100 "
                       controlId="wccalcPrintSide"
                     >
                       <Form.Label className="pr-2">Print side</Form.Label>
@@ -326,7 +326,7 @@ const [printSide, setPrintSide] = useState('frontSide');
                     {
                      ( printSide==="frontSide" ) &&
                       <Form.Group
-                      className="mb-3 Print Side w-75 m-auto"
+                      className="mb-3 Print Side w-100 "
                       controlId="wccalcPrintSide">
                       <Form.Label className="pr-2">Print Size</Form.Label>
                       <Form.Control
@@ -377,7 +377,7 @@ const [printSide, setPrintSide] = useState('frontSide');
                       <>
 
 <Form.Group
-                      className="mb-3 Print Side w-75 m-auto"
+                      className="mb-3 Print Side w-100 "
                       controlId="wccalcPrintSide"
                     >
                       <Form.Label className="pr-2">Print Size front</Form.Label>
@@ -424,7 +424,7 @@ const [printSide, setPrintSide] = useState('frontSide');
                       </Form.Control>
                     </Form.Group>
                     <Form.Group
-                    className="mb-3 Print Side w-75 m-auto"
+                    className="mb-3 Print Side w-100 "
                     controlId="wccalcPrintSide"
                   >
                     <Form.Label className="pr-2">Print Size back</Form.Label>
@@ -570,7 +570,7 @@ const [printSide, setPrintSide] = useState('frontSide');
             <Col xs={12} md={4}  className="mt-25" >
       
       <div  className="printSizeDemoCol" >
-      <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 10.jpg' className='img-fluid' alt='10X10' />
+      <img  src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 10.jpg' className='img-fluid' alt='10X10' />
       </div>
        
 <div className='printSizeTextDiv'>

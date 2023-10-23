@@ -29,7 +29,7 @@ const BlankDropSholder = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Black N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Black.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -44,7 +44,7 @@ const BlankDropSholder = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder White N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder White.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -59,7 +59,7 @@ const BlankDropSholder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
@@ -73,7 +73,7 @@ const BlankDropSholder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',

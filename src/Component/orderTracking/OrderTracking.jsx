@@ -217,12 +217,12 @@ const copyOrderId = () => {
        
          </div>
                   <div className="font-weight-bold col-lg-2 mt-2 "
-                        style={{ marginBottom: "20px",display:"flex",justifyContent:"space-between" }}
+                        style={{ marginBottom: "20px" }}
                       >
                        
                         <div style={{display:"flex"}} >
   <div className="   font-weight-bold  "
-                        style={{ marginBottom: "20px",display:"flex"}}
+                        style={{ display:""}}
                       >
                         <div style={{display:""}}>
                          
@@ -230,10 +230,11 @@ const copyOrderId = () => {
                      
                        
                         </div>
+                      
                          </div> 
                       
                       <div className="   font-weight-bold "
-                        style={{ marginBottom: "20px",marginLeft:"10px",display:"flex",justifyContent:"flex-end" }}
+                        style={{marginLeft:"10px",display:"flex",justifyContent:"flex-end" }}
                       >
                         <div style={{display:""}}>
                          
@@ -241,12 +242,15 @@ const copyOrderId = () => {
                                 getSpecificOrderById?.orderStatus
                                 )}}>{getSpecificOrderById?.orderStatus}</p>
                      
-                        <p className='text_Align_Left' style={{textAlign:"center",marginTop:'10px'}}>Status changed at: {getSpecificOrderById?.statusDate}</p>
+                      
                         </div>
                        
                       </div>
 
   </div>
+  
+  <p className='text_Align_Left' style={{textAlign:"center"}}>Status changed at: {getSpecificOrderById?.statusDate}</p>
+  
                         </div> 
  
                   

@@ -113,7 +113,7 @@ const Ticket = () => {
 
 <div className="ticket-display" >
                 <div className="row">
-                  <div className="col-8">
+                  <div className="col-md-12 col-sm-12">
                     <div className="td-box1">
                       <div className="box1-left"> 
                         {/* <input className="check-box" type="checkbox" /> */}
@@ -143,8 +143,8 @@ const Ticket = () => {
                      
                         <h5>Ticket ID: {allTicket?.ticketId}</h5>
                        
-                        <span className='timeStampDesignMobile'>
-                             {lastTimestamp && <p>{exactTime} {lastTimestamp}</p>}
+                        <span >
+                             {lastTimestamp && <p className='timeStampDesignMobile'>{exactTime} {lastTimestamp}</p>}
   
                         </span>
                          
@@ -152,7 +152,7 @@ const Ticket = () => {
                       </div>
                     </div>
                   </div>
-                <div className='col-4 '>
+                {/* <div className='col-4 '>
                 {
                  allTicket?.unread==="true" &&
 
@@ -161,7 +161,7 @@ const Ticket = () => {
                  
                }
              
-                </div>
+                </div> */}
                 </div>
               </div>
                 </Link>

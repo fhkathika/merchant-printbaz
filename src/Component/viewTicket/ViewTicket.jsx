@@ -385,23 +385,23 @@ return (
               <div ref={messagesEndRef} />
          
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-12">
              
              
               
+              
+            
+            </div>
+          </div> */}
+            <div className="row">
+              <div className='col-lg-12 col-sm-12  '>
               {
-                lastTicketStatus==="close" &&
+                lastTicketStatus==="close" ?
                 <div className="ticket-replay">
                   <h2 style={{textAlign:"center",color:"red"}}>Ticket Closed!</h2>
                 </div>
-              }
-            
-            </div>
-          </div>
-            <div className="row">
-              <div className='col-lg-12 col-sm-12  '>
-            
+            :
              <form className="input-group chat-messages p-4 " onSubmit={handleSendMessage}>
     <div   ref={quillRef}  />
     {/* <textarea  className='col-12'
@@ -448,7 +448,7 @@ return (
                                    <button className="btn"><i className="fa fa-paperclip" aria-hidden="true" /></button>
                                    <button className="btn btn-primary">Reply</button> */}
                    </form>
-           
+}
               </div>
         
            

@@ -560,16 +560,16 @@ getSpecificOrderById?.orderStatus==="returned"?
       </div>
     </div>
  
-    <div className="row order-list-title d-none-phone">
+    <div className="row order-list-title ">
       
       <div className="col-3">
-        <h4>Color</h4>
+        <h4 className='font10px'>Color</h4>
       </div>
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4>T-shirt Size</h4>
+        <h4 className='font10px'> Size</h4>
       </div>
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4>Quantity</h4>
+        <h4 className='font10px'>Quantity</h4>
       </div>
       {/* <div className="col-1" style={{display:"flex",justifyContent:"center"}}>
         <h4>Print Size</h4>
@@ -578,7 +578,7 @@ getSpecificOrderById?.orderStatus==="returned"?
         <h4>Main File</h4>
       </div> */}
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4>Picture</h4>
+        <h4 className='font10px d-none'>Picture</h4>
       </div>
         {/* <div className="col-1">
         <h4>BrandLogo</h4>
@@ -599,19 +599,19 @@ getSpecificOrderById?.orderStatus==="returned"?
         <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
         
       <div className="col-3">
-        <p>{orderDetail?.color}</p>
+        <p  className='font12px'>{orderDetail?.color}</p>
       </div>
-      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+      <div className="col-3 " style={{display:"flex",justifyContent:"center"}}>
     
       <ul>
       {typeof orderDetail.teshirtSize === 'string' ? (
-        <li>
+        <li  className='font12px'>
           {orderDetail.teshirtSize}- {orderDetail.quantity}
         </li>
       ) : (
         Object.entries(orderDetail.teshirtSize || {}).map(
           ([size, quantity]) => (
-            <li key={size}>
+            <li className='font12px' key={size}>
              {size}- {quantity}
             </li>
           )
@@ -621,7 +621,7 @@ getSpecificOrderById?.orderStatus==="returned"?
        
         
       </div>
-      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+      <div className="col-3 font12px" style={{display:"flex",justifyContent:"center"}}>
       {orderDetail?.totalQuantity} 
       </div>
  

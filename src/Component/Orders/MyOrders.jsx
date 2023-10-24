@@ -421,14 +421,19 @@ const filerByOrderDate=info.filter(order=>{
                <p style={{fontSize: '14px'}}> created at: {new Date(orderInfo?.createdAt).toLocaleDateString('en-US', options)}</p>
              </div>
              <div className="col-md-1 col-sm-12">
-               <p style={{lineHeight: '15px', border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
+               <p className='paymentStatus'   style={{lineHeight: '15px',border: '5px greenyellow',color:"#fff", backgroundColor: 'rgb(127, 208, 255)', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px'}}>{orderInfo?.paymentStatus}</p>
              </div>
-             <div className="col-md-2 col-sm-12">
-               <p style={{fontWeight: 800, lineHeight: '15px'}}>Amount to receive: <span style={{fontWeight: 400}}>{orderInfo?.recvMoney}</span></p>
-             </div>
-             <div className="col-md-1 col-sm-12">
-             <Link style={{textDecoration:"none",lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}   to={`/viewOrder/${orderInfo?._id}`}
-                                              state={ {orderInfo}}>View</Link>
+             <div className="col-md-2 col-sm-12" style={{  }}>
+    <p className='textCenter_verticAndHorizontal' style={{ fontWeight: 800, lineHeight: '15px', }}>
+        Amount to receive: <span style={{ fontWeight: 400 }}>{orderInfo?.recvMoney}</span>
+    </p>
+</div>
+
+
+             <div className="col-md-1  col-sm-12">
+             <Link className='textCenter_verticAndHorizontal'
+  style={{textDecoration:"none",marginBottom:"5px"}}   to={`/viewOrder/${orderInfo?._id}`}
+                                              state={ {orderInfo}}><span style={{backgroundColor:"#001846", padding: '10px',lineHeight: '15px', border: '5px #001846', fontWeight: 'bold', borderRadius: '5px',color:"white"}}>View</span></Link>
                {/* <button onClick={handleViewOrder} style={{lineHeight: '15px', border: '5px #001846', backgroundColor: '#001846', padding: '10px', fontWeight: 'bold', display: 'inline-block', borderRadius: '5px', color: '#fff'}}>View</button> */}
              </div>
                </>

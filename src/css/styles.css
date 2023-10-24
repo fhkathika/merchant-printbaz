@@ -421,6 +421,11 @@ background-color: white !important;
 .hide {
   display: none;
 }
+.align_center{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .flex{
   display: flex;
   justify-content: space-between;
@@ -548,6 +553,10 @@ align-items: center;
   }
   .m_L15P{
     margin-left: 15%;
+  }
+
+  .viewOrderPaymentStatus{
+    margin-left:25px
   }
 @media only screen and (max-width: 600px) {
   .block{
@@ -956,6 +965,7 @@ color: #bababa !important;
 .notification-badge-individual {
   background-color: red;
   margin-top: 50px;
+  margin-left: 20px;
   display: inline-block;
   justify-content: center;
   align-items: center;
@@ -1214,7 +1224,16 @@ font-size: 16px !important;
   border: 2px black solid;
   padding: 15px 25px;
 }
-
+.paymentStatus{
+  margin-top: 70px;
+}
+.textCenter_verticAndHorizontal{
+  text-align: center;
+  display: flex;
+   align-items: center; 
+   justify-content: center;
+   height: 100%
+}
 
 @media (max-width: 600px) {
  
@@ -1296,6 +1315,31 @@ font-size: 16px !important;
 
 
 @media screen and (max-width: 700px){
+  .viewOrderPaymentStatus{
+    margin-left:0px;
+  }
+  .paymentStatus{
+    margin-top: 0px;
+  }
+  .textCenter_verticAndHorizontal {
+    display: block; /* Reverts display back to the default for <div> */
+    align-items: normal;
+    justify-content: normal;
+    text-align: left; /* Or 'inherit' or 'start', depending on what you need */
+    /* Remove the height property if it's not required for mobile view */
+  }
+  .notifyDiv{
+    text-align: center;
+    margin-right: 70px;
+  }
+  .notification-badge-individual {
+    font-size: 10px;
+  }
+  .notification-badge {
+   
+    right: 0px;
+    left: 70px;
+  }
   .block-mobile{
     display: block !important;
   }

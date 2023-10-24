@@ -109,7 +109,7 @@ const Ticket = () => {
                
  
                                 
-                <Link to={`/viewTicket/${allTicket?._id}`} state={{allTicket}}   key={index}>
+                <Link style={{textDecoration:"none"}} to={`/viewTicket/${allTicket?._id}`} state={{allTicket}}   key={index}>
 
 <div className="ticket-display" >
                 <div className="row">
@@ -121,7 +121,8 @@ const Ticket = () => {
                         <img src={user?.brandLogoURL} alt="" />
                        
                       </div>
-                      <div className="box1-right">
+                      <div className='flex block-mobile' >
+                      <div className="box1-right ">
                         
                         <h6>{allTicket?.ticketIssue==="onHold out of stock" &&"Out of stock"}
                {allTicket?.ticketIssue==="onHold artwork issue" &&"Artwork issue"}
@@ -150,7 +151,24 @@ const Ticket = () => {
                          
                         
                       </div>
+
+                      <div className='notifyDiv' >
+                      {
+                 allTicket?.unread==="true" &&
+
+                   <span  className='notification-badge-individual'>New Message</span> 
+              
+                 
+               }
+                      </div>
+                    
+                     
+
+
+                      </div>
+                   
                     </div>
+                    
                   </div>
                 {/* <div className='col-4 '>
                 {

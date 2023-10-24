@@ -224,6 +224,18 @@ let msgCount=0;
           <Link className="nav-link scrollto " to="/ticket">
               TICKET
             </Link>
+            {
+   fetchAllTicket?.forEach(readMsg => {
+    if(readMsg?.unread === "true"){
+      msgCount++
+   }
+
+  })
+   }
+   {
+     msgCount>0 &&
+     <span className='notification-badge' >{msgCount}</span>
+   }
           </li>
           <li>
             <a className="nav-link scrollto" href="#">

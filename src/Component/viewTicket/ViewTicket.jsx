@@ -17,6 +17,8 @@ const ViewTicket = () => {
     const [usersStoredTickets, setUsersStoredTickets] = useState([]);
    
     const [selectedFiles, setSelectedFiles] = useState([]);
+    console.log("newMsg",newMsg)
+    console.log("selectedFiles",selectedFiles)
     const {user}=useContext(AuthContext);
     const { quill, quillRef, Quill } = useQuill({
       modules: { blotFormatter: {} }
@@ -134,13 +136,17 @@ useEffect(() => {
     };
     //upload files
     const handleFileChange = (e) => {
+      console.log(e.target.files.length)
       setSelectedFiles(e.target.files);
     };
     
   
     const handleSendMessage = async (e) => {
         e.preventDefault();
-             // After the message is sent, scroll to the bottom of the chat log
+        if(newMsg==='' && selectedFiles.length === 0){
+          return
+        }
+        //      // After the message is sent, scroll to the bottom of the chat log
   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
         try {
        

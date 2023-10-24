@@ -199,7 +199,7 @@ const copyOrderId = () => {
         <div>
         
           <NavigationBar />
-          <div className="all-content mt-5">
+          <div className="all-content m45 m_12responsive700">
           <div className="row mt-5">
               <div className="col-12">
                 <div className="order-id bg-white p-4  shadow-sm" >
@@ -221,7 +221,7 @@ const copyOrderId = () => {
                       >
                        
                         <div style={{display:"flex"}} >
-  <div className="   font-weight-bold  "
+  <div className=" viewOrderPaymentStatus  font-weight-bold  "
                         style={{ display:""}}
                       >
                         <div style={{display:""}}>
@@ -449,8 +449,54 @@ const copyOrderId = () => {
                   </div>
                 </div>
               </div>
+
+           
               <div className="col-lg-4 col-md-12 mb-3">
-                <div className="bg-white p-3 shadow-sm">
+              <div className="bg-white p-4 shadow-sm mb-3" style={{height:"auto"}}>
+                  <div className="row amu-title">
+                    <div className="col-12">
+                      <h3 className="all-title">Cost of Order</h3>
+                      <div className='align_center'>
+                      <h6>Printbaz Cost</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>{getSpecificOrderById?.printbazcost} BDT</p>
+                      </div>
+                      <div className='align_center'>
+                      <h6>Delivery Fee</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>{getSpecificOrderById?.deliveryFee} BDT</p>
+                      </div> 
+                      <div className='align_center'>
+                      <h6>Collect Amount</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>{getSpecificOrderById?.collectAmount} BDT</p>
+                      </div> 
+                      <div className='align_center'>
+                      
+                      <h6>Cash Handling Fee</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>3% BDT</p>
+                      </div>
+                   
+                  
+                      <div className='align_center'>
+                      {
+getSpecificOrderById?.orderStatus==="returned"?
+<>
+
+<h6 style={{color:"red"}}>Returned Amount</h6>
+<p style={{color:"red",lineHeight:"0px"}}> {getSpecificOrderById?.returnedAmount}</p>
+</>
+:
+<>
+
+<h6>Receivable Amount</h6>
+<p style={{lineHeight:"0px"}}>{parseInt(getSpecificOrderById?.recvMoney)}</p>
+</>
+                      }
+                      </div>
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+                {/* <div className="bg-white p-3 shadow-sm">
                   <div className="row amu-title">
                     <div className="col-12">
                       <h3 className="all-title">Cost of Order</h3>
@@ -480,7 +526,7 @@ getSpecificOrderById?.orderStatus==="returned"?
                      
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
            {/* //instruction box  */}

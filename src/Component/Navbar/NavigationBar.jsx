@@ -12,7 +12,8 @@ const NavigationBar = () => {
   const [fetchAllTicket, setFetchAllTicket] = useState([]);
   const { fetchedData} = useGetData(id, collections, dbData);
   const resellerInfoFromDb=fetchedData?.resellerInfoArr
-  // const {user,logOut}=useContext(AuthContext)
+  console.log("user",user)
+  console.log("fetchAllTicket",fetchAllTicket)
 
   useEffect(() => {
     // Fetch the chat log from the server when the component mounts
@@ -226,8 +227,11 @@ let msgCount=0;
             </Link>
             {
    fetchAllTicket?.forEach(readMsg => {
-    if(readMsg?.unread === "true"){
+    if( user?.email===readMsg?.userEmail && readMsg?.unread === "true"){
       msgCount++
+   }
+   else{
+    msgCount=0
    }
 
   })

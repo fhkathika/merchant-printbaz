@@ -17,8 +17,7 @@ const ViewTicket = () => {
     const [usersStoredTickets, setUsersStoredTickets] = useState([]);
    
     const [selectedFiles, setSelectedFiles] = useState([]);
-    console.log("newMsg",newMsg)
-    console.log("selectedFiles",selectedFiles)
+    console.log("usersStoredTickets",usersStoredTickets)
     const {user}=useContext(AuthContext);
     const { quill, quillRef, Quill } = useQuill({
       modules: { blotFormatter: {} }
@@ -87,14 +86,14 @@ useEffect(() => {
     useEffect(() => {
       // Fetch the chat log from the server when the component mounts
       fetchOrderIddata();
-      fetchUserIddata()
+      // fetchUserIddata()
       // Scroll to the bottom of the chat log on initial load
      
     
       // Fetch the chat log every 10 seconds
       const intervalId = setInterval(() => {
         fetchOrderIddata();
-        fetchUserIddata()
+        // fetchUserIddata()
     
       }, 10000);
     
@@ -210,7 +209,7 @@ useEffect(() => {
           }
           setNewMsg('');
           fetchOrderIddata()
-          fetchUserIddata()
+          // fetchUserIddata()
         } catch (err) {
           console.error(err);
         }

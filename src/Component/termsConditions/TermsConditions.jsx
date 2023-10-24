@@ -37,14 +37,15 @@ const TermsConditions = () => {
                                   </tbody></table>
                                 <div className="spacer_block block-3" style={{height: '40px', lineHeight: '40px', fontSize: '1px'}}> </div>
                                 <table border={0} cellPadding={0} cellSpacing={0} className="heading_block block-4" role="presentation" style={{msoTableLspace: '0pt', msoTableRspace: '0pt'}} width="100%">
-                                  <tbody><tr>
-                                      <td className="pad" style={{textAlign: 'center', width: '100%'}}>
-                                        <h1 style={{margin: 0, color: '#555555', direction: 'ltr', fontFamily: 'Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif', fontSize: '50px', fontWeight: 700, letterSpacing: 'normal', lineHeight: '120%', textAlign: 'center', marginTop: 0, marginBottom: 0}}><strong><span style={{color: '#ffffff'}}>বিনা পুজিতে রাউন্ড নেক টি-শার্ট, ড্রপ শোল্ডার টি-শার্ট, হুডি ব্যবসা।</span></strong></h1>
+                                  <tbody>
+                                    <tr className='term_conditoinPg'>
+                                      <td className=" tm_td1" >
+                                        <h1 >বিনা পুজিতে রাউন্ড নেক টি-শার্ট, ড্রপ শোল্ডার টি-শার্ট, হুডি ব্যবসা।</h1>
                                       </td>
                                     </tr>
                                   </tbody></table>
                                 <table border={0} cellPadding={0} cellSpacing={0} className="heading_block block-5" role="presentation" style={{msoTableLspace: '0pt', msoTableRspace: '0pt'}} width="100%">
-                                  <tbody><tr>
+                                  <tbody><tr className='term_conditoinPg'>
                                       <td className="pad" style={{paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', textAlign: 'center', width: '100%'}}>
                                         <h1 style={{margin: 0, color: '#ffffff', direction: 'ltr', fontFamily: '"Merriwheater", "Georgia", serif', fontSize: '19px', fontWeight: 400, letterSpacing: 'normal', lineHeight: '120%', textAlign: 'center', marginTop: 0, marginBottom: 0}}><br />আমরা সবাই জানি, কাস্টোমাররা টিশার্টের ডিজাইনটা দেখেই টিশার্ট কিনে থাকে। আর তার উপর যদি টিশার্টটা ভালো কোয়ালিটির আর প্রিন্টটা ঠিক যেমন ফোনের স্কিনে দেখা যাচ্ছে তেমন হয়, তাহলেতো কথাই নেই!</h1>
                                       </td>

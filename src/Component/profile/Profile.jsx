@@ -115,6 +115,7 @@ if (updateData.brandLogo) {
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         
           <NavigationBar/>
+          <div className='m45'>
           {
                loggedUser?.map(resellerInfo=> 
                 <div className="profile-info">
@@ -226,6 +227,7 @@ if (updateData.brandLogo) {
               </div>
 
               )}
+              </div>
         <Footer/>
         </div>
       );

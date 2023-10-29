@@ -101,7 +101,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                           <p className="lead mb-4">
                           {getBlogById?.title}
                           </p>
-                          <div className="tag-option mt-5 clearfix">
+                          {/* <div className="tag-option mt-5 clearfix">
                             <ul className="float-left list-inline">
                               <li>Tags:</li>
                               <li className="list-inline-item"><a href="#" rel="tag">Round Neck</a></li>
@@ -116,11 +116,11 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                               <li className="list-inline-item"><a href="#" target="_blank"><i className="fab fa-pinterest-p" aria-hidden="true" /></a></li>
                               <li className="list-inline-item"><a href="#" target="_blank"><i className="fab fa-google-plus" aria-hidden="true" /></a></li>
                             </ul>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-12 mb-5">
+                    {/* <div className="col-lg-12 mb-5">
                       <div className="posts-nav bg-white pt-5 d-lg-flex d-md-flex justify-content-between ">
                         <a className="post-prev align-items-center" href="#">
                           <div className="posts-prev-item mb-4 mb-lg-0">
@@ -141,7 +141,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                           </div>
                         </a>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="col-lg-4">
@@ -165,7 +165,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                       )
                     }
                     </div>
-                    <div className="sidebar-widget bg-white rounded tags p-4 mb-3">
+                    {/* <div className="sidebar-widget bg-white rounded tags p-4 mb-3">
                       <h5 className="mb-4">Tags</h5>
                       <a href="#">T-Shirt</a>
                       <a href="#">Round Neck</a>
@@ -175,7 +175,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                       <a href="#">Size</a>
                       <a href="#">Print</a>
                       <a href="#">Branding</a>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

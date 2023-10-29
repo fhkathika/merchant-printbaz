@@ -120,7 +120,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                     }
                       
                     </div>
-                    <div className="sidebar-widget bg-white rounded tags p-4 mb-3">
+                    {/* <div className="sidebar-widget bg-white rounded tags p-4 mb-3">
                       <h5 className="mb-4">Tags</h5>
                       <a href="#">T-Shirt</a>
                       <a href="#">Round Neck</a>
@@ -130,7 +130,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                       <a href="#">Size</a>
                       <a href="#">Print</a>
                       <a href="#">Branding</a>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

@@ -40,6 +40,8 @@ import BlankRoundNeck from "./Component/blankRoundNeck/BlankRoundNeck";
 import BlankDropSholder from "./Component/blankDropSholder/BlankDropSholder";
 import CustomHoodie from "./Component/custonHoodie/CustomHoodie";
 import BlankHoodie from "./Component/blankHoodie/BlankHoodie";
+import Blogs from "./Component/blogs/Blogs.jsx";
+import BlogsPreview from "./Component/blogsPreview/BlogsPreview.jsx";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -278,7 +280,25 @@ function App() {
             </PrivateRoute>
           }
         />
+         <Route
+          path="/blogs"
+          element={
+            <PrivateRoute>
+              <Blogs/>
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="/blogsPreview/:id"
+          element={
+            <PrivateRoute>
+              <BlogsPreview/>
+            </PrivateRoute>
+          }
+        />
+     
       </Routes>
+       
      
     </div>
   );

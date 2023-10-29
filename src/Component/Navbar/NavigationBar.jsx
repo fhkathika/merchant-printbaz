@@ -242,9 +242,8 @@ let msgCount=0;
    }
           </li>
           <li>
-            <a className="nav-link scrollto" href="#">
-              BLOGS
-            </a>
+          
+            <Link className='nav-link scrollto'  to="/blogs">BLOGS</Link> 
           </li>
           <li className="dropdown" onClick={toggleDropdown}>
             <a href="#">

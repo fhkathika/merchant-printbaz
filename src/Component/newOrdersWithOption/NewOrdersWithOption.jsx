@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import NavigationBar from '../Navbar/NavigationBar';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { Button, Container, Overlay, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../footer/Footer';
+import BackToTop from '../backToTop/BackToTop';
 const NewOrdersWithOption = () => {
   const navigate=useNavigate()
   const handleClickNeworder=()=>{
@@ -26,6 +27,22 @@ const NewOrdersWithOption = () => {
   const handleClickBlankHoodie=()=>{
     navigate("/blankHoodie")
   }
+
+  useEffect(() => {
+    const backtotop = document.querySelector('.back-to-top');
+    const toggleBacktotop = () => {
+      if (window.scrollY > 100) {
+        backtotop.classList.add('active');
+      } else {
+        backtotop.classList.remove('active');
+      }
+    };
+    toggleBacktotop();
+    window.addEventListener('scroll', toggleBacktotop);
+    return () => {
+      window.removeEventListener('scroll', toggleBacktotop);
+    };
+  }, []);
     // Define a state variable to hold the current color
     const target = useRef(null);
     const [customforRoundNeck, setCustomforRoundNeck] = useState('customRoundNeckBlack');
@@ -190,7 +207,7 @@ const NewOrdersWithOption = () => {
         </div>
     </div>
         <Card.Body>
-          <Card.Title style={{textAlign:"center"}}>Blank Round Neck</Card.Title>
+          <Card.Title  className='cardTitle' style={{textAlign:"center"}}>Blank Round Neck</Card.Title>
           <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsBlankRoundNeck).map(color => (
@@ -248,7 +265,7 @@ const NewOrdersWithOption = () => {
     </div>
             
             <Card.Body>
-              <Card.Title style={{textAlign:"center"}}>Custom Round Neck</Card.Title>
+              <Card.Title className='cardTitle' style={{textAlign:"center"}}>Custom Round Neck</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsCustomRoundNeck).map(color => (
@@ -292,7 +309,7 @@ const NewOrdersWithOption = () => {
     </div>
             
             <Card.Body>
-              <Card.Title style={{textAlign:"center"}}>Blank Drop Sholder</Card.Title>
+              <Card.Title className='cardTitle' style={{textAlign:"center"}}>Blank Drop Sholder</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsBlankDropSholder).map(color => (
@@ -338,7 +355,7 @@ const NewOrdersWithOption = () => {
             
             
             <Card.Body>
-              <Card.Title style={{textAlign:"center"}}>custom Drop Sholder</Card.Title>
+              <Card.Title className='cardTitle' style={{textAlign:"center"}}>custom Drop Sholder</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsCustomDropSholder).map(color => (
@@ -384,7 +401,7 @@ const NewOrdersWithOption = () => {
         </div>
     </div>
             <Card.Body>
-              <Card.Title style={{textAlign:"center",marginBottom:"10px"}}>Blank Hoodie</Card.Title>
+              <Card.Title className='cardTitle' style={{textAlign:"center",marginBottom:"10px"}}>Blank Hoodie</Card.Title>
               
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
@@ -432,7 +449,7 @@ const NewOrdersWithOption = () => {
            
             <Card.Body>
             
-              <Card.Title style={{textAlign:"center",marginBottom:"10px"}}>custom Hoodie</Card.Title>
+              <Card.Title  className='cardTitle' style={{textAlign:"center",marginBottom:"10px"}}>Custom Hoodie</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsCustomHoodie).map(color => (
@@ -457,6 +474,7 @@ const NewOrdersWithOption = () => {
     
     </Row>
     <Footer/>
+ <BackToTop/>
         </div>
     );
 };

@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
 import deliveryCharge from '../../Formulas/deliveryCharge';
+import BackToTop from '../backToTop/BackToTop';
 const BlankDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -114,6 +115,8 @@ const BlankDropSholder = () => {
   const [formValid, setFormValid] = useState(false);
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
+  
+
   useEffect(() => {
     // axios.get('http://localhost:5000/unique-districts')
     axios.get('https://mserver.printbaz.com/unique-districts')
@@ -880,7 +883,7 @@ onClose={() => setShowAlert(false)}
 }
 
  <Footer/>
-
+<BackToTop/>
           </div>
   
       );

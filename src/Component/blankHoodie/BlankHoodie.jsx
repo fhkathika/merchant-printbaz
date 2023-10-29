@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
 import deliveryCharge from '../../Formulas/deliveryCharge';
+import BackToTop from '../backToTop/BackToTop';
 const BlankHoodie = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -137,6 +138,22 @@ const BlankHoodie = () => {
         console.error('Error fetching unique districts:', error);
       });
   }, []);
+  
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
   useEffect(() => {
     if (formData?.districts) {
       // axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(formData?.districts)}`)
@@ -879,7 +896,7 @@ onClose={() => setShowAlert(false)}
 }
 
  <Footer/>
-
+<BackToTop/>
           </div>
   
       );

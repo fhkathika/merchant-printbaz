@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
+import BackToTop from '../backToTop/BackToTop';
 
 const Ticket = () => {
   const[fetchAllTicket,setFetchAllTicket]=useState([])
@@ -195,6 +196,7 @@ const Ticket = () => {
       </div>
     </section>
     <Footer/>
+    <BackToTop/>
   </div>
   );
 };

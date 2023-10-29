@@ -1,16 +1,16 @@
 
 import React from 'react';
 const teeshirtCalcultorPrice = (quantity,
-    printSize,
-    printSizeBack,
-    customRoundNeckFilter,
-customDropSholderFilter,
-customHoodieFilter,
-blankRoundNeckFilter,
-blankDropSholderFilter,
-blankHoodieFilter,
-selectProductType,
-printSide
+  printSize,
+  printSizeBack,
+  customRoundNeckFilter,
+  customDropSholderFilter,
+  customHoodieFilter,
+  blankRoundNeckFilter,
+  blankDropSholderFilter,
+  blankHoodieFilter,
+  selectProductType,
+  printSide
                                      
     ) => {
       console.log("printSize",printSize);
@@ -23,15 +23,14 @@ const customDropSholderBackinputFilter=customDropSholderFilter?.find(thsirt => t
 
 const cusftomHoodieinputFilter=customHoodieFilter?.find(thsirt => thsirt.printSizeFront === printSize)
 const cusftomHoodieBackinputFilter=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
-console.log("customRoundNeckinputFilter",customRoundNeckinputFilter);
+console.log("cusftomHoodieinputFilter from function",cusftomHoodieinputFilter);
 if(selectProductType==="Round Neck"){ 
    if( printSide==="frontSide" || printSide==="backSide"){
-  // 10 x 14
-  totalPrice=quantity*customRoundNeckinputFilter?.frontSideprice;
+ totalPrice=quantity*customRoundNeckinputFilter?.frontSideprice;
  
    }
    else if( printSide==="bothSide"){
-  // 10 x 14
+ 
   totalPrice=quantity*(customRoundNeckinputFilter?.frontSideprice+customRoundNeckBackinputFilter?.backSideprice);
  
    }
@@ -39,12 +38,12 @@ if(selectProductType==="Round Neck"){
 }
 if( selectProductType==="Hoodie"){ 
     if( printSide==="frontSide"|| printSide==="backSide"){
-  // 10 x 14
+ 
   totalPrice=quantity*cusftomHoodieinputFilter?.frontSideprice;
        
  
     } else if( printSide==="bothSide"){
-        // 10 x 14
+       
     totalPrice=quantity*(cusftomHoodieinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice);
        
    
@@ -53,12 +52,12 @@ if( selectProductType==="Hoodie"){
 }
 if( selectProductType==="Drop Sholder"){ 
     if( printSide==="frontSide"|| printSide==="backSide"){
-  // 10 x 14
+ 
   totalPrice=quantity*customDropSholderinputFilter?.frontSideprice;
  
     }
     else if ( printSide==="bothSide"){
-        totalPrice=quantity*(customDropSholderinputFilter?.frontSideprice+cusftomHoodieBackinputFilter?.backSideprice);
+        totalPrice=quantity*(customDropSholderinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice);
     }
   
 }

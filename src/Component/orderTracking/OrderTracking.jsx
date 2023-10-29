@@ -7,6 +7,7 @@ import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
 import SupportTicketPopUp from '../supportTicketPopUp/SupportTicketPopUp';
 import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSupportTickets';
+import BackToTop from '../backToTop/BackToTop';
  const OrderTracking = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
@@ -25,6 +26,21 @@ import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSup
     const location = useLocation();
 const viewOrder = location.state ? location?.state?.orderInfo : null;
 
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
 useEffect(()=>{
   const getOrderById=async()=>{
            // Fetch the updated order details
@@ -491,6 +507,21 @@ getSpecificOrderById?.orderStatus==="returned"?
 </>
                       }
                       </div>
+                      {
+                        getSpecificOrderById?.dsicount &&
+                        <div className='flex'>
+                        <h6>Discount</h6>
+                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.dsicount)}BDT</span>
+                        </div>
+                      }
+                      {
+                        getSpecificOrderById?.additionalCost &&
+                        <div className='flex'>
+                        <h6>Additional Cost</h6>
+                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.additionalCost)}BDT</span>
+                        </div>
+                      }
+                    
                       
                     </div>
                     
@@ -551,6 +582,47 @@ getSpecificOrderById?.orderStatus==="returned"?
                 </div>
               </div>
            </div>
+
+           <div className='row'>
+<div className="col-lg-6 col-md-6 mb-3">
+                <div className="rec-info bg-white p-4 shadow-sm">
+                  <div className="row">
+                    <div className="col-12">
+                      <h3 className="all-title">Discount</h3>
+                    </div>
+                  </div>
+               
+                  <div className="row order-list-title">
+                    <div className="col-12">
+                      <h4 className='font_16'>{getSpecificOrderById?.discountNote}</h4>
+                    </div>
+              
+                  </div>
+               
+                
+                 
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-6 mb-3">
+                <div className="rec-info bg-white p-4 shadow-sm">
+                  <div className="row">
+                    <div className="col-12">
+                      <h3 className="all-title">Additional Cost</h3>
+                    </div>
+                  </div>
+               
+                  <div className="row order-list-title">
+                    <div className="col-12">
+                      <h4 className='font_16'>{getSpecificOrderById?.additionalCostNote}</h4>
+                    </div>
+              
+                  </div>
+               
+                
+                 
+                </div>
+              </div>
+</div>
 
            <div className="col-lg-12 col-md-12 mb-3">
   <div className="rec-info bg-white p-4 shadow-sm">
@@ -944,6 +1016,7 @@ orderDetail?.brandLogo ?
            
           </div>
           <Footer/>
+      <BackToTop/>
         </div>
         );
  };

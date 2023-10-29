@@ -12,6 +12,7 @@ import axios from 'axios';
 import Footer from '../footer/Footer';
 import tshirtFormulaCustomDropSholder from '../../Formulas/tshirtFormulaCustomDropSholder';
 import deliveryCharge from '../../Formulas/deliveryCharge';
+import BackToTop from '../backToTop/BackToTop';
 const CustomDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -111,6 +112,22 @@ const CustomDropSholder = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
+  
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   useEffect(() => {
@@ -283,22 +300,22 @@ let updatedPrintbazcost=0
       let backSidePrintCost = 0;
       let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
       // backSidePrintCost += totalQuantity * 130;
-      if(formData?.orderDetailArr[i]?.printSizeBack==="11.7 x 16.5" || (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="11.7 x 16.5")){
+      if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="11.7 x 16.5"){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 160
       } 
-      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
+      if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" ){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 125
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
+      else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 68
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
+      } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" &&formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 39
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
+      } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="5 x 5"){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 25
       }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
+      else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 x 5"){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 18
-      }  else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"|| (formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 2.5")){
+      }  else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"){
         backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 14
       }
       
@@ -1162,7 +1179,7 @@ onClose={() => setShowAlert(false)}
 }
 
  <Footer/>
-
+<BackToTop/>
           </div>
   
       );

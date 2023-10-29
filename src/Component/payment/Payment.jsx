@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
+import BackToTop from '../backToTop/BackToTop';
 
 const Payment = () => {
     let id = "resellerId";
@@ -105,6 +106,7 @@ const Payment = () => {
             </form>
           </div>
           <Footer/>
+          <BackToTop/>
         </div>
      );
     };

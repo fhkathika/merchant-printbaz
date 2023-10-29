@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../footer/Footer';
 import deliveryCharge from '../../Formulas/deliveryCharge';
+import BackToTop from '../backToTop/BackToTop';
 const BlankRoundNeck = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -153,6 +154,7 @@ const BlankRoundNeck = () => {
   console.log("updated deliveryFee", deliveryFee);
   
   
+
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   useEffect(() => {
@@ -945,7 +947,7 @@ onClose={() => setShowAlert(false)}
 }
 
  <Footer/>
-
+<BackToTop/>
           </div>
   
       );

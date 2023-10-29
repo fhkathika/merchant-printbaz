@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import NavigationBar from '../Navbar/NavigationBar';
 import Footer from '../footer/Footer';
+import BackToTop from '../backToTop/BackToTop';
 const TermsConditions = () => {
       return (
         <>
@@ -1631,6 +1632,7 @@ const TermsConditions = () => {
         </table>{/* End */}
         </div>
     <Footer/>
+    <BackToTop/>
         </>
         
       );

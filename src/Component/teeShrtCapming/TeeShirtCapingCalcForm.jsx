@@ -13,6 +13,7 @@ import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 import teeshirtCalcultorPrice from '../../Formulas/teeshirtCalcultorPrice';
 import NavigationBar from '../Navbar/NavigationBar';
 import Footer from '../footer/Footer';
+import BackToTop from '../backToTop/BackToTop';
 const TeeShirtCapingCalcForm = () => {
     let id = "teeShirtCampingId";
     let collections = "productValues";
@@ -20,12 +21,14 @@ const TeeShirtCapingCalcForm = () => {
     const [dbData, setDbData] = useState({});
     let globalValueId="allGlobalValuesId";
     const [price, setPrice] = useState();
+    console.log("price",price)
     const { fetchedData } = useGetData(id, collections, dbData);
 const {user}=useContext(AuthContext)
     const [quantity,setQuantity]=useState(1)
   
     const [printSize, setPrintSize] = useState("10 x 14");
     const [printSizeBack, setPrintSizeBack] = useState("10 x 14");
+  
     function closePopup() {
         document.getElementById("popup1").style.display = "none";
       }
@@ -47,10 +50,20 @@ const customHoodieFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Cust
 const blankRoundNeckFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Round Neck")
 const blankDropSholderFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Drop Sholder")
 const blankHoodieFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Hoodie")
-console.log("customRoundNeckFilter",customRoundNeckFilter);
+const customDropSholderinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === printSize)
+const customDropSholderBackinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
+console.log("customDropSholderinputFilter",customDropSholderinputFilter)
+console.log("customDropSholderBackinputFilter",customDropSholderBackinputFilter)
+console.log("customDropSholderinputFilter?.frontSideprice",customDropSholderinputFilter?.frontSideprice)
+console.log("customDropSholderBackinputFilter?.backSideprice",customDropSholderBackinputFilter?.backSideprice)
+console.log("customDropSholderBackinputFilter",customDropSholderBackinputFilter)
+let ptice=customDropSholderinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice;
+console.log("customDropSholderinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice",customDropSholderinputFilter?.frontSideprice,"+",customDropSholderBackinputFilter?.backSideprice)
 const [selectProductType, setSelectProductType] = useState('Round Neck');
 const [printSide, setPrintSide] = useState('frontSide');
- 
+console.log("printSize",printSize)
+console.log("printSizeBack",printSizeBack)
+console.log("printSide",printSide)
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     switch (id) {
@@ -1112,6 +1125,7 @@ const [printSide, setPrintSide] = useState('frontSide');
           
         </Container>
         <Footer/>
+        <BackToTop/>
         </div>  
     );
 };

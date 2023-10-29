@@ -7,6 +7,7 @@ import 'quill/dist/quill.snow.css';
 import NavigationBar from '../Navbar/NavigationBar';
 import "../../css/styles.css"
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import BackToTop from '../backToTop/BackToTop';
 const ViewTicket = () => {
   const messagesEndRef = React.useRef(null);
     const location = useLocation();
@@ -459,6 +460,7 @@ return (
        
       </div>
     </section>
+    <BackToTop/>
   </div>
   );
 };

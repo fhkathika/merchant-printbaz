@@ -9,6 +9,7 @@ import NavigationBar from '../Navbar/NavigationBar';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../css/dashboardStyles.css'
+import BackToTop from '../backToTop/BackToTop';
 
 const MyOrders = () => {
     let id = "resellerOrdersId";
@@ -77,6 +78,22 @@ useEffect(() => {
     refs.current[index] = React.createRef();
   });
 }, [info, user]);
+
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
 const handleTabClick = (tabId) => {
       setActiveTab(tabId);
     }
@@ -920,6 +937,7 @@ const filerByOrderDate=info.filter(order=>{
           </div>
           
           <Footer/>
+    <BackToTop/>
         </div>
       );
     };

@@ -9,6 +9,7 @@ import { useGetData } from '../../hooks/useGetData';
 import useGetMongoData from '../../hooks/useGetMongoData';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
+import BackToTop from '../backToTop/BackToTop';
 
  const Profile = () => {
        //  const [quantity, setQuantity] = useState(1);
@@ -33,6 +34,22 @@ console.log("loggedUser",loggedUser);
     }
     getOrders()
 },[loginUser])
+
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
   const handleFileChange = (e) => {
     const { name, value } = e.target;
     if (e.target.type === "file") {
@@ -229,6 +246,7 @@ if (updateData.brandLogo) {
               )}
               </div>
         <Footer/>
+  <BackToTop/>
         </div>
       );
 };

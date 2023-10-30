@@ -283,17 +283,17 @@ function App() {
          <Route
           path="/blogs"
           element={
-            <PrivateRoute>
+        
               <Blogs/>
-            </PrivateRoute>
+          
           }
         />
          <Route
           path="/blogsPreview/:id"
           element={
-            <PrivateRoute>
+            
               <BlogsPreview/>
-            </PrivateRoute>
+            
           }
         />
      

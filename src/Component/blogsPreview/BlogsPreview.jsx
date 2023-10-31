@@ -14,6 +14,8 @@ const BlogsPreview = () => {
 const viewBlog = location.state ? location?.state?.blogs : null;
 const [getBlogById, setGetBlogById] = useState();
 const [allBlogs,setAllBlogs]=useState([])
+const [selectedBlog, setSelectedBlog] = useState(viewBlog); // Initialize with the blog passed through the location state
+
 useEffect(()=>{
   const getBlogs = async () => {
    await fetch('https://mserver.printbaz.com/getAllBlogs') //for main site
@@ -24,34 +26,37 @@ useEffect(()=>{
   }
   getBlogs()
 },[])
-useEffect(()=>{
-  const getblogsById=async()=>{
-           // Fetch the updated order details
-  await fetch(`https://mserver.printbaz.com/getBlogById/${viewBlog?._id}`)
-  // await fetch(`http://localhost:5000/getBlogById/${viewBlog?._id}`)
+const getblogsById=async()=>{
+  // Fetch the updated order details
+await fetch(`https://mserver.printbaz.com/getBlogById/${viewBlog?._id}`)
+// await fetch(`http://localhost:5000/getBlogById/${viewBlog?._id}`)
 
-  .then(res=>res.json())
-  .then(data => {setGetBlogById(data)
-  })
-    
-  
-       }
+.then(res=>res.json())
+.then(data => {setGetBlogById(data)
+})
+
+
+}
+useEffect(()=>{
+
        getblogsById()
         // Update the previousPath state when the location changes
 
       },[])
       console.log("getBlogById",getBlogById)
-
+      const handleBlogSelection = (blog) => {
+        setSelectedBlog(blog);
+    };
       // Sort the blogs by createdAt in descending order
 const sortedBlogs = allBlogs.sort((a, b) => {
-  const dateA = new Date(a.createdAt.$date);
-  const dateB = new Date(b.createdAt.$date);
+  const dateA = new Date(a.createdAt);
+  const dateB = new Date(b.createdAt);
 
   return dateB - dateA;  // Return a positive number for descending order
 });
 
 // Get the two latest blogs
-const latestBlogs = sortedBlogs.slice(0, 2);
+const latestBlogs = sortedBlogs.slice(0, 3);
 
       return (
         <>
@@ -91,15 +96,17 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                   <div className="row">
                     <div className="col-lg-12 mb-5">
                       <div className="single-blog-item">
-                        <img style={{width: '100%'}} src={getBlogById?.imageUrl} alt="" className="img-fluid rounded" />
+                        <img style={{width: '100%'}} src={selectedBlog?selectedBlog.imageUrl
+:getBlogById?.imageUrl
+} alt="" className="img-fluid rounded" />
                         <div className="blog-item-content bg-white pt-5">
                           <div className="blog-item-meta bg-gray py-1 px-2">
                             <span className="text-black text-capitalize mr-3"><i className="ti-time mr-1" />
-                             {getBlogById?.postTime}</span>
+                             {selectedBlog?selectedBlog?.postTime:getBlogById?.postTime}</span>
                           </div>
-                          <h2 className="mt-3 mb-4">{getBlogById?.title}
+                          <h2 className="mt-3 mb-4">{selectedBlog?selectedBlog?.title:getBlogById?.title}
                           </h2>
-                          <p className="lead mb-4" dangerouslySetInnerHTML={{ __html: getBlogById?.description }} />
+                          <p className="lead mb-4" dangerouslySetInnerHTML={{ __html: selectedBlog?selectedBlog?.description:getBlogById?.description }} />
                         
                           {/* <div className="tag-option mt-5 clearfix">
                             <ul className="float-left list-inline">
@@ -146,20 +153,26 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                 </div>
                 <div className="col-lg-4">
                   <div className="sidebar-wrap">
-                    <div className="sidebar-widget search card p-4 mb-3 border-0">
+                    {/* <div className="sidebar-widget search card p-4 mb-3 border-0">
                       <input type="text" className="form-control" placeholder="search" />
                       <a href="#" className="btn btn-mian btn-small d-block mt-2">search</a>
-                    </div>
+                    </div> */}
                     <div className="sidebar-widget latest-post card border-0 p-4 mb-3">
                       <h5>Latest Posts</h5>
                       {
-                      latestBlogs?.slice(0,2).map(latest=>
+                      latestBlogs?.map(blogs=>
                         <div className="media border-bottom py-3">
-                        <Link to={`/blogsPreview/${latest?._id}`}
-                           state={ {latest}}><img className="mr-4" style={{width: '110px'}} src={latest?.imageUrl} alt="" /></Link>
+                       <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        handleBlogSelection(blogs);
+                                    }}><img className="mr-4" style={{width: '110px'}} src={blogs?.imageUrl} alt="" /></a>
                         <div className="media-body">
-                          <h6 className="my-2">{latest?.title}</h6>
-                          <span className="text-sm text-muted">{latest?.postTime}</span>
+                          <h6 className="my-2">  {/* Here, instead of navigating, we just set the selected blog */}
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        handleBlogSelection(blogs);
+                                    }}>{blogs.title}</a></h6>
+                          <span className="text-sm text-muted">{blogs?.postTime}</span>
                         </div>
                       </div>
                       )

@@ -20,14 +20,26 @@ const Blogs = () => {
 
 // Sort the blogs by createdAt in descending order
 const sortedBlogs = allBlogs.sort((a, b) => {
-  const dateA = new Date(a.createdAt.$date);
-  const dateB = new Date(b.createdAt.$date);
+  const dateA = new Date(a.createdAt);
+  const dateB = new Date(b.createdAt);
 
   return dateB - dateA;  // Return a positive number for descending order
 });
 
 // Get the two latest blogs
 const latestBlogs = sortedBlogs.slice(0, 2);
+const blogsPerPage = 4;
+const [currentPage, setCurrentPage] = useState(1);
+const totalPages = Math.ceil(allBlogs.length / blogsPerPage);
+
+useEffect(() => {
+  window.scrollTo(0, 0); // To scroll to the top whenever the page changes
+}, [currentPage]);
+
+// Get current blogs
+const indexOfLastBlog = currentPage * blogsPerPage;
+const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+const currentBlogs = allBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
       return (
         <>
@@ -66,7 +78,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                 <div className="col-lg-8">
                   <div className="row">
                  {
-                  allBlogs?.map(blogs=>{
+                  currentBlogs?.map(blogs=>{
                     const lines = blogs?.description?.split('\n').slice(0, 2); // Gets the first 2 lines
                     return(
                       <div className="col-lg-6 col-md-6 mb-5">
@@ -105,20 +117,21 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                 <div className="col-lg-4">
                   <div className="sidebar-wrap">
                   
-                  <div className="sidebar-widget search card p-4 mb-3 border-0">
+                  {/* <div className="sidebar-widget search card p-4 mb-3 border-0">
                       <input type="text" className="form-control" placeholder="search" />
                       <a href="#" className="btn btn-mian btn-small d-block mt-2">search</a>
-                    </div>
+                    </div> */}
                     <div className="sidebar-widget latest-post card border-0 p-4 mb-3">
                       <h5>Latest Posts</h5>
                       {
-                      latestBlogs?.slice(0,2).map(latest=>
+                      latestBlogs?.map(blogs=>
                         <div className="media border-bottom py-3">
-                        <Link  to={`/blogsPreview/${latest?._id}`}
-                           state={ {latest}}><img className="mr-4" style={{width: '110px'}} src={latest?.imageUrl} alt="" /></Link>
+                        <Link  to={`/blogsPreview/${blogs?._id}`}
+                           state={ {blogs}}><img className="mr-4" style={{width: '110px'}} src={blogs?.imageUrl} alt="" /></Link>
                         <div className="media-body">
-                          <h6 className="my-2">{latest?.title}</h6>
-                          <span className="text-sm text-muted">{latest?.postTime}</span>
+                          <h6 className="my-2"> <Link  to={`/blogsPreview/${blogs?._id}`}
+                           state={ {blogs}}>{blogs?.title}</Link></h6>
+                          <span className="text-sm text-muted">{blogs?.postTime}</span>
                         </div>
                       </div>
                       )
@@ -139,7 +152,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                   </div>
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-lg-8">
                   <nav className="navigation pagination py-2 d-inline-block">
                     <div className="nav-links">
@@ -153,7 +166,33 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                     </div>
                   </nav>
                 </div>
-              </div>
+              </div> */}
+
+                {/* Pagination */}
+      <div className="row">
+        <div className="col-lg-8">
+          <nav className="navigation pagination py-2 d-inline-block">
+            <div className="nav-links">
+              <button className='prev page-numbers' onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                Prev
+              </button>
+              <button className="next page-numbers" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
+                Next
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button 
+                style={{background:"none",border:"none"}}
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={currentPage === index + 1 ? 'current page-numbers' : ''}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          </nav>
+        </div>
+      </div>
             </div>
           </section>
           {/* Main jQuery */}

@@ -7,6 +7,7 @@ import Footer from '../footer/Footer';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import BackToTop from '../backToTop/BackToTop';
 const BlogsPreview = () => {
   const target = useRef(null);
   const location = useLocation();
@@ -98,9 +99,8 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                           </div>
                           <h2 className="mt-3 mb-4">{getBlogById?.title}
                           </h2>
-                          <p className="lead mb-4">
-                          {getBlogById?.title}
-                          </p>
+                          <p className="lead mb-4" dangerouslySetInnerHTML={{ __html: getBlogById?.description }} />
+                        
                           {/* <div className="tag-option mt-5 clearfix">
                             <ul className="float-left list-inline">
                               <li>Tags:</li>
@@ -182,6 +182,7 @@ const latestBlogs = sortedBlogs.slice(0, 2);
             </div>
           </section>
         </div>
+        <BackToTop/>
     <Footer/>
         </>
         

@@ -224,7 +224,9 @@ const copyOrderId = () => {
                   <h3 className=" font-weight-bold col-lg-12 font_16" onClick={copyOrderId}>ORDER ID: {viewOrder?._id} &nbsp;<span style={{cursor:"pointer",padding:"5px",fontSize:"16px"}} ref={target}  onClick={copyOrderId}><i class="fa fa-copy ml-2 mt-1 text-green cursor-pointer text-sm"></i></span> 
                 <h5 className='font_16' style={{marginTop:"10px"}}>{formattedDate}</h5>
                 </h3>
-                  
+                <div className='flex mt-3'>
+               <p style={{fontWeight:"600",color:"white",backgroundColor:"orange",padding:"7px",borderRadius:"5px"}}>{getSpecificOrderById?.category}</p>
+             </div>
                   </div>
               
          <div  className="font-weight-bold col-lg-5  mt-2" >
@@ -511,14 +513,14 @@ getSpecificOrderById?.orderStatus==="returned"?
                         getSpecificOrderById?.dsicount &&
                         <div className='flex'>
                         <h6>Discount</h6>
-                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.dsicount)}BDT</span>
+                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.dsicount)}  BDT</span>
                         </div>
                       }
                       {
                         getSpecificOrderById?.additionalCost &&
                         <div className='flex'>
                         <h6>Additional Cost</h6>
-                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.additionalCost)}BDT</span>
+                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.additionalCost)}  BDT</span>
                         </div>
                       }
                     
@@ -584,6 +586,8 @@ getSpecificOrderById?.orderStatus==="returned"?
            </div>
 
            <div className='row'>
+            {
+              getSpecificOrderById?.discountNote &&
 <div className="col-lg-6 col-md-6 mb-3">
                 <div className="rec-info bg-white p-4 shadow-sm">
                   <div className="row">
@@ -603,7 +607,10 @@ getSpecificOrderById?.orderStatus==="returned"?
                  
                 </div>
               </div>
-              <div className="col-lg-6 col-md-6 mb-3">
+            }
+{
+  getSpecificOrderById?.additionalCostNote &&
+<div className="col-lg-6 col-md-6 mb-3">
                 <div className="rec-info bg-white p-4 shadow-sm">
                   <div className="row">
                     <div className="col-12">
@@ -622,6 +629,8 @@ getSpecificOrderById?.orderStatus==="returned"?
                  
                 </div>
               </div>
+}
+              
 </div>
 
            <div className="col-lg-12 col-md-12 mb-3">

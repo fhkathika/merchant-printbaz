@@ -66,31 +66,36 @@ const latestBlogs = sortedBlogs.slice(0, 2);
                 <div className="col-lg-8">
                   <div className="row">
                  {
-                  allBlogs?.map(blogs=>
-                    <div className="col-lg-6 col-md-6 mb-5">
-                    <div className="blog-item">
-                      <img src={blogs?.imageUrl} alt="" className="img-fluid rounded" />
-                      <div className="blog-item-content bg-white p-4">
-                        <div className="blog-item-meta py-1 px-2">
-                          <span className="text-muted text-capitalize mr-3">{blogs?.productType}</span>
+                  allBlogs?.map(blogs=>{
+                    const lines = blogs?.description?.split('\n').slice(0, 2); // Gets the first 2 lines
+                    return(
+                      <div className="col-lg-6 col-md-6 mb-5">
+                      <div className="blog-item">
+                        <img src={blogs?.imageUrl} alt="" className="img-fluid rounded" />
+                        <div className="blog-item-content bg-white p-4">
+                          <div className="blog-item-meta py-1 px-2">
+                            <span className="text-muted text-capitalize mr-3">{blogs?.productType}</span>
+                          </div>
+  
+                           {/* <p>   {viewTick.content}</p> */}
+                           <div  />
+                       
+                          <h4 className="mt-3 mb-3"> <Link 
+                             to={`/blogsPreview/${blogs?._id}`}
+                             state={ {blogs}}>{blogs?.title}</Link></h4>
+                          <p className="mb-4"dangerouslySetInnerHTML={{ __html: blogs.description.slice(0, 300) }}/>
+                     
+  
+                            <Link 
+                             to={`/blogsPreview/${blogs?._id}`}
+                             state={ {blogs}} className="btn btn-small btn-main btn-round-full">Read
+                            More</Link> 
                         </div>
-
-                         {/* <p>   {viewTick.content}</p> */}
-    <div dangerouslySetInnerHTML={{ __html: blogs.description }} />
-                        {/* <h4 className="mt-3 mb-3"><a href="/blogsPreview">Tshirt, Dropshoulder, Hoodie এর
-                            ব্যবসায় ডেলিভারির আগেই যেভাবে প্রফিট করবেন</a></h4>
-                        <p className="mb-4">আমাদের অনেকের মনে হয়, ব্যবসা করার জন্য বড় পুঁজি বা বিপুল সময়
-                          প্রয়োজন। কিন্তু সঠিক তথ্য ও প্রযুক্তির ব্যবহারে বিনা পুঁজি ও কম সময়েও সফল
-                          ব্যবসা করা সম্ভব।</p> */}
-                   
-
-                          <Link 
-                           to={`/blogsPreview/${blogs?._id}`}
-                           state={ {blogs}} className="btn btn-small btn-main btn-round-full">Read
-                          More</Link> 
                       </div>
                     </div>
-                  </div>
+                    )
+                  }
+                  
                     )
                  }
                    

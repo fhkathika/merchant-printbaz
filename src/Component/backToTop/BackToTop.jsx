@@ -18,8 +18,8 @@ const BackToTop = () => {
         };
       }, []);
     return (
-        <div>
-             <a
+        <div >
+             <a style={{marginBottom:"30px"}}
     href="#"
     className="back-to-top d-flex align-items-center justify-content-center"
   >

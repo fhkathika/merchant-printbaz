@@ -16,6 +16,7 @@ import useGetMongoData from '../hooks/useGetMongoData';
 import ReqPaymentTIcketPopup from '../alertBox/ReqPaymentTIcketPopup';
 import Footer from '../Component/footer/Footer';
 import NavigationBar from '../Component/Navbar/NavigationBar';
+import BackToTop from '../Component/backToTop/BackToTop';
 const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
   let id = "resellerOrdersId";
@@ -653,7 +654,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#07d5c0" }}>Total Payment Received</h3>
               <div className="payments">
-                <sup>৳</sup>{lastPayment?.totalReleasedAmount}
+                <sup>৳</sup>{lastPayment?.totalReleasedAmount?lastPayment?.totalReleasedAmount:0}
               </div>
             </div>
           </div>
@@ -966,12 +967,8 @@ const handleLogOut=()=>{
   </footer> */}
   <Footer/>
   {/* End Footer */}
-  <a
-    href="#"
-    className="back-to-top d-flex align-items-center justify-content-center"
-  >
-    <i className="bi bi-arrow-up-short" />
-  </a>
+  <BackToTop/>
+
   {/* Vendor JS Files */}
 </>
   );

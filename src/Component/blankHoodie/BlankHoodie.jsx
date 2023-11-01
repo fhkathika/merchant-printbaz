@@ -502,7 +502,29 @@ const handleSubmit = async (e) => {
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
        </Card.Title>
-       <Card.Img variant="top" src={item?.categoryImg} />
+       {/* <Card.Img variant="top" src={item?.categoryImg} /> */}
+          {/* Card Image */}
+          <div style={{ position: 'relative' }}>
+                <Card.Img variant="top" src={item?.categoryImg} />
+                
+                {/* Conditionally render the overlay for the first card */}
+                {index === 0 && (
+                    <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0,0,0,0.5)', // You can adjust the RGBA values for desired transparency
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white'
+                    }}>
+                        <h1 style={{fontWeight:"700"}}>Out of stock</h1> {/* Replace this with your desired overlay content */}
+                    </div>
+                )}
+            </div>
        <ListGroup className="list-group-flush pl-0 pr-0">
            <ListGroup.Item className="d-flex align-items-center">
                <span value="m">M</span>

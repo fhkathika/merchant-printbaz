@@ -632,7 +632,29 @@ const handleSubmit = async (e) => {
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
        </Card.Title>
-       <Card.Img variant="top" src={item?.categoryImg} />
+       {/* <Card.Img variant="top" src={item?.categoryImg} /> */}
+
+       <div style={{ position: 'relative' }}>
+                <Card.Img variant="top" src={item?.categoryImg} />
+                
+                {/* Conditionally render the overlay for the first card */}
+                {index === 0 && (
+                    <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0,0,0,0.5)', // You can adjust the RGBA values for desired transparency
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white'
+                    }}>
+                        <h1 style={{fontWeight:"700"}}>Out of stock</h1> {/* Replace this with your desired overlay content */}
+                    </div>
+                )}
+            </div>
        <ListGroup className="list-group-flush pl-0 pr-0">
            <ListGroup.Item className="d-flex align-items-center">
                <span value="m">M</span>
@@ -724,14 +746,31 @@ const handleSubmit = async (e) => {
                         name="printSize"
                         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
-                        <option value="">select print size</option> 
-                        <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″(A4)</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                        {
+                          index === 0 ?
+                          <>
+                          <option value="">select print size</option> 
+                          <option value="11.7 x 16.5">11.7″ x 16.5″(A3) <spna > (Out of stock)</spna></option>
+                          <option value="10 x 14">10″ x 14″  <spna > (Out of stock)</spna></option>
+                          <option value="10 x 10">10″ x 10″(A4) <spna > (Out of stock)</spna></option>
+                          <option value="10 x 5">10″ x 5″ <spna > (Out of stock)</spna></option>
+                          <option value="5 X 5">5″ x 5″ <spna > (Out of stock)</spna></option>
+                          <option value="2.5 X 5">2.5″ x 5″ <spna > (Out of stock)</spna></option>
+                          <option value="2.5 X 2.5">2.5″ x 2.5″ <spna > (Out of stock)</spna></option>
+                          </>
+                          :
+                          <>
+                          <option value="">select print size</option> 
+                          <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
+                          <option value="10 x 14">10″ x 14″</option>
+                          <option value="10 x 10">10″ x 10″(A4)</option>
+                          <option value="10 x 5">10″ x 5″</option>
+                          <option value="5 X 5">5″ x 5″</option>
+                          <option value="2.5 X 5">2.5″ x 5″</option>
+                          <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                          </>
+                        }
+                     
                       </Form.Control>
                     </Form.Group>
 }
@@ -754,14 +793,31 @@ const handleSubmit = async (e) => {
                         name="printSize"
                         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
-                       <option value="">select print size</option> 
-                       <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″(A4)</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 2.5″</option>
+                        {
+                            index === 0 ?
+                            <>
+                            <option value="">select print size</option> 
+                            <option value="11.7 x 16.5">11.7″ x 16.5″(A3) <spna > (Out of stock)</spna></option>
+                             <option value="10 x 14">10″ x 14″ <spna > (Out of stock)</spna></option>
+                             <option value="10 x 10">10″ x 10″(A4) <spna > (Out of stock)</spna></option>
+                             <option value="10 x 5">10″ x 5″ <spna > (Out of stock)</spna></option>
+                             <option value="5 X 5">5″ x 5″ <spna > (Out of stock)</spna></option>
+                             <option value="2.5 X 5">2.5″ x 5″ <spna > (Out of stock)</spna></option>
+                             <option value="2.5 X 5">2.5″ x 2.5″ <spna > (Out of stock)</spna></option>
+                             </>
+                             :
+                             <>
+                             <option value="">select print size</option> 
+                             <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
+                              <option value="10 x 14">10″ x 14″</option>
+                              <option value="10 x 10">10″ x 10″(A4)</option>
+                              <option value="10 x 5">10″ x 5″</option>
+                              <option value="5 X 5">5″ x 5″</option>
+                              <option value="2.5 X 5">2.5″ x 5″</option>
+                              <option value="2.5 X 5">2.5″ x 2.5″</option>
+                              </>
+                        }
+                       
                       </Form.Control>
                     </Form.Group>
                     <Form.Group
@@ -780,14 +836,31 @@ const handleSubmit = async (e) => {
                      
                       required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                     >
-                     <option value="">select print size</option> 
-                     <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
-                      <option value="10 x 14">10″ x 14″</option>
-                      <option value="10 x 10">10″ x 10″(A4)</option>
-                      <option value="10 x 5">10″ x 5″</option>
-                      <option value="5 X 5">5″ x 5″</option>
-                      <option value="2.5 X 5">2.5″ x 5″</option>
-                      <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                      {
+                          index === 0 ?
+                          <>
+                          <option value="">select print size</option> 
+                          <option value="11.7 x 16.5">11.7″ x 16.5″(A3) <spna style={{color:"red"}} > (Out of stock)</spna></option>
+                           <option value="10 x 14">10″ x 14″ <spna > (Out of stock)</spna></option>
+                           <option value="10 x 10">10″ x 10″(A4) <spna > (Out of stock)</spna></option>
+                           <option value="10 x 5">10″ x 5″ <spna > (Out of stock)</spna></option>
+                           <option value="5 X 5">5″ x 5″ <spna > (Out of stock)</spna></option>
+                           <option value="2.5 X 5">2.5″ x 5″ <spna > (Out of stock)</spna></option>
+                           <option value="2.5 X 2.5">2.5″ x 2.5″ <spna > (Out of stock)</spna></option>
+                           </>
+                           :
+                           <>
+                           <option value="">select print size</option> 
+                           <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
+                            <option value="10 x 14">10″ x 14″</option>
+                            <option value="10 x 10">10″ x 10″(A4)</option>
+                            <option value="10 x 5">10″ x 5″</option>
+                            <option value="5 X 5">5″ x 5″</option>
+                            <option value="2.5 X 5">2.5″ x 5″</option>
+                            <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                            </>
+                      }
+                    
                     </Form.Control>
                   </Form.Group>
                       </>

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/blogsStyles.css';
 import { Accordion, Container, Nav, Navbar } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import NavigationBar from '../Navbar/NavigationBar';
 import Footer from '../footer/Footer';
 import { useRef } from 'react';
@@ -15,7 +15,7 @@ const viewBlog = location.state ? location?.state?.blogs : null;
 const [getBlogById, setGetBlogById] = useState();
 const [allBlogs,setAllBlogs]=useState([])
 const [selectedBlog, setSelectedBlog] = useState(viewBlog); // Initialize with the blog passed through the location state
-
+let { id } = useParams();
 useEffect(()=>{
   const getBlogs = async () => {
    await fetch('https://mserver.printbaz.com/getAllBlogs') //for main site
@@ -28,8 +28,8 @@ useEffect(()=>{
 },[])
 const getblogsById=async()=>{
   // Fetch the updated order details
-await fetch(`https://mserver.printbaz.com/getBlogById/${viewBlog?._id}`)
-// await fetch(`http://localhost:5000/getBlogById/${viewBlog?._id}`)
+await fetch(`https://mserver.printbaz.com/getBlogById/${id}`)
+// await fetch(`http://localhost:5000/getBlogById/${id}`)
 
 .then(res=>res.json())
 .then(data => {setGetBlogById(data)
@@ -42,7 +42,7 @@ useEffect(()=>{
        getblogsById()
         // Update the previousPath state when the location changes
 
-      },[])
+      },[getBlogById])
       console.log("getBlogById",getBlogById)
       const handleBlogSelection = (blog) => {
         setSelectedBlog(blog);
@@ -96,17 +96,17 @@ const latestBlogs = sortedBlogs.slice(0, 3);
                   <div className="row">
                     <div className="col-lg-12 mb-5">
                       <div className="single-blog-item">
-                        <img style={{width: '100%'}} src={selectedBlog?selectedBlog.imageUrl
+                        <img style={{width: '100%'}} src={selectedBlog?.imageUrl?selectedBlog?.imageUrl
 :getBlogById?.imageUrl
 } alt="" className="img-fluid rounded" />
                         <div className="blog-item-content bg-white pt-5">
                           <div className="blog-item-meta bg-gray py-1 px-2">
                             <span className="text-black text-capitalize mr-3"><i className="ti-time mr-1" />
-                             {selectedBlog?selectedBlog?.postTime:getBlogById?.postTime}</span>
+                             {selectedBlog?.postTime?selectedBlog?.postTime:getBlogById?.postTime}</span>
                           </div>
-                          <h2 className="mt-3 mb-4">{selectedBlog?selectedBlog?.title:getBlogById?.title}
+                          <h2 className="mt-3 mb-4">{selectedBlog?.title?selectedBlog?.title:getBlogById?.title}
                           </h2>
-                          <p className="lead mb-4" dangerouslySetInnerHTML={{ __html: selectedBlog?selectedBlog?.description:getBlogById?.description }} />
+                          <p className="lead mb-4" dangerouslySetInnerHTML={{ __html: selectedBlog?.description ?selectedBlog?.description:getBlogById?.description }} />
                         
                           {/* <div className="tag-option mt-5 clearfix">
                             <ul className="float-left list-inline">

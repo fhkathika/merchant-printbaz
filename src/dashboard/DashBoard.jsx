@@ -221,7 +221,7 @@ for(let i=0;i<orderSatatusReturned?.length;i++){
     
     // If totalReturn and deliveryFee exist and are numbers, add them to totalReturnAmountBase
    
-      totalReturnAmmountBase += (totalReturn +deliveryFee/2);
+      totalReturnAmmountBase += (totalReturn +deliveryFee+deliveryFee/2);
     
   }
 
@@ -690,7 +690,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#ff0071" }}>Due Amount</h3>
               <div className="payments">
-                <sup>৳</sup>{user?.dueAmountNow}
+                <sup>৳</sup>{Math.floor(user?.dueAmountNow)}
               </div>
             </div>
           </div>

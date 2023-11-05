@@ -654,7 +654,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#07d5c0" }}>Total Payment Received</h3>
               <div className="payments">
-                <sup>৳</sup>{lastPayment?.totalReleasedAmount?lastPayment?.totalReleasedAmount:0}
+                <sup>৳</sup>{lastPayment?.totalReleasedAmount?Math.floor(lastPayment?.totalReleasedAmount):0}
               </div>
             </div>
           </div>
@@ -666,7 +666,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#65c600" }}>Total Bill</h3>
               <div className="payments">
-                <sup>৳</sup>{lastPayment?.totalBill}
+                <sup>৳</sup>{Math.floor(lastPayment?.totalBill)}
               </div>
             </div>
           </div>
@@ -678,7 +678,7 @@ const handleLogOut=()=>{
             <div className="box">
               <h3 style={{ color: "#ff901c" }}>Return Value</h3>
               <div className="payments">
-                <sup>৳</sup>{lastPayment?.totalReturnAmmountBase}
+                <sup>৳</sup>{Math.floor(lastPayment?.totalReturnAmmountBase)}
               </div>
             </div>
           </div>

@@ -272,7 +272,7 @@ a[x-apple-data-detectors] {
   justify-content: space-between;
 }
   /* Adjusting the input fields for responsiveness */
-  input[type="number"] {
+  input[type="text"] {
     /* width: 100%; */
     max-width: 80%;
     box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
@@ -281,6 +281,11 @@ a[x-apple-data-detectors] {
     max-width: 100%;
     box-sizing: border-box; 
   }
+  .rcp_info input[type="text"] {
+    max-width: 100%;
+ 
+    box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
+  } 
   select.form-control {
     width: 100%;
     max-width: 100%;

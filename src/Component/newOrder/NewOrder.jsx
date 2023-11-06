@@ -15,6 +15,7 @@ import Footer from '../footer/Footer';
 import deliveryCharge from '../../Formulas/deliveryCharge';
 import BackToTop from '../backToTop/BackToTop';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
+import backsideFormula from '../../Formulas/backsideFormula';
 const NewOrder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -195,12 +196,25 @@ const NewOrder = () => {
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-    const price_10x14=358
-    const price_10x10=301
-    const price_10x5=272
-    const price_5X5=257
-    const price_2p5X5=250
-    const price_2p5X2p5=247
+
+    // these will come from database 
+    let price_10x14=358
+    let price_10x10=301
+    let price_10x5=272
+    let price_5X5=257
+    let price_2p5X5=250
+    let price_2p5X2p5=247
+
+let backSideDtfprice_10x14=113
+let backSideDtfprice_10x10=57
+let backSideDtfprice_10x5=29
+let backSideDtfprice_5X5=15
+let backSideDtfprice_2p5X5=8
+let backSideDtfprice_2p5X2p5=4
+let additionalCost=10
+
+//////////////////////////////////////////
+
 
     const navigate=useNavigate()
     const location=useLocation()
@@ -287,6 +301,7 @@ let updatedPrintbazcost=0
      
     ) 
     {
+      // front side cost 
       const totalPrice = teeShirtFormula(
         formData?.quantity,
         formData?.orderDetailArr[i]?.totalQuantity,
@@ -298,25 +313,41 @@ let updatedPrintbazcost=0
         price_2p5X5,
         price_2p5X2p5
       ).totalPrice;
-      let backSidePrintCost = 0;
-      let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
-      // backSidePrintCost += totalQuantity * 130;
-      if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 14"){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 125
-      }
-      else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 68
-      } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 39
-      } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 25
-      }
-      else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 18
-      }
-        else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 14
-      }
+
+      // back side dtf cost plus additional cost 
+      let backSidePrintCost =backsideFormula(
+        formData?.quantity,
+        formData?.orderDetailArr[i]?.totalQuantity,
+        formData?.orderDetailArr[i]?.printSizeBack,
+        formData?.orderDetailArr[i]?.printSide,
+        backSideDtfprice_10x14,
+        backSideDtfprice_10x10,
+        backSideDtfprice_10x5,
+        backSideDtfprice_5X5,
+        backSideDtfprice_2p5X5,
+        backSideDtfprice_2p5X2p5,
+        additionalCost,
+
+      ).backDtfAndAdditionalCost;
+  
+      // let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
+      // // backSidePrintCost += totalQuantity * 130;
+      // if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 14"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * backSideDtfprice_10x14+additionalCost
+      // }
+      // else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * backSideDtfprice_10x10 +additionalCost
+      // } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * backSideDtfprice_10x5+additionalCost
+      // } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * backSideDtfprice_5X5+additionalCost
+      // }
+      // else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * backSideDtfprice_2p5X5+additionalCost
+      // }
+      //   else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * backSideDtfprice_2p5X2p5+additionalCost
+      // }
       
       // At this point, backSidePrintCost contains the total cost for the current item's back side print
       

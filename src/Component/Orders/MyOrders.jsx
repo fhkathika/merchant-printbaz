@@ -393,12 +393,6 @@ const filerByOrderDate=info.filter(order=>{
                   
                 </select>
               </div>
-              
-               
-               
-                
-                 
-        
                
               </div>
             </form>

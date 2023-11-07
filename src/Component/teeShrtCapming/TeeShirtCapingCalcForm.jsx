@@ -164,7 +164,19 @@ console.log("printSide",printSide)
          selectProductType==="Round Neck" &&
          <tbody>
          {
-             customRoundNeckFilter.map(roundNeck=>
+             customRoundNeckFilter?.sort((a, b) => {
+              // Helper function to calculate area from a "W x H" string.
+              const calculateArea = (size) => {
+                const [width, height] = size.split(' x ').map(Number);
+                return width * height;
+              };
+        
+              // Calculate area for both elements.
+              const areaA = calculateArea(a.printSizeFront);
+              const areaB = calculateArea(b.printSizeFront);
+        
+              return areaA - areaB; // For ascending order by area
+            }).map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>
@@ -183,14 +195,12 @@ console.log("printSide",printSide)
          selectProductType==="Drop Sholder" &&
          <tbody>
          {
-             customDropSholderFilter.map(roundNeck=>
+             customDropSholderFilter?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>
                 {/* <td>{roundNeck?.backSideprice}</td> */}
               
-               
-             
             </tr>
                 )
          }
@@ -200,7 +210,7 @@ console.log("printSide",printSide)
          selectProductType==="Hoodie" &&
          <tbody>
          {
-             customHoodieFilter.map(roundNeck=>
+             customHoodieFilter?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>

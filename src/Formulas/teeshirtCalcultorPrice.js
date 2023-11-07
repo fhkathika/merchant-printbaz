@@ -16,6 +16,7 @@ const teeshirtCalcultorPrice = (quantity,
       console.log("printSize",printSize);
 let totalPrice=0
 const customRoundNeckinputFilter=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === printSize)
+console.log("customRoundNeckinputFilter",customRoundNeckinputFilter)
 const customRoundNeckBackinputFilter=customRoundNeckFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
 
 const customDropSholderinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === printSize)
@@ -26,12 +27,12 @@ const cusftomHoodieBackinputFilter=customHoodieFilter?.find(thsirt => thsirt.pri
 console.log("cusftomHoodieinputFilter from function",cusftomHoodieinputFilter);
 if(selectProductType==="Round Neck"){ 
    if( printSide==="frontSide" || printSide==="backSide"){
- totalPrice=quantity*customRoundNeckinputFilter?.frontSideprice;
+ totalPrice=quantity*Number(customRoundNeckinputFilter?.frontSideprice);
  
    }
    else if( printSide==="bothSide"){
  
-  totalPrice=quantity*(customRoundNeckinputFilter?.frontSideprice+customRoundNeckBackinputFilter?.backSideprice);
+  totalPrice=quantity*(Number(customRoundNeckinputFilter?.frontSideprice)+Number(customRoundNeckBackinputFilter?.backSideprice)+Number(customRoundNeckBackinputFilter?.additionalCost));
  
    }
   
@@ -39,12 +40,12 @@ if(selectProductType==="Round Neck"){
 if( selectProductType==="Hoodie"){ 
     if( printSide==="frontSide"|| printSide==="backSide"){
  
-  totalPrice=quantity*cusftomHoodieinputFilter?.frontSideprice;
+  totalPrice=quantity*Number(cusftomHoodieinputFilter?.frontSideprice);
        
  
     } else if( printSide==="bothSide"){
        
-    totalPrice=quantity*(cusftomHoodieinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice);
+    totalPrice=quantity*(Number(cusftomHoodieinputFilter?.frontSideprice)+Number(cusftomHoodieinputFilter?.backSideprice)+Number(cusftomHoodieinputFilter?.additionalCost));
        
    
     }
@@ -53,11 +54,11 @@ if( selectProductType==="Hoodie"){
 if( selectProductType==="Drop Sholder"){ 
     if( printSide==="frontSide"|| printSide==="backSide"){
  
-  totalPrice=quantity*customDropSholderinputFilter?.frontSideprice;
+  totalPrice=quantity*Number(customDropSholderinputFilter?.frontSideprice);
  
     }
     else if ( printSide==="bothSide"){
-        totalPrice=quantity*(customDropSholderinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice);
+        totalPrice=quantity*(Number(customDropSholderinputFilter?.frontSideprice)+Number(customDropSholderBackinputFilter?.backSideprice)+Number(customDropSholderBackinputFilter?.additionalCost));
     }
   
 }

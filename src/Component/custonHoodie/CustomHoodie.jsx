@@ -199,13 +199,14 @@ const [formData, setFormData] = useState({
     const {dynamicBackPrices} = useDynamicBckSidePrice();
     const { tshirtPrice } = useGetTshirtPrice();
     const {dynamicFrontPrices} = useDynamicFrontSidePrice();
-    let price_11p7x16p5=dynamicFrontPrices?.frontSideprice_11p7x16p5A3
-    let price_10x14=dynamicFrontPrices?.frontSideprice_10x14
-    let price_10x10=dynamicFrontPrices?.frontSideprice_10x10
-    let price_10x5=dynamicFrontPrices?.frontSideprice_10x5
-    let price_5X5=dynamicFrontPrices?.frontSideprice_5x5
-    let price_2p5X5=dynamicFrontPrices?.frontSideprice_2p5x5
-    let price_2p5X2p5=dynamicFrontPrices?.frontSideprice_2p5x2p5
+    
+    let price_11p7x16p5=tshirtPrice[13]?.frontSideprice
+    let price_10x14=tshirtPrice[14]?.frontSideprice
+    let price_10x10=tshirtPrice[15]?.frontSideprice
+    let price_10x5=tshirtPrice[16]?.frontSideprice
+    let price_5X5=tshirtPrice[17]?.frontSideprice
+    let price_2p5X5=tshirtPrice[18]?.frontSideprice
+    let price_2p5X2p5=tshirtPrice[19]?.frontSideprice
 
 //     let backSideDtfprice_11p7x16p5=150
 // let backSideDtfprice_10x14=113
@@ -216,13 +217,14 @@ const [formData, setFormData] = useState({
 // let backSideDtfprice_2p5X2p5=4
 // let additionalCost=10
 
-let backSideDtfprice_11p7x16p5=dynamicBackPrices?.backSideDtfprice_11p7x16p5A3
-let backSideDtfprice_10x14= dynamicBackPrices?.backSideDtfprice_10x14
-let backSideDtfprice_10x10=dynamicBackPrices?.backSideDtfprice_10x10
-let backSideDtfprice_10x5=dynamicBackPrices?.backSideDtfprice_10x5
-let backSideDtfprice_5X5=dynamicBackPrices?.backSideDtfprice_5x5
-let backSideDtfprice_2p5X5=dynamicBackPrices?.backSideDtfprice_2p5x5
-let backSideDtfprice_2p5X2p5=dynamicBackPrices?.backSideDtfprice_2p5x2p5
+let backSideDtfprice_11p7x16p5=tshirtPrice[13]?.backSideprice
+let backSideDtfprice_10x14=tshirtPrice[14]?.backSideprice
+let backSideDtfprice_10x10=tshirtPrice[15]?.backSideprice
+let backSideDtfprice_10x5=tshirtPrice[16]?.backSideprice
+let backSideDtfprice_5X5=tshirtPrice[17]?.backSideprice
+let backSideDtfprice_2p5X5=tshirtPrice[18]?.backSideprice
+let backSideDtfprice_2p5X2p5=tshirtPrice[19]?.backSideprice
+console.log("backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
 let additionalCost=tshirtPrice[0]?.additionalCost
 
     const navigate=useNavigate()

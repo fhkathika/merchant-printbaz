@@ -197,26 +197,41 @@ useEffect(() => {
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
     const {dynamicBackPrices} = useDynamicBckSidePrice();
-    const { tshirtPrice } = useGetTshirtPrice();
     const {dynamicFrontPrices} = useDynamicFrontSidePrice();
-    let price_11p7x16p5=dynamicFrontPrices?.frontSideprice_11p7x16p5A3
-    let price_10x14=dynamicFrontPrices?.frontSideprice_10x14
-    let price_10x10=dynamicFrontPrices?.frontSideprice_10x10
-    let price_10x5=dynamicFrontPrices?.frontSideprice_10x5
-    let price_5X5=dynamicFrontPrices?.frontSideprice_5x5
-    let price_2p5X5=dynamicFrontPrices?.frontSideprice_2p5x5
-    let price_2p5X2p5=dynamicFrontPrices?.frontSideprice_2p5x2p5
+    const { tshirtPrice } = useGetTshirtPrice();
+    
+    let price_11p7x16p5=tshirtPrice[6]?.frontSideprice
+    let price_10x14=tshirtPrice[7]?.frontSideprice
+    let price_10x10=tshirtPrice[8]?.frontSideprice
+    let price_10x5=tshirtPrice[9]?.frontSideprice
+    let price_5X5=tshirtPrice[10]?.frontSideprice
+    let price_2p5X5=tshirtPrice[11]?.frontSideprice
+    let price_2p5X2p5=tshirtPrice[12]?.frontSideprice
+    console.log("dynamicFrontPrices",dynamicFrontPrices)
+console.log("price_11p7x16p5",price_11p7x16p5)
+console.log("price_10x14",price_10x14)
+console.log("price_10x10",price_10x10)
+console.log("price_10x5",price_10x5)
+console.log("price_5X5",price_5X5)
+console.log("price_2p5X5",price_2p5X5)
+console.log("price_2p5X2p5",price_2p5X2p5)
 
-
-let backSideDtfprice_11p7x16p5=dynamicBackPrices?.backSideDtfprice_11p7x16p5A3
-let backSideDtfprice_10x14= dynamicBackPrices?.backSideDtfprice_10x14
-let backSideDtfprice_10x10=dynamicBackPrices?.backSideDtfprice_10x10
-let backSideDtfprice_10x5=dynamicBackPrices?.backSideDtfprice_10x5
-let backSideDtfprice_5X5=dynamicBackPrices?.backSideDtfprice_5x5
-let backSideDtfprice_2p5X5=dynamicBackPrices?.backSideDtfprice_2p5x5
-let backSideDtfprice_2p5X2p5=dynamicBackPrices?.backSideDtfprice_2p5x2p5
+let backSideDtfprice_11p7x16p5=tshirtPrice[6]?.backSideprice
+let backSideDtfprice_10x14=tshirtPrice[7]?.backSideprice
+let backSideDtfprice_10x10=tshirtPrice[8]?.backSideprice
+let backSideDtfprice_10x5=tshirtPrice[9]?.backSideprice
+let backSideDtfprice_5X5=tshirtPrice[10]?.backSideprice
+let backSideDtfprice_2p5X5=tshirtPrice[11]?.backSideprice
+let backSideDtfprice_2p5X2p5=tshirtPrice[12]?.backSideprice
 let additionalCost=tshirtPrice[0]?.additionalCost
-
+console.log("backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
+console.log("backSideDtfprice_10x14",backSideDtfprice_10x14)
+console.log("backSideDtfprice_10x10",backSideDtfprice_10x10)
+console.log("backSideDtfprice_10x5",backSideDtfprice_10x5)
+console.log("backSideDtfprice_5X5",backSideDtfprice_5X5)
+console.log("backSideDtfprice_2p5X5",backSideDtfprice_2p5X5)
+console.log("backSideDtfprice_2p5X2p5",backSideDtfprice_2p5X2p5)
+console.log("additionalCost",additionalCost)
     const navigate=useNavigate()
     const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);

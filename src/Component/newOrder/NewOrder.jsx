@@ -214,12 +214,12 @@ const NewOrder = () => {
     // let price_5X5=257
     // let price_2p5X5=250
     // let price_2p5X2p5=247
-    let price_10x14=dynamicFrontPrices?.frontSideprice_10x14
-    let price_10x10=dynamicFrontPrices?.frontSideprice_10x10
-    let price_10x5=dynamicFrontPrices?.frontSideprice_10x5
-    let price_5X5=dynamicFrontPrices?.frontSideprice_5x5
-    let price_2p5X5=dynamicFrontPrices?.frontSideprice_2p5x5
-    let price_2p5X2p5=dynamicFrontPrices?.frontSideprice_2p5x2p5
+    let price_10x14=tshirtPrice[0]?.frontSideprice
+    let price_10x10=tshirtPrice[1]?.frontSideprice
+    let price_10x5=tshirtPrice[2]?.frontSideprice
+    let price_5X5=tshirtPrice[3]?.frontSideprice
+    let price_2p5X5=tshirtPrice[4]?.frontSideprice
+    let price_2p5X2p5=tshirtPrice[5]?.frontSideprice
 
 // let backSideDtfprice_10x14=113
 // let backSideDtfprice_10x10=57
@@ -228,12 +228,12 @@ const NewOrder = () => {
 // let backSideDtfprice_2p5X5=8
 // let backSideDtfprice_2p5X2p5=4
 // let additionalCost=10
-let backSideDtfprice_10x14= dynamicBackPrices?.backSideDtfprice_10x14
-let backSideDtfprice_10x10=dynamicBackPrices?.backSideDtfprice_10x10
-let backSideDtfprice_10x5=dynamicBackPrices?.backSideDtfprice_10x5
-let backSideDtfprice_5X5=dynamicBackPrices?.backSideDtfprice_5x5
-let backSideDtfprice_2p5X5=dynamicBackPrices?.backSideDtfprice_2p5x5
-let backSideDtfprice_2p5X2p5=dynamicBackPrices?.backSideDtfprice_2p5x2p5
+let backSideDtfprice_10x14=tshirtPrice[0]?.backSideprice
+let backSideDtfprice_10x10=tshirtPrice[1]?.backSideprice
+let backSideDtfprice_10x5=tshirtPrice[2]?.backSideprice
+let backSideDtfprice_5X5=tshirtPrice[3]?.backSideprice
+let backSideDtfprice_2p5X5=tshirtPrice[4]?.backSideprice
+let backSideDtfprice_2p5X2p5=tshirtPrice[5]?.backSideprice
 let additionalCost=tshirtPrice[0]?.additionalCost
 
 //////////////////////////////////////////

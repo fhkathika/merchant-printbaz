@@ -15,6 +15,9 @@ import deliveryCharge from '../../Formulas/deliveryCharge';
 import BackToTop from '../backToTop/BackToTop';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
 import backsiideFormulaDropSholderHoodie from '../../Formulas/backsiideFormulaDropSholderHoodie';
+import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
+import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
+import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
 const CustomDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -193,22 +196,26 @@ useEffect(() => {
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-    let price_11p7x16p5=433
-    let price_10x14=398
-    let price_10x10=341
-    let price_10x5=312
-    let price_5X5=297
-    let price_2p5X5=290
-    let price_2p5X2p5=287
+    const {dynamicBackPrices} = useDynamicBckSidePrice();
+    const { tshirtPrice } = useGetTshirtPrice();
+    const {dynamicFrontPrices} = useDynamicFrontSidePrice();
+    let price_11p7x16p5=dynamicFrontPrices?.frontSideprice_11p7x16p5A3
+    let price_10x14=dynamicFrontPrices?.frontSideprice_10x14
+    let price_10x10=dynamicFrontPrices?.frontSideprice_10x10
+    let price_10x5=dynamicFrontPrices?.frontSideprice_10x5
+    let price_5X5=dynamicFrontPrices?.frontSideprice_5x5
+    let price_2p5X5=dynamicFrontPrices?.frontSideprice_2p5x5
+    let price_2p5X2p5=dynamicFrontPrices?.frontSideprice_2p5x2p5
 
-let backSideDtfprice_11p7x16p5=150
-let backSideDtfprice_10x14=113
-let backSideDtfprice_10x10=57
-let backSideDtfprice_10x5=29
-let backSideDtfprice_5X5=15
-let backSideDtfprice_2p5X5=8
-let backSideDtfprice_2p5X2p5=4
-let additionalCost=10
+
+let backSideDtfprice_11p7x16p5=dynamicBackPrices?.backSideDtfprice_11p7x16p5A3
+let backSideDtfprice_10x14= dynamicBackPrices?.backSideDtfprice_10x14
+let backSideDtfprice_10x10=dynamicBackPrices?.backSideDtfprice_10x10
+let backSideDtfprice_10x5=dynamicBackPrices?.backSideDtfprice_10x5
+let backSideDtfprice_5X5=dynamicBackPrices?.backSideDtfprice_5x5
+let backSideDtfprice_2p5X5=dynamicBackPrices?.backSideDtfprice_2p5x5
+let backSideDtfprice_2p5X2p5=dynamicBackPrices?.backSideDtfprice_2p5x2p5
+let additionalCost=tshirtPrice[0]?.additionalCost
 
     const navigate=useNavigate()
     const location=useLocation()

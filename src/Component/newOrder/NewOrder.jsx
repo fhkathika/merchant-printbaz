@@ -16,7 +16,11 @@ import deliveryCharge from '../../Formulas/deliveryCharge';
 import BackToTop from '../backToTop/BackToTop';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
 import backsideFormula from '../../Formulas/backsideFormula';
+import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
+import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
+import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
 const NewOrder = () => {
+  
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -112,11 +116,13 @@ const NewOrder = () => {
      collectionsPrice,
      dbData
    );
+  
   const {user}=useContext(AuthContext);
   const userEmail=user?.email
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
+  
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   useEffect(() => {
@@ -196,24 +202,50 @@ const NewOrder = () => {
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-
+    const { tshirtPrice } = useGetTshirtPrice();
+    const {dynamicBackPrices} = useDynamicBckSidePrice();
+    const {dynamicFrontPrices} = useDynamicFrontSidePrice();
+//  console.log("dynamicBackPrices",dynamicBackPrices)
+    console.log("dynamicFrontPrices",dynamicFrontPrices)
     // these will come from database 
-    let price_10x14=358
-    let price_10x10=301
-    let price_10x5=272
-    let price_5X5=257
-    let price_2p5X5=250
-    let price_2p5X2p5=247
+    // let price_10x14=358
+    // let price_10x10=301
+    // let price_10x5=272
+    // let price_5X5=257
+    // let price_2p5X5=250
+    // let price_2p5X2p5=247
+    let price_10x14=dynamicFrontPrices?.frontSideprice_10x14
+    let price_10x10=dynamicFrontPrices?.frontSideprice_10x10
+    let price_10x5=dynamicFrontPrices?.frontSideprice_10x5
+    let price_5X5=dynamicFrontPrices?.frontSideprice_5x5
+    let price_2p5X5=dynamicFrontPrices?.frontSideprice_2p5x5
+    let price_2p5X2p5=dynamicFrontPrices?.frontSideprice_2p5x2p5
 
-let backSideDtfprice_10x14=113
-let backSideDtfprice_10x10=57
-let backSideDtfprice_10x5=29
-let backSideDtfprice_5X5=15
-let backSideDtfprice_2p5X5=8
-let backSideDtfprice_2p5X2p5=4
-let additionalCost=10
+// let backSideDtfprice_10x14=113
+// let backSideDtfprice_10x10=57
+// let backSideDtfprice_10x5=29
+// let backSideDtfprice_5X5=15
+// let backSideDtfprice_2p5X5=8
+// let backSideDtfprice_2p5X2p5=4
+// let additionalCost=10
+let backSideDtfprice_10x14= dynamicBackPrices?.backSideDtfprice_10x14
+let backSideDtfprice_10x10=dynamicBackPrices?.backSideDtfprice_10x10
+let backSideDtfprice_10x5=dynamicBackPrices?.backSideDtfprice_10x5
+let backSideDtfprice_5X5=dynamicBackPrices?.backSideDtfprice_5x5
+let backSideDtfprice_2p5X5=dynamicBackPrices?.backSideDtfprice_2p5x5
+let backSideDtfprice_2p5X2p5=dynamicBackPrices?.backSideDtfprice_2p5x2p5
+let additionalCost=tshirtPrice[0]?.additionalCost
 
 //////////////////////////////////////////
+
+console.log("backSideDtfprice_10x10",backSideDtfprice_10x10)
+console.log("backSideDtfprice_10x5",backSideDtfprice_10x5)
+console.log("backSideDtfprice_5X5",backSideDtfprice_5X5)
+console.log("backSideDtfprice_2p5X5",backSideDtfprice_2p5X5)
+console.log("backSideDtfprice_2p5X2p5",backSideDtfprice_2p5X2p5)
+
+
+
 
 
     const navigate=useNavigate()

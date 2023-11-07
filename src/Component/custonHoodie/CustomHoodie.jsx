@@ -15,6 +15,9 @@ import deliveryCharge from '../../Formulas/deliveryCharge';
 import BackToTop from '../backToTop/BackToTop';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
 import backsiideFormulaDropSholderHoodie from '../../Formulas/backsiideFormulaDropSholderHoodie';
+import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
+import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
+import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
 const CustomHoodie = () => {
 const [formData, setFormData] = useState({
     name: '',
@@ -193,22 +196,34 @@ const [formData, setFormData] = useState({
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-    const price_11p7x16p5=568
-     const price_10x14=533
-    const price_10x10=476
-    const price_10x5=447
-    const price_5X5=432
-    const price_2p5X5=425
-    const price_2p5X2p5=422
+    const {dynamicBackPrices} = useDynamicBckSidePrice();
+    const { tshirtPrice } = useGetTshirtPrice();
+    const {dynamicFrontPrices} = useDynamicFrontSidePrice();
+    let price_11p7x16p5=dynamicFrontPrices?.frontSideprice_11p7x16p5A3
+    let price_10x14=dynamicFrontPrices?.frontSideprice_10x14
+    let price_10x10=dynamicFrontPrices?.frontSideprice_10x10
+    let price_10x5=dynamicFrontPrices?.frontSideprice_10x5
+    let price_5X5=dynamicFrontPrices?.frontSideprice_5x5
+    let price_2p5X5=dynamicFrontPrices?.frontSideprice_2p5x5
+    let price_2p5X2p5=dynamicFrontPrices?.frontSideprice_2p5x2p5
 
-    let backSideDtfprice_11p7x16p5=150
-let backSideDtfprice_10x14=113
-let backSideDtfprice_10x10=57
-let backSideDtfprice_10x5=29
-let backSideDtfprice_5X5=15
-let backSideDtfprice_2p5X5=8
-let backSideDtfprice_2p5X2p5=4
-let additionalCost=10
+//     let backSideDtfprice_11p7x16p5=150
+// let backSideDtfprice_10x14=113
+// let backSideDtfprice_10x10=57
+// let backSideDtfprice_10x5=29
+// let backSideDtfprice_5X5=15
+// let backSideDtfprice_2p5X5=8
+// let backSideDtfprice_2p5X2p5=4
+// let additionalCost=10
+
+let backSideDtfprice_11p7x16p5=dynamicBackPrices?.backSideDtfprice_11p7x16p5A3
+let backSideDtfprice_10x14= dynamicBackPrices?.backSideDtfprice_10x14
+let backSideDtfprice_10x10=dynamicBackPrices?.backSideDtfprice_10x10
+let backSideDtfprice_10x5=dynamicBackPrices?.backSideDtfprice_10x5
+let backSideDtfprice_5X5=dynamicBackPrices?.backSideDtfprice_5x5
+let backSideDtfprice_2p5X5=dynamicBackPrices?.backSideDtfprice_2p5x5
+let backSideDtfprice_2p5X2p5=dynamicBackPrices?.backSideDtfprice_2p5x2p5
+let additionalCost=tshirtPrice[0]?.additionalCost
 
     const navigate=useNavigate()
     const location=useLocation()
@@ -392,10 +407,6 @@ let updatedPrintbazcost=0
         printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
         printbazcost += printbazcostbase;
       
-        console.log("printbazcost",printbazcost)
-        console.log("printbazcostbase",printbazcostbase)
-        console.log("backSidePrintCost",backSidePrintCost)
-        console.log("totalPrice",totalPrice)
       }
  
     }
@@ -446,8 +457,6 @@ let updatedPrintbazcost=0
       deliveryAreas: deliveryAreas
     }).deliveryFee;
   }
-  
-  console.log("updated deliveryFee", deliveryFee);
   
     let recvMoney = 0;
     let costHandlingfee;

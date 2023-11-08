@@ -51,14 +51,10 @@ const blankRoundNeckFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Bl
 const blankDropSholderFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Drop Sholder")
 const blankHoodieFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Hoodie")
 const customDropSholderinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === printSize)
-const customDropSholderBackinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
-console.log("customDropSholderinputFilter",customDropSholderinputFilter)
-console.log("customDropSholderBackinputFilter",customDropSholderBackinputFilter)
-console.log("customDropSholderinputFilter?.frontSideprice",customDropSholderinputFilter?.frontSideprice)
-console.log("customDropSholderBackinputFilter?.backSideprice",customDropSholderBackinputFilter?.backSideprice)
-console.log("customDropSholderBackinputFilter",customDropSholderBackinputFilter)
-let ptice=customDropSholderinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice;
-console.log("customDropSholderinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice",customDropSholderinputFilter?.frontSideprice,"+",customDropSholderBackinputFilter?.backSideprice)
+const customHoodieBackinputFilter=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
+
+console.log("customHoodieBackinputFilter",customHoodieBackinputFilter)
+
 const [selectProductType, setSelectProductType] = useState('Round Neck');
 const [printSide, setPrintSide] = useState('frontSide');
 console.log("printSize",printSize)
@@ -164,19 +160,7 @@ console.log("printSide",printSide)
          selectProductType==="Round Neck" &&
          <tbody>
          {
-             customRoundNeckFilter?.sort((a, b) => {
-              // Helper function to calculate area from a "W x H" string.
-              const calculateArea = (size) => {
-                const [width, height] = size.split(' x ').map(Number);
-                return width * height;
-              };
-        
-              // Calculate area for both elements.
-              const areaA = calculateArea(a.printSizeFront);
-              const areaB = calculateArea(b.printSizeFront);
-        
-              return areaA - areaB; // For ascending order by area
-            }).map(roundNeck=>
+             customRoundNeckFilter?.reverse()?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>
@@ -195,7 +179,7 @@ console.log("printSide",printSide)
          selectProductType==="Drop Sholder" &&
          <tbody>
          {
-             customDropSholderFilter?.map(roundNeck=>
+             customDropSholderFilter?.reverse()?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>
@@ -210,7 +194,7 @@ console.log("printSide",printSide)
          selectProductType==="Hoodie" &&
          <tbody>
          {
-             customHoodieFilter?.map(roundNeck=>
+             customHoodieFilter?.reverse()?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>

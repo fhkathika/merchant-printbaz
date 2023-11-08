@@ -14,6 +14,7 @@ import Footer from '../footer/Footer';
 import deliveryCharge from '../../Formulas/deliveryCharge';
 import BackToTop from '../backToTop/BackToTop';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
+import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 const BlankHoodie = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -128,6 +129,7 @@ const BlankHoodie = () => {
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
   const [alert, setAlert] = useState(false);
+  const { tshirtPrice } = useGetTshirtPrice();
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   useEffect(() => {
@@ -268,7 +270,7 @@ let perCategoryCost=0
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 400
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * tshirtPrice[22]?.frontSideprice
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }

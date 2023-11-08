@@ -15,6 +15,7 @@ import Footer from '../footer/Footer';
 import deliveryCharge from '../../Formulas/deliveryCharge';
 import BackToTop from '../backToTop/BackToTop';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
+import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 const BlankDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -118,7 +119,7 @@ const BlankDropSholder = () => {
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   
-
+  const { tshirtPrice } = useGetTshirtPrice();
   useEffect(() => {
     // axios.get('http://localhost:5000/unique-districts')
     axios.get('https://mserver.printbaz.com/unique-districts')
@@ -241,7 +242,7 @@ let perCategoryCost=0
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 265
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * tshirtPrice[21]?.frontSideprice
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }

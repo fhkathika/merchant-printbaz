@@ -15,6 +15,7 @@ import Footer from '../footer/Footer';
 import deliveryCharge from '../../Formulas/deliveryCharge';
 import BackToTop from '../backToTop/BackToTop';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
+import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 const BlankRoundNeck = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -152,9 +153,11 @@ const BlankRoundNeck = () => {
       deliveryAreas: deliveryAreas
     }).deliveryFee;
   }
-  
+  const { tshirtPrice } = useGetTshirtPrice();
   console.log("updated deliveryFee", deliveryFee);
-  
+  console.log("tshirtPrice[20]?.frontSideprice",tshirtPrice[20]?.frontSideprice)
+  console.log("tshirtPrice[21]?.frontSideprice",tshirtPrice[21]?.frontSideprice)
+  console.log("tshirtPrice[22]?.frontSideprice",tshirtPrice[22]?.frontSideprice)
   
 
 // fetch location dropdown data 
@@ -225,7 +228,7 @@ const BlankRoundNeck = () => {
       const value = parseInt(str);
       return isNaN(value) ? 0 : value;
   };
-  
+
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
     const color = event.target.getAttribute('data-color');
@@ -276,7 +279,7 @@ let perCategoryCost=0
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * 220
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * tshirtPrice[20]?.frontSideprice
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }

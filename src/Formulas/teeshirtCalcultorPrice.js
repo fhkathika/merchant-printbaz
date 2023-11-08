@@ -1,5 +1,6 @@
 
 import React from 'react';
+import useGetTshirtPrice from '../hooks/useGetTshirtPrice';
 const teeshirtCalcultorPrice = (quantity,
   printSize,
   printSizeBack,
@@ -10,10 +11,13 @@ const teeshirtCalcultorPrice = (quantity,
   blankDropSholderFilter,
   blankHoodieFilter,
   selectProductType,
-  printSide
+  printSide,
+  tshirtPrice
                                      
     ) => {
       console.log("printSize",printSize);
+    
+   
 let totalPrice=0
 const customRoundNeckinputFilter=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === printSize)
 console.log("customRoundNeckinputFilter",customRoundNeckinputFilter)
@@ -61,6 +65,16 @@ if( selectProductType==="Drop Sholder"){
         totalPrice=quantity*(Number(customDropSholderinputFilter?.frontSideprice)+Number(customDropSholderBackinputFilter?.backSideprice)+Number(customDropSholderBackinputFilter?.additionalCost));
     }
   
+}
+
+if(selectProductType==="Blank Round Neck"){
+totalPrice=quantity*Number(tshirtPrice[20]?.frontSideprice)
+}
+else if(selectProductType==="Blank Drop Sholder"){
+totalPrice=quantity*Number(tshirtPrice[21]?.frontSideprice)
+}
+ else if(selectProductType==="Blank Hoodie"){
+totalPrice=quantity*Number(tshirtPrice[22]?.frontSideprice)
 }
 
 

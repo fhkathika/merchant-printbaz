@@ -133,9 +133,9 @@ console.log("printSide",printSide)
         <option value='Round Neck'>Round Neck</option>
         <option value="Drop Sholder">Drop Sholder</option>
         <option value="Hoodie">Hoodie</option>
-        {/* <option value="Blank Round Neck">Blank Round Neck</option>
+        <option value="Blank Round Neck">Blank Round Neck</option>
         <option value="Blank Drop Sholder">Blank Drop Sholder</option>
-        <option value="Blank Hoodie">Blank Hoodie</option> */}
+        <option value="Blank Hoodie">Blank Hoodie</option>
     </select></span></h2>
                
                   </div>
@@ -284,843 +284,925 @@ console.log("printSide",printSide)
    </Table>
           <hr className="mb-25"/>
         
-        
-  <Row className='printSizeDemo'>
-  <Col xs={12} md={8}  className="mt-25" >
-          <Form
-                            className="sm lg xs md "
-                            onSubmit={(e) => {
-                                e.preventDefault();
-
-                                setPrice((_) =>
-                                    teeshirtCalcultorPrice(
-                                        quantity,
-                                        printSize,
-                                        printSizeBack,
-                                        customRoundNeckFilter,
-                                        customDropSholderFilter,
-                                        customHoodieFilter,
-                                        blankRoundNeckFilter,
-                                        blankDropSholderFilter,
-                                        blankHoodieFilter,
-                                        selectProductType,
-                                        printSide
-                                     
-                                    )
-                                );
-
-                            }}
-                        >
-                            <Form.Group className="mb-3 Quantity w-100 " controlId="wccalcQuantity">
-                                <Form.Label >Quantity</Form.Label>
-                             
-                                <Form.Control
-                                    name="quantity"
-                                    type="number"
-                                    onChange={(data) => setQuantity((_) => data.target.value)}
-                                    value={quantity}
-                                    placeholder="Enter Quantity"
-                                    min="1"
-                                    
-                                />
-
+      {
+        (selectProductType==="Round Neck" ||
+        selectProductType==="Drop Sholder"||
+        selectProductType==="Hoodie") &&
+        <Row className='printSizeDemo'>
+        <Col xs={12} md={8}  className="mt-25" >
+                <Form
+                                  className="sm lg xs md "
+                                  onSubmit={(e) => {
+                                      e.preventDefault();
+      
+                                      setPrice((_) =>
+                                          teeshirtCalcultorPrice(
+                                              quantity,
+                                              printSize,
+                                              printSizeBack,
+                                              customRoundNeckFilter,
+                                              customDropSholderFilter,
+                                              customHoodieFilter,
+                                              blankRoundNeckFilter,
+                                              blankDropSholderFilter,
+                                              blankHoodieFilter,
+                                              selectProductType,
+                                              printSide
+                                           
+                                          )
+                                      );
+      
+                                  }}
+                              >
+                                  <Form.Group className="mb-3 Quantity w-100 " controlId="wccalcQuantity">
+                                      <Form.Label >Quantity</Form.Label>
+                                   
+                                      <Form.Control
+                                          name="quantity"
+                                          type="number"
+                                          onChange={(data) => setQuantity((_) => data.target.value)}
+                                          value={quantity}
+                                          placeholder="Enter Quantity"
+                                          min="1"
+                                          
+                                      />
+      
+                                  
+                                  </Form.Group>
+                                  <Form.Group
+                            className="mb-3 Print Side w-100 "
+                            controlId="wccalcPrintSide"
+                          >
+                            <Form.Label className="pr-2">Print side</Form.Label>
+                            <Form.Control
+                              as="select"
+                              value={printSide}
+                              onChange={(e) => 
+                                  setPrintSide(e.target.value)
+                              }
+                              name="printSide"
                             
-                            </Form.Group>
+                            >
+                             <option value="">select print side</option> 
+                              <option value="frontSide">Front Side</option>
+                              <option value="backSide">Back Side</option>
+                              <option value="bothSide">Both Side</option>
+                            </Form.Control>
+                          </Form.Group>
+                          {
+                           ( printSide==="frontSide" ) &&
                             <Form.Group
-                      className="mb-3 Print Side w-100 "
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print side</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={printSide}
-                        onChange={(e) => 
-                            setPrintSide(e.target.value)
-                        }
-                        name="printSide"
-                      
-                      >
-                       <option value="">select print side</option> 
-                        <option value="frontSide">Front Side</option>
-                        <option value="backSide">Back Side</option>
-                        <option value="bothSide">Both Side</option>
-                      </Form.Control>
-                    </Form.Group>
-                    {
-                     ( printSide==="frontSide" ) &&
-                      <Form.Group
-                      className="mb-3 Print Side w-100 "
-                      controlId="wccalcPrintSide">
-                      <Form.Label className="pr-2">Print Size</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={printSize}
-                        onChange={(e) => {
-                           setPrintSize(()=>e.target.value);
-                        }}
-                        name="printSize"
-                       >
-                       {/* <option value="">select print size</option> 
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
-                         {
-                          selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
-                          <>
-                            <option value="">select print size</option> 
-                          <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                        
-                          :
-                          <>
-                             <option value="">select print size</option> 
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10">10″ x 10″</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                       
-                      }
-                      </Form.Control>
-                    </Form.Group>
-}
-                    {
-                     printSide==="bothSide" && 
-                      <>
-
-<Form.Group
-                      className="mb-3 Print Side w-100 "
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Print Size front</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={printSize}
-                        onChange={(e) => {
-                           setPrintSize((_)=>e.target.value);
-                        }}
-                        name="printSize"
-                      > 
-                      {
-                          selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
-                          <>
-                            <option value="">select print size</option> 
-                          <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                        
-                          :
-                          <>
-                             <option value="">select print size</option> 
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10">10″ x 10″</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                       
-                      }
-                       {/* <option value="">select print size</option> 
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group
-                    className="mb-3 Print Side w-100 "
-                    controlId="wccalcPrintSide"
-                  >
-                    <Form.Label className="pr-2">Print Size back</Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="printSizeBack"
-                      value={printSizeBack}
-                      onChange={(e) => {
-                         setPrintSizeBack((_)=>e.target.value);
-                      }}
+                            className="mb-3 Print Side w-100 "
+                            controlId="wccalcPrintSide">
+                            <Form.Label className="pr-2">Print Size</Form.Label>
+                            <Form.Control
+                              as="select"
+                              value={printSize}
+                              onChange={(e) => {
+                                 setPrintSize(()=>e.target.value);
+                              }}
+                              name="printSize"
+                             >
+                             {/* <option value="">select print size</option> 
+                              <option value="10 x 14">10″ x 14″</option>
+                              <option value="10 x 10">10″ x 10″</option>
+                              <option value="10 x 5">10″ x 5″</option>
+                              <option value="5 X 5">5″ x 5″</option>
+                              <option value="2.5 X 5">2.5″ x 5″</option>
+                              <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
+                               {
+                                selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
+                                <>
+                                  <option value="">select print size</option> 
+                                <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                              
+                                :
+                                <>
+                                   <option value="">select print size</option> 
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10">10″ x 10″</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                             
+                            }
+                            </Form.Control>
+                          </Form.Group>
+      }
+                          {
+                           printSide==="bothSide" && 
+                            <>
+      
+      <Form.Group
+                            className="mb-3 Print Side w-100 "
+                            controlId="wccalcPrintSide"
+                          >
+                            <Form.Label className="pr-2">Print Size front</Form.Label>
+                            <Form.Control
+                              as="select"
+                              value={printSize}
+                              onChange={(e) => {
+                                 setPrintSize((_)=>e.target.value);
+                              }}
+                              name="printSize"
+                            > 
+                            {
+                                selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
+                                <>
+                                  <option value="">select print size</option> 
+                                <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                              
+                                :
+                                <>
+                                   <option value="">select print size</option> 
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10">10″ x 10″</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                             
+                            }
+                             {/* <option value="">select print size</option> 
+                              <option value="10 x 14">10″ x 14″</option>
+                              <option value="10 x 10">10″ x 10″</option>
+                              <option value="10 x 5">10″ x 5″</option>
+                              <option value="5 X 5">5″ x 5″</option>
+                              <option value="2.5 X 5">2.5″ x 5″</option>
+                              <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
+                            </Form.Control>
+                          </Form.Group>
+                          <Form.Group
+                          className="mb-3 Print Side w-100 "
+                          controlId="wccalcPrintSide"
+                        >
+                          <Form.Label className="pr-2">Print Size back</Form.Label>
+                          <Form.Control
+                            as="select"
+                            name="printSizeBack"
+                            value={printSizeBack}
+                            onChange={(e) => {
+                               setPrintSizeBack((_)=>e.target.value);
+                            }}
+                           
+                          >
+                           {/* <option value="">select print size</option> 
+                            <option value="10 x 14">10″ x 14″</option>
+                            <option value="10 x 10">10″ x 10″</option>
+                            <option value="10 x 5">10″ x 5″</option>
+                            <option value="5 X 5">5″ x 5″</option>
+                            <option value="2.5 X 5">2.5″ x 5″</option>
+                            <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
+                             {
+                                selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
+                                <>
+                                  <option value="">select print size</option> 
+                                <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                              
+                                :
+                                <>
+                                   <option value="">select print size</option> 
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10">10″ x 10″</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                             
+                            }
+                          </Form.Control>
+                        </Form.Group>
+                            </>
+                           
+                          }
+      
+      {
+                           ( printSide==="backSide" ) &&
+                            <Form.Group
+                            className="mb-3 Print Side w-75 m-auto"
+                            controlId="wccalcPrintSide">
+                            <Form.Label className="pr-2">Print Size</Form.Label>
+                            <Form.Control
+                              as="select"
+                              value={printSize}
+                              onChange={(e) => {
+                                 setPrintSize(()=>e.target.value);
+                              }}
+                              name="printSize"
+                             >
+                             {/* <option value="">select print size</option> 
+                              <option value="10 x 14">10″ x 14″</option>
+                              <option value="10 x 10">10″ x 10″</option>
+                              <option value="10 x 5">10″ x 5″</option>
+                              <option value="5 X 5">5″ x 5″</option>
+                              <option value="2.5 X 5">2.5″ x 5″</option>
+                              <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
+                               {
+                                selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
+                                <>
+                                  <option value="">select print size</option> 
+                                <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                              
+                                :
+                                <>
+                                   <option value="">select print size</option> 
+                                <option value="10 x 14">10″ x 14″</option>
+                                <option value="10 x 10">10″ x 10″</option>
+                                <option value="10 x 5">10″ x 5″</option>
+                                <option value="5 x 5">5″ x 5″</option>
+                                <option value="2.5 x 5">2.5″ x 5″</option>
+                                <option value="2.5 x 2.5">2.5″ x 2.5″</option>
+                                </>
+                             
+                            }
+                            </Form.Control>
+                          </Form.Group>
+      }
+                                
+                               <div style={{textAlign:"center",marginTop:"30px"}}>
+                               <Button style={{backgroundColor:"#124"}}  type="submit">
+                                      CheckPrice
+                                  </Button>
+                               </div>
+                               
+                                  {setPrice && (
+                                      <p className="pt-4 " style={{textAlign:"center"}}>
+                                          Your Grand Total is :   <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.totalPrice} </span> BDT <br />
+                                          Unit price is :  <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.unitPrice}</span> BDT
+                                      </p>
+                                  )}
+                              </Form>
+                </Col>
+                {
+                  printSize==="10 x 14" &&   selectProductType==="Round Neck" && printSide==="frontSide" &&
+                
+                  <Col  xs={12} md={4} className="mt-25"  >
+                    
+                    <div  className="printSizeDemoCol" >
+                    <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg' className='img-fluid' alt='10X14' />
+                    </div>
                      
-                    >
-                     {/* <option value="">select print size</option> 
-                      <option value="10 x 14">10″ x 14″</option>
-                      <option value="10 x 10">10″ x 10″</option>
-                      <option value="10 x 5">10″ x 5″</option>
-                      <option value="5 X 5">5″ x 5″</option>
-                      <option value="2.5 X 5">2.5″ x 5″</option>
-                      <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
-                       {
-                          selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
-                          <>
-                            <option value="">select print size</option> 
-                          <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                        
-                          :
-                          <>
-                             <option value="">select print size</option> 
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10">10″ x 10″</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                       
-                      }
-                    </Form.Control>
-                  </Form.Group>
-                      </>
+              <div className='printSizeTextDiv'>
+              <p className='printSizeText'>print size:10X14</p>
+              </div>
+                  </Col>
+                }
+                {
+                  printSize==="2.5 x 5" &&selectProductType==="Round Neck" && printSide==="frontSide" &&
+                  <Col xs={12} md={4}  className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 5.jpg' className='img-fluid' alt='2.5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size:2.5X5</p>
+            </div>
+                </Col>
+                } {
+                  printSize==="10 x 10" && selectProductType==="Round Neck" && printSide==="frontSide" &&
+                  <Col xs={12} md={4}  className="mt-25" >
+            
+            <div  className="printSizeDemoCol" >
+            <img  src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 10.jpg' className='img-fluid' alt='10X10' />
+            </div>
+             
+      <div className='printSizeTextDiv'>
+      <p className='printSizeText'>print size:10X10</p>
+      </div>
+          </Col> 
+                } {
+                  printSize==="10 x 5" && selectProductType==="Round Neck" && printSide==="frontSide" &&
+                  <Col xs={12} md={4}  className="mt-25" >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 5.jpg' className='img-fluid' alt='10X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size:10X5</p>
+            </div>
+                </Col> 
+                }
+                 {
+                  printSize==="5 x 5" && selectProductType==="Round Neck" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size :5X5</p>
+            </div>
+                </Col> 
+                } {
+                  printSize==="2.5 x 2.5" && selectProductType==="Round Neck" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5X2.5</p>
+            </div>
+                </Col> 
+                }  
+                {/* round neck back side  */}
+                {
+                  printSize==="10 x 14" &&   selectProductType==="Round Neck" && printSide==="backSide" &&
+                
+                  <Col  xs={12} md={4} className="mt-25"  >
+                    
+                    <div  className="printSizeDemoCol" >
+                    <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 14.jpg' className='img-fluid' alt='10X14' />
+                    </div>
                      
-                    }
-
-{
-                     ( printSide==="backSide" ) &&
-                      <Form.Group
-                      className="mb-3 Print Side w-75 m-auto"
-                      controlId="wccalcPrintSide">
-                      <Form.Label className="pr-2">Print Size</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={printSize}
-                        onChange={(e) => {
-                           setPrintSize(()=>e.target.value);
-                        }}
-                        name="printSize"
-                       >
-                       {/* <option value="">select print size</option> 
-                        <option value="10 x 14">10″ x 14″</option>
-                        <option value="10 x 10">10″ x 10″</option>
-                        <option value="10 x 5">10″ x 5″</option>
-                        <option value="5 X 5">5″ x 5″</option>
-                        <option value="2.5 X 5">2.5″ x 5″</option>
-                        <option value="2.5 X 2.5">2.5″ x 2.5″</option> */}
-                         {
-                          selectProductType==="Hoodie" ||selectProductType==="Drop Sholder" ?
-                          <>
-                            <option value="">select print size</option> 
-                          <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10 (A4)">10″ x 10″ (A4)</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                        
-                          :
-                          <>
-                             <option value="">select print size</option> 
-                          <option value="10 x 14">10″ x 14″</option>
-                          <option value="10 x 10">10″ x 10″</option>
-                          <option value="10 x 5">10″ x 5″</option>
-                          <option value="5 x 5">5″ x 5″</option>
-                          <option value="2.5 x 5">2.5″ x 5″</option>
-                          <option value="2.5 x 2.5">2.5″ x 2.5″</option>
-                          </>
-                       
-                      }
-                      </Form.Control>
-                    </Form.Group>
-}
-                          
-                         <div style={{textAlign:"center",marginTop:"30px"}}>
-                         <Button style={{backgroundColor:"#124"}}  type="submit">
-                                CheckPrice
-                            </Button>
-                         </div>
-                         
-                            {setPrice && (
-                                <p className="pt-4 " style={{textAlign:"center"}}>
-                                    Your Grand Total is :   <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.totalPrice} </span> BDT <br />
-                                    Unit price is :  <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.unitPrice}</span> BDT
-                                </p>
-                            )}
-                        </Form>
-          </Col>
-          {
-            printSize==="10 x 14" &&   selectProductType==="Round Neck" && printSide==="frontSide" &&
-          
-            <Col  xs={12} md={4} className="mt-25"  >
-              
-              <div  className="printSizeDemoCol" >
-              <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg' className='img-fluid' alt='10X14' />
+              <div className='printSizeTextDiv'>
+              <p className='printSizeText'>print size:10X14</p>
               </div>
+                  </Col>
+                }
+                {
+                  printSize==="2.5 x 5" &&selectProductType==="Round Neck" && printSide==="backSide" &&
+                  <Col xs={12} md={4}  className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 2.5 X 5.jpg' className='img-fluid' alt='2.5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size:2.5X5</p>
+            </div>
+                </Col>
+                } {
+                  printSize==="10 x 10" && selectProductType==="Round Neck" && printSide==="backSide" &&
+                  <Col xs={12} md={4}  className="mt-25" >
+            
+            <div  className="printSizeDemoCol" >
+            <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 10.jpg' className='img-fluid' alt='10X10' />
+            </div>
+             
+      <div className='printSizeTextDiv'>
+      <p className='printSizeText'>print size:10X10</p>
+      </div>
+          </Col> 
+                } {
+                  printSize==="10 x 5" && selectProductType==="Round Neck" && printSide==="backSide" &&
+                  <Col xs={12} md={4}  className="mt-25" >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 5.jpg' className='img-fluid' alt='10X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size:10X5</p>
+            </div>
+                </Col> 
+                }
+                 {
+                  printSize==="5 x 5" && selectProductType==="Round Neck" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size :5X5</p>
+            </div>
+                </Col> 
+                } {
+                  printSize==="2.5 x 2.5" && selectProductType==="Round Neck" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 X 2.5</p>
+            </div>
+                </Col> 
+                } 
+      
+                {/* hoodie front side  */}
+                
+                  {
+                  printSize==="10 x 14" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 X 14</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="10 x 10 (A4)" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 X 10</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="10 x 5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 5</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="5 x 5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 5 x 5</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="2.5 x 5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 5</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="2.5 x 2.5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 2.5</p>
+            </div>
+                </Col> 
+                } 
                
-        <div className='printSizeTextDiv'>
-        <p className='printSizeText'>print size:10X14</p>
-        </div>
-            </Col>
-          }
-          {
-            printSize==="2.5 x 5" &&selectProductType==="Round Neck" && printSide==="frontSide" &&
-            <Col xs={12} md={4}  className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 5.jpg' className='img-fluid' alt='2.5X5' />
+        {/* hoodie back side  */}
+                
+        {
+                  printSize==="10 x 14" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 X 14</p>
             </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size:2.5X5</p>
-      </div>
-          </Col>
-          } {
-            printSize==="10 x 10" && selectProductType==="Round Neck" && printSide==="frontSide" &&
-            <Col xs={12} md={4}  className="mt-25" >
-      
-      <div  className="printSizeDemoCol" >
-      <img  src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 10.jpg' className='img-fluid' alt='10X10' />
-      </div>
-       
-<div className='printSizeTextDiv'>
-<p className='printSizeText'>print size:10X10</p>
-</div>
-    </Col> 
-          } {
-            printSize==="10 x 5" && selectProductType==="Round Neck" && printSide==="frontSide" &&
-            <Col xs={12} md={4}  className="mt-25" >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 5.jpg' className='img-fluid' alt='10X5' />
+                </Col> 
+                } 
+                 {
+                  printSize==="10 x 10 (A4)" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 X 10</p>
             </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size:10X5</p>
-      </div>
-          </Col> 
-          }
-           {
-            printSize==="5 x 5" && selectProductType==="Round Neck" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                </Col> 
+                } 
+                 {
+                  printSize==="10 x 5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 5</p>
             </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size :5X5</p>
-      </div>
-          </Col> 
-          } {
-            printSize==="2.5 x 2.5" && selectProductType==="Round Neck" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                </Col> 
+                } 
+                 {
+                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
             </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5X2.5</p>
-      </div>
-          </Col> 
-          }  
-          {/* round neck back side  */}
-          {
-            printSize==="10 x 14" &&   selectProductType==="Round Neck" && printSide==="backSide" &&
-          
-            <Col  xs={12} md={4} className="mt-25"  >
-              
-              <div  className="printSizeDemoCol" >
-              <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 14.jpg' className='img-fluid' alt='10X14' />
-              </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="5 x 5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 5 x 5</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="2.5 x 5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 5</p>
+            </div>
+                </Col> 
+                } 
+                 {
+                  printSize==="2.5 x 2.5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 2.5</p>
+            </div>
+                </Col> 
+                }
+                 {
+                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 2.5</p>
+            </div>
+                </Col> 
+                } 
                
-        <div className='printSizeTextDiv'>
-        <p className='printSizeText'>print size:10X14</p>
-        </div>
-            </Col>
-          }
-          {
-            printSize==="2.5 x 5" &&selectProductType==="Round Neck" && printSide==="backSide" &&
-            <Col xs={12} md={4}  className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 2.5 X 5.jpg' className='img-fluid' alt='2.5X5' />
+                {/* Drop sholder front side  */}
+                
+                {
+                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
             </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size:2.5X5</p>
-      </div>
-          </Col>
-          } {
-            printSize==="10 x 10" && selectProductType==="Round Neck" && printSide==="backSide" &&
-            <Col xs={12} md={4}  className="mt-25" >
+                </Col> 
+                }     {
+                  printSize==="10 x 14" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 14</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="10 x 10 (A4)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 10 (A4)</p>
+            </div>
+                </Col> 
+                } {
+                  printSize==="10 x 5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 5</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 5 x 5</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="2.5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 5</p>
+            </div>
+                </Col> 
+                }  
+                 {
+                  printSize==="2.5 x 2.5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 2.5)</p>
+            </div>
+                </Col> 
+                } 
       
-      <div  className="printSizeDemoCol" >
-      <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 10.jpg' className='img-fluid' alt='10X10' />
-      </div>
+                {/* Drop sholder back side  */}
+                
+                {
+                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="10 x 14" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 14</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="10 x 10 (A4)" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 10 (A4)</p>
+            </div>
+                </Col> 
+                } {
+                  printSize==="10 x 5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 10 x 5</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 5 x 5</p>
+            </div>
+                </Col> 
+                }     {
+                  printSize==="2.5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 5</p>
+            </div>
+                </Col> 
+                }  
+                 {
+                  printSize==="2.5 x 2.5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
+                  <Col xs={12} md={4} className="mt-25"  >
+            
+                  <div  className="printSizeDemoCol" >
+                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  </div>
+                   
+            <div className='printSizeTextDiv'>
+            <p className='printSizeText'>print size : 2.5 x 2.5)</p>
+            </div>
+                </Col> 
+                } 
+                
        
-<div className='printSizeTextDiv'>
-<p className='printSizeText'>print size:10X10</p>
-</div>
-    </Col> 
-          } {
-            printSize==="10 x 5" && selectProductType==="Round Neck" && printSide==="backSide" &&
-            <Col xs={12} md={4}  className="mt-25" >
+        </Row>
+      }
       
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 5.jpg' className='img-fluid' alt='10X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size:10X5</p>
-      </div>
-          </Col> 
-          }
-           {
-            printSize==="5 x 5" && selectProductType==="Round Neck" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size :5X5</p>
-      </div>
-          </Col> 
-          } {
-            printSize==="2.5 x 2.5" && selectProductType==="Round Neck" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 X 2.5</p>
-      </div>
-          </Col> 
-          } 
 
-          {/* hoodie front side  */}
+      {
+     ( selectProductType==="Blank Round Neck" ||
+      selectProductType==="Blank Drop Sholder" ||
+      selectProductType==="Blank Hoodie")  &&
+        <Row className='printSizeDemo'>
+        <Col xs={12} md={8}  className="mt-25" >
+                <Form
+                                  className="sm lg xs md "
+                                  onSubmit={(e) => {
+                                      e.preventDefault();
+      
+                                      setPrice((_) =>
+                                          teeshirtCalcultorPrice(
+                                              quantity,
+                                              printSize,
+                                              printSizeBack,
+                                              customRoundNeckFilter,
+                                              customDropSholderFilter,
+                                              customHoodieFilter,
+                                              blankRoundNeckFilter,
+                                              blankDropSholderFilter,
+                                              blankHoodieFilter,
+                                              selectProductType,
+                                              printSide,
+                                              tshirtPrice
+                                           
+                                          )
+                                      );
+      
+                                  }}
+                              >
+                                  <Form.Group className="mb-3 Quantity w-100 " controlId="wccalcQuantity">
+                                      <Form.Label >Quantity</Form.Label>
+                                   
+                                      <Form.Control
+                                          name="quantity"
+                                          type="number"
+                                          onChange={(data) => setQuantity((_) => data.target.value)}
+                                          value={quantity}
+                                          placeholder="Enter Quantity"
+                                          min="1"
+                                          
+                                      />
+      
+                                  
+                                  </Form.Group>
+                                 
+      
+    
+                                
+                               <div style={{textAlign:"center",marginTop:"30px"}}>
+                               <Button style={{backgroundColor:"#124"}}  type="submit">
+                                      CheckPrice
+                                  </Button>
+                               </div>
+                               
+                                  {setPrice && (
+                                      <p className="pt-4 " style={{textAlign:"center"}}>
+                                          Your Grand Total is :   <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.totalPrice} </span> BDT <br />
+                                          Unit price is :  <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.unitPrice}</span> BDT
+                                      </p>
+                                  )}
+                              </Form>
+                </Col>
+               
+                
+               
+               
+               
+                {/* Drop sholder front side  */}
           
-            {
-            printSize==="10 x 14" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 14.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 X 14</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="10 x 10 (A4)" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 10.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 X 10</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="10 x 5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 5</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 14.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="5 x 5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 5 x 5</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="2.5 x 5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 5</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="2.5 x 2.5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 2.5</p>
-      </div>
-          </Col> 
-          } 
-         
-  {/* hoodie back side  */}
-          
-  {
-            printSize==="10 x 14" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 14.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 X 14</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="10 x 10 (A4)" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 10.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 X 10</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="10 x 5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 5</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 14.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="5 x 5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 5 x 5</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="2.5 x 5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 5</p>
-      </div>
-          </Col> 
-          } 
-           {
-            printSize==="2.5 x 2.5" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 2.5</p>
-      </div>
-          </Col> 
-          }
-           {
-            printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 2.5</p>
-      </div>
-          </Col> 
-          } 
-         
-          {/* Drop sholder front side  */}
-          
-          {
-            printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="10 x 14" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 14.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 14</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="10 x 10 (A4)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 10.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 10 (A4)</p>
-      </div>
-          </Col> 
-          } {
-            printSize==="10 x 5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 5</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 5 x 5</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="2.5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 5</p>
-      </div>
-          </Col> 
-          }  
-           {
-            printSize==="2.5 x 2.5" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 2.5)</p>
-      </div>
-          </Col> 
-          } 
+                
+       
+        </Row>
+      } 
 
-          {/* Drop sholder back side  */}
-          
-          {
-            printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="10 x 14" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 14.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 14</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="10 x 10 (A4)" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 10.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 10 (A4)</p>
-      </div>
-          </Col> 
-          } {
-            printSize==="10 x 5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 10 x 5</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 5 x 5</p>
-      </div>
-          </Col> 
-          }     {
-            printSize==="2.5 x 5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 5</p>
-      </div>
-          </Col> 
-          }  
-           {
-            printSize==="2.5 x 2.5" &&   selectProductType==="Drop Sholder" && printSide==="backSide" &&
-            <Col xs={12} md={4} className="mt-25"  >
-      
-            <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
-            </div>
-             
-      <div className='printSizeTextDiv'>
-      <p className='printSizeText'>print size : 2.5 x 2.5)</p>
-      </div>
-          </Col> 
-          } 
-          
- 
-  </Row>
 
 
 

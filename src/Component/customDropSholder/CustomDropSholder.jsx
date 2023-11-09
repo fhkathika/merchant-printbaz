@@ -18,6 +18,7 @@ import backsiideFormulaDropSholderHoodie from '../../Formulas/backsiideFormulaDr
 import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
 import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
+import useFilterValueBasedonCategory from '../../hooks/useFilterValueBasedonCategory';
 const CustomDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -199,14 +200,28 @@ useEffect(() => {
     const {dynamicBackPrices} = useDynamicBckSidePrice();
     const {dynamicFrontPrices} = useDynamicFrontSidePrice();
     const { tshirtPrice } = useGetTshirtPrice();
-    
-    let price_11p7x16p5=tshirtPrice[6]?.frontSideprice
-    let price_10x14=tshirtPrice[7]?.frontSideprice
-    let price_10x10=tshirtPrice[8]?.frontSideprice
-    let price_10x5=tshirtPrice[9]?.frontSideprice
-    let price_5X5=tshirtPrice[10]?.frontSideprice
-    let price_2p5X5=tshirtPrice[11]?.frontSideprice
-    let price_2p5X2p5=tshirtPrice[12]?.frontSideprice
+    const {
+      customDropSholderinputFront11p7X16p5,
+      customDropSholderinputFront10X14,
+      customDropSholderinputFront10X10,
+      customDropSholderinputFront10X5,
+      customDropSholderinputFront5X5,
+      customDropSholderinputFront2p5X5,
+      customDropSholderinputFront2p5X2p5,
+      customDropSholderinputBack11p7X16p5,
+      customDropSholderinputBack10X14,
+      customDropSholderinputBack10X10,
+      customDropSholderinputBack10X5,
+      customDropSholderinputBack5X5,
+      customDropSholderinputBack2p5X5,
+      customDropSholderinputBack2p5X2p5}=useFilterValueBasedonCategory()
+    let price_11p7x16p5=customDropSholderinputFront11p7X16p5?.frontSideprice
+    let price_10x14=customDropSholderinputFront10X14?.frontSideprice
+    let price_10x10=customDropSholderinputFront10X10?.frontSideprice
+    let price_10x5=customDropSholderinputFront10X5?.frontSideprice
+    let price_5X5=customDropSholderinputFront5X5?.frontSideprice
+    let price_2p5X5=customDropSholderinputFront2p5X5?.frontSideprice
+    let price_2p5X2p5=customDropSholderinputFront2p5X2p5?.frontSideprice
     console.log("dynamicFrontPrices",dynamicFrontPrices)
 console.log("price_11p7x16p5",price_11p7x16p5)
 console.log("price_10x14",price_10x14)
@@ -216,13 +231,13 @@ console.log("price_5X5",price_5X5)
 console.log("price_2p5X5",price_2p5X5)
 console.log("price_2p5X2p5",price_2p5X2p5)
 
-let backSideDtfprice_11p7x16p5=tshirtPrice[6]?.backSideprice
-let backSideDtfprice_10x14=tshirtPrice[7]?.backSideprice
-let backSideDtfprice_10x10=tshirtPrice[8]?.backSideprice
-let backSideDtfprice_10x5=tshirtPrice[9]?.backSideprice
-let backSideDtfprice_5X5=tshirtPrice[10]?.backSideprice
-let backSideDtfprice_2p5X5=tshirtPrice[11]?.backSideprice
-let backSideDtfprice_2p5X2p5=tshirtPrice[12]?.backSideprice
+let backSideDtfprice_11p7x16p5=customDropSholderinputBack11p7X16p5?.backSideprice
+let backSideDtfprice_10x14=customDropSholderinputBack10X14?.backSideprice
+let backSideDtfprice_10x10=customDropSholderinputBack10X10?.backSideprice
+let backSideDtfprice_10x5=customDropSholderinputBack10X5?.backSideprice
+let backSideDtfprice_5X5=customDropSholderinputBack5X5?.backSideprice
+let backSideDtfprice_2p5X5=customDropSholderinputBack2p5X5?.backSideprice
+let backSideDtfprice_2p5X2p5=customDropSholderinputBack2p5X2p5?.backSideprice
 let additionalCost=tshirtPrice[0]?.additionalCost
 console.log("backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
 console.log("backSideDtfprice_10x14",backSideDtfprice_10x14)

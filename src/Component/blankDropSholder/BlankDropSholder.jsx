@@ -236,13 +236,13 @@ formData?.orderDetailArr.forEach(item => {
                        safeParseInt(item.quantityXL) + 
                        safeParseInt(item.quantityXXL);
 });
-
+const blankDropSholderFilter=tshirtPrice?.find(thsirt => thsirt.category === "Blank Drop Sholder")
 let perCategoryCost=0
   let printbazcost=0;
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * tshirtPrice[21]?.frontSideprice
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * blankDropSholderFilter?.frontSideprice
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }

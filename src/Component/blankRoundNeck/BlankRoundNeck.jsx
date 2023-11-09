@@ -228,7 +228,7 @@ const BlankRoundNeck = () => {
       const value = parseInt(str);
       return isNaN(value) ? 0 : value;
   };
-
+  const blankRoundNeckFilter=tshirtPrice?.find(thsirt => thsirt.category === "Blank Round Neck")
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
     const color = event.target.getAttribute('data-color');
@@ -279,7 +279,7 @@ let perCategoryCost=0
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * tshirtPrice[20]?.frontSideprice
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }

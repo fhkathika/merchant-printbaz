@@ -17,7 +17,11 @@ const teeshirtCalcultorPrice = (quantity,
     ) => {
       console.log("printSize",printSize);
     
-   
+   // blank product filter 
+const blankRoundNeckFilters=tshirtPrice?.find(thsirt => thsirt.category === "Blank Round Neck")
+const blankDropSholderFilters=tshirtPrice?.find(thsirt => thsirt.category === "Blank Drop Sholder")
+const blankHoodieFilters=tshirtPrice?.find(thsirt => thsirt.category === "Blank Hoodie")
+console.log("blankRoundNeckFilters",blankRoundNeckFilters)
 let totalPrice=0
 const customRoundNeckinputFrontFilter=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === printSize)
 
@@ -69,13 +73,13 @@ if( selectProductType==="Drop Sholder"){
 }
 
 if(selectProductType==="Blank Round Neck"){
-totalPrice=quantity*Number(tshirtPrice[20]?.frontSideprice)
+totalPrice=quantity*Number(blankRoundNeckFilters?.frontSideprice)
 }
 else if(selectProductType==="Blank Drop Sholder"){
-totalPrice=quantity*Number(tshirtPrice[21]?.frontSideprice)
+totalPrice=quantity*Number(blankDropSholderFilters?.frontSideprice)
 }
  else if(selectProductType==="Blank Hoodie"){
-totalPrice=quantity*Number(tshirtPrice[22]?.frontSideprice)
+totalPrice=quantity*Number(blankHoodieFilters?.frontSideprice)
 }
 
 

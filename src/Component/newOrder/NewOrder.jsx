@@ -19,6 +19,7 @@ import backsideFormula from '../../Formulas/backsideFormula';
 import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
 import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
+import useFilterValueBasedonCategory from '../../hooks/useFilterValueBasedonCategory';
 const NewOrder = () => {
   
   const [formData, setFormData] = useState({
@@ -196,7 +197,19 @@ const NewOrder = () => {
       }
     }, [formData?.districts ,formData?.zones , formData?.areas]);
   
-  
+  const {
+    customRoundNeckinputFront10X14,
+    customRoundNeckinputFront10X10,
+    customRoundNeckinputFront10X5,
+    customRoundNeckinputFront5X5,
+    customRoundNeckinputFront2p5X5,
+    customRoundNeckinputFront2p5X2p5,
+    customRoundNeckinputBack10X14,
+    customRoundNeckinputBack10X10,
+    customRoundNeckinputBack10X5,
+    customRoundNeckinputBack5X5,
+    customRoundNeckinputBack2p5X5,
+    customRoundNeckinputBack2p5X2p5}=useFilterValueBasedonCategory()
 
 
   const d = new Date();
@@ -214,12 +227,12 @@ const NewOrder = () => {
     // let price_5X5=257
     // let price_2p5X5=250
     // let price_2p5X2p5=247
-    let price_10x14=tshirtPrice[0]?.frontSideprice
-    let price_10x10=tshirtPrice[1]?.frontSideprice
-    let price_10x5=tshirtPrice[2]?.frontSideprice
-    let price_5X5=tshirtPrice[3]?.frontSideprice
-    let price_2p5X5=tshirtPrice[4]?.frontSideprice
-    let price_2p5X2p5=tshirtPrice[5]?.frontSideprice
+    let price_10x14=customRoundNeckinputFront10X14?.frontSideprice
+    let price_10x10=customRoundNeckinputFront10X10?.frontSideprice
+    let price_10x5=customRoundNeckinputFront10X5?.frontSideprice
+    let price_5X5=customRoundNeckinputFront5X5?.frontSideprice
+    let price_2p5X5=customRoundNeckinputFront2p5X5?.frontSideprice
+    let price_2p5X2p5=customRoundNeckinputFront2p5X2p5?.frontSideprice
 
 // let backSideDtfprice_10x14=113
 // let backSideDtfprice_10x10=57
@@ -228,12 +241,12 @@ const NewOrder = () => {
 // let backSideDtfprice_2p5X5=8
 // let backSideDtfprice_2p5X2p5=4
 // let additionalCost=10
-let backSideDtfprice_10x14=tshirtPrice[0]?.backSideprice
-let backSideDtfprice_10x10=tshirtPrice[1]?.backSideprice
-let backSideDtfprice_10x5=tshirtPrice[2]?.backSideprice
-let backSideDtfprice_5X5=tshirtPrice[3]?.backSideprice
-let backSideDtfprice_2p5X5=tshirtPrice[4]?.backSideprice
-let backSideDtfprice_2p5X2p5=tshirtPrice[5]?.backSideprice
+let backSideDtfprice_10x14=customRoundNeckinputBack10X14?.backSideprice
+let backSideDtfprice_10x10=customRoundNeckinputBack10X10?.backSideprice
+let backSideDtfprice_10x5=customRoundNeckinputBack10X5?.backSideprice
+let backSideDtfprice_5X5=customRoundNeckinputBack5X5?.backSideprice
+let backSideDtfprice_2p5X5=customRoundNeckinputBack2p5X5?.backSideprice
+let backSideDtfprice_2p5X2p5=customRoundNeckinputBack2p5X2p5?.backSideprice
 let additionalCost=tshirtPrice[0]?.additionalCost
 
 //////////////////////////////////////////

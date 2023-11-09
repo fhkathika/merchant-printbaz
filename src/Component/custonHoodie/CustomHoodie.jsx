@@ -18,6 +18,7 @@ import backsiideFormulaDropSholderHoodie from '../../Formulas/backsiideFormulaDr
 import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
 import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
+import useFilterValueBasedonCategory from '../../hooks/useFilterValueBasedonCategory';
 const CustomHoodie = () => {
 const [formData, setFormData] = useState({
     name: '',
@@ -199,14 +200,28 @@ const [formData, setFormData] = useState({
     const {dynamicBackPrices} = useDynamicBckSidePrice();
     const { tshirtPrice } = useGetTshirtPrice();
     const {dynamicFrontPrices} = useDynamicFrontSidePrice();
-    
-    let price_11p7x16p5=tshirtPrice[13]?.frontSideprice
-    let price_10x14=tshirtPrice[14]?.frontSideprice
-    let price_10x10=tshirtPrice[15]?.frontSideprice
-    let price_10x5=tshirtPrice[16]?.frontSideprice
-    let price_5X5=tshirtPrice[17]?.frontSideprice
-    let price_2p5X5=tshirtPrice[18]?.frontSideprice
-    let price_2p5X2p5=tshirtPrice[19]?.frontSideprice
+    const {
+      customHoodieinputFront11p7X16p5,
+      customHoodieinputFront10X14,
+      customHoodieinputFront10X10,
+      customHoodieinputFront10X5,
+      customHoodieinputFront5X5,
+      customHoodieinputFront2p5X5,
+      customHoodieinputFront2p5X2p5,
+      customHoodieinputBack11p7X16p5,
+      customHoodieinputBack10X14,
+      customHoodieinputBack10X10,
+      customHoodieinputBack10X5,
+      customHoodieinputBack5X5,
+      customHoodieinputBack2p5X5,
+      customHoodieinputBack2p5X2p5}=useFilterValueBasedonCategory()
+    let price_11p7x16p5=customHoodieinputFront11p7X16p5?.frontSideprice
+    let price_10x14=customHoodieinputFront10X14?.frontSideprice
+    let price_10x10=customHoodieinputFront10X10?.frontSideprice
+    let price_10x5=customHoodieinputFront10X5?.frontSideprice
+    let price_5X5=customHoodieinputFront5X5?.frontSideprice
+    let price_2p5X5=customHoodieinputFront2p5X5?.frontSideprice
+    let price_2p5X2p5=customHoodieinputFront2p5X2p5?.frontSideprice
 
 //     let backSideDtfprice_11p7x16p5=150
 // let backSideDtfprice_10x14=113
@@ -217,13 +232,13 @@ const [formData, setFormData] = useState({
 // let backSideDtfprice_2p5X2p5=4
 // let additionalCost=10
 
-let backSideDtfprice_11p7x16p5=tshirtPrice[13]?.backSideprice
-let backSideDtfprice_10x14=tshirtPrice[14]?.backSideprice
-let backSideDtfprice_10x10=tshirtPrice[15]?.backSideprice
-let backSideDtfprice_10x5=tshirtPrice[16]?.backSideprice
-let backSideDtfprice_5X5=tshirtPrice[17]?.backSideprice
-let backSideDtfprice_2p5X5=tshirtPrice[18]?.backSideprice
-let backSideDtfprice_2p5X2p5=tshirtPrice[19]?.backSideprice
+let backSideDtfprice_11p7x16p5=customHoodieinputBack11p7X16p5?.backSideprice
+let backSideDtfprice_10x14=customHoodieinputBack10X14?.backSideprice
+let backSideDtfprice_10x10=customHoodieinputBack10X10?.backSideprice
+let backSideDtfprice_10x5=customHoodieinputBack10X5?.backSideprice
+let backSideDtfprice_5X5=customHoodieinputBack5X5?.backSideprice
+let backSideDtfprice_2p5X5=customHoodieinputBack2p5X5?.backSideprice
+let backSideDtfprice_2p5X2p5=customHoodieinputBack2p5X2p5?.backSideprice
 console.log("backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
 let additionalCost=tshirtPrice[0]?.additionalCost
 

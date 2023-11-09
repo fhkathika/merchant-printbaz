@@ -264,13 +264,13 @@ formData?.orderDetailArr.forEach(item => {
                        safeParseInt(item.quantityXL) + 
                        safeParseInt(item.quantityXXL);
 });
-
+const blankHoodieFilter=tshirtPrice?.find(thsirt => thsirt.category === "Blank Hoodie")
 let perCategoryCost=0
   let printbazcost=0;
   let printbazcostbase;
   for  (var i = 0; i < formData?.orderDetailArr?.length; i++) {
     if (formData?.quantity &&formData?.orderDetailArr[i]?.totalQuantity ) {
-        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * tshirtPrice[22]?.frontSideprice
+        perCategoryCost=formData?.orderDetailArr[i]?.totalQuantity  * blankHoodieFilter?.frontSideprice
         console.log("perCategoryCost",perCategoryCost);
         printbazcost +=perCategoryCost
       }

@@ -48,6 +48,7 @@ const customRoundNeckFilter=tshirtPrice?.filter(thsirt => thsirt.category === "C
 const customDropSholderFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Custom Drop Sholder")
 const customHoodieFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Custom Hoodie")
 const blankRoundNeckFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Round Neck")
+console.log("blankRoundNeckFilter..........",blankRoundNeckFilter)
 const blankDropSholderFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Drop Sholder")
 const blankHoodieFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Hoodie")
 const customDropSholderinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === printSize)
@@ -160,7 +161,8 @@ console.log("printSide",printSide)
          selectProductType==="Round Neck" &&
          <tbody>
          {
-             customRoundNeckFilter?.reverse()?.map(roundNeck=>
+             customRoundNeckFilter   
+             ?.sort((a, b) => Number(a.frontSideprice) - Number(b.frontSideprice))?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>
@@ -179,7 +181,8 @@ console.log("printSide",printSide)
          selectProductType==="Drop Sholder" &&
          <tbody>
          {
-             customDropSholderFilter?.reverse()?.map(roundNeck=>
+             customDropSholderFilter   // Convert prices to numbers and sort
+             ?.sort((a, b) => Number(a.frontSideprice) - Number(b.frontSideprice))?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>
@@ -194,7 +197,8 @@ console.log("printSide",printSide)
          selectProductType==="Hoodie" &&
          <tbody>
          {
-             customHoodieFilter?.reverse()?.map(roundNeck=>
+             customHoodieFilter   // Convert prices to numbers and sort
+             ?.sort((a, b) => Number(a.frontSideprice) - Number(b.frontSideprice))?.map(roundNeck=>
                 <tr>
                 <td>{roundNeck?.printSizeFront}</td>
                 <td>{roundNeck?.frontSideprice}</td>
@@ -1169,8 +1173,8 @@ console.log("printSide",printSide)
                                
                                   {setPrice && (
                                       <p className="pt-4 " style={{textAlign:"center"}}>
-                                          Your Grand Total is :   <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.totalPrice} </span> BDT <br />
-                                          Unit price is :  <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{price?.unitPrice}</span> BDT
+                                          Your Grand Total is :   <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{Number(price?.totalPrice)} </span> BDT <br />
+                                          Unit price is :  <span style={{fontSize:"22px",fontWeight:"600",color:"orange"}}>{Number(price?.unitPrice)}</span> BDT
                                       </p>
                                   )}
                               </Form>

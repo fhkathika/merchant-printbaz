@@ -37,13 +37,13 @@ let customDropSholderinputFront5X5=customDropSholderFilter?.find(thsirt => thsir
 let customDropSholderinputFront2p5X5=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === "2.5 x 5")
 let customDropSholderinputFront2p5X2p5=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === "2.5 x 2.5")
 // custom drop sholder backside 
-let customDropSholderinputBack11p7X16p5=customDropSholderFilter?.find(thsirt => thsirt.backSideprice === "11.7 x 16.5 (A3)")
-let customDropSholderinputBack10X14=customDropSholderFilter?.find(thsirt => thsirt.backSideprice === "10 x 14")
-let customDropSholderinputBack10X10=customDropSholderFilter?.find(thsirt => thsirt.backSideprice === "10 x 10 (A4)")
-let customDropSholderinputBack10X5=customDropSholderFilter?.find(thsirt => thsirt.backSideprice === "10 x 5")
-let customDropSholderinputBack5X5=customDropSholderFilter?.find(thsirt => thsirt.backSideprice === "5 x 5")
-let customDropSholderinputBack2p5X5=customDropSholderFilter?.find(thsirt => thsirt.backSideprice === "2.5 x 5")
-let customDropSholderinputBack2p5X2p5=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === "2.5 x 2.5")
+let customDropSholderinputBack11p7X16p5=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === "11.7 x 16.5 (A3)")
+let customDropSholderinputBack10X14=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === "10 x 14")
+let customDropSholderinputBack10X10=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === "10 x 10 (A4)")
+let customDropSholderinputBack10X5=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === "10 x 5")
+let customDropSholderinputBack5X5=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === "5 x 5")
+let customDropSholderinputBack2p5X5=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === "2.5 x 5")
+let customDropSholderinputBack2p5X2p5=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === "2.5 x 2.5")
 
 // custom hoodie front 
 let customHoodieinputFront11p7X16p5=customHoodieFilter?.find(thsirt => thsirt.printSizeFront === "11.7 x 16.5 (A3)")
@@ -56,13 +56,13 @@ let customHoodieinputFront2p5X2p5=customHoodieFilter?.find(thsirt => thsirt.prin
 
 // custom hoodie back side 
 
-let customHoodieinputBack11p7X16p5=customHoodieFilter?.find(thsirt => thsirt.backSideprice === "11.7 x 16.5 (A3)")
-let customHoodieinputBack10X14=customHoodieFilter?.find(thsirt => thsirt.backSideprice === "10 x 14")
-let customHoodieinputBack10X10=customHoodieFilter?.find(thsirt => thsirt.backSideprice === "10 x 10 (A4)")
-let customHoodieinputBack10X5=customHoodieFilter?.find(thsirt => thsirt.backSideprice === "10 x 5")
-let customHoodieinputBack5X5=customHoodieFilter?.find(thsirt => thsirt.backSideprice === "5 x 5")
-let customHoodieinputBack2p5X5=customHoodieFilter?.find(thsirt => thsirt.backSideprice === "2.5 x 5")
-let customHoodieinputBack2p5X2p5=customHoodieFilter?.find(thsirt => thsirt.backSideprice === "2.5 x 2.5")
+let customHoodieinputBack11p7X16p5=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "11.7 x 16.5 (A3)")
+let customHoodieinputBack10X14=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "10 x 14")
+let customHoodieinputBack10X10=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "10 x 10 (A4)")
+let customHoodieinputBack10X5=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "10 x 5")
+let customHoodieinputBack5X5=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "5 x 5")
+let customHoodieinputBack2p5X5=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "2.5 x 5")
+let customHoodieinputBack2p5X2p5=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "2.5 x 2.5")
 return({blankRoundNeckFilter,blankDropSholderFilter,
     blankHoodieFilter,customRoundNeckinputFront10X14,
     customRoundNeckinputFront10X10,

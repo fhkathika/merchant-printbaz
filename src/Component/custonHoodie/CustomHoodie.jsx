@@ -232,6 +232,7 @@ const [formData, setFormData] = useState({
 // let backSideDtfprice_2p5X2p5=4
 // let additionalCost=10
 
+
 let backSideDtfprice_11p7x16p5=customHoodieinputBack11p7X16p5?.backSideprice
 let backSideDtfprice_10x14=customHoodieinputBack10X14?.backSideprice
 let backSideDtfprice_10x10=customHoodieinputBack10X10?.backSideprice
@@ -239,7 +240,7 @@ let backSideDtfprice_10x5=customHoodieinputBack10X5?.backSideprice
 let backSideDtfprice_5X5=customHoodieinputBack5X5?.backSideprice
 let backSideDtfprice_2p5X5=customHoodieinputBack2p5X5?.backSideprice
 let backSideDtfprice_2p5X2p5=customHoodieinputBack2p5X2p5?.backSideprice
-console.log("backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
+console.log(" hoodie ............. backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
 let additionalCost=tshirtPrice[0]?.additionalCost
 
     const navigate=useNavigate()

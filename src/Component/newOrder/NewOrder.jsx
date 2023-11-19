@@ -374,7 +374,6 @@ let updatedPrintbazcost=0
         additionalCost,
 
       ).backDtfAndAdditionalCost;
-  
       // let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
       // // backSidePrintCost += totalQuantity * 130;
       // if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 14"){

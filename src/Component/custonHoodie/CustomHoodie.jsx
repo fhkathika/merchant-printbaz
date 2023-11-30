@@ -696,7 +696,7 @@ const handleSubmit = async (e) => {
                 <Card.Img variant="top" src={item?.categoryImg} />
                 
                 {/* Conditionally render the overlay for the first card */}
-                {index === 0 && (
+                {index === 3 && (
                     <div style={{
                         position: 'absolute',
                         top: 0,
@@ -805,7 +805,7 @@ const handleSubmit = async (e) => {
                         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                       >
                         {
-                          index === 0 ?
+                          index === 3 ?
                           <>
                           <option value="">select print size</option> 
                           <option value="11.7 x 16.5">11.7″ x 16.5″(A3) <spna > (Out of stock)</spna></option>

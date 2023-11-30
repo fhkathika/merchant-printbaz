@@ -42,7 +42,7 @@ const NewOrder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
-       
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -58,6 +58,7 @@ const NewOrder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -73,6 +74,7 @@ const NewOrder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -87,6 +89,7 @@ const NewOrder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -277,7 +280,7 @@ console.log("backSideDtfprice_2p5X2p5",backSideDtfprice_2p5X2p5)
 
     let itemIndex = newOrderDetailArr.findIndex(item => item.color === color);
 console.log("printSIde",value)
-    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
+    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="quantityXXXL"||name==="printSize"|| name==="printSide" || name==="printSizeBack") {
         if (size) {
             newOrderDetailArr[itemIndex].teshirtSize = { ...newOrderDetailArr[itemIndex].teshirtSize, [size]: value };
         }
@@ -292,7 +295,8 @@ console.log("printSIde",value)
   acc + safeParseInt(item.quantityM) + 
         safeParseInt(item.quantityL) + 
         safeParseInt(item.quantityXL) + 
-        safeParseInt(item.quantityXXL), 
+        safeParseInt(item.quantityXXL) +
+        safeParseInt(item.quantityXXXL), 
 0);
     
     // Update state
@@ -326,7 +330,8 @@ formData?.orderDetailArr.forEach(item => {
   item.totalQuantity = safeParseInt(item.quantityM) + 
                        safeParseInt(item.quantityL) + 
                        safeParseInt(item.quantityXL) + 
-                       safeParseInt(item.quantityXXL);
+                       safeParseInt(item.quantityXXL)+
+                       safeParseInt(item.quantityXXXL);
 });
 
 let updatedPrintbazcost=0
@@ -652,6 +657,7 @@ formData2.append('clientName', user?.name);
     <th class="tg-0lax_title tg-0lax">L</th>
     <th class="tg-0lax_title tg-0lax">XL</th>
     <th class="tg-0lax_title tg-0lax">XXL</th>
+    <th class="tg-0lax_title tg-0lax">3XL</th>
   </tr>
 </thead>
 <tbody>
@@ -661,6 +667,7 @@ formData2.append('clientName', user?.name);
     <td class="tg-0lax">40</td>
     <td class="tg-0lax">42</td>
     <td class="tg-0lax">44</td>
+    <td class="tg-0lax">46</td>
   </tr>
   <tr>
     <td class="tg-0lax">LENGHT</td>
@@ -668,6 +675,7 @@ formData2.append('clientName', user?.name);
     <td class="tg-0lax">28</td>
     <td class="tg-0lax">29</td>
     <td class="tg-0lax">30</td>
+    <td class="tg-0lax">32</td>
   </tr>
 </tbody>
 </table>
@@ -726,6 +734,18 @@ formData2.append('clientName', user?.name);
                    name="quantityXXL"
                    type="text"
                    value={item.quantityXXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+           </ListGroup.Item>  
+           <ListGroup.Item className="d-flex align-items-center">
+               <span value="XXXL">3XL</span>
+               <input 
+                   data-size="XXXL"
+                   data-color={item.color}
+                   name="quantityXXXL"
+                   type="text"
+                   value={item.quantityXXXL}
                    style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
                    onChange={(e) => handleInputChange(e, index)}
                />

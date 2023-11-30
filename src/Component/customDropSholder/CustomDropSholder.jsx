@@ -40,6 +40,7 @@ const CustomDropSholder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
        printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -55,6 +56,7 @@ const CustomDropSholder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -70,6 +72,7 @@ const CustomDropSholder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -84,6 +87,7 @@ const CustomDropSholder = () => {
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -263,7 +267,7 @@ console.log("additionalCost",additionalCost)
 
     let itemIndex = newOrderDetailArr.findIndex(item => item.color === color);
 
-    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
+    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"||  name==="quantityXXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
         if (size) {
             newOrderDetailArr[itemIndex].teshirtSize = { ...newOrderDetailArr[itemIndex].teshirtSize, [size]: value };
         }
@@ -278,7 +282,8 @@ console.log("additionalCost",additionalCost)
   acc + safeParseInt(item.quantityM) + 
         safeParseInt(item.quantityL) + 
         safeParseInt(item.quantityXL) + 
-        safeParseInt(item.quantityXXL), 
+        safeParseInt(item.quantityXXL)+ 
+        safeParseInt(item.quantityXXXL), 
 0);
     
     // Update state
@@ -313,7 +318,8 @@ formData?.orderDetailArr.forEach(item => {
   item.totalQuantity = safeParseInt(item.quantityM) + 
                        safeParseInt(item.quantityL) + 
                        safeParseInt(item.quantityXL) + 
-                       safeParseInt(item.quantityXXL);
+                       safeParseInt(item.quantityXXL)+
+                       safeParseInt(item.quantityXXXL);
 });
 
 let updatedPrintbazcost=0
@@ -657,6 +663,7 @@ const handleSubmit = async (e) => {
     <th class="tg-0lax_title tg-0lax">L</th>
     <th class="tg-0lax_title tg-0lax">XL</th>
     <th class="tg-0lax_title tg-0lax">XXL</th>
+    <th class="tg-0lax_title tg-0lax">3XL</th>
   </tr>
 </thead>
 <tbody>
@@ -666,6 +673,7 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">44</td>
     <td class="tg-0lax">46</td>
     <td class="tg-0lax">48</td>
+    <td class="tg-0lax">50</td>
   </tr>
   <tr>
     <td class="tg-0lax">LENGHT</td>
@@ -673,6 +681,7 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">28</td>
     <td class="tg-0lax">29</td>
     <td class="tg-0lax">30</td>
+    <td class="tg-0lax">32</td>
   </tr>
   <tr>
     <td class="tg-0lax">SHOULDER</td>
@@ -680,6 +689,7 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">8.5</td>
     <td class="tg-0lax">9</td>
     <td class="tg-0lax">9.5</td>
+    <td class="tg-0lax">10</td>
   </tr>
   <tr>
     <td class="tg-0lax">SLEEVE</td>
@@ -687,6 +697,7 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">9</td>
     <td class="tg-0lax">9.5</td>
     <td class="tg-0lax">9.8</td>
+    <td class="tg-0lax">10</td>
   </tr>
 </tbody>
 </table>
@@ -746,6 +757,18 @@ const handleSubmit = async (e) => {
                    name="quantityXXL"
                    type="text"
                    value={item.quantityXXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+           </ListGroup.Item>  
+           <ListGroup.Item className="d-flex align-items-center">
+               <span value="XXXL">3XL</span>
+               <input 
+                   data-size="XXXL"
+                   data-color={item.color}
+                   name="quantityXXXL"
+                   type="text"
+                   value={item.quantityXXXL}
                    style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
                    onChange={(e) => handleInputChange(e, index)}
                />

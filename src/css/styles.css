@@ -1449,5 +1449,53 @@ font-size: 16px !important;
   background-color: #e0e0e0;
 }
 
+/* tab  */
+
+
+.tab-container {
+  width: 100%;
+  margin: auto;
+  /* display: flex !important; */
+}
+
+.tab-buttons {
+  /* display: flex !important; */
+  flex-direction: column;
+  padding-right: 20px;
+  margin-left: 30px;
+
+}
+
+.tab-buttons button {
+  background-color: #f1f1f1;
+  color: black;
+  margin-left: 5px;
+  padding:10px 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.tab-buttons button:hover,
+.tab-buttons button.active {
+  background-color:  #012652;
+  color:white;
+}
+
+.tab-content {
+  /* border-left: 1px solid #ccc; */
+  padding: 10px;
+  margin-left: 30px;
+}
+
+.tab-content > div {
+  /* display: none; */
+}
+
+.tab-content > div > h3 {
+  margin-top: 0;
+}
 
 

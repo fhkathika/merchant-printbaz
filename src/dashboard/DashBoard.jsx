@@ -17,6 +17,7 @@ import ReqPaymentTIcketPopup from '../alertBox/ReqPaymentTIcketPopup';
 import Footer from '../Component/footer/Footer';
 import NavigationBar from '../Component/Navbar/NavigationBar';
 import BackToTop from '../Component/backToTop/BackToTop';
+import ProductInfoTab from '../Component/productInfoTab/ProductInfoTab';
 const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
   let id = "resellerOrdersId";
@@ -529,7 +530,6 @@ const handleLogOut=()=>{
  <NavigationBar/>
   {/* End Header */}
   {/* ======= Hero Section ======= */}
- 
 
   <section id="Hero" className="Hero">
     <div className="container" data-aos="fade-up">

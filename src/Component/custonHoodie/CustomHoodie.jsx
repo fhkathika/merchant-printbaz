@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner, Row, Col, Card, ListGroup, Container} from 'react-bootstrap';
+import  '../../css/productStyles.css'
+import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner, Row, Col, Card, ListGroup, Container, Nav, Tabs, Tab} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
 import { useGetData } from "../../hooks/useGetData";
 import teeShirtFormula from "../../Formulas/teeShirtFormula";
@@ -19,6 +20,7 @@ import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
 import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
 import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
 import useFilterValueBasedonCategory from '../../hooks/useFilterValueBasedonCategory';
+import ProductInfoTab from '../productInfoTab/ProductInfoTab';
 const CustomHoodie = () => {
 const [formData, setFormData] = useState({
     name: '',
@@ -30,16 +32,17 @@ const [formData, setFormData] = useState({
     zones:'',
     areas:'',
     quantity:0,
-    productType:'Blank hoodie',
+    productType:'Custom hoodie',
     orderDetailArr: [
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Black Custom.jpg",
+        categoryImg:"https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
        printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -50,11 +53,12 @@ const [formData, setFormData] = useState({
       {
         color: 'Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Neon Green Custom.jpg",
+        categoryImg:"https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -65,25 +69,28 @@ const [formData, setFormData] = useState({
       {
         color: 'Nevy Blue',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Nevy Blue Custom.jpg",
+        categoryImg:"https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
         file: null,
         image: null,
         brandLogo: null,
-      },  {
+      }, 
+       {
         color: 'Gray',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Gray Custom.jpg",
+        categoryImg:"https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -94,11 +101,12 @@ const [formData, setFormData] = useState({
       {
         color: 'Red',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Hoodies Red Custom.jpg",
+        categoryImg:"https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -258,7 +266,7 @@ let additionalCost=tshirtPrice[0]?.additionalCost
     const newOrderDetailArr = [...formData.orderDetailArr];
     let itemIndex = newOrderDetailArr.findIndex(item => item.color === color);
 
-    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
+    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="quantityXXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
         if (size) {
             newOrderDetailArr[itemIndex].teshirtSize = { ...newOrderDetailArr[itemIndex].teshirtSize, [size]: value };
         }
@@ -273,7 +281,8 @@ let additionalCost=tshirtPrice[0]?.additionalCost
   acc + safeParseInt(item.quantityM) + 
         safeParseInt(item.quantityL) + 
         safeParseInt(item.quantityXL) + 
-        safeParseInt(item.quantityXXL), 
+        safeParseInt(item.quantityXXL)+ 
+        safeParseInt(item.quantityXXXL), 
 0);
     
     // Update state
@@ -320,7 +329,8 @@ formData?.orderDetailArr.forEach(item => {
   item.totalQuantity = safeParseInt(item.quantityM) + 
                        safeParseInt(item.quantityL) + 
                        safeParseInt(item.quantityXL) + 
-                       safeParseInt(item.quantityXXL);
+                       safeParseInt(item.quantityXXL)+
+                       safeParseInt(item.quantityXXXL);
 });
 
 let updatedPrintbazcost=0
@@ -629,8 +639,10 @@ const handleSubmit = async (e) => {
               rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             />
-          
+        
             <NavigationBar />
+          
+            <hr />
             {loading===true && (
 <>
 <div className="alert-overlay"  />
@@ -641,17 +653,17 @@ const handleSubmit = async (e) => {
 </div>
 </>
 )}
-
+ 
 <Row className='m-auto'>
   <Col xs={12} md={12} className='mt-5  mb-2 '>
 
   <h3 className='headerName'  style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Hoodie</h3>
   </Col>
 </Row>
-
+<ProductInfoTab />
  <Form onSubmit={handleSubmit}  className="mb-4">
 
- <table class="size_table">
+ {/* <table class="size_table">
 <thead>
   <tr>
     <th class="tg-0lax_title tg-0lax">SIZE</th>
@@ -690,12 +702,11 @@ const handleSubmit = async (e) => {
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
            <input data-color={item.color} name="color" type="hidden" value={item.color} />
        </Card.Title>
-       {/* <Card.Img variant="top" src={item?.categoryImg} /> */}
-
+     
        <div style={{ position: 'relative' }}>
                 <Card.Img variant="top" src={item?.categoryImg} />
                 
-                {/* Conditionally render the overlay for the first card */}
+             
                 {index === 3 && (
                     <div style={{
                         position: 'absolute',
@@ -703,13 +714,13 @@ const handleSubmit = async (e) => {
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        backgroundColor: 'rgba(0,0,0,0.5)', // You can adjust the RGBA values for desired transparency
+                        backgroundColor: 'rgba(0,0,0,0.5)', // 
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         color: 'white'
                     }}>
-                        <h1 style={{fontWeight:"700"}}>Out of stock</h1> {/* Replace this with your desired overlay content */}
+                        <h1 style={{fontWeight:"700"}}>Out of stock</h1> 
                     </div>
                 )}
             </div>
@@ -971,9 +982,507 @@ onChange={(e) => handleFileChange(e, index)}
 ))}
 
 
-</Row>
-<hr />
-<RecipientDetail 
+</Row> */}
+
+<div>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {/*====== Title ======*/}
+        <title>Printbaz | Product Preview</title>
+        {/*====== Favicon Icon ======*/}
+        <link rel="shortcut icon" href="https://media.discordapp.net/attachments/1128921638977683526/1163824367923368007/Logo-01.jpg?ex=6565e4e8&is=65536fe8&hm=1708566566dde136fc9b7940d92367098c9c3eebe0283875d0f452ff0dbe4ad0&=&width=612&height=612" type="image/png" />
+        {/*====== Bootstrap CSS ======*/}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" />
+        {/*====== Style CSS ======*/}
+       
+        {/*====== Main ======*/}
+        <section className="mainProduct">
+          <div className="container">
+            {/*====== Product Area ======*/}
+            <div className="row">
+              <div className="col-lg-5">
+                {/*====== Product Image ======*/}
+                <div className="row">
+                  <div className="col-12">
+                    <div className="productMainImg active show" id="preview1">
+                      <img src="https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg" alt="Custom T-shirt" />
+                    </div>
+                  </div>
+                  <div className="col-3">
+                    <div className="productMoreImg" id="preview2">
+                      <img src="https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg" alt="Custom T-shirt" />
+                    </div>
+                  </div>
+                  <div className="col-3">
+                    <div className="productMoreImg">
+                      <img src="https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg" alt="Custom T-shirt" />
+                    </div>
+                  </div>
+                  <div className="col-3">
+                    <div className="productMoreImg">
+                      <img src="https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg" alt="Custom T-shirt" />
+                    </div>
+                  </div>
+                  <div className="col-3">
+                    <div className="productMoreImg">
+                      <img src="https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg" alt="Custom T-shirt" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/*====== Product Information ======*/}
+              <div className="col-lg-7">
+                <div className="productInformation">
+                  {/*====== Product Title ======*/}
+                  <div className="productTitle">
+                    <h2>Custom Hoodie</h2>
+                  </div>
+                  {/*====== Product Color/Size/Files/Price/Button ======*/}
+                  <div className="productColorSizeRow1">
+                    {/*====== Product Color/Size/Files ======*/}
+                    <div className="row">
+                      <h5>Product Size/Color</h5>
+                      <div className="col-lg-8 productSizeRow1">
+                        <div className="accordion" id="accordionExample">
+                       
+
+{formData.orderDetailArr.map((item, index) => (
+  <div className="accordion-item" key={index}>
+    <h2 className="accordion-header" id={`heading${index}`}>
+      <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>
+        {item.color}
+        <input data-color={item.color} name="color" type="hidden" value={item.color} />
+      </button>
+    </h2>
+    <div id={`collapse${index}`} className="accordion-collapse collapse" aria-labelledby={`heading${index}`} data-bs-parent="#accordionExample">
+    <div className="accordion-body">
+     <div className="productSizeColor">
+       <div className="productSize">
+         <h6 value="m">M</h6>
+         <input 
+                   data-size="m"
+                   data-color={item.color}
+                   name="quantityM"
+                   type="text"
+                   value={item.quantityM}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+       </div>
+       <div className="productSize">
+         <h6 value="L">L</h6>
+         <input 
+                   data-size="L"
+                   data-color={item.color}
+                   name="quantityL"
+                   type="text"
+                   value={item.quantityL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+       </div>
+       <div className="productSize">
+         <h6 value="XL">XL</h6>
+         <input 
+                   data-size="XL"
+                   data-color={item.color}
+                   name="quantityXL"
+                   type="text"
+                   value={item.quantityXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+       </div>
+       <div className="productSize">
+         <h6 value="XXL">2XL</h6>
+         <input 
+                   data-size="XXL"
+                   data-color={item.color}
+                   name="quantityXXL"
+                   type="text"
+                   value={item.quantityXXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+       </div>
+       <div className="productSize">
+         <h6 value="XXXL">3XL</h6>
+         <input 
+                   data-size="XXXL"
+                   data-color={item.color}
+                   name="quantityXXXL"
+                   type="text"
+                   value={item.quantityXXXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+       </div>
+     </div>
+     <div className="productPrintSizeAndFiles">
+       <label htmlFor="formFile" className="form-label fileUploadTitle">Print
+         Side</label>
+       <select className="form-select" aria-label="Default select example"
+        data-color={item.color}
+        value={item.printSide}
+        onChange={(e) => {
+           handleInputChange(e,index);
+        }}
+        name="printSide"
+        required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL || item.quantityXXXL}
+        
+       >
+         <option selected>Select Print Side</option>
+         <option value="frontSide">Front Side</option>
+         <option value="backSide">Back Side</option>
+         <option value="bothSide">Both Side</option>
+       </select>
+       {
+ ( item.printSide==="frontSide" || item.printSide==="backSide") &&
+ <>
+ <label htmlFor="formFile" className="form-label fileUploadTitle">Front
+ Side
+ Print Size</label>
+<select className="form-select" aria-label="Default select example"
+ data-color={item.color}
+ value={item.printSize}
+ onChange={(e) => {
+    handleInputChange(e,index);
+ }}
+ name="printSize"
+ required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
+>
+ <option selected>Select Print Size</option>
+ 
+                          {/* <option value="">select print size</option>  */}
+                          <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
+                          <option value="10 x 14">10″ x 14″</option>
+                          <option value="10 x 10">10″ x 10″(A4)</option>
+                          <option value="10 x 5">10″ x 5″</option>
+                          <option value="5 X 5">5″ x 5″</option>
+                          <option value="2.5 X 5">2.5″ x 5″</option>
+                          <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                        
+</select>
+</>
+       }
+        {
+                      item.printSide==="bothSide" && 
+      <>
+       <label htmlFor="formFile" className="form-label fileUploadTitle">Back
+         Side
+         Print Size</label>
+       <select className="form-select" aria-label="Default select example" data-color={item.color}
+                      name="printSizeBack"
+                      value={item?.printSizeBack}
+                      onChange={(e) => {
+                         handleInputChange(e,index);
+                      }}
+                     
+                      required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}>
+         <option selected>Select Print Size</option>
+      
+                           {/* <option value="">select print size</option>  */}
+                           <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
+                            <option value="10 x 14">10″ x 14″</option>
+                            <option value="10 x 10">10″ x 10″(A4)</option>
+                            <option value="10 x 5">10″ x 5″</option>
+                            <option value="5 X 5">5″ x 5″</option>
+                            <option value="2.5 X 5">2.5″ x 5″</option>
+                            <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                            
+       </select>
+       </>
+}
+       <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+         Design File</label>
+       <input className="form-control" type="file"
+                   name="file"
+                  
+                   onChange={(e) => handleFileChange(e, index)} 
+                   required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL || item.quantityXXXL}
+                   accept=".ai,.eps,.psd,.pdf,.svg,.png"
+                   multiple />
+       <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+         Mockup File</label>
+       <input className="form-control"  type="file"
+                   name="image"
+                  
+                   required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL ||  item.quantityXXXL}
+                   accept="image/*"
+                   onChange={(e) => handleFileChange(e, index)}
+                   multiple />
+       <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+         Brand Logo File</label>
+       <input className="form-control" type="file"
+name="brandLogo"
+accept="image/jpeg, image/png"
+onChange={(e) => handleFileChange(e, index)}/>
+     </div>
+   </div>
+    </div>
+  </div>
+))}
+
+
+                          {/* <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingTwo">
+                              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                White
+                              </button>
+                            </h2>
+                            <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                              <div className="accordion-body">
+                                <div className="productSizeColor">
+                                  <div className="productSize">
+                                    <h6>M</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>L</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>2XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>3XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                </div>
+                                <div className="productPrintSizeAndFiles">
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Print
+                                    Side</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Side</option>
+                                    <option value={1}>Front Side</option>
+                                    <option value={2}>Back Side</option>
+                                    <option value={3}>Broth Side</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Front
+                                    Side
+                                    Print Size</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Size</option>
+                                    <option value={1}>2.5 X 2.5 In</option>
+                                    <option value={2}>2.5 X 5 In</option>
+                                    <option value={3}>5 X 5 In</option>
+                                    <option value={4}>10 X 5 In</option>
+                                    <option value={5}>10 X 10 In</option>
+                                    <option value={6}>10 X 14 In</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Back
+                                    Side
+                                    Print Size</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Size</option>
+                                    <option value={1}>2.5 X 2.5 In</option>
+                                    <option value={2}>2.5 X 5 In</option>
+                                    <option value={3}>5 X 5 In</option>
+                                    <option value={4}>10 X 5 In</option>
+                                    <option value={5}>10 X 10 In</option>
+                                    <option value={6}>10 X 14 In</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Design File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Mockup File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Brand Logo File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingThree">
+                              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Maroon
+                              </button>
+                            </h2>
+                            <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                              <div className="accordion-body">
+                                <div className="productSizeColor">
+                                  <div className="productSize">
+                                    <h6>M</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>L</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>2XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>3XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                </div>
+                                <div className="productPrintSizeAndFiles">
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Print
+                                    Side</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Side</option>
+                                    <option value={1}>Front Side</option>
+                                    <option value={2}>Back Side</option>
+                                    <option value={3}>Broth Side</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Front
+                                    Side
+                                    Print Size</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Size</option>
+                                    <option value={1}>2.5 X 2.5 In</option>
+                                    <option value={2}>2.5 X 5 In</option>
+                                    <option value={3}>5 X 5 In</option>
+                                    <option value={4}>10 X 5 In</option>
+                                    <option value={5}>10 X 10 In</option>
+                                    <option value={6}>10 X 14 In</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Back
+                                    Side
+                                    Print Size</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Size</option>
+                                    <option value={1}>2.5 X 2.5 In</option>
+                                    <option value={2}>2.5 X 5 In</option>
+                                    <option value={3}>5 X 5 In</option>
+                                    <option value={4}>10 X 5 In</option>
+                                    <option value={5}>10 X 10 In</option>
+                                    <option value={6}>10 X 14 In</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Design File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Mockup File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Brand Logo File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingFour">
+                              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Bottle Green
+                              </button>
+                            </h2>
+                            <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                              <div className="accordion-body">
+                                <div className="productSizeColor">
+                                  <div className="productSize">
+                                    <h6>M</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>L</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>2XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                  <div className="productSize">
+                                    <h6>3XL</h6>
+                                    <input type="number" />
+                                  </div>
+                                </div>
+                                <div className="productPrintSizeAndFiles">
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Print
+                                    Side</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Side</option>
+                                    <option value={1}>Front Side</option>
+                                    <option value={2}>Back Side</option>
+                                    <option value={3}>Broth Side</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Front
+                                    Side
+                                    Print Size</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Size</option>
+                                    <option value={1}>2.5 X 2.5 In</option>
+                                    <option value={2}>2.5 X 5 In</option>
+                                    <option value={3}>5 X 5 In</option>
+                                    <option value={4}>10 X 5 In</option>
+                                    <option value={5}>10 X 10 In</option>
+                                    <option value={6}>10 X 14 In</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Back
+                                    Side
+                                    Print Size</label>
+                                  <select className="form-select" aria-label="Default select example">
+                                    <option selected>Select Print Size</option>
+                                    <option value={1}>2.5 X 2.5 In</option>
+                                    <option value={2}>2.5 X 5 In</option>
+                                    <option value={3}>5 X 5 In</option>
+                                    <option value={4}>10 X 5 In</option>
+                                    <option value={5}>10 X 10 In</option>
+                                    <option value={6}>10 X 14 In</option>
+                                  </select>
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Design File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Mockup File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                  <label htmlFor="formFile" className="form-label fileUploadTitle">Upload
+                                    Brand Logo File</label>
+                                  <input className="form-control" type="file" id="formFile" />
+                                </div>
+                              </div>
+                            </div>
+                          </div> */}
+                        </div>
+                      </div>
+                    </div>
+                    {/*====== Product Price ======*/}
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <div className="productPrice">
+                          <h5>Product Price</h5>
+                          <h6>{printbazcost} Tk</h6>
+                          <p>Per Unit {formData?.quantity ?Number(printbazcost/Number(formData?.quantity)):0} Tk</p>
+                        </div>
+                      </div>
+                    </div>
+                    {/*====== Product Button ======*/}
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <div className="productButton">
+                          <button>Buy Now</button>
+                          <button>Add To Cart</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div></section>
+        {/*====== Bootstrap js ======*/}
+      </div>
+
+{/* <RecipientDetail 
 formData={formData}
 handleInputChange={handleInputChange}
 areas={areas}
@@ -986,7 +1495,8 @@ recvMoney={recvMoney}
 formValid={formValid}
 recvAmount={recvAmount}
 alert={alert}
-/>
+/> */}
+ 
 <div className="col-md-12 d-flex flex-column align-items-center ">   
 
           
@@ -1014,7 +1524,11 @@ alert={alert}
 
 
 
-</Form>            
+</Form>
+
+
+
+    
 <div className="row m45 m_1responsive700 mb-3">
                 <div className="col-12">
                   <h3>Terms and Conditions</h3>

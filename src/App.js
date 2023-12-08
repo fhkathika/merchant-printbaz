@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import AddToCart from "./Component/addToCart/AddToCart.jsx"
 import TeeShirtCapingCalcForm from "./Component/teeShrtCapming/TeeShirtCapingCalcForm";
 import PrivateRoute from "../src/routes/PrivateRoute.jsx";
 import NavigationBar from "./Component/Navbar/NavigationBar";
@@ -293,6 +294,14 @@ function App() {
           element={
             
               <BlogsPreview/>
+            
+          }
+        />
+         <Route
+          path="/addToCart"
+          element={
+            
+              <AddToCart/>
             
           }
         />

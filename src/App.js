@@ -43,7 +43,7 @@ import CustomHoodie from "./Component/custonHoodie/CustomHoodie";
 import BlankHoodie from "./Component/blankHoodie/BlankHoodie";
 import Blogs from "./Component/blogs/Blogs.jsx";
 import BlogsPreview from "./Component/blogsPreview/BlogsPreview.jsx";
-
+import CheckOut from "./Component/checkout/CheckOut.jsx"
 ReactGA.initialize("UA-267461228-1")
 function App() {
   const { user, loading } = useContext(AuthContext);
@@ -302,6 +302,14 @@ function App() {
           element={
             
               <AddToCart/>
+            
+          }
+        />
+       <Route
+          path="/checkout"
+          element={
+            
+              <CheckOut/>
             
           }
         />

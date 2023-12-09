@@ -8,6 +8,7 @@ import AuthProvider from './context/AuthProvider/AuthProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'aos/dist/aos.css';
 import ReactGA from "react-ga4";
+import { CartProvider } from './context/CartProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 //Initialize GA4
 
@@ -16,7 +17,9 @@ root.render(
   <React.StrictMode>
    <BrowserRouter>
      <AuthProvider>
+       <CartProvider>
     <App />
+    </CartProvider>
     </AuthProvider>
     </BrowserRouter>
   </React.StrictMode> 

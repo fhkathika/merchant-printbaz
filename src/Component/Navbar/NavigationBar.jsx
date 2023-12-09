@@ -4,8 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
 import '../../css/dashboardStyles.css'
+import { CartContext } from '../../context/CartProvider';
 const NavigationBar = () => {
   const {user,logoutUser}=useContext(AuthContext);
+  const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
+  useContext(CartContext);
+  console.log("cartItems",cartItems);
   let id = "resellerId";
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
@@ -240,7 +244,8 @@ let msgCount=0;
      msgCount>0 &&
      <span className='notification-badge' >{msgCount}</span>
    }
-          </li>
+          </li> 
+         
           <li>
           
             <Link className='nav-link scrollto'  to="/blogs">BLOGS</Link> 
@@ -282,6 +287,28 @@ let msgCount=0;
               
               )}
             </ul>
+          </li>
+          <li>
+          <Link className="nav-link scrollto " to="/addToCart">
+<img  style={{width:"35px",height:"30px"}}src="https://media.discordapp.net/attachments/1181515624455872602/1182942257658200106/shopping-cart.png?ex=658687d4&is=657412d4&hm=68969a99571dfa5dd6f0cf3da17e7054a28f34aeeec045de7e718bbc9fbc9812&=&format=webp&quality=lossless" alt="Icon" />
+                        {cartItems.length > 0 &&
+                        <span className="notification-badge" >{cartItems.length}</span>}
+            </Link>
+            {
+   fetchAllTicket?.forEach(readMsg => {
+    if( user?.email===readMsg?.userEmail && readMsg?.unread === "true"){
+      msgCount++
+   }
+   else{
+    msgCount=0
+   }
+
+  })
+   }
+   {
+     msgCount>0 &&
+     <span className='notification-badge' >{msgCount}</span>
+   }
           </li>
         </ul>
      

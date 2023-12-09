@@ -957,6 +957,8 @@ color: #bababa !important;
 }
 
 .notification-badge {
+  width: 25px;
+  height: 25px;
   background-color: red;
   color: white;
   border-radius: 50%;
@@ -1366,7 +1368,7 @@ font-size: 16px !important;
   .notification-badge {
    
     right: 0px;
-    left: 70px;
+    left: 60px;
   }
   .block-mobile{
     display: block !important;

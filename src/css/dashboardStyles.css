@@ -372,7 +372,7 @@
     .mobile-nav-toggle {
       display: block;
     }
-  
+   
     .navbar ul {
       display: none;
     }
@@ -404,10 +404,12 @@
     left: 15px;
     padding: 10px 0;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #fff !important;
     overflow-y: auto;
     transition: 0.3s;
   }
+
+
   
   .navbar-mobile a,
   .navbar-mobile a:focus {
@@ -837,3 +839,16 @@
     font-size: 13px;
     color: #012970;
   }
+
+
+  .navbar-mobile .navbar ul  {
+    height: 300px !important;
+}
+
+.dropdown-content {
+  display: none;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

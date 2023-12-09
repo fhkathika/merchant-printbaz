@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import AddToCart from "./Component/addToCart/AddToCart.jsx"
 import TeeShirtCapingCalcForm from "./Component/teeShrtCapming/TeeShirtCapingCalcForm";
 import PrivateRoute from "../src/routes/PrivateRoute.jsx";
 import NavigationBar from "./Component/Navbar/NavigationBar";
@@ -40,6 +41,8 @@ import BlankRoundNeck from "./Component/blankRoundNeck/BlankRoundNeck";
 import BlankDropSholder from "./Component/blankDropSholder/BlankDropSholder";
 import CustomHoodie from "./Component/custonHoodie/CustomHoodie";
 import BlankHoodie from "./Component/blankHoodie/BlankHoodie";
+import Blogs from "./Component/blogs/Blogs.jsx";
+import BlogsPreview from "./Component/blogsPreview/BlogsPreview.jsx";
 
 ReactGA.initialize("UA-267461228-1")
 function App() {
@@ -209,9 +212,9 @@ function App() {
         <Route
           path="/termsConditions"
           element={
-            <PrivateRoute>
+           
               <TermsConditions />
-            </PrivateRoute>
+         
           }
         />
         <Route
@@ -278,7 +281,33 @@ function App() {
             </PrivateRoute>
           }
         />
+         <Route
+          path="/blogs"
+          element={
+        
+              <Blogs/>
+          
+          }
+        />
+         <Route
+          path="/blogsPreview/:id"
+          element={
+            
+              <BlogsPreview/>
+            
+          }
+        />
+         <Route
+          path="/addToCart"
+          element={
+            
+              <AddToCart/>
+            
+          }
+        />
+     
       </Routes>
+       
      
     </div>
   );

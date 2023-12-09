@@ -160,8 +160,8 @@ a[x-apple-data-detectors] {
     top: 230px; 
   }
   .nav-link{
-    background-color: #001846 !important;
-    color: White !important;
+    background-color: none !important;
+    color: #001846 !important;
    
   }  
 
@@ -253,26 +253,69 @@ a[x-apple-data-detectors] {
   overflow-x: hidden;
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
   .m_1responsive700 {
     margin: 8px;
   }
-   .m_12responsive700 {
+
+  .m_12responsive700 {
     margin: 12px;
   }
-  .m45  {
+
+  .m45 {
     margin: 0px !important;
   }
-  .box{
-    width: 80%;
+  
+  
+
+.jb{
+  justify-content: space-between;
+}
+  /* Adjusting the input fields for responsiveness */
+  input[type="text"] {
+    /* width: 100%; */
+    max-width: 80%;
+    box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
   }
-  .popup{
+  .Quantity input[type="number"] {
+    max-width: 100%;
+    box-sizing: border-box; 
+  }
+  .rcp_info input[type="text"] {
+    max-width: 100%;
+ 
+    box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
+  } 
+  select.form-control {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't make the input larger than its parent */
+  }
+
+  .uploadFilePlaceholder {
+    font-size: 9px !important;
+  }
+
+
+  /* Increase width for cards for better visibility on smaller screens */
+  .card {
+    width: 98%;
+  margin: 2px;
+  }
+
+  /* Adjusting the popup for responsiveness */
+  .popup {
     width: 80%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
+
 .text_brandColor{
   color: #012652 !important;
 }
+
+
 @media screen and (min-width:360px   ) and  (max-width:660px){ 
   .bg_gray{
     background-color: #555 !important;
@@ -382,6 +425,11 @@ background-color: white !important;
 
 .hide {
   display: none;
+}
+.align_center{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .flex{
   display: flex;
@@ -511,6 +559,10 @@ align-items: center;
   .m_L15P{
     margin-left: 15%;
   }
+
+  .viewOrderPaymentStatus{
+    margin-left:25px
+  }
 @media only screen and (max-width: 600px) {
   .block{
     display:block
@@ -628,6 +680,9 @@ position: relative;
   border-left: 3px solid #012652;
   border-radius: 20px 20px 0px 0px;
 }
+.printSizeDemoCol img{
+  border-radius: 20px 20px 0px 0px;
+}
 
 .printSizeText{
   width: 100%;
@@ -724,6 +779,7 @@ cursor: pointer;
     padding-left: 10px !important;
    
   } */
+ 
 }
 @media only screen and (max-width: 991.98px) {
   .my-2.my-lg-0 {
@@ -914,6 +970,7 @@ color: #bababa !important;
 .notification-badge-individual {
   background-color: red;
   margin-top: 50px;
+  margin-left: 20px;
   display: inline-block;
   justify-content: center;
   align-items: center;
@@ -1021,7 +1078,19 @@ font-size: 16px !important;
   transform: scale(1);
   z-index: 2;
 }
-
+.term_conditoinPg{
+  .tm_td1 {
+    text-align: center;width: 100%
+  }
+  .tm_td1 h1{
+    margin: 0;
+    text-align: center;
+    color: white;
+  }
+  .tm_td1 {
+    
+  }
+}
 /* Mobile styles */
 @media only screen and (max-width: 768px) {
   .carousel-container {
@@ -1042,7 +1111,8 @@ font-size: 16px !important;
 /* home slider end  */
 
 .baseCard{
-  box-shadow: 0px 0px 5px 5px rgb(235, 235, 235);
+  box-shadow: 0px 0px 5px 5px rgb(240, 240, 240);
+
 }
 
 /* new order flip cards style  */
@@ -1050,6 +1120,7 @@ font-size: 16px !important;
   width: auto;
   height: 400px;
   perspective: 1000px; /* This gives a nice 3D effect on flip */
+  overflow: hidden;
 
 }
 
@@ -1150,11 +1221,14 @@ font-size: 16px !important;
   height: 100%;
   /* Add additional styles as needed */
 }
-
+.headerName{
+  margin-left: 25px;
+  
+}
 /* Size Table */
 .size_table{
-  margin-left: 60px;
-  width: 93%;
+  margin: auto;
+  width: 95%;
 }
 
 .tg-0lax_title{
@@ -1167,17 +1241,144 @@ font-size: 16px !important;
   border: 2px black solid;
   padding: 15px 25px;
 }
-
-@media only screen and (max-width: 600px) {
-
-
+.paymentStatus{
+  margin-top: 70px;
+}
+.textCenter_verticAndHorizontal{
+  text-align: center;
+  display: flex;
+   align-items: center; 
+   justify-content: center;
+   height: 100%
 }
 
-@media screen and (max-width: 700px){
+@media (max-width: 600px) {
+ 
+  .cardImg{
+/* max-height: 300px !important; */
+  }
+.card-inner{
+  height: fit-content;
+}
+.card-front{
+  /* max-height: 300px !important; */
+}
+  .card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card_newOrder {
+  height:80%;
+  perspective: 600px;
+}
+  .card-back {
+    /* height: 250px; */
+    padding: 10px 4px;
+}
+  .card-back h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+  }
   
+  .card-back li {
+      font-size: 10px;
+  }
+  #copyButton2 {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+  
+  .card-back li span {
+      font-size: 10px;
+  }
+    /* Override Bootstrap's default column padding */
+    .no-gutter > [class*='col-'] {
+      padding-left: 0;
+      padding-right: 0;
+  }
+  
+  /* If you still want some space between columns, adjust this value */
+  .small-gutter > [class*='col-'] {
+      padding-left: 5px;
+      padding-right: 5px;
+  }
+}
+
+/* Custom Stylesheet or in a <style> block */
+
+/* Default styles for mobile */
+@media (max-width: 767px) {
+  .mobile-row-adjustment {
+      margin: 0.5rem !important; /* Half of m-3 for mobile view */
+  }
+  .mobile-col-adjustment {
+      padding-left: 0.2rem !important; /* Half of the default Bootstrap column gap */
+      padding-right: 0.2rem !important; /* Half of the default Bootstrap column gap */
+  }
+}
+
+/* Styles for desktop and up */
+@media (min-width: 768px) {
+  .mobile-row-adjustment {
+      margin: 1rem !important;
+  }
+  .mobile-col-adjustment {
+      padding-left: 0.5rem !important; /* Default Bootstrap column gap */
+      padding-top: 0.5rem !important; /* Default Bootstrap column gap */
+      padding-right: 0.5rem !important; /* Default Bootstrap column gap */
+  }
+}
+
+
+@media screen and (max-width: 700px){
+  .cardTitle{
+    font-size: 18px !important;
+  }
+  .font10px{
+    font-size: 15px;
+  
+  }
+  .font12px{
+    font-size: 10px;
+  
+  }
+  .viewOrderPaymentStatus{
+    margin-left:0px;
+  }
+  .paymentStatus{
+    margin-top: 0px;
+  }
+  .textCenter_verticAndHorizontal {
+    display: block; /* Reverts display back to the default for <div> */
+    align-items: normal;
+    justify-content: normal;
+    text-align: left; /* Or 'inherit' or 'start', depending on what you need */
+    /* Remove the height property if it's not required for mobile view */
+  }
+  .notifyDiv{
+    text-align: center;
+    margin-right: 70px;
+  }
+  .notification-badge-individual {
+    font-size: 10px;
+  }
+  .notification-badge {
+   
+    right: 0px;
+    left: 70px;
+  }
+  .block-mobile{
+    display: block !important;
+  }
 /* Size Table */
 .size_table{
-  margin: 15px;
+  /* margin: 15px; */
+  margin: auto;
+  width:95.5%;
+}
+.headerName{margin-left:0px
+  
 }
 
 .tg-0lax_title{
@@ -1190,5 +1391,111 @@ font-size: 16px !important;
   border: 2px black solid;
   padding: 0px 0px;
 }
-  
+.timeStampDesignMobile{
+  font-size: 10px !important;
 }
+#root .ql-snow.ql-toolbar {
+  display: block;
+  width: 100%;
+  height: 8rem;
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.p-4 {
+  padding: 0px !important;
+}
+ 
+}
+
+
+.custom-file-label-mobile {
+  display: inline-block;
+  padding: 0.5em 1em;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+/* .custom-file-label-mobile{
+  width: 100%;
+} */
+/* Assuming the breakpoint for mobile view is 768px */
+/* @media (min-width: 769px) {
+  .custom-file-label-mobile::before {
+
+      content: "Choose File";
+  }
+
+ 
+}
+.custom-file-label-mobile::before {
+
+  content: "";
+} */
+
+.custom-file-input-wrapper .custom-file-input-label {
+  display: inline-block;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #f8f8f8;
+  transition: background-color 0.3s;
+}
+
+.custom-file-input-wrapper .custom-file-input-label:hover {
+  background-color: #e0e0e0;
+}
+
+/* tab  */
+
+
+.tab-container {
+  width: 100%;
+  margin: auto;
+  /* display: flex !important; */
+}
+
+.tab-buttons {
+  /* display: flex !important; */
+  flex-direction: column;
+  padding-right: 20px;
+  margin-left: 30px;
+
+}
+
+.tab-buttons button {
+  background-color: #f1f1f1;
+  color: black;
+  margin-left: 5px;
+  padding:10px 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.tab-buttons button:hover,
+.tab-buttons button.active {
+  background-color:  #012652;
+  color:white;
+}
+
+.tab-content {
+  /* border-left: 1px solid #ccc; */
+  padding: 10px;
+  margin-left: 30px;
+}
+
+.tab-content > div {
+  /* display: none; */
+}
+
+.tab-content > div > h3 {
+  margin-top: 0;
+}
+
+

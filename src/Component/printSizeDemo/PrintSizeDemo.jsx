@@ -2,8 +2,38 @@ import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
+import BackToTop from '../backToTop/BackToTop';
 
 const PrintSizeDemo = () => {
+  const demoImages=[
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 5.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 10.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 5.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 5 X 5.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 2.5.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 14'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
+  
+  ]
     return (
       <>
       <NavigationBar/>
@@ -68,6 +98,7 @@ const PrintSizeDemo = () => {
      
         </div>
         <Footer/>
+        <BackToTop/>
       </>
        
     );

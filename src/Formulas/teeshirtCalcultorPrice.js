@@ -1,66 +1,85 @@
 
 import React from 'react';
+import useGetTshirtPrice from '../hooks/useGetTshirtPrice';
 const teeshirtCalcultorPrice = (quantity,
-    printSize,
-    printSizeBack,
-    customRoundNeckFilter,
-customDropSholderFilter,
-customHoodieFilter,
-blankRoundNeckFilter,
-blankDropSholderFilter,
-blankHoodieFilter,
-selectProductType,
-printSide
+  printSize,
+  printSizeBack,
+  customRoundNeckFilter,
+  customDropSholderFilter,
+  customHoodieFilter,
+  blankRoundNeckFilter,
+  blankDropSholderFilter,
+  blankHoodieFilter,
+  selectProductType,
+  printSide,
+  tshirtPrice
                                      
     ) => {
       console.log("printSize",printSize);
+    
+   // blank product filter 
+const blankRoundNeckFilters=tshirtPrice?.find(thsirt => thsirt.category === "Blank Round Neck")
+const blankDropSholderFilters=tshirtPrice?.find(thsirt => thsirt.category === "Blank Drop Sholder")
+const blankHoodieFilters=tshirtPrice?.find(thsirt => thsirt.category === "Blank Hoodie")
+console.log("blankRoundNeckFilters",blankRoundNeckFilters)
 let totalPrice=0
-const customRoundNeckinputFilter=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === printSize)
+const customRoundNeckinputFrontFilter=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === printSize)
+
 const customRoundNeckBackinputFilter=customRoundNeckFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
 
-const customDropSholderinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === printSize)
+const customDropSholderFrontinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === printSize)
 const customDropSholderBackinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
 
-const cusftomHoodieinputFilter=customHoodieFilter?.find(thsirt => thsirt.printSizeFront === printSize)
+const cusftomHoodieinputfrontFilter=customHoodieFilter?.find(thsirt => thsirt.printSizeFront === printSize)
 const cusftomHoodieBackinputFilter=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
-console.log("customRoundNeckinputFilter",customRoundNeckinputFilter);
 if(selectProductType==="Round Neck"){ 
    if( printSide==="frontSide" || printSide==="backSide"){
-  // 10 x 14
-  totalPrice=quantity*customRoundNeckinputFilter?.frontSideprice;
+ totalPrice=quantity*Number(customRoundNeckinputFrontFilter?.frontSideprice);
  
    }
    else if( printSide==="bothSide"){
-  // 10 x 14
-  totalPrice=quantity*(customRoundNeckinputFilter?.frontSideprice+customRoundNeckBackinputFilter?.backSideprice);
+ 
+  totalPrice=quantity*(Number(customRoundNeckinputFrontFilter?.frontSideprice)+Number(customRoundNeckBackinputFilter?.backSideprice)+Number(customRoundNeckBackinputFilter?.additionalCost));
  
    }
   
 }
 if( selectProductType==="Hoodie"){ 
+  console.log("hoodie")
     if( printSide==="frontSide"|| printSide==="backSide"){
-  // 10 x 14
-  totalPrice=quantity*cusftomHoodieinputFilter?.frontSideprice;
+ 
+  totalPrice=quantity*Number(cusftomHoodieinputfrontFilter?.frontSideprice);
        
  
     } else if( printSide==="bothSide"){
-        // 10 x 14
-    totalPrice=quantity*(cusftomHoodieinputFilter?.frontSideprice+customDropSholderBackinputFilter?.backSideprice);
        
+    totalPrice=quantity*(Number(cusftomHoodieinputfrontFilter?.frontSideprice)+Number(cusftomHoodieBackinputFilter?.backSideprice)+Number(cusftomHoodieBackinputFilter?.additionalCost));
+     
    
     }
   
 }
 if( selectProductType==="Drop Sholder"){ 
+  console.log("Drop sholder")
     if( printSide==="frontSide"|| printSide==="backSide"){
-  // 10 x 14
-  totalPrice=quantity*customDropSholderinputFilter?.frontSideprice;
+ 
+  totalPrice=quantity*Number(customDropSholderFrontinputFilter?.frontSideprice);
  
     }
     else if ( printSide==="bothSide"){
-        totalPrice=quantity*(customDropSholderinputFilter?.frontSideprice+cusftomHoodieBackinputFilter?.backSideprice);
+        totalPrice=quantity*(Number(customDropSholderFrontinputFilter?.frontSideprice)+Number(customDropSholderBackinputFilter?.backSideprice)+Number(customDropSholderBackinputFilter?.additionalCost));
     }
   
+}
+
+if(selectProductType==="Blank Round Neck"){
+totalPrice=quantity*Number(blankRoundNeckFilters?.frontSideprice)
+}
+else if(selectProductType==="Blank Drop Sholder"){
+totalPrice=quantity*Number(blankDropSholderFilters?.frontSideprice)
+}
+ else if(selectProductType==="Blank Hoodie"){
+totalPrice=quantity*Number(blankHoodieFilters?.frontSideprice)
 }
 
 

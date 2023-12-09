@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner, Row, Col, Card, ListGroup, Container} from 'react-bootstrap';
+import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner, Row, Col, Card, ListGroup, Container, Alert} from 'react-bootstrap';
 import { db, storage } from '../../firebase.config';
 import { useGetData } from "../../hooks/useGetData";
 import teeShirtFormula from "../../Formulas/teeShirtFormula";
@@ -12,6 +12,13 @@ import axios from 'axios';
 import Footer from '../footer/Footer';
 import tshirtFormulaCustomDropSholder from '../../Formulas/tshirtFormulaCustomDropSholder';
 import deliveryCharge from '../../Formulas/deliveryCharge';
+import BackToTop from '../backToTop/BackToTop';
+import RecipientDetail from '../recipientDetail/RecipientDetail';
+import backsiideFormulaDropSholderHoodie from '../../Formulas/backsiideFormulaDropSholderHoodie';
+import useDynamicBckSidePrice from '../../hooks/useDynamicBckSidePrice';
+import useGetTshirtPrice from '../../hooks/useGetTshirtPrice';
+import useDynamicFrontSidePrice from '../../hooks/useDynamicFrontSidePrice';
+import useFilterValueBasedonCategory from '../../hooks/useFilterValueBasedonCategory';
 const CustomDropSholder = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -28,11 +35,12 @@ const CustomDropSholder = () => {
       {
         color: 'Black',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Black Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Black Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
        printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -43,11 +51,12 @@ const CustomDropSholder = () => {
       {
         color: 'White',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder White Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder White Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -58,11 +67,12 @@ const CustomDropSholder = () => {
       {
         color: 'Bottle Green',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Bottle Green Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -72,11 +82,12 @@ const CustomDropSholder = () => {
       },  {
         color: 'Maroon',
         teshirtSize: {},
-        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon Custom N.jpg",
+        categoryImg:"/images/categoryImgs/Drop Shoulder Maroon Custom.jpg",
         quantityM: '',
         quantityL: '',
         quantityXL: '',
         quantityXXL: '',
+        quantityXXXL: '',
         printSide: '',
         printSize: '',
         printSizeBack: '',
@@ -101,6 +112,7 @@ const CustomDropSholder = () => {
    const [printSide, setPrintSide] = useState('');
    const [addbrandLogo, setAddBrandLogo] = useState(false);
    const [deliveryAreas, setDeliveryAreas] = useState('');
+   const [alert, setAlert] = useState(false);
    const { fetchedData, searchProduct, setSearchProduct } = useGetData(
      idPrice,
      collectionsPrice,
@@ -111,6 +123,22 @@ const CustomDropSholder = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount,setRecvAmount]=useState()
   const [formValid, setFormValid] = useState(false);
+  
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
   useEffect(() => {
@@ -173,14 +201,56 @@ const CustomDropSholder = () => {
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = d.toLocaleDateString("en-US", options);
-    const price_11p7x16p5=433
-    const price_10x14=398
-    const price_10x10=341
-    const price_10x5=312
-    const price_5X5=297
-    const price_2p5X5=290
-    const price_2p5X2p5=287
+    const {dynamicBackPrices} = useDynamicBckSidePrice();
+    const {dynamicFrontPrices} = useDynamicFrontSidePrice();
+    const { tshirtPrice } = useGetTshirtPrice();
+    const {
+      customDropSholderinputFront11p7X16p5,
+      customDropSholderinputFront10X14,
+      customDropSholderinputFront10X10,
+      customDropSholderinputFront10X5,
+      customDropSholderinputFront5X5,
+      customDropSholderinputFront2p5X5,
+      customDropSholderinputFront2p5X2p5,
+      customDropSholderinputBack11p7X16p5,
+      customDropSholderinputBack10X14,
+      customDropSholderinputBack10X10,
+      customDropSholderinputBack10X5,
+      customDropSholderinputBack5X5,
+      customDropSholderinputBack2p5X5,
+      customDropSholderinputBack2p5X2p5}=useFilterValueBasedonCategory()
+    let price_11p7x16p5=customDropSholderinputFront11p7X16p5?.frontSideprice
+    let price_10x14=customDropSholderinputFront10X14?.frontSideprice
+    let price_10x10=customDropSholderinputFront10X10?.frontSideprice
+    let price_10x5=customDropSholderinputFront10X5?.frontSideprice
+    let price_5X5=customDropSholderinputFront5X5?.frontSideprice
+    let price_2p5X5=customDropSholderinputFront2p5X5?.frontSideprice
+    let price_2p5X2p5=customDropSholderinputFront2p5X2p5?.frontSideprice
+    console.log("dynamicFrontPrices",dynamicFrontPrices)
+console.log("price_11p7x16p5",price_11p7x16p5)
+console.log("price_10x14",price_10x14)
+console.log("price_10x10",price_10x10)
+console.log("price_10x5",price_10x5)
+console.log("price_5X5",price_5X5)
+console.log("price_2p5X5",price_2p5X5)
+console.log("price_2p5X2p5",price_2p5X2p5)
 
+let backSideDtfprice_11p7x16p5=customDropSholderinputBack11p7X16p5?.backSideprice
+let backSideDtfprice_10x14=customDropSholderinputBack10X14?.backSideprice
+let backSideDtfprice_10x10=customDropSholderinputBack10X10?.backSideprice
+let backSideDtfprice_10x5=customDropSholderinputBack10X5?.backSideprice
+let backSideDtfprice_5X5=customDropSholderinputBack5X5?.backSideprice
+let backSideDtfprice_2p5X5=customDropSholderinputBack2p5X5?.backSideprice
+let backSideDtfprice_2p5X2p5=customDropSholderinputBack2p5X2p5?.backSideprice
+let additionalCost=tshirtPrice[0]?.additionalCost
+console.log("backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
+console.log("backSideDtfprice_10x14",backSideDtfprice_10x14)
+console.log("backSideDtfprice_10x10",backSideDtfprice_10x10)
+console.log("backSideDtfprice_10x5",backSideDtfprice_10x5)
+console.log("backSideDtfprice_5X5",backSideDtfprice_5X5)
+console.log("backSideDtfprice_2p5X5",backSideDtfprice_2p5X5)
+console.log("backSideDtfprice_2p5X2p5",backSideDtfprice_2p5X2p5)
+console.log("additionalCost",additionalCost)
     const navigate=useNavigate()
     const location=useLocation()
     const [inputs, setInputs] = useState([{ value: '' }]);
@@ -197,7 +267,7 @@ const CustomDropSholder = () => {
 
     let itemIndex = newOrderDetailArr.findIndex(item => item.color === color);
 
-    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
+    if (name==="color" || name==="teshirtSize" || name==="quantityM" ||  name==="quantityL"|| name==="quantityXL"||  name==="quantityXXL"||  name==="quantityXXXL"|| name==="printSize"|| name==="printSide" || name==="printSizeBack") {
         if (size) {
             newOrderDetailArr[itemIndex].teshirtSize = { ...newOrderDetailArr[itemIndex].teshirtSize, [size]: value };
         }
@@ -212,7 +282,8 @@ const CustomDropSholder = () => {
   acc + safeParseInt(item.quantityM) + 
         safeParseInt(item.quantityL) + 
         safeParseInt(item.quantityXL) + 
-        safeParseInt(item.quantityXXL), 
+        safeParseInt(item.quantityXXL)+ 
+        safeParseInt(item.quantityXXXL), 
 0);
     
     // Update state
@@ -223,17 +294,22 @@ const CustomDropSholder = () => {
     }));
 }
 
-  
+const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
    console.log("formData",formData);
   const handleFileChange = (event, index) => {
     const { name, files } = event.target;
+    const updatedBrandLogoArray = [...addBrandLogoArray];
     if (name==="file" || name==="image" || name==="brandLogo") {
+      if (name === "brandLogo") {
+        updatedBrandLogoArray[index] = files && files.length > 0;
+        setAddBrandLogoArray(updatedBrandLogoArray);
+    }
       // const fieldName = name.split('.')[1];
       const newOrderDetailArr = [...formData.orderDetailArr];
        // Change from a single file to an array of files
       newOrderDetailArr[index][[event.target.name]] =Array.from(files);
       setFormData({ ...formData, orderDetailArr: newOrderDetailArr });
-    
+  
     }
   };
 
@@ -242,7 +318,8 @@ formData?.orderDetailArr.forEach(item => {
   item.totalQuantity = safeParseInt(item.quantityM) + 
                        safeParseInt(item.quantityL) + 
                        safeParseInt(item.quantityXL) + 
-                       safeParseInt(item.quantityXXL);
+                       safeParseInt(item.quantityXXL)+
+                       safeParseInt(item.quantityXXXL);
 });
 
 let updatedPrintbazcost=0
@@ -275,49 +352,83 @@ let updatedPrintbazcost=0
         price_2p5X5,
         price_2p5X2p5
       ).totalPrice;
-      let backSidePrintCost = 0;
+   // back side dtf cost plus additional cost 
+   let backSidePrintCost =backsiideFormulaDropSholderHoodie(
+    formData?.quantity,
+    formData?.orderDetailArr[i]?.totalQuantity,
+    formData?.orderDetailArr[i]?.printSizeBack,
+    formData?.orderDetailArr[i]?.printSide,
+    backSideDtfprice_11p7x16p5,
+    backSideDtfprice_10x14,
+    backSideDtfprice_10x10,
+    backSideDtfprice_10x5,
+    backSideDtfprice_5X5,
+    backSideDtfprice_2p5X5,
+    backSideDtfprice_2p5X2p5,
+    additionalCost,
+
+  ).backDtfAndAdditionalCost;
+  console.log("backSidePrintCost",backSidePrintCost)
       let totalQuantity = formData?.orderDetailArr[i]?.totalQuantity;
       // backSidePrintCost += totalQuantity * 130;
-      if(formData?.orderDetailArr[i]?.printSizeBack==="11.7 x 16.5" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="11.7 x 16.5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 160
-      } 
-      if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" || (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 14")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 125
-      }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"||(formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 10")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 68
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="10 x 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 39
-      } else if(formData?.orderDetailArr[i]?.printSizeBack==="5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="5 X 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 25
-      }
-      else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 18
-      }  else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"|| (formData?.orderDetailArr[i]?.printSide==="backSide" && formData?.orderDetailArr[i]?.printSize==="2.5 X 2.5")){
-        backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 14
-      }
+      // if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="11.7 x 16.5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 160
+      // } 
+      // if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 14" ){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 125
+      // }
+      // else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="10 x 10"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 68
+      // } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" &&formData?.orderDetailArr[i]?.printSizeBack==="10 x 5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 39
+      // } else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="5 x 5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 25
+      // }
+      // else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 x 5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 18
+      // }  else if(formData?.orderDetailArr[i]?.printSide==="bothSide" && formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 2.5"){
+      //   backSidePrintCost+= formData?.orderDetailArr[i]?.totalQuantity * 14
+      // }
       
       // At this point, backSidePrintCost contains the total cost for the current item's back side print
       
-      if(addbrandLogo===true){
-        // printbazcost=parseInt(printbazcostbase+5)
+      // if(addbrandLogo===true){
+      //   // printbazcost=parseInt(printbazcostbase+5)
         
-        printbazcostbase = Number(totalPrice)+backSidePrintCost+(5*formData?.orderDetailArr[i]?.totalQuantity);
+      //   printbazcostbase = Number(totalPrice)+backSidePrintCost+(5*formData?.orderDetailArr[i]?.totalQuantity);
+      //   printbazcost += printbazcostbase;
+      //   const test=printbazcost+backSidePrintCost
+      //   console.log("printbazcost",printbazcost)
+      //   console.log("backSidePrintCost",backSidePrintCost)
+      //   console.log("test",test)
+      // }
+      // else{
+      //   printbazcostbase = Number(totalPrice) + backSidePrintCost;
+      //   printbazcost +=printbazcostbase;
+      
+      //   console.log("printbazcost",printbazcost)
+      //   console.log("backSidePrintCost",backSidePrintCost)
+      // }
+
+      if(addBrandLogoArray[i]){
+        // printbazcost=parseInt(printbazcostbase+5)
+        let brandLogoCost=5*formData?.orderDetailArr[i]?.totalQuantity
+        printbazcostbase = Number(totalPrice)+backSidePrintCost+brandLogoCost;
+        console.log("brandLogoCost",brandLogoCost);
+        console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
         printbazcost += printbazcostbase;
         const test=printbazcost+backSidePrintCost
-        console.log("printbazcost",printbazcost)
-        console.log("backSidePrintCost",backSidePrintCost)
-        console.log("test",test)
+      console.log("addbrandLogo",addbrandLogo);
       }
       else{
-        printbazcostbase = Number(totalPrice) + backSidePrintCost;
-        printbazcost +=printbazcostbase;
+        printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
+        printbazcost += printbazcostbase;
       
         console.log("printbazcost",printbazcost)
+        console.log("printbazcostbase",printbazcostbase)
         console.log("backSidePrintCost",backSidePrintCost)
+        console.log("totalPrice",totalPrice)
       }
-
- 
     }
     //  else {
     //   if(printbazcostbase){
@@ -397,6 +508,10 @@ let updatedPrintbazcost=0
 // foe mongodb new
 const handleSubmit = async (e) => {
   e.preventDefault();
+  if(formData?.quantity===0){
+    setAlert(true)
+    return
+  }
   setIsLoading(true)
     // Validate the form here
     if (validateForm()) {
@@ -532,9 +647,9 @@ const handleSubmit = async (e) => {
 </>
 )}
 <Row className='m-auto'>
-  <Col xs={12} md={12} className='mt-5  mb-2'>
+  <Col xs={12} md={12} className='mt-5  mb-2  '>
 
-  <h3   style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Drop Sholder</h3>
+  <h3 className='headerName'   style={{cursor:"pointer"}}  onClick={handleBack}><span style={{cursor:"pointer"}} > <img style={{width:"20px"}} src='/images/left-arrow.png' alter="backTocategory"/></span>   Custom Drop Sholder</h3>
   </Col>
 </Row>
 
@@ -548,6 +663,7 @@ const handleSubmit = async (e) => {
     <th class="tg-0lax_title tg-0lax">L</th>
     <th class="tg-0lax_title tg-0lax">XL</th>
     <th class="tg-0lax_title tg-0lax">XXL</th>
+    <th class="tg-0lax_title tg-0lax">3XL</th>
   </tr>
 </thead>
 <tbody>
@@ -557,6 +673,7 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">44</td>
     <td class="tg-0lax">46</td>
     <td class="tg-0lax">48</td>
+    <td class="tg-0lax">50</td>
   </tr>
   <tr>
     <td class="tg-0lax">LENGHT</td>
@@ -564,6 +681,7 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">28</td>
     <td class="tg-0lax">29</td>
     <td class="tg-0lax">30</td>
+    <td class="tg-0lax">32</td>
   </tr>
   <tr>
     <td class="tg-0lax">SHOULDER</td>
@@ -571,6 +689,7 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">8.5</td>
     <td class="tg-0lax">9</td>
     <td class="tg-0lax">9.5</td>
+    <td class="tg-0lax">10</td>
   </tr>
   <tr>
     <td class="tg-0lax">SLEEVE</td>
@@ -578,14 +697,15 @@ const handleSubmit = async (e) => {
     <td class="tg-0lax">9</td>
     <td class="tg-0lax">9.5</td>
     <td class="tg-0lax">9.8</td>
+    <td class="tg-0lax">10</td>
   </tr>
 </tbody>
 </table>
 
-<Row xs={1} md={4} className="g-3  m45 m_1responsive700">
+<Row className="g-2 m45 m_1responsive700">
 
 {formData.orderDetailArr.map((item, index) => (
-  <Col >
+  <Col xs={6} md={3}>
   
    <Card  className="">
        <Card.Title className='m-auto p-3' style={{backgroundColor:"#001846",color:"white",width:"100%",textAlign:"center"}}>{item.color}
@@ -599,7 +719,7 @@ const handleSubmit = async (e) => {
                    data-size="m"
                    data-color={item.color}
                    name="quantityM"
-                   type="number"
+                   type="text"
                    value={item.quantityM}
                    style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
                    onChange={(e) => handleInputChange(e, index)}
@@ -611,7 +731,7 @@ const handleSubmit = async (e) => {
                    data-size="L"
                    data-color={item.color}
                    name="quantityL"
-                   type="number"
+                   type="text"
                    value={item.quantityL}
                    style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
                    onChange={(e) => handleInputChange(e, index)}
@@ -623,7 +743,7 @@ const handleSubmit = async (e) => {
                    data-size="XL"
                    data-color={item.color}
                    name="quantityXL"
-                   type="number"
+                   type="text"
                    value={item.quantityXL}
                    style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
                    onChange={(e) => handleInputChange(e, index)}
@@ -635,8 +755,20 @@ const handleSubmit = async (e) => {
                    data-size="XXL"
                    data-color={item.color}
                    name="quantityXXL"
-                   type="number"
+                   type="text"
                    value={item.quantityXXL}
+                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
+                   onChange={(e) => handleInputChange(e, index)}
+               />
+           </ListGroup.Item>  
+           <ListGroup.Item className="d-flex align-items-center">
+               <span value="XXXL">3XL</span>
+               <input 
+                   data-size="XXXL"
+                   data-color={item.color}
+                   name="quantityXXXL"
+                   type="text"
+                   value={item.quantityXXXL}
                    style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
                    onChange={(e) => handleInputChange(e, index)}
                />
@@ -662,7 +794,7 @@ const handleSubmit = async (e) => {
                       >
                        <option value="">select print side</option> 
                         <option value="frontSide">Front Side</option>
-                        {/* <option value="backSide">Back Side</option> */}
+                        <option value="backSide">Back Side</option>
                         <option value="bothSide">Both Side</option>
                       </Form.Control>
                     </Form.Group>
@@ -764,7 +896,7 @@ const handleSubmit = async (e) => {
                    accept=".ai,.eps,.psd,.pdf,.svg,.png"
                    multiple
                  />
-                 <span style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</span>
+                 <p className='uploadFilePlaceholder' style={{color:"gray"}}>upload .ai,.eps,.psd,.pdf,.svg,.png file</p>
                </Form.Group>
                {fileprogress === 0 ? null : (
     <ProgressBar now={fileprogress} label={`${fileprogress}%`} />
@@ -801,270 +933,28 @@ onChange={(e) => handleFileChange(e, index)}
 
 </Row>
 
-<div className='row m45 m_12responsive700'>
-<div className="col-md-12">
-                    <h3>Recipient Details</h3>
-      <Row xs={1} md={2}>
+<RecipientDetail 
+formData={formData}
+handleInputChange={handleInputChange}
+areas={areas}
+districts={districts}
+zones={zones}
+printbazcost={printbazcost}
+deliveryFee={deliveryFee}
+suggestedCollectAmount={suggestedCollectAmount}
+recvMoney={recvMoney}
+formValid={formValid}
+recvAmount={recvAmount}
+alert={alert}
+/>
+<div className="col-md-12 d-flex flex-column align-items-center ">   
 
-    
-                    <Form.Group className="mb-3">
-                      <Form.Label>Recipient's Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        className="form-control"
-                        id="recipientName"
-                        onChange={(e) =>  handleInputChange(e)}
-                        required
-                        placeholder="Enter Name"
-                      />
-                    </Form.Group>
-      
-                    <Form.Group className="mb-3">
-                      <Form.Label>Recipient's Phone</Form.Label>
-                      <Form.Control
-                        type="tel"
-                        pattern="[0-9]{11}"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={(e) =>  handleInputChange(e)}
-                        className="form-control"
-                        id="recipientPhone"
-                        required
-                        placeholder="Enter recipient number"
-                      />
-                    </Form.Group>
-                    </Row>
-                   <Row xs={1} md={3} >
-                    <Form.Group
-                      className="mb-3 Print Side w-100"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">District</Form.Label>
-                      <Form.Control
-                        as="select"
-                        name="districts"
-                        value={formData.districts}
-                        onChange={(e) =>  handleInputChange(e)}
-                        required
-                      >
-                       
-        <option value="">Select District</option>
-        {districts.map(d => <option key={d} value={d}>{d}</option>)}
-                      </Form.Control>
-                    </Form.Group>
-           <Form.Group
-                      className="mb-3 Print Side w-100"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Zone</Form.Label>
-                      <Form.Control
-                        as="select"
-                        name="zones"
-                        value={formData.zones}
-                        onChange={(e) =>  handleInputChange(e)}
-                        required
-                      >
-                       
-        <option value="">Select Zone</option>
-        {zones.map(d => <option key={d} value={d}>{d}</option>)}
-                      </Form.Control>
-                    </Form.Group>
-<Form.Group
-                      className="mb-3 Print Side w-100"
-                      controlId="wccalcPrintSide"
-                    >
-                      <Form.Label className="pr-2">Area</Form.Label>
-                      <Form.Control
-                        as="select"
-                        name="areas"
-                        value={formData.areas}
-                        onChange={(e) =>  handleInputChange(e)}
-                        required
-                      >
-                       
-        <option value="">Select Area</option>
-        {areas.map(d => <option key={d} value={d}>{d}</option>)}
-                      </Form.Control>
-                    </Form.Group>
-
-                    </Row>
-
-                    <Form.Group className="mb-3 ">
-                      <Form.Label>Recipient's/Delivery Address</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="address"
-                        value={formData.address}
-                        onChange={(e) =>  handleInputChange(e)}
-                        className="form-control"
-                        id="recipientAddress"
-                        required
-                        placeholder="Enter recipient address"
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label> Special Instructions</Form.Label>
-                      {["bottom"].map((placement) => (
-                        <OverlayTrigger
-                          key={placement}
-                          placement={placement}
-                          overlay={
-                            <Tooltip id={`tooltip-${placement}`}>
-                              Any specific request for
-                              production, branding or delivery
-                            </Tooltip>
-                          }
-                        >
-                          <span variant="secondary" className="info_icon">
-                            <img
-                              style={{
-                                marginLeft: "5px",
-                                width: "15px",
-                                height: "15px",
-                              }}
-                              src="/images/info.png"
-                              alt="info"
-                            />
-                          </span>
-                        </OverlayTrigger>
-                      ))}
-                      <Form.Control
-                        as="textarea"
-                        type="text"
-                        name="instruction"
-                        value={formData.instruction}
-                        onChange={(e) =>  handleInputChange(e)}
-                        className="form-control"
-                        id="recipientAddress"
-                        style={{ height: "150px" }}
-                        placeholder=""
-                      />
-                    </Form.Group>
-                  </div> 
-                  <div className="col-md-12 d-flex flex-column align-items-center ">            
-<div style={{ width: '100%' }}>
-                    <h3>Cost Of Order</h3>
-                    <div className="costOrder_Style">
-                      <label htmlFor="printbazCost">Total Quantity</label>
-      
-                      <h3>
-                        {" "}
-                        {/* <span style={{ fontSize: "" }}>&#2547;</span> {addbrandLogo ?parseInt(printbazcost+5):printbazcost} */}
-                        <span style={{ fontSize: "" }}>{formData?.quantity}</span> 
-                      </h3>
-                    </div> <div className="costOrder_Style">
-                      <label htmlFor="printbazCost">Printbaz Cost</label>
-      
-                      <h3>
-                        {" "}
-                        {/* <span style={{ fontSize: "" }}>&#2547;</span> {addbrandLogo ?parseInt(printbazcost+5):printbazcost} */}
-                        <span style={{ fontSize: "" }}>&#2547;</span> {printbazcost}
-                      </h3>
-                    </div>
-      
-                    <div className="costOrder_Style">
-                      <label htmlFor="printbazCost">Delivery Fee</label>
-      
-                      <h3>
-                        {" "}
-                        <span style={{ fontSize: "" }}>&#2547;</span>{" "}
-                        {deliveryFee}
-                      </h3>
-                    </div>
-                    <div>
-
-                    <Row  className="costOrder_Style">
-                      <Col xs={12} md={6}>
-                    <Form.Group className="mb-3 ">
-                      <Form.Label>Amount to Collect</Form.Label>
-                      {["bottom"].map((placement) => (
-                        <OverlayTrigger
-                          key={placement}
-                          placement={placement}
-                          overlay={
-                            <Tooltip id={`tooltip-${placement}`}>
-                             Amount of money you want the
-                              receiver will pay; Must include delivery fee
-                            </Tooltip>
-                          }
-                        >
-                          <span variant="secondary" className="info_icon">
-                            <img
-                              style={{
-                                marginLeft: "5px",
-                                width: "15px",
-                                height: "15px",
-                              }}
-                              src="/images/info.png"
-                              alt="info"
-                            />
-                          </span>
-                        </OverlayTrigger>
-                      ))}
-                    
-                      <Form.Control
-                        type="number"
-                        name="collectAmount"
-                        value={formData.collectAmount}
-                        className="form-control"
-                        onChange={(e) => {
-                           handleInputChange(e);;
-                        }}
-                        required
-                        placeholder=""
-                      />
-                    </Form.Group>
-                    </Col>
-                    <Col xs={12} md={6}>
-                           <Form.Group className="mb-3 ">
-                           <Form.Label>Minimum Amount to Collect</Form.Label>
-                          
-                           <Form.Control
-                             type="number"
-                             name="collectAmount"
-                             value={ printbazcost && ( deliveryFee) && suggestedCollectAmount ?suggestedCollectAmount : '' }
-                             readOnly
-                           />
-                         </Form.Group>
-                        
-                    </Col>
-                   
-                    </Row>
-                      </div>
-                    
-                    
-                    <div className="costOrder_Style">
-                      <label htmlFor="printbazCost">Cash Handling fee</label>{" "}
-                      <h3> 3%</h3>
-                    </div>
-      
-                    {/* {formData?.quantity && formData?.orderDetailArr[0]?.printSize && formData?.collectAmount && ( */}
-                      <div >
-                        <div className="costOrder_Style">
-                        <label htmlFor="printbazCost">You will receive</label>
-                        <h3> {recvMoney>0 && parseInt(recvMoney)}</h3>
-                        </div>
-                       
-                      
-                        { formValid===true &&
-    <p style={{color:"red",textAlign:"right"}}>{recvAmount}</p>
-  }
-                       
-                      </div>
-                    {/* )} */}
-                  </div>
+          
                   <Button  className='orderSubmit_btn' type="submit">
         Submit
       </Button>
 
-      {/* <Button
-                      type="reset"
-                      style={{ backgroundColor: "gray", marginLeft: "10px" }}
-                    >
-                      Cancel
-                    </Button> */}
+  
                     {
   isLoading===true &&(
     <>
@@ -1080,7 +970,8 @@ onChange={(e) => handleFileChange(e, index)}
   
 } 
                   </div>
-</div>
+
+
 
 
 </Form>            
@@ -1139,7 +1030,7 @@ onClose={() => setShowAlert(false)}
 }
 
  <Footer/>
-
+<BackToTop/>
           </div>
   
       );

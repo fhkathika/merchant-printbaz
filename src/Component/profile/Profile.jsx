@@ -9,6 +9,7 @@ import { useGetData } from '../../hooks/useGetData';
 import useGetMongoData from '../../hooks/useGetMongoData';
 import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
+import BackToTop from '../backToTop/BackToTop';
 
  const Profile = () => {
        //  const [quantity, setQuantity] = useState(1);
@@ -33,6 +34,22 @@ console.log("loggedUser",loggedUser);
     }
     getOrders()
 },[loginUser])
+
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
   const handleFileChange = (e) => {
     const { name, value } = e.target;
     if (e.target.type === "file") {
@@ -115,6 +132,7 @@ if (updateData.brandLogo) {
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         
           <NavigationBar/>
+          <div className='m45'>
           {
                loggedUser?.map(resellerInfo=> 
                 <div className="profile-info">
@@ -226,7 +244,9 @@ if (updateData.brandLogo) {
               </div>
 
               )}
+              </div>
         <Footer/>
+  <BackToTop/>
         </div>
       );
 };

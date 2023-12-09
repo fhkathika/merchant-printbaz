@@ -7,6 +7,7 @@ import Footer from '../footer/Footer';
 import NavigationBar from '../Navbar/NavigationBar';
 import SupportTicketPopUp from '../supportTicketPopUp/SupportTicketPopUp';
 import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSupportTickets';
+import BackToTop from '../backToTop/BackToTop';
  const OrderTracking = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
@@ -25,6 +26,21 @@ import UsersStoredSupportTickets from '../userStoredSupportTicket/UsersStoredSup
     const location = useLocation();
 const viewOrder = location.state ? location?.state?.orderInfo : null;
 
+useEffect(() => {
+  const backtotop = document.querySelector('.back-to-top');
+  const toggleBacktotop = () => {
+    if (window.scrollY > 100) {
+      backtotop.classList.add('active');
+    } else {
+      backtotop.classList.remove('active');
+    }
+  };
+  toggleBacktotop();
+  window.addEventListener('scroll', toggleBacktotop);
+  return () => {
+    window.removeEventListener('scroll', toggleBacktotop);
+  };
+}, []);
 useEffect(()=>{
   const getOrderById=async()=>{
            // Fetch the updated order details
@@ -199,7 +215,7 @@ const copyOrderId = () => {
         <div>
         
           <NavigationBar />
-          <div className="all-content mt-5">
+          <div className="all-content m45 m_12responsive700">
           <div className="row mt-5">
               <div className="col-12">
                 <div className="order-id bg-white p-4  shadow-sm" >
@@ -208,7 +224,9 @@ const copyOrderId = () => {
                   <h3 className=" font-weight-bold col-lg-12 font_16" onClick={copyOrderId}>ORDER ID: {viewOrder?._id} &nbsp;<span style={{cursor:"pointer",padding:"5px",fontSize:"16px"}} ref={target}  onClick={copyOrderId}><i class="fa fa-copy ml-2 mt-1 text-green cursor-pointer text-sm"></i></span> 
                 <h5 className='font_16' style={{marginTop:"10px"}}>{formattedDate}</h5>
                 </h3>
-                  
+                <div className='flex mt-3'>
+               <p style={{fontWeight:"600",color:"white",backgroundColor:"orange",padding:"7px",borderRadius:"5px"}}>{getSpecificOrderById?.category}</p>
+             </div>
                   </div>
               
          <div  className="font-weight-bold col-lg-5  mt-2" >
@@ -217,12 +235,12 @@ const copyOrderId = () => {
        
          </div>
                   <div className="font-weight-bold col-lg-2 mt-2 "
-                        style={{ marginBottom: "20px",display:"flex",justifyContent:"space-between" }}
+                        style={{ marginBottom: "20px" }}
                       >
                        
                         <div style={{display:"flex"}} >
-  <div className="   font-weight-bold  "
-                        style={{ marginBottom: "20px",display:"flex"}}
+  <div className=" viewOrderPaymentStatus  font-weight-bold  "
+                        style={{ display:""}}
                       >
                         <div style={{display:""}}>
                          
@@ -230,10 +248,11 @@ const copyOrderId = () => {
                      
                        
                         </div>
+                      
                          </div> 
                       
                       <div className="   font-weight-bold "
-                        style={{ marginBottom: "20px",marginLeft:"10px",display:"flex",justifyContent:"flex-end" }}
+                        style={{marginLeft:"10px",display:"flex",justifyContent:"flex-end" }}
                       >
                         <div style={{display:""}}>
                          
@@ -241,12 +260,15 @@ const copyOrderId = () => {
                                 getSpecificOrderById?.orderStatus
                                 )}}>{getSpecificOrderById?.orderStatus}</p>
                      
-                        <p className='text_Align_Left' style={{textAlign:"center",marginTop:'10px'}}>Status changed at: {getSpecificOrderById?.statusDate}</p>
+                      
                         </div>
                        
                       </div>
 
   </div>
+  
+  <p className='text_Align_Left' style={{textAlign:"center"}}>Status changed at: {getSpecificOrderById?.statusDate}</p>
+  
                         </div> 
  
                   
@@ -445,8 +467,69 @@ const copyOrderId = () => {
                   </div>
                 </div>
               </div>
+
+           
               <div className="col-lg-4 col-md-12 mb-3">
-                <div className="bg-white p-3 shadow-sm">
+              <div className="bg-white p-4 shadow-sm mb-3" style={{height:"auto"}}>
+                  <div className="row amu-title">
+                    <div className="col-12">
+                      <h3 className="all-title">Cost of Order</h3>
+                      <div className='align_center'>
+                      <h6>Printbaz Cost</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>{getSpecificOrderById?.printbazcost} BDT</p>
+                      </div>
+                      <div className='align_center'>
+                      <h6>Delivery Fee</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>{getSpecificOrderById?.deliveryFee} BDT</p>
+                      </div> 
+                      <div className='align_center'>
+                      <h6>Collect Amount</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>{getSpecificOrderById?.collectAmount} BDT</p>
+                      </div> 
+                      <div className='align_center'>
+                      
+                      <h6>Cash Handling Fee</h6>
+                      <p style={{marginTop:"10px",lineHeight:"0px"}}>3% BDT</p>
+                      </div>
+                   
+                  
+                      <div className='align_center'>
+                      {
+getSpecificOrderById?.orderStatus==="returned"?
+<>
+
+<h6 style={{color:"red"}}>Returned Amount</h6>
+<p style={{color:"red",lineHeight:"0px"}}> {getSpecificOrderById?.returnedAmount}</p>
+</>
+:
+<>
+
+<h6>Receivable Amount</h6>
+<p style={{lineHeight:"0px"}}>{parseInt(getSpecificOrderById?.recvMoney)}</p>
+</>
+                      }
+                      </div>
+                      {
+                        getSpecificOrderById?.dsicount &&
+                        <div className='flex'>
+                        <h6>Discount</h6>
+                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.dsicount)}  BDT</span>
+                        </div>
+                      }
+                      {
+                        getSpecificOrderById?.additionalCost &&
+                        <div className='flex'>
+                        <h6>Additional Cost</h6>
+                        <span style={{marginTop:"10px"}}>{parseInt(getSpecificOrderById?.additionalCost)}  BDT</span>
+                        </div>
+                      }
+                    
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+                {/* <div className="bg-white p-3 shadow-sm">
                   <div className="row amu-title">
                     <div className="col-12">
                       <h3 className="all-title">Cost of Order</h3>
@@ -476,7 +559,7 @@ getSpecificOrderById?.orderStatus==="returned"?
                      
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
            {/* //instruction box  */}
@@ -502,6 +585,54 @@ getSpecificOrderById?.orderStatus==="returned"?
               </div>
            </div>
 
+           <div className='row'>
+            {
+              getSpecificOrderById?.discountNote &&
+<div className="col-lg-6 col-md-6 mb-3">
+                <div className="rec-info bg-white p-4 shadow-sm">
+                  <div className="row">
+                    <div className="col-12">
+                      <h3 className="all-title">Discount</h3>
+                    </div>
+                  </div>
+               
+                  <div className="row order-list-title">
+                    <div className="col-12">
+                      <h4 className='font_16'>{getSpecificOrderById?.discountNote}</h4>
+                    </div>
+              
+                  </div>
+               
+                
+                 
+                </div>
+              </div>
+            }
+{
+  getSpecificOrderById?.additionalCostNote &&
+<div className="col-lg-6 col-md-6 mb-3">
+                <div className="rec-info bg-white p-4 shadow-sm">
+                  <div className="row">
+                    <div className="col-12">
+                      <h3 className="all-title">Additional Cost</h3>
+                    </div>
+                  </div>
+               
+                  <div className="row order-list-title">
+                    <div className="col-12">
+                      <h4 className='font_16'>{getSpecificOrderById?.additionalCostNote}</h4>
+                    </div>
+              
+                  </div>
+               
+                
+                 
+                </div>
+              </div>
+}
+              
+</div>
+
            <div className="col-lg-12 col-md-12 mb-3">
   <div className="rec-info bg-white p-4 shadow-sm">
     <div className="row">
@@ -510,16 +641,16 @@ getSpecificOrderById?.orderStatus==="returned"?
       </div>
     </div>
  
-    <div className="row order-list-title d-none-phone">
+    <div className="row order-list-title ">
       
       <div className="col-3">
-        <h4>Color</h4>
+        <h4 className='font10px'>Color</h4>
       </div>
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4>T-shirt Size</h4>
+        <h4 className='font10px'> Size</h4>
       </div>
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4>Quantity</h4>
+        <h4 className='font10px'>Quantity</h4>
       </div>
       {/* <div className="col-1" style={{display:"flex",justifyContent:"center"}}>
         <h4>Print Size</h4>
@@ -528,7 +659,7 @@ getSpecificOrderById?.orderStatus==="returned"?
         <h4>Main File</h4>
       </div> */}
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4>Picture</h4>
+        <h4 className='font10px d-none'>Picture</h4>
       </div>
         {/* <div className="col-1">
         <h4>BrandLogo</h4>
@@ -549,19 +680,19 @@ getSpecificOrderById?.orderStatus==="returned"?
         <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
         
       <div className="col-3">
-        <p>{orderDetail?.color}</p>
+        <p  className='font12px'>{orderDetail?.color}</p>
       </div>
-      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+      <div className="col-3 " style={{display:"flex",justifyContent:"center"}}>
     
       <ul>
       {typeof orderDetail.teshirtSize === 'string' ? (
-        <li>
+        <li  className='font12px'>
           {orderDetail.teshirtSize}- {orderDetail.quantity}
         </li>
       ) : (
         Object.entries(orderDetail.teshirtSize || {}).map(
           ([size, quantity]) => (
-            <li key={size}>
+            <li className='font12px' key={size}>
              {size}- {quantity}
             </li>
           )
@@ -571,7 +702,7 @@ getSpecificOrderById?.orderStatus==="returned"?
        
         
       </div>
-      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+      <div className="col-3 font12px" style={{display:"flex",justifyContent:"center"}}>
       {orderDetail?.totalQuantity} 
       </div>
  
@@ -894,6 +1025,7 @@ orderDetail?.brandLogo ?
            
           </div>
           <Footer/>
+      <BackToTop/>
         </div>
         );
  };

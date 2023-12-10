@@ -30,6 +30,7 @@ import backsideFormula from "../../Formulas/backsideFormula";
 import AddtoCartAlert from "../alert/AddtoCartAlert";
 import { CartContext } from "../../context/CartProvider";
 import NavigationBar from "../Navbar/NavigationBar";
+import ProductTab from "../ProductTab";
 
 // import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
 
@@ -640,7 +641,7 @@ setShowLoginPopup(true)
         </>
       )}
       <Row className="m-auto">
-        <Col xs={12} md={12} className="mt-5  mb-2">
+        <Col xs={12} md={12} className="mt-5 ">
           <h3 style={{ cursor: "pointer" }} onClick={handleBack}>
             <span style={{ cursor: "pointer" }}>
               {" "}
@@ -657,33 +658,7 @@ setShowLoginPopup(true)
 
       <Form onSubmit={EditItemDetail?handleEdit:handleGotoAddToCart} className="mb-4">
     
-        <table class="size_table">
-<thead>
-  <tr>
-    <th class="tg-0lax_title tg-0lax">SIZE</th>
-    <th class="tg-0lax_title tg-0lax">M</th>
-    <th class="tg-0lax_title tg-0lax">L</th>
-    <th class="tg-0lax_title tg-0lax">XL</th>
-    <th class="tg-0lax_title tg-0lax">XXL</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-0lax">CHEST</td>
-    <td class="tg-0lax">38</td>
-    <td class="tg-0lax">40</td>
-    <td class="tg-0lax">42</td>
-    <td class="tg-0lax">44</td>
-  </tr>
-  <tr>
-    <td class="tg-0lax">LENGHT</td>
-    <td class="tg-0lax">27</td>
-    <td class="tg-0lax">28</td>
-    <td class="tg-0lax">29</td>
-    <td class="tg-0lax">30</td>
-  </tr>
-</tbody>
-</table>
+     
 
 <div>
         <meta charSet="UTF-8" />
@@ -743,6 +718,46 @@ setShowLoginPopup(true)
                   <div className="productTitle" >
                     <h2 style={{textAlign:"left"}}>Custom Round Neck</h2>
                   </div>
+                  <div class="self-product-description">
+                            <h5><strong>Size chart - In inches</strong></h5>
+                            <table border="1" cellpadding="5">
+                            <thead>
+                            <tr>
+                            <th>Size</th>
+                            <th>Chest (Round)</th>
+                            <th>Length</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                            <td>M</td>
+                            <td>38</td>
+                            <td>27</td>
+                            </tr>
+                            <tr>
+                            <td>L</td>
+                            <td>40</td>
+                            <td>28</td>
+                            </tr>
+                            <tr>
+                            <td>XL</td>
+                            <td>42</td>
+                            <td>29</td>
+                            </tr>
+                            <tr>
+                            <td>2XL</td>
+                            <td>44</td>
+                            <td>30</td>
+                            </tr>
+                            <tr>
+                            <td>3XL</td>
+                            <td>46</td>
+                            <td>32</td>
+                            </tr>
+                            </tbody>
+                            </table>
+                            <p></p></div>
+
                   {/*====== Product Color/Size/Files/Price/Button ======*/}
                   <div className="productColorSizeRow1">
                     {/*====== Product Color/Size/Files ======*/}
@@ -1064,7 +1079,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           } */}
         </div>
       </Form>
-
+      <ProductTab describtion="describtion here........"/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert

@@ -165,3 +165,22 @@ input[type=number] {
       font-weight: 700;
       }
   
+      .self-product-description {
+        margin-top: 50px;
+    }
+    
+    .self-product-description table {
+        background: #CFE2FF;
+        font-size: 13px;
+        border-color: #ffffff;
+        border-style: solid;
+    }
+    
+    .self-product-description table td, tr, th{
+        border-style: none solid solid none;
+        padding: 10px 85px 10px 20px;
+        /* border: 3px solid #ffffff; */
+    }
+
+
+   

@@ -507,7 +507,7 @@ const AddToCart = () => {
 const startEdit = (e, itemIdentifier) => {
   e.preventDefault();
   
-  const itemToEdit = cartItems.find(item => item._id === itemIdentifier);
+  const itemToEdit = cartItems?.find(item => item._id === itemIdentifier);
   console.log("itemToEdit",itemToEdit)
   if (itemToEdit) {
     let updatedFormData = { ...itemToEdit };
@@ -582,7 +582,7 @@ const startEdit = (e, itemIdentifier) => {
         const handleCheckOut=()=>{
           navigate("/checkout")
         }
-        const allProductsPrintbazCost = cartItems.reduce((total, item) => {
+        const allProductsPrintbazCost = cartItems?.reduce((total, item) => {
           return total + item.printbazcost;
       }, 0);
       
@@ -645,8 +645,8 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"60px",height:"60px"}}  src={`https://drive.google.com/uc?id=${item?.image?.fileId}`} alt="" className="img-fluid" />
-                              <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" />
+                              <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/85b9H6S/Round-Neck-Maroon.jpg" alt="" className="img-fluid" />
+                              {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" /> */}
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -685,8 +685,8 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"60px",height:"60px"}}  src={`https://drive.google.com/uc?id=${item?.image?.fileId}`} alt="" className="img-fluid" />
-                              <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" />
+                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/WzhzNv1/Drop-Shoulder-Bottle-Green.jpg" alt="" className="img-fluid" />
+                              {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" /> */}
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -725,8 +725,8 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"60px",height:"60px"}}  src={`https://drive.google.com/uc?id=${item?.image?.fileId}`} alt="" className="img-fluid" />
-                              <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" />
+                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg" alt="" className="img-fluid" />
+                              {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" /> */}
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -770,8 +770,8 @@ const startEdit = (e, itemIdentifier) => {
                                     //  ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" />
-                              <img style={{width:"60px",height:"60px"}}src={item?.file} alt="file" className="img-fluid" /> */}
+                              {/* {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" /> */}
+                              <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/sQfVyNz/Round-Neck-Black.jpg" alt="file" className="img-fluid" /> 
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -818,8 +818,8 @@ const startEdit = (e, itemIdentifier) => {
                                     //  ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" />
-                              <img style={{width:"60px",height:"60px"}}src={item?.file} alt="file" className="img-fluid" /> */}
+                              {/* {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" /> */}
+                              <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/kxwpVfX/Drop-Shoulder-Black.jpg" alt="file" className="img-fluid" /> 
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -858,8 +858,8 @@ const startEdit = (e, itemIdentifier) => {
                                     //  ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" />
-                              <img style={{width:"60px",height:"60px"}}src={item?.file} alt="file" className="img-fluid" /> */}
+                              {/* {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" /> */}
+                              <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg" alt="file" className="img-fluid" /> 
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -899,8 +899,8 @@ const startEdit = (e, itemIdentifier) => {
                             
                             <td><span style={{fontWeight: 800}}>৳</span>{selectedProduct?.printbazcost}</td>
                             <td>
-                              <button onClick={(e)=>deleteCartItem(selectedProduct?._id,e)} className="btn btn-primary btn-sm mr-2">Delete</button>
-                              <button onClick={(e) => startEdit(e,selectedProduct?._id)} className="btn btn-primary btn-sm">Edit</button>
+                              <button onClick={(e)=>deleteCartItem(selectedProduct?._id,e)} style={{backgroundColor:"#012652",border:"none"}} className="btn btn-primary btn-sm mr-2">Delete</button>
+                              <button onClick={(e) => startEdit(e,selectedProduct?._id)} style={{backgroundColor:"#012652",border:"none",marginLeft:"10px"}} className="btn btn-primary btn-sm ">Edit</button>
 
                             </td>
                               </tr> 
@@ -937,7 +937,7 @@ const startEdit = (e, itemIdentifier) => {
                   <div className="col-md-6">
                     <div className="row mb-5">
                       <div className="col-md-6">
-                        <button onClick={handleBackToHomepage} className="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                        <button onClick={handleBackToHomepage} className="btn btn-outline-primary btn-sm btn-block" style={{backgroundColor:"#012652",border:"none",color:"white"}}>Continue Shopping</button>
                       </div>
                     </div>
                   </div>
@@ -969,7 +969,7 @@ const startEdit = (e, itemIdentifier) => {
                           {
                             cartItems?.length>0 &&
                             <div className="col-md-12">
-                            <button className="btn btn-primary btn-lg py-3 btn-block" onClick={handleCheckOut}>Proceed To Checkout</button>
+                            <button className="btn btn-primary btn-lg py-3 btn-block" style={{backgroundColor:"#012652",border:"none"}} onClick={handleCheckOut}>Proceed To Checkout</button>
                           </div>
                           }
                          

@@ -5,6 +5,8 @@ import RecipientDetail from '../recipientDetail/RecipientDetail';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import deliveryCharge from '../../Formulas/deliveryCharge';
 import NavigationBar from '../Navbar/NavigationBar';
+import OrderSubmitDoneAlert from '../alert/OrderSubmitDoneAlert';
+import ConfirmOrderAlert from '../alert/ConfirmOrderAlert';
 
 const CheckOut = () => {
   const { setFormData,setCartItems,editCartItem,cartItems} = useContext(CartContext);
@@ -68,7 +70,7 @@ const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', 
     deliveryFee:0,
     discount:0,
     collectAmount:0,
-    rcvAmount:0,
+   
     orderCreatedAt:formattedDate,
     paymentSystem:'',
     orderStatus:'Pending',
@@ -258,7 +260,7 @@ useEffect(()=>{
   //   console.log("allCustomRoundNeckProducts from use effect")
   //   getIndividualProductCostSumAndQuantity(cartItems)
   // }
-},[allCustomRoundNeckProducts,individualCostCustomRoundNeckProductCost])
+},[allCustomRoundNeckProducts,allCustomDropSholderProducts,allCustomHoodieProducts,allBlankRoundNeckProducts,allBlankDropSholderProducts,allBlankHoodieProducts])
 
  // charge based on weight 
   // inside dhaka 
@@ -308,7 +310,30 @@ if(formDataSelected.paymentSystem === "bkashNagadRocket"){
   else{
     addeDiscount=50
   }
-}
+}let recvMoney = 0;
+let costHandlingfee;
+let recvMoneyWithouthandling = 0;
+recvMoneyWithouthandling = Number(
+  // Math.ceil(formDataSelected.collectAmount - (formDataSelected?.printbazcost + deliveryFee))
+  Math.ceil(formDataSelected.collectAmount - (formDataSelected?.grandCost))
+);
+// costHandlingfee = recvMoneyWithouthandling * 0.03;
+costHandlingfee = Number(formDataSelected.collectAmount * 0.03);
+recvMoney = recvMoneyWithouthandling - costHandlingfee;
+
+let suggestedCollectAmount = Math.ceil((1 + formDataSelected?.grandCost) / 0.97);
+// console.log("recvMoney",recvMoney)
+// console.log("suggestedCollectAmount",suggestedCollectAmount)
+const validateForm = () => {
+  if (recvMoney < 0) {
+    setFormValid(true);
+    setRecvAmount("Received money cannot be less than 0.");
+    return true;
+  } else {
+    setFormValid(false);
+    return false;
+  }
+};
 
 let orderTotal=cartItems?.reduce((total, item) => {
   return total + item.printbazcost;
@@ -371,6 +396,7 @@ const handleInputChange = (event, index) => {
 
  
 }
+
 const handleCheckboxChange = (event) => {
   const { name, checked } = event.target;
   if (checked && formDataSelected.paymentSystem === "bkashNagadRocket") {
@@ -460,34 +486,14 @@ const handleConfirmOrder = () => {
     setConfirmHandlers({ onConfirm: handleConfirm, onClose: handleClose });
   });
 };
-let recvMoney = 0;
-    let costHandlingfee;
-    let recvMoneyWithouthandling = 0;
-    recvMoneyWithouthandling = Number(
-      // Math.ceil(formDataSelected.collectAmount - (formDataSelected?.printbazcost + deliveryFee))
-      Math.ceil(formDataSelected.collectAmount - (formDataSelected?.grandCost))
-    );
-    // costHandlingfee = recvMoneyWithouthandling * 0.03;
-    costHandlingfee = Number(formDataSelected.collectAmount * 0.03);
-    recvMoney = recvMoneyWithouthandling - costHandlingfee;
-   
-    let suggestedCollectAmount = Math.ceil((1 + formDataSelected?.grandCost) / 0.97);
-    // console.log("recvMoney",recvMoney)
-    // console.log("suggestedCollectAmount",suggestedCollectAmount)
-    const validateForm = () => {
-      if (recvMoney < 0) {
-        setFormValid(true);
-        setRecvAmount("Received money cannot be less than 0.");
-        return true;
-      } else {
-        setFormValid(false);
-        return false;
-      }
-    };
 
 const handleSubmitOrder=async(e)=>{
   e.preventDefault()
  console.log( "click to submit")
+ if (validateForm()) {
+  setIsLoading(false) // Set loading status to false if form is invalid
+  return; // Exit the function if form is invalid
+}
  // Check if a payment system is selected
  if (!formDataSelected.paymentSystem) {
   setNoPaymentSystem(true);
@@ -548,16 +554,18 @@ const handleSubmitOrder=async(e)=>{
   formDataSendOrdertoServer.append("grandCost",formDataSelected?.grandCost);
   formDataSendOrdertoServer.append("deliveryFee",formDataSelected?.deliveryFee);
   formDataSendOrdertoServer.append("discount",formDataSelected?.discount);
+  formDataSendOrdertoServer.append("collectAmount",formDataSelected?.collectAmount);
+  formDataSendOrdertoServer.append("recvAmount",recvAmount);
   formDataSendOrdertoServer.append("orderCreatedAt",formDataSelected?.orderCreatedAt);
   formDataSendOrdertoServer.append("paymentSystem",formDataSelected?.paymentSystem);
   formDataSendOrdertoServer.append("orderStatus",formDataSelected?.orderStatus);
   formDataSendOrdertoServer.append("paymentStatus",formDataSelected?.paymentStatus);
-    formDataSendOrdertoServer.append('createdAt', formattedDate);
+  formDataSendOrdertoServer.append('createdAt', formattedDate);
 
   
     try {
-      // const response = await fetch('http://localhost:5000/sendOrder', {
-      const response = await fetch('https://server.printbaz.com/sendOrder', {
+      const response = await fetch('http://localhost:5000/sendOrder', {
+      // const response = await fetch('https://server.printbaz.com/sendOrder', {
         method: 'POST',
         body: formDataSendOrdertoServer
       });
@@ -631,31 +639,27 @@ const handleSubmitOrder=async(e)=>{
 }
 
   return (
+    <>
+     
         <div>
-          <title>Printbaz</title>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700" /> 
-          <link rel="stylesheet" href="fonts/icomoon/style.css" />
-          <link rel="stylesheet" href="css/bootstrap.min.css" />
-          <link rel="stylesheet" href="css/magnific-popup.css" />
-          <link rel="stylesheet" href="css/jquery-ui.css" />
-          <link rel="stylesheet" href="css/owl.carousel.min.css" />
-          <link rel="stylesheet" href="css/owl.theme.default.min.css" />
-          <link rel="stylesheet" href="css/aos.css" />
-          <style dangerouslySetInnerHTML={{__html: "\n      \n/* Blocks */\n.site-blocks-cover {\n  background-size: cover;\n  background-repeat: no-repeat;\n  background-position: center center; }\n  .site-blocks-cover, .site-blocks-cover .row {\n    min-height: 600px;\n    height: calc(100vh - 174px); }\n  .site-blocks-cover h1 {\n    font-size: 30px;\n    font-weight: 900;\n    color: #000; }\n    @media (min-width: 768px) {\n      .site-blocks-cover h1 {\n        font-size: 50px; } }\n  .site-blocks-cover p {\n    color: #333333;\n    font-size: 20px;\n    line-height: 35px; }\n  .site-blocks-cover .intro-text {\n    font-size: 16px;\n    line-height: 1.5; }\n\n.site-blocks-1 {\n  border-bottom: 1px solid #edf0f5; }\n  .site-blocks-1 .divider {\n    position: relative; }\n    .site-blocks-1 .divider:after {\n      content: \"\";\n      position: absolute;\n      height: 100%;\n      width: 1px;\n      right: 10px;\n      background: #edf0f5; }\n    .site-blocks-1 .divider:last-child:after {\n      display: none; }\n  .site-blocks-1 .icon span {\n    position: relative;\n    color: #012652;\n    top: -10px;\n    font-size: 50px;\n    display: inline-block; }\n  .site-blocks-1 .text h2 {\n    color: #25262a;\n    letter-spacing: .05em;\n    font-size: 18px; }\n  .site-blocks-1 .text p:last-child {\n    margin-bottom: 0; }\n\n.site-blocks-2 .block-2-item {\n  display: block;\n  position: relative; }\n  .site-blocks-2 .block-2-item:before {\n    z-index: 1;\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    background: -moz-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n    background: -webkit-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n    background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(18%, transparent), color-stop(99%, rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0.8)));\n    background: -o-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n    background: linear-gradient(to bottom, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#cc000000',GradientType=0 ); }\n  .site-blocks-2 .block-2-item .image {\n    position: relative;\n    margin-bottom: 0;\n    overflow: hidden; }\n    .site-blocks-2 .block-2-item .image img {\n      margin-bottom: 0;\n      -webkit-transition: .3s all ease-in-out;\n      -o-transition: .3s all ease-in-out;\n      transition: .3s all ease-in-out; }\n  .site-blocks-2 .block-2-item .text {\n    z-index: 2;\n    bottom: 0;\n    padding-left: 20px;\n    position: absolute;\n    width: 100%; }\n    .site-blocks-2 .block-2-item .text > span, .site-blocks-2 .block-2-item .text h3 {\n      color: #fff; }\n    .site-blocks-2 .block-2-item .text > span {\n      font-size: 12px;\n      letter-spacing: .1em;\n      font-weight: 900; }\n    .site-blocks-2 .block-2-item .text h3 {\n      font-size: 40px; }\n  .site-blocks-2 .block-2-item:hover .image img {\n    -webkit-transform: scale(1.1);\n    -ms-transform: scale(1.1);\n    transform: scale(1.1); }\n\n.block-3 .owl-stage {\n  padding-top: 40px;\n  padding-bottom: 40px; }\n\n.block-3 .owl-nav {\n  position: relative;\n  position: absolute;\n  bottom: -50px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n  -ms-transform: translateX(-50%);\n  transform: translateX(-50%); }\n  .block-3 .owl-nav .owl-prev, .block-3 .owl-nav .owl-next {\n    position: relative;\n    display: inline-block;\n    padding: 20px;\n    font-size: 30px;\n    color: #5c626e; }\n    .block-3 .owl-nav .owl-prev:hover, .block-3 .owl-nav .owl-next:hover {\n      color: #25262a; }\n    .block-3 .owl-nav .owl-prev.disabled, .block-3 .owl-nav .owl-next.disabled {\n      opacity: .2; }\n\n.block-4 {\n  -webkit-box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);\n  box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);\n  background: #fff; }\n  .block-4 .block-4-text h3 {\n    font-size: 20px;\n    margin-bottom: 0; }\n    .block-4 .block-4-text h3 a {\n      text-decoration: none; }\n\n.block-5 ul, .block-5 ul li {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  line-height: 1.5; }\n\n.block-5 ul li {\n  padding-left: 30px;\n  position: relative;\n  margin-bottom: 15px;\n  color: #25262a; }\n  .block-5 ul li:before {\n    top: 0;\n    font-family: \"icomoon\";\n    content: \"\";\n    position: absolute;\n    left: 0;\n    font-size: 20px;\n    line-height: 1;\n    color: #012652; }\n  .block-5 ul li.address:before {\n    content: \"\\e8b4\"; }\n  .block-5 ul li.email:before {\n    content: \"\\f0e0\"; }\n  .block-5 ul li.phone:before {\n    content: \"\\f095\"; }\n\n.block-6 {\n  display: block; }\n  .block-6 img {\n    display: block; }\n  .block-6 h3 {\n    font-size: 18px; }\n  .block-6 p {\n    color: #737b8a; }\n\n.block-7 .form-group {\n  position: relative; }\n\n.block-7 .form-control {\n  padding-right: 96px; }\n\n.block-7 .btn {\n  position: absolute;\n  width: 80px;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  transform: translateY(-50%);\n  right: 3px; }\n\n.block-8 .post-meta {\n  color: #c4c7ce; }\n\n.block-8 .block-8-sep {\n  margin-left: 10px;\n  margin-right: 10px; }\n\n.site-blocks-table {\n  overflow: auto; }\n  .site-blocks-table .product-thumbnail {\n    width: 200px; }\n  .site-blocks-table thead th {\n    padding: 30px;\n    text-align: center;\n    border-width: 1px !important;\n    vertical-align: middle;\n    color: #212529;\n    font-size: 18px; }\n  .site-blocks-table td {\n    padding: 20px;\n    text-align: center;\n    vertical-align: middle;\n    color: #212529; }\n  .site-blocks-table tbody tr:first-child td {\n    border-top: 1px solid #012652 !important; }\n\n.site-block-order-table th {\n  border-top: none !important;\n  border-bottom-width: 1px !important; }\n\n.site-block-order-table td, .site-block-order-table th {\n  color: #000; }\n\n.site-block-top-search {\n  position: relative; }\n  .site-block-top-search .icon {\n    position: absolute;\n    left: 0;\n    top: 50%;\n    -webkit-transform: translateY(-50%);\n    -ms-transform: translateY(-50%);\n    transform: translateY(-50%); }\n  .site-block-top-search input {\n    padding-left: 40px;\n    -webkit-transition: .3s all ease-in-out;\n    -o-transition: .3s all ease-in-out;\n    transition: .3s all ease-in-out; }\n    .site-block-top-search input:focus, .site-block-top-search input:active {\n      padding-left: 25px; }\n\n.site-block-27 ul, .site-block-27 ul li {\n  padding: 0;\n  margin: 0; }\n\n.site-block-27 ul li {\n  display: inline-block;\n  margin-bottom: 4px; }\n  .site-block-27 ul li a, .site-block-27 ul li span {\n    text-align: center;\n    display: inline-block;\n    width: 40px;\n    height: 40px;\n    line-height: 40px;\n    border-radius: 50%;\n    border: 1px solid #ccc; }\n  .site-block-27 ul li.active a, .site-block-27 ul li.active span {\n    background: #012652;\n    color: #fff;\n    border: 1px solid transparent; }\n\n#slider-range {\n  height: 8px; }\n  #slider-range .ui-slider-handle {\n    width: 16px;\n    height: 16px;\n    border-radius: 50%;\n    border: none !important;\n    background: #012652; }\n    #slider-range .ui-slider-handle:focus, #slider-range .ui-slider-handle:active {\n      outline: none; }\n  #slider-range .ui-slider-range {\n    background-color: #012652; }\n\n.color-item .color {\n  width: 14px;\n  height: 14px; }\n\n.block-16 figure {\n  position: relative; }\n  .block-16 figure .play-button {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n    -ms-transform: translate(-50%, -50%);\n    transform: translate(-50%, -50%);\n    font-size: 40px;\n    width: 90px;\n    height: 90px;\n    background: #fff;\n    display: block;\n    border-radius: 50%;\n    border: none; }\n    .block-16 figure .play-button:hover {\n      opacity: 1; }\n    .block-16 figure .play-button > span {\n      position: absolute;\n      left: 55%;\n      top: 50%;\n      -webkit-transform: translate(-50%, -45%);\n      -ms-transform: translate(-50%, -45%);\n      transform: translate(-50%, -45%); }\n\n.block-38 .block-38-header .block-38-heading {\n  color: #000;\n  margin: 0;\n  font-weight: 300; }\n\n.block-38 .block-38-header .block-38-subheading {\n  color: #b3b3b3;\n  margin: 0 0 20px 0;\n  text-transform: uppercase;\n  font-size: 15px;\n  letter-spacing: .1em; }\n\n.block-38 .block-38-header img {\n  width: 120px;\n  border-radius: 50%;\n  margin-bottom: 20px; }\n\n.product-name p {\n  margin: 0;\n}\n\n/* Chrome, Safari, Edge, Opera */\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type=number] {\n  -moz-appearance: textfield;\n}\n\n.btn-primary {\n  color: #fff;\n  background-color: #012652;\n  border-color: #012652;\n}\n\n.btn-primary:hover {\n  color: #fff;\n  background-color: #012652;\n  border-color: #012652;\n}\n\n.btn-outline-primary {\n  color: #012652;\n  background-color: transparent;\n  background-image: none;\n  border-color: #012652;\n}\n\n.btn-outline-primary:hover {\n  color: #ffffff;\n  background-color: #012652;\n  background-image: none;\n  border-color: #012652;\n}\n    " }} />
-          {/* ======= Header ======= */}
- <NavigationBar/>
-          <div className="site-wrap">
-            <div className="site-section">
-              <div className="container">
-              <Form onSubmit={handleSubmitOrder} className="mb-4">
-                <div className="row">
-               
-                  <div className="col-md-6 mb-5 mb-md-0">
-                    <h2 className="h3 mb-3 text-black">Billing Details</h2>
-                    <div className="p-3 p-lg-5 border">
-                    <RecipientDetail 
+        <title>Printbaz</title>
+        <meta name="description" content />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/*====== Favicon Icon ======*/}
+        <link rel="shortcut icon" href="https://media.discordapp.net/attachments/1128921638977683526/1163824367923368007/Logo-01.jpg?ex=6565e4e8&is=65536fe8&hm=1708566566dde136fc9b7940d92367098c9c3eebe0283875d0f452ff0dbe4ad0&=&width=612&height=612" type="image/png" />
+        {/*====== Bootstrap CSS ======*/}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" />
+        <style dangerouslySetInnerHTML={{__html: "\n    /* Blocks */\n    .site-blocks-cover {\n      background-size: cover;\n      background-repeat: no-repeat;\n      background-position: center center;\n    }\n\n    .site-blocks-cover,\n    .site-blocks-cover .row {\n      min-height: 600px;\n      height: calc(100vh - 174px);\n    }\n\n    .site-blocks-cover h1 {\n      font-size: 30px;\n      font-weight: 900;\n      color: #000;\n    }\n\n    @media (min-width: 768px) {\n      .site-blocks-cover h1 {\n        font-size: 50px;\n      }\n    }\n\n    .site-blocks-cover p {\n      color: #333333;\n      font-size: 20px;\n      line-height: 35px;\n    }\n\n    .site-blocks-cover .intro-text {\n      font-size: 16px;\n      line-height: 1.5;\n    }\n\n    .site-blocks-1 {\n      border-bottom: 1px solid #edf0f5;\n    }\n\n    .site-blocks-1 .divider {\n      position: relative;\n    }\n\n    .site-blocks-1 .divider:after {\n      content: \"\";\n      position: absolute;\n      height: 100%;\n      width: 1px;\n      right: 10px;\n      background: #edf0f5;\n    }\n\n    .site-blocks-1 .divider:last-child:after {\n      display: none;\n    }\n\n    .site-blocks-1 .icon span {\n      position: relative;\n      color: #012652;\n      top: -10px;\n      font-size: 50px;\n      display: inline-block;\n    }\n\n    .site-blocks-1 .text h2 {\n      color: #25262a;\n      letter-spacing: .05em;\n      font-size: 18px;\n    }\n\n    .site-blocks-1 .text p:last-child {\n      margin-bottom: 0;\n    }\n\n    .site-blocks-2 .block-2-item {\n      display: block;\n      position: relative;\n    }\n\n    .site-blocks-2 .block-2-item:before {\n      z-index: 1;\n      content: '';\n      position: absolute;\n      top: 0;\n      right: 0;\n      bottom: 0;\n      left: 0;\n      background: -moz-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      background: -webkit-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(18%, transparent), color-stop(99%, rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0.8)));\n      background: -o-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      background: linear-gradient(to bottom, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#cc000000', GradientType=0);\n    }\n\n    .site-blocks-2 .block-2-item .image {\n      position: relative;\n      margin-bottom: 0;\n      overflow: hidden;\n    }\n\n    .site-blocks-2 .block-2-item .image img {\n      margin-bottom: 0;\n      -webkit-transition: .3s all ease-in-out;\n      -o-transition: .3s all ease-in-out;\n      transition: .3s all ease-in-out;\n    }\n\n    .site-blocks-2 .block-2-item .text {\n      z-index: 2;\n      bottom: 0;\n      padding-left: 20px;\n      position: absolute;\n      width: 100%;\n    }\n\n    .site-blocks-2 .block-2-item .text>span,\n    .site-blocks-2 .block-2-item .text h3 {\n      color: #fff;\n    }\n\n    .site-blocks-2 .block-2-item .text>span {\n      font-size: 12px;\n      letter-spacing: .1em;\n      font-weight: 900;\n    }\n\n    .site-blocks-2 .block-2-item .text h3 {\n      font-size: 40px;\n    }\n\n    .site-blocks-2 .block-2-item:hover .image img {\n      -webkit-transform: scale(1.1);\n      -ms-transform: scale(1.1);\n      transform: scale(1.1);\n    }\n\n    .block-3 .owl-stage {\n      padding-top: 40px;\n      padding-bottom: 40px;\n    }\n\n    .block-3 .owl-nav {\n      position: relative;\n      position: absolute;\n      bottom: -50px;\n      left: 50%;\n      -webkit-transform: translateX(-50%);\n      -ms-transform: translateX(-50%);\n      transform: translateX(-50%);\n    }\n\n    .block-3 .owl-nav .owl-prev,\n    .block-3 .owl-nav .owl-next {\n      position: relative;\n      display: inline-block;\n      padding: 20px;\n      font-size: 30px;\n      color: #5c626e;\n    }\n\n    .block-3 .owl-nav .owl-prev:hover,\n    .block-3 .owl-nav .owl-next:hover {\n      color: #25262a;\n    }\n\n    .block-3 .owl-nav .owl-prev.disabled,\n    .block-3 .owl-nav .owl-next.disabled {\n      opacity: .2;\n    }\n\n    .block-4 {\n      -webkit-box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);\n      box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);\n      background: #fff;\n    }\n\n    .block-4 .block-4-text h3 {\n      font-size: 20px;\n      margin-bottom: 0;\n    }\n\n    .block-4 .block-4-text h3 a {\n      text-decoration: none;\n    }\n\n    .block-5 ul,\n    .block-5 ul li {\n      list-style: none;\n      padding: 0;\n      margin: 0;\n      line-height: 1.5;\n    }\n\n    .block-5 ul li {\n      padding-left: 30px;\n      position: relative;\n      margin-bottom: 15px;\n      color: #25262a;\n    }\n\n    .block-5 ul li:before {\n      top: 0;\n      font-family: \"icomoon\";\n      content: \"\";\n      position: absolute;\n      left: 0;\n      font-size: 20px;\n      line-height: 1;\n      color: #012652;\n    }\n\n    .block-5 ul li.address:before {\n      content: \"\\e8b4\";\n    }\n\n    .block-5 ul li.email:before {\n      content: \"\\f0e0\";\n    }\n\n    .block-5 ul li.phone:before {\n      content: \"\\f095\";\n    }\n\n    .block-6 {\n      display: block;\n    }\n\n    .block-6 img {\n      display: block;\n    }\n\n    .block-6 h3 {\n      font-size: 18px;\n    }\n\n    .block-6 p {\n      color: #737b8a;\n    }\n\n    .block-7 .form-group {\n      position: relative;\n      margin-top: 25px;\n    }\n\n    .block-7 .form-control {\n      padding-right: 96px;\n    }\n\n    .block-7 .btn {\n      position: absolute;\n      width: 80px;\n      top: 50%;\n      -webkit-transform: translateY(-50%);\n      -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n      right: 3px;\n    }\n\n    .block-8 .post-meta {\n      color: #c4c7ce;\n    }\n\n    .block-8 .block-8-sep {\n      margin-left: 10px;\n      margin-right: 10px;\n    }\n\n    .site-blocks-table {\n      overflow: auto;\n    }\n\n    .site-blocks-table .product-thumbnail {\n      width: 200px;\n    }\n\n    .site-blocks-table thead th {\n      padding: 30px;\n      text-align: center;\n      border-width: 1px !important;\n      vertical-align: middle;\n      color: #212529;\n      font-size: 18px;\n    }\n\n    .site-blocks-table td {\n      padding: 20px;\n      text-align: center;\n      vertical-align: middle;\n      color: #212529;\n    }\n\n    .site-blocks-table tbody tr:first-child td {\n      border-top: 1px solid #012652 !important;\n    }\n\n    .site-block-order-table th {\n      border-top: none !important;\n      border-bottom-width: 1px !important;\n    }\n\n    .site-block-order-table td,\n    .site-block-order-table th {\n      color: #000;\n    }\n\n    .site-block-top-search {\n      position: relative;\n    }\n\n    .site-block-top-search .icon {\n      position: absolute;\n      left: 0;\n      top: 50%;\n      -webkit-transform: translateY(-50%);\n      -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n    }\n\n    .site-block-top-search input {\n      padding-left: 40px;\n      -webkit-transition: .3s all ease-in-out;\n      -o-transition: .3s all ease-in-out;\n      transition: .3s all ease-in-out;\n    }\n\n    .site-block-top-search input:focus,\n    .site-block-top-search input:active {\n      padding-left: 25px;\n    }\n\n    .site-block-27 ul,\n    .site-block-27 ul li {\n      padding: 0;\n      margin: 0;\n    }\n\n    .site-block-27 ul li {\n      display: inline-block;\n      margin-bottom: 4px;\n    }\n\n    .site-block-27 ul li a,\n    .site-block-27 ul li span {\n      text-align: center;\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      line-height: 40px;\n      border-radius: 50%;\n      border: 1px solid #ccc;\n    }\n\n    .site-block-27 ul li.active a,\n    .site-block-27 ul li.active span {\n      background: #012652;\n      color: #fff;\n      border: 1px solid transparent;\n    }\n\n    #slider-range {\n      height: 8px;\n    }\n\n    #slider-range .ui-slider-handle {\n      width: 16px;\n      height: 16px;\n      border-radius: 50%;\n      border: none !important;\n      background: #012652;\n    }\n\n    #slider-range .ui-slider-handle:focus,\n    #slider-range .ui-slider-handle:active {\n      outline: none;\n    }\n\n    #slider-range .ui-slider-range {\n      background-color: #012652;\n    }\n\n    .color-item .color {\n      width: 14px;\n      height: 14px;\n    }\n\n    .block-16 figure {\n      position: relative;\n    }\n\n    .block-16 figure .play-button {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n      -ms-transform: translate(-50%, -50%);\n      transform: translate(-50%, -50%);\n      font-size: 40px;\n      width: 90px;\n      height: 90px;\n      background: #fff;\n      display: block;\n      border-radius: 50%;\n      border: none;\n    }\n\n    .block-16 figure .play-button:hover {\n      opacity: 1;\n    }\n\n    .block-16 figure .play-button>span {\n      position: absolute;\n      left: 55%;\n      top: 50%;\n      -webkit-transform: translate(-50%, -45%);\n      -ms-transform: translate(-50%, -45%);\n      transform: translate(-50%, -45%);\n    }\n\n    .block-38 .block-38-header .block-38-heading {\n      color: #000;\n      margin: 0;\n      font-weight: 300;\n    }\n\n    .block-38 .block-38-header .block-38-subheading {\n      color: #b3b3b3;\n      margin: 0 0 20px 0;\n      text-transform: uppercase;\n      font-size: 15px;\n      letter-spacing: .1em;\n    }\n\n    .block-38 .block-38-header img {\n      width: 120px;\n      border-radius: 50%;\n      margin-bottom: 20px;\n    }\n\n    .product-name p {\n      margin: 0;\n    }\n\n    /* Chrome, Safari, Edge, Opera */\n    input::-webkit-outer-spin-button,\n    input::-webkit-inner-spin-button {\n      -webkit-appearance: none;\n      margin: 0;\n    }\n\n    /* Firefox */\n    input[type=number] {\n      -moz-appearance: textfield;\n    }\n\n    .btn-primary {\n      color: #fff;\n      background-color: #FE2202;\n      border-color: #FE2202;\n      padding: 10px 15px;\n    }\n\n    .btn-primary:hover {\n      color: #FE2202;\n      background-color: transparent;\n      border-color: #FE2202;\n    }\n\n    .btn-outline-primary {\n      color: #012652;\n      background-color: transparent;\n      background-image: none;\n      border-color: #012652;\n    }\n\n    .btn-outline-primary:hover {\n      color: #ffffff;\n      background-color: #012652;\n      background-image: none;\n      border-color: #012652;\n    }\n\n    .form-group input {\n      margin-bottom: 20px;\n    }\n\n    .border {\n      padding: 40px;\n    }\n\n    .border th {\n      font-size: 25px;\n      color: #FE2202;\n    }\n\n    .border-payment {\n      padding: 10px;\n      margin-bottom: 20px;\n    }\n\n    .form-group-payment th {\n      color: #FE2202;\n    }\n\n    .terrms {\n      margin-top: 20px;\n    }\n\n    .order-button {\n      display: inline-block;\n      margin-top: 15px;\n      margin-right: 25px;\n    }\n\n    .btn-buy {\n      padding: 8px 20px 10px 20px;\n      color: #ffffff;\n      background-color: #FE2202;\n      transition: none;\n      font-size: 16px;\n      font-weight: 400;\n      font-family: \"Nunito\", sans-serif;\n      font-weight: 600;\n      transition: 0.3s;\n      border: 1px solid #FE2202;\n    }\n\n    .btn-buy:hover {\n      color: #FE2202;\n      background-color: transparent;\n      border: 1px solid #FE2202;\n    }\n\n    .site-wrap {\n      margin-top: 50px;\n      margin-bottom: 50px;\n    }\n\n    .box-title {\n      font-weight: 800;\n      color: #012652;\n      margin-bottom: 20px;\n      text-transform: uppercase;\n    }\n  " }} />
+        <NavigationBar/>
+        <div className="site-wrap">
+          <div className="site-section">
+            <div className="container">
+            <Form onSubmit={handleSubmitOrder} className="mb-4">
+              <div className="row">
+                <div className="col-md-6">
+                  <h2 className="box-title">Recipient Details</h2>
+                  <div className="border">
+                  <RecipientDetail 
 formData={formDataSelected}
 handleInputChange={handleInputChange}
 areas={areas}
@@ -665,26 +669,26 @@ zones={zones}
 formValid={formValid}
 alert={alert}
 />
-                     
-                    </div>
                   </div>
-                  <div className="col-md-6">
-                    <div className="row mb-5">
-                      <div className="col-md-12">
-                        <h2 className="h3 mb-3 text-black">Your Order</h2>
-                        <div className="p-3 p-lg-5 border">
-                          <label htmlFor="c_code" className="text-black mb-3">Enter your coupon code if you have one</label>
-                          <div className="input-group w-75">
-                            <input type="text" className="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2" />
-                            <div className="input-group-append">
-                              <button className="btn btn-primary btn-sm" type="button" id="button-addon2">Apply</button>
-                            </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h2 className="box-title">Cost Of Order</h2>
+                      <div className="p-3 p-lg-5 border">
+                        <label htmlFor="c_code" className="text-black mb-3">Enter your coupon code if you have one</label>
+                        <div className="input-group w-75">
+                          <input type="text" className="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2" />
+                          <div className="input-group-append">
+                            <button className="btn btn-primary btn-sm" type="button" id="button-addon2">Apply</button>
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-12">
-                        <div className="p-3 p-lg-5 border">
-                          <table className="table site-block-order-table mb-5">
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="border">
+                    <table className="table site-block-order-table mb-5">
                             <thead>
                               <tr><th>Product</th>
                                 <th>Total</th>
@@ -695,22 +699,26 @@ alert={alert}
                                 <td><span style={{fontWeight: 800}}>৳</span>250</td>
                               </tr> */}
                               <tr>
-                              
+                               
+                             {
+                                individualCustomRoundNeckQuantity>0 &&
                                   <>
                                    <td>Custom Round Neck <strong className="mx-2">x</strong> {individualCustomRoundNeckQuantity}</td>
                                 <td><span style={{fontWeight: 800}}>৳</span>{individualCostCustomRoundNeckProductCost}</td>
                                   </>
                                 
-                               
+                             }
                               </tr>
                               <tr>
                              
+                             {
+                                individualCustomDropSholdQuantity>0 &&
                              
                                   <>
                                    <td>Custom Drop Sholder <strong className="mx-2">x</strong> {individualCustomDropSholdQuantity}</td>
                                 <td><span style={{fontWeight: 800}}>৳</span>{individualCustomDropSholdProductCost}</td>
                                   </>
-                              
+}
                                
                               </tr>
                               <tr>
@@ -765,72 +773,43 @@ alert={alert}
                                 <td className="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
                                 <td className="text-black"><span style={{fontWeight: 800}}>৳</span>{allProductsPrintbazCost}</td>
                               </tr>
-                              <tr>
+                              {
+                                formDataSelected?.discount>0 && 
+                                <tr>
                                 <td className="text-black font-weight-bold"><strong>Discount </strong></td>
                                 <td className="text-black"><span style={{fontWeight: 800}}>৳</span>{formDataSelected?.discount}</td>
                               </tr>
+                              }
+                             
                               <tr>
                                 <td className="text-black font-weight-bold"><strong>Delivery Fee</strong></td>
                                 <td className="text-black"><span style={{fontWeight: 800}}>৳</span>{deliveryFee}</td>
                               </tr>
                               <tr>
+                                <td className="text-black font-weight-bold"><strong>Cash Handling Fee</strong></td>
+                                <td className="text-black font-weight-bold"><span>3%</span></td>
+                              </tr> 
+                              <tr>
                                 <td className="text-black font-weight-bold"><strong>Order Total</strong></td>
                                 <td className="text-black font-weight-bold"><strong><span style={{fontWeight: 800}}>৳</span>{formDataSelected?.grandCost}</strong></td>
                               </tr> 
-                               <tr>
-                                <td className="text-black font-weight-bold"><strong>Ammount To Collect</strong></td>
-                                <td className="text-black font-weight-bold">
-                                <Form.Control
-                        type="number"
-                        name="collectAmount"
-                        value={formDataSelected.collectAmount}
-                        className="form-control"
-                        onChange={(e) => {
-                           handleInputChange(e);;
-                        }}
-                        required
-                        placeholder=""
-                      />
-                                </td>
-                              </tr>
-                               <tr>
-                                <td className="text-black font-weight-bold"><strong>Minimum To Collect</strong></td>
-                                <td className="text-black font-weight-bold">
-                                <Form.Control
-                        type="number"
-                        name="suggestedCollectAmount"
-                        value={suggestedCollectAmount}
-                        className="form-control"
-                      readOnly
-                      />
-                                </td>
-                              </tr>
+
+                             
+                              
+                               
                               
                             </tbody>
                           </table>
                           <div className="border p-3 mb-2">
     <input 
         type="checkbox" 
-        name="directBankTransfer" 
-        checked={formDataSelected.paymentSystem === "directBankTransfer"}
+        name="full advance payment" 
+        checked={formDataSelected.paymentSystem === "full advance payment"}
         onChange={handleCheckboxChange} 
     />
-    <span>Direct Bank Transfer</span>
+    <span>Full Advance Payment</span>
 </div>
-{/* <div className="border p-3 mb-2">
-    <input 
-        type="checkbox" 
-        name="bkashNagadRocket" 
-        checked={formDataSelected.paymentSystem === "bkashNagadRocket"}
-        onChange={handleCheckboxChange} 
-    />
-   
-    <span>Bkash/Nagad/Rocket</span>
-    <span style={{color:"gray",marginLeft:'20px'}} className='font12mobile'>10% discount</span>
-   
-    
 
-</div> */}
 <div className="border p-3 mb-2">
     <input 
         type="checkbox" 
@@ -850,18 +829,47 @@ alert={alert}
   ''
   
 }
-
-
-                          <div className="form-group">
-                            <button className="btn btn-primary btn-lg py-3 btn-block"type="submit">Place Order</button>
-                          </div>
-           
-                         
+                      <div className="form-group">
+                        <div className="col-md-12">
+                          <label htmlFor="c_phone" className="text-black">Amount to Collect <span className="text-danger">*</span></label>
+                          <Form.Control
+                        type="number"
+                        name="collectAmount"
+                        value={formDataSelected.collectAmount}
+                        className="form-control"
+                        onChange={(e) => {
+                           handleInputChange(e);;
+                        }}
+                        required
+                        placeholder=""
+                      />
                         </div>
                       </div>
+                      {
+                        recvMoney>=0 &&
+                        <div className="form-group form-group-payment">
+                        <table className="table site-block-order-table">
+                          <tbody><tr>
+                              <th className="font-weight-bold"><strong>You will receive</strong></th>
+                              <th className="font-weight-bold"><strong><span style={{fontWeight: 800}}>৳</span>{recvMoney}</strong></th>
+                            </tr>
+                          </tbody></table>
+                      </div>
+                      }
+                      
                     </div>
                   </div>
-                
+                </div>
+                <div className="col-md-12">
+                  <input type="checkbox" className="terrms" />
+                  <span>I accept the Terrms of Use and Privacy Policy.</span>
+                  <br />
+                  <div className="form-group order-button">
+                    <button className="btn btn-buy" type='submit'>Place Order</button>
+                  </div>
+                  <div className="form-group order-button">
+                    <button className="btn btn-buy" >Cancel Order</button>
+                  </div>
                 </div>
                 {
   isLoading===true &&(
@@ -874,23 +882,23 @@ alert={alert}
          <h2>Please wait!</h2>
        </div>
     </>
-  )
-  
-} 
-                </Form>
-                {/* {isConfirmAlertOpen && (
+  )}
+              </div>
+              </Form>
+       {isConfirmAlertOpen && (
   <ConfirmOrderAlert
     isOpen={isConfirmAlertOpen}
     message="Are you sure you want to place this order?"
     onConfirm={confirmHandlers.onConfirm}
     onClose={confirmHandlers.onClose}
   />
-)} */}
-     
-              </div>
+)}
             </div>
+            {/* </form> */}
           </div>
-          {/* {showAlert===true && (
+        </div>
+        {/*====== Bootstrap js ======*/}
+        {showAlert===true && (
           
           <OrderSubmitDoneAlert
           message="Your order has been submitted"
@@ -904,8 +912,9 @@ alert={alert}
           )
           
           
-          } */}
-        </div>
+          }
+      </div>
+        </>
       );
 };
 

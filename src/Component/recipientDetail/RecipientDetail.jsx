@@ -18,9 +18,11 @@ alert}) => {
         <div >
 <div className="col-md-12">
                     <h3>Recipient Details</h3>
-      <Row xs={12} md={2}>
-                    <Form.Group className="mb-3 rcp_info">
-                      <Form.Label>Recipient's Name</Form.Label>
+                  
+                   
+                 
+                   <Form.Group className="mb-3 rcp_info">
+                      <Form.Label className="text-black">First Name<span className="text-danger">*</span></Form.Label>
                       <Form.Control
                         type="text"
                         name="name"
@@ -32,7 +34,19 @@ alert}) => {
                         placeholder="Enter Name"
                       />
                     </Form.Group>
-      
+                    <Form.Group className="mb-3 rcp_info">
+                      <Form.Label className='text-black'>Last Name<span className="text-danger">*</span></Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        className="form-control"
+                        id="lastName"
+                        onChange={(e) =>  handleInputChange(e)}
+                        required
+                        placeholder="Enter Name"
+                      />
+                    </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label>Recipient's Phone</Form.Label>
                       <Form.Control
@@ -42,13 +56,14 @@ alert}) => {
                         value={formData.phone}
                         onChange={(e) =>  handleInputChange(e)}
                         className="form-control"
+                        style={{width:"100%"}}
                         id="recipientPhone"
                         required
                         placeholder="Enter recipient number"
                       />
                     </Form.Group>
-                    </Row>
-                   <Row xs={12} md={3} >
+                    <Row xs={12} md={3} >
+                  
                    <Form.Group
                       className="mb-3 Print Side w-100"
                       controlId="wccalcPrintSide"
@@ -103,8 +118,6 @@ alert}) => {
 
 
                    </Row>
-                 
-
                     <Form.Group className="mb-3 rcp_info">
                       <Form.Label>Recipient's/Delivery Address</Form.Label>
                       <Form.Control
@@ -158,7 +171,125 @@ alert}) => {
                     </Form.Group>
                   </div> 
                   {/* <hr /> */}
+                  {/* <div className="col-md-12 d-flex flex-column align-items-center ">            
+<div style={{ width: '100%' }}>
+                    <h3>Cost Of Order</h3>
+                    <div className="costOrder_Style">
+                      <label htmlFor="printbazCost">Total Quantity</label>
+      
+                      <h3>
+                        {" "}
+                       <span style={{ fontSize: "" }}>{formData?.quantity}</span> 
+                      </h3>
+                    </div> <div className="costOrder_Style">
+                      <label htmlFor="printbazCost">Printbaz Cost</label>
+      
+                      <h3>
+                        {" "}
+                       <span style={{ fontSize: "" }}>&#2547;</span> {printbazcost}
+                      </h3>
+                    </div>
+      
+                    <div className="costOrder_Style">
+                      <label htmlFor="printbazCost">Delivery Fee</label>
+      
+                      <h3>
+                        {" "}
+                        <span style={{ fontSize: "" }}>&#2547;</span>{" "}
+                        {deliveryFee}
+                      </h3>
+                    </div>
+                    <div>
+
+                    <Row  className="costOrder_Style">
+                      <Col xs={12} md={6}>
+                    <Form.Group className="mb-3 ">
+                      <Form.Label>Amount to Collect</Form.Label>
+                      {["bottom"].map((placement) => (
+                        <OverlayTrigger
+                          key={placement}
+                          placement={placement}
+                          overlay={
+                            <Tooltip id={`tooltip-${placement}`}>
+                             Amount of money you want the
+                              receiver will pay; Must include delivery fee
+                            </Tooltip>
+                          }
+                        >
+                          <span variant="secondary" className="info_icon">
+                            <img
+                              style={{
+                                marginLeft: "5px",
+                                width: "15px",
+                                height: "15px",
+                              }}
+                              src="/images/info.png"
+                              alt="info"
+                            />
+                          </span>
+                        </OverlayTrigger>
+                      ))}
+                    
+                      <Form.Control
+                        type="number"
+                        name="collectAmount"
+                        value={formData.collectAmount}
+                        className="form-control"
+                        onChange={(e) => {
+                           handleInputChange(e);;
+                        }}
+                        required
+                        placeholder=""
+                      />
+                    </Form.Group>
+                    </Col>
+                    <Col xs={12} md={6}>
+                           <Form.Group className="mb-3 ">
+                           <Form.Label>Minimum Amount to Collect</Form.Label>
+                          
+                           <Form.Control
+                             type="number"
+                             name="collectAmount"
+                             value={ printbazcost && (  {deliveryFee}) && suggestedCollectAmount ?suggestedCollectAmount : '' }
+                             readOnly
+                           />
+                         </Form.Group>
+                         </Col>
+                    
+                   
+                     
+                      </Row>
+                    </div>
+                    
+                    <div className="costOrder_Style">
+                      <label htmlFor="printbazCost">Cash Handling fee</label>{" "}
+                      <h3> 3%</h3>
+                    </div>
+      
+                   <div >
+                        <div className="costOrder_Style">
+                        <label htmlFor="printbazCost">You will receive</label>
+                        <h3> {recvMoney>0 && Math.floor(recvMoney)}</h3>
+                        </div>
+                       
+                      
+                        { formValid===true &&
+    <p style={{color:"red",textAlign:"right"}}>{recvAmount}</p>
+  }
+                       
+             
+                      </div>
+                  
+                  </div>
+                  {
+                    alert===true &&
+                    <Alert key="danger" variant="danger">
+                    Quantity required!
+                  </Alert>
+                  }
+          
                  
+                  </div> */}
 </div>
     );
 };

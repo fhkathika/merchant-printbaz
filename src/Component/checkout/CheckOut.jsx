@@ -7,9 +7,12 @@ import deliveryCharge from '../../Formulas/deliveryCharge';
 import NavigationBar from '../Navbar/NavigationBar';
 import OrderSubmitDoneAlert from '../alert/OrderSubmitDoneAlert';
 import ConfirmOrderAlert from '../alert/ConfirmOrderAlert';
+import AuthProvider, { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
 const CheckOut = () => {
   const { setFormData,setCartItems,editCartItem,cartItems} = useContext(CartContext);
+  const {user,logoutUser}=useContext(AuthContext);
+  console.log("user............",user)
   const [isConfirmAlertOpen, setIsConfirmAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -59,7 +62,8 @@ const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', 
     lastName:'',
     companyName:'',
     phone: '',
-    email:'',
+    email:user?.email,
+    regId:user?._id,
     address: '',
     instruction: '',
     districts:'',
@@ -69,7 +73,7 @@ const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', 
     grandCost:0,
     deliveryFee:0,
     discount:0,
-    collectAmount:0,
+    collectAmount:'',
    
     orderCreatedAt:formattedDate,
     paymentSystem:'',
@@ -319,13 +323,20 @@ recvMoneyWithouthandling = Number(
 );
 // costHandlingfee = recvMoneyWithouthandling * 0.03;
 costHandlingfee = Number(formDataSelected.collectAmount * 0.03);
-recvMoney = recvMoneyWithouthandling - costHandlingfee;
+// recvMoney = recvMoneyWithouthandling - costHandlingfee;
+if(formDataSelected.collectAmount===0){
+  recvMoney = 0;
+}
+else{
+  recvMoney = recvMoneyWithouthandling;
+}
+
 
 let suggestedCollectAmount = Math.ceil((1 + formDataSelected?.grandCost) / 0.97);
 // console.log("recvMoney",recvMoney)
 // console.log("suggestedCollectAmount",suggestedCollectAmount)
 const validateForm = () => {
-  if (recvMoney < 0) {
+  if (recvMoney < 0 &&formDataSelected.paymentSystem === "cashOnDelivery" ) {
     setFormValid(true);
     setRecvAmount("Received money cannot be less than 0.");
     return true;
@@ -335,10 +346,11 @@ const validateForm = () => {
   }
 };
 
-let orderTotal=cartItems?.reduce((total, item) => {
+let orderTotalCalculation=cartItems?.reduce((total, item) => {
   return total + item.printbazcost;
 }, 0)+deliveryFee-Number(addeDiscount);
 
+let orderTotal=Math.ceil(orderTotalCalculation+(orderTotalCalculation*0.03))
 
 const handleInputChange = (event, index) => {
   const { name, value } = event.target;
@@ -531,6 +543,7 @@ const handleSubmitOrder=async(e)=>{
     formDataSendOrdertoServer.append(`quantityL${index}_${productIndex}`, product.quantityL);
     formDataSendOrdertoServer.append(`quantityXL${index}_${productIndex}`, product.quantityXL);
     formDataSendOrdertoServer.append(`quantityXXL${index}_${productIndex}`, product.quantityXXL);
+    formDataSendOrdertoServer.append(`quantityXXXL${index}_${productIndex}`, product.quantityXXXL);
     formDataSendOrdertoServer.append(`printSize${index}_${productIndex}`, product.printSize);
     formDataSendOrdertoServer.append(`printSizeBack${index}_${productIndex}`, product.printSizeBack);
     formDataSendOrdertoServer.append(`printSide${index}_${productIndex}`, product.printSide);
@@ -544,7 +557,12 @@ const handleSubmitOrder=async(e)=>{
   formDataSendOrdertoServer.append("lastName",formDataSelected?.lastName);
   formDataSendOrdertoServer.append("companyName",formDataSelected?.companyName);
   formDataSendOrdertoServer.append("phone",formDataSelected?.phone);
-  formDataSendOrdertoServer.append("email",formDataSelected?.email);
+  formDataSendOrdertoServer.append("userMail",user?.email);
+  formDataSendOrdertoServer.append("regId",user?._id);
+  formDataSendOrdertoServer.append('createdAt', formattedDate);
+ 
+  formDataSendOrdertoServer.append('clientName', user?.name);
+  formDataSendOrdertoServer.append('clientbrandName', user?.brandName);
   formDataSendOrdertoServer.append("address",formDataSelected?.address);
   formDataSendOrdertoServer.append("instruction",formDataSelected?.instruction);
   formDataSendOrdertoServer.append("districts",formDataSelected?.districts);
@@ -552,10 +570,11 @@ const handleSubmitOrder=async(e)=>{
   formDataSendOrdertoServer.append("areas",formDataSelected?.areas);
   formDataSendOrdertoServer.append("grandQuantity",formDataSelected?.grandQuantity);
   formDataSendOrdertoServer.append("grandCost",formDataSelected?.grandCost);
+  formDataSendOrdertoServer.append("printbazcost",allProductsPrintbazCost);
   formDataSendOrdertoServer.append("deliveryFee",formDataSelected?.deliveryFee);
   formDataSendOrdertoServer.append("discount",formDataSelected?.discount);
   formDataSendOrdertoServer.append("collectAmount",formDataSelected?.collectAmount);
-  formDataSendOrdertoServer.append("recvAmount",recvAmount);
+  formDataSendOrdertoServer.append("recvMoney",recvMoney);
   formDataSendOrdertoServer.append("orderCreatedAt",formDataSelected?.orderCreatedAt);
   formDataSendOrdertoServer.append("paymentSystem",formDataSelected?.paymentSystem);
   formDataSendOrdertoServer.append("orderStatus",formDataSelected?.orderStatus);
@@ -578,6 +597,10 @@ const handleSubmitOrder=async(e)=>{
        // Clear cartItems from state and localStorage on successful submission
        setCartItems([]); // Assuming setCartItems is your state updater function for cart items
        localStorage.removeItem('cartItems'); // Clear cart items from localStorage
+  // Update the cart items in the database
+  await fetch(`http://localhost:5000/deleteAllCartItems`, {
+    method: 'DELETE',
+  });
 
       setShowAlert(true)
      setFormDataSelected( 
@@ -829,24 +852,46 @@ alert={alert}
   ''
   
 }
-                      <div className="form-group">
-                        <div className="col-md-12">
-                          <label htmlFor="c_phone" className="text-black">Amount to Collect <span className="text-danger">*</span></label>
-                          <Form.Control
-                        type="number"
-                        name="collectAmount"
-                        value={formDataSelected.collectAmount}
-                        className="form-control"
-                        onChange={(e) => {
-                           handleInputChange(e);;
-                        }}
-                        required
-                        placeholder=""
-                      />
-                        </div>
-                      </div>
+{
+  formDataSelected.paymentSystem==="full advance payment"?
+  <div className="form-group">
+  <div className="col-md-12">
+    <label htmlFor="c_phone" className="text-black">Amount to Collect <span className="text-danger">*</span></label>
+    <Form.Control
+  type="number"
+  name="collectAmount"
+  value={formDataSelected.collectAmount=0}
+  className="form-control"
+  onChange={(e) => {
+     handleInputChange(e);
+  }}
+  readOnly
+  required
+ 
+/>
+  </div>
+</div>
+:
+<div className="form-group">
+<div className="col-md-12">
+  <label htmlFor="c_phone" className="text-black">Amount to Collect <span className="text-danger">*</span></label>
+  <Form.Control
+type="number"
+name="collectAmount"
+value={formDataSelected.collectAmount}
+className="form-control"
+onChange={(e) => {
+   handleInputChange(e);;
+}}
+required
+placeholder=""
+/>
+</div>
+</div>
+}
+                     
                       {
-                        recvMoney>=0 &&
+                        recvMoney>0 &&
                         <div className="form-group form-group-payment">
                         <table className="table site-block-order-table">
                           <tbody><tr>
@@ -855,7 +900,7 @@ alert={alert}
                             </tr>
                           </tbody></table>
                       </div>
-                      }
+                   } 
                       
                     </div>
                   </div>

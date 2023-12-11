@@ -51,7 +51,8 @@ const MyOrders = () => {
     // const handleInputChange = (event, index) => {
     //   const { name, value } = event.target;
     //   setFilterOrders(value)
-    // }
+    // }.........
+    console.log("info............",info)
     const [activeTab, setActiveTab] = useState('all');
 // filter order based on status 
 let pendingOrders=info?.filter(users=>users?.orderStatus==="Pending");

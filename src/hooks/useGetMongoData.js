@@ -7,8 +7,8 @@ const useGetMongoData = () => {
     const userEmail=user?.email;
     useEffect(()=>{
         const getOrders = async () => {
-         await fetch(`https://mserver.printbaz.com/getmyorder/${userEmail}`) //for main site
-        //  await fetch(`http://localhost:5000/getmyorder/${userEmail}`) //for testing site
+        //  await fetch(`https://mserver.printbaz.com/getmyorder/${userEmail}`) //for main site
+         await fetch(`http://localhost:5000/getmyorder/${userEmail}`) //for testing site
         //  await fetch(`https://mserver.printbaz.com/testgetmyorder/${userEmail}`) //for testing site
         .then(res=>res.json())
         .then(data => setInfo(data))

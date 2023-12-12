@@ -166,8 +166,8 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
     try {
       // Send the file to your backend server
-      const response = await fetch('http://localhost:5000/uploadOrderedFile', {
-      // const response = await fetch('https://server.printbaz.com/uploadOrderedFile', {
+      // const response = await fetch('http://localhost:5000/uploadOrderedFile', {
+      const response = await fetch('https://mserver.printbaz.com/uploadOrderedFile', {
         method: 'POST',
         body: formData, // Send the file within FormData
       });
@@ -247,8 +247,8 @@ useEffect(()=>{},[addBrandLogoArray,uploadedFile,formData])
 console.log("uploadedFile.............",uploadedFile)
 const removeFileFromServer = async (fileId) => {
   try {
-    const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
-    // const response = await fetch(`https://server.printbaz.com/deleteFileApi/${fileId}`, {
+    // const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
+    const response = await fetch(`https://mserver.printbaz.com/deleteFileApi/${fileId}`, {
       method: 'DELETE'
     });
     
@@ -556,8 +556,8 @@ const removeFileFromServer = async (fileId) => {
   };
   try {
     // Make a POST request to your server with the order data
-    // const response = await fetch('https://server.printbaz.com/addToCart', {
-    const response = await fetch('http://localhost:5000/addToCart', {
+    const response = await fetch('https://mserver.printbaz.com/addToCart', {
+    // const response = await fetch('http://localhost:5000/addToCart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

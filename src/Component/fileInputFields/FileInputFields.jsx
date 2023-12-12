@@ -17,7 +17,8 @@ const FileInputFields = ({itemToEdit,handleFileChange,index,item}) => {
       item.quantityM ||
       item.quantityL ||
       item.quantityXL ||
-      item.quantityXXL
+      item.quantityXXL ||
+      item.quantityXXXL
     }
     accept=".ai,.eps,.psd,.pdf,.svg,.png"
     multiple
@@ -41,7 +42,8 @@ const FileInputFields = ({itemToEdit,handleFileChange,index,item}) => {
       (item.quantityM ||
       item.quantityL ||
       item.quantityXL ||
-      item.quantityXXL) &&
+      item.quantityXXL ||
+      item.quantityXXXL) &&
       !item.file
     }
     // onChange={(e) => handleFileChange(e, index)}
@@ -81,7 +83,8 @@ const FileInputFields = ({itemToEdit,handleFileChange,index,item}) => {
                         item.quantityM ||
                         item.quantityL ||
                         item.quantityXL ||
-                        item.quantityXXL
+                        item.quantityXXL ||
+                        item.quantityXXXL
                       }
                       accept="image/*"
                       // onChange={(e) => handleFileChange(e, index, 'image')}

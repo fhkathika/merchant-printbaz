@@ -156,8 +156,8 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
     try {
       // Send the file to your backend server
-      const response = await fetch('http://localhost:5000/uploadOrderedFile', {
-      // const response = await fetch('https://server.printbaz.com/uploadOrderedFile', {
+      // const response = await fetch('http://localhost:5000/uploadOrderedFile', {
+      const response = await fetch('https://mserver.printbaz.com/uploadOrderedFile', {
         method: 'POST',
         body: formData, // Send the file within FormData
       });
@@ -237,8 +237,8 @@ useEffect(()=>{},[addBrandLogoArray,uploadedFile,formData])
 console.log("uploadedFile.............",uploadedFile)
 const removeFileFromServer = async (fileId) => {
   try {
-    const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
-    // const response = await fetch(`https://server.printbaz.com/deleteFileApi/${fileId}`, {
+    // const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
+    const response = await fetch(`https://mserver.printbaz.com/deleteFileApi/${fileId}`, {
       method: 'DELETE'
     });
     
@@ -336,8 +336,8 @@ const removeFileFromServer = async (fileId) => {
     for (var j = 0; j < formData?.orderDetailArrCustomDropSholder?.length; j++) {
       if (
         formData?.quantity &&
-        formData?.orderDetailArrCustomDropSholder[i]?.totalQuantity &&
-        formData?.orderDetailArrCustomDropSholder[i]?.printSize &&
+        formData?.orderDetailArrCustomDropSholder[j]?.totalQuantity &&
+        formData?.orderDetailArrCustomDropSholder[j]?.printSize &&
         price_11p7x16p5 &&
         price_10x14 &&
         price_10x10 &&
@@ -349,8 +349,8 @@ const removeFileFromServer = async (fileId) => {
        
       const totalPrice = tshirtFormulaCustomDropSholder(
         formData?.quantity,
-        formData?.orderDetailArrCustomDropSholder[i]?.totalQuantity,
-        formData?.orderDetailArrCustomDropSholder[i]?.printSize,
+        formData?.orderDetailArrCustomDropSholder[j]?.totalQuantity,
+        formData?.orderDetailArrCustomDropSholder[j]?.printSize,
         price_11p7x16p5,
         price_10x14,
         price_10x10,
@@ -363,9 +363,9 @@ const removeFileFromServer = async (fileId) => {
         // back side dtf cost plus additional cost 
    let backSidePrintCost =backsiideFormulaDropSholderHoodie(
     formData?.quantity,
-    formData?.orderDetailArrCustomDropSholder[i]?.totalQuantity,
-    formData?.orderDetailArrCustomDropSholder[i]?.printSizeBack,
-    formData?.orderDetailArrCustomDropSholder[i]?.printSide,
+    formData?.orderDetailArrCustomDropSholder[j]?.totalQuantity,
+    formData?.orderDetailArrCustomDropSholder[j]?.printSizeBack,
+    formData?.orderDetailArrCustomDropSholder[j]?.printSide,
     backSideDtfprice_11p7x16p5,
     backSideDtfprice_10x14,
     backSideDtfprice_10x10,
@@ -459,7 +459,7 @@ const removeFileFromServer = async (fileId) => {
     // Update state
     setFormData((prevState) => ({
       ...prevState,
-      orderDetailArr: newOrderDetailArr,
+      orderDetailArrCustomDropSholder: newOrderDetailArr,
       quantity: parseInt(newGrandQuantity),
       printbazcost: printbazcost,
     }));
@@ -555,7 +555,8 @@ const removeFileFromServer = async (fileId) => {
   try {
     // Make a POST request to your server with the order data
     // const response = await fetch('https://server.printbaz.com/addToCart', {
-    const response = await fetch('http://localhost:5000/addToCart', {
+    // const response = await fetch('http://localhost:5000/addToCart', {
+    const response = await fetch('https://mserver.printbaz.com/addToCart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -884,7 +885,7 @@ setShowLoginPopup(true)
  <option selected>Select Print Size</option>
  
                           {/* <option value="">select print size</option>  */}
-                          {/* <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option> */}
+                          <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
                           <option value="10 x 14">10″ x 14″</option>
                           <option value="10 x 10">10″ x 10″(A4)</option>
                           <option value="10 x 5">10″ x 5″</option>
@@ -913,7 +914,7 @@ setShowLoginPopup(true)
                       <option selected>Select Print Size</option>
                       
                                                {/* <option value="">select print size</option>  */}
-                                               {/* <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option> */}
+                                               <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
                                                <option value="10 x 14">10″ x 14″</option>
                                                <option value="10 x 10">10″ x 10″(A4)</option>
                                                <option value="10 x 5">10″ x 5″</option>
@@ -938,7 +939,7 @@ setShowLoginPopup(true)
          <option selected>Select Print Size</option>
       
                            {/* <option value="">select print size</option>  */}
-                           {/* <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option> */}
+                           <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
                             <option value="10 x 14">10″ x 14″</option>
                             <option value="10 x 10">10″ x 10″(A4)</option>
                             <option value="10 x 5">10″ x 5″</option>

@@ -522,7 +522,7 @@ const startEdit = (e, itemIdentifier) => {
     }
      else if (itemToEdit.orderDetailArrCustomHoodie?.length > 0) {
       updatedFormData.orderDetailArrCustomHoodie = mergeOptionsWithSelectedData(itemToEdit.orderDetailArrCustomHoodie, initialHoodieOptions);
-      navigate('/customHoodie', { state: { itemToEdit: updatedFormData } });
+      navigate('/custonHoodie', { state: { itemToEdit: updatedFormData } });
     }
      else if (itemToEdit.orderDetailArrBlankRoundNeck?.length > 0) {
       updatedFormData.orderDetailArrBlankRoundNeck = mergeOptionsWithSelectedData(itemToEdit.orderDetailArrBlankRoundNeck, initialBankRoundNackOptions);

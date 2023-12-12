@@ -32,7 +32,7 @@ const navigate=useNavigate()
     <h2>{message}</h2>
         {/* <span style={{color:"white"}}>{message2}</span> */}
         <span></span>
-        <button onClick={goToCart} id="neonShadow"><span> <img className=''  src='/images/right-arrow (1).png' alt='go to cart'/></span></button>
+        <button onClick={goToCart} id="neonShadow">Go To Cart</button>
         </div>
       </div>
       </div>

@@ -158,7 +158,7 @@ brandLogo:null
             orderDetailArrCustomHoodie:
              [
               {
-                productType:'Custom Hoodie',
+                productType:'Custom hoodie',
                 color: 'Black',
                 teshirtSize: {},
                 categoryImg:"https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg",
@@ -497,8 +497,8 @@ brandLogo:null
     };
     const fetchOrders = async () => {
       try {
-          const response = await fetch(`http://localhost:5000/getCartItems`);
-          // const response = await fetch(`https://server.printbaz.com/getCartItems`);
+          // const response = await fetch(`http://localhost:5000/getCartItems`);
+          const response = await fetch(`https://mserver.printbaz.com/getCartItems`);
           if (!response.ok) {
               throw new Error('Network response was not ok');
           }
@@ -536,7 +536,8 @@ const deleteCartItem = async (itemIdentifier) => {
     setCartItems(updatedCartItems);
 
     // Update the cart items in the database
-    await fetch(`http://localhost:5000/deleteCartItem/${itemIdentifier}`, {
+    // await fetch(`http://localhost:5000/deleteCartItem/${itemIdentifier}`, {
+    await fetch(`https://mserver.printbaz.com/deleteCartItem/${itemIdentifier}`, {
       method: 'DELETE',
     });
 
@@ -606,7 +607,8 @@ const editCartItem = async (itemIdentifier, newData) => {
   };
   try {
     // Making a PUT request to the server to update the item
-    const response = await fetch(`http://localhost:5000/editCartItem/${itemIdentifier}`, {
+    // const response = await fetch(`http://localhost:5000/editCartItem/${itemIdentifier}`, {
+    const response = await fetch(`https://mserver.printbaz.com/editCartItem/${itemIdentifier}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

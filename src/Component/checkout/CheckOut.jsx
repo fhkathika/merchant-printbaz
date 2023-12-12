@@ -22,8 +22,8 @@ const CheckOut = () => {
 const [confirmHandlers, setConfirmHandlers] = useState({ onConfirm: () => {}, onClose: () => {} });
 const fetchOrders = async () => {
   try {
-      const response = await fetch(`http://localhost:5000/getCartItems`);
-      // const response = await fetch(`https://server.printbaz.com/getCartItems`);
+      // const response = await fetch(`http://localhost:5000/getCartItems`);
+      const response = await fetch(`https://mserver.printbaz.com/getCartItems`);
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
@@ -583,22 +583,23 @@ const handleSubmitOrder=async(e)=>{
 
   
     try {
-      const response = await fetch('http://localhost:5000/sendOrder', {
-      // const response = await fetch('https://server.printbaz.com/sendOrder', {
+      // const response = await fetch('http://localhost:5000/sendOrder', {
+      const response = await fetch('https://mserver.printbaz.com/sendOrder', {
         method: 'POST',
         body: formDataSendOrdertoServer
       });
-  
+  // Clear cartItems from state and localStorage on successful submission
+  setCartItems([]); // Assuming setCartItems is your state updater function for cart items
+  localStorage.removeItem('cartItems'); // Clear cart items from localStorage
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
       const result = await response.json();
-       // Clear cartItems from state and localStorage on successful submission
-       setCartItems([]); // Assuming setCartItems is your state updater function for cart items
-       localStorage.removeItem('cartItems'); // Clear cart items from localStorage
+       
   // Update the cart items in the database
-  await fetch(`http://localhost:5000/deleteAllCartItems`, {
+  // await fetch(`http://localhost:5000/deleteAllCartItems`, {
+await fetch(`https://mserver.printbaz.com/deleteAllCartItems`, {
     method: 'DELETE',
   });
 

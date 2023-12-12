@@ -44,8 +44,8 @@ useEffect(() => {
 useEffect(()=>{
   const getOrderById=async()=>{
            // Fetch the updated order details
-  // await fetch(`https://mserver.printbaz.com/getorder/${viewOrder?._id}`)
-  await fetch(`http://localhost:5000/getorder/${viewOrder?._id}`)
+  await fetch(`https://mserver.printbaz.com/getorder/${viewOrder?._id}`)
+  // await fetch(`http://localhost:5000/getorder/${viewOrder?._id}`)
   // await fetch(`https://mserver.printbaz.com/testgetorder/${viewOrder?._id}`)
   .then(res=>res.json())
   .then(data => {setGetSpecificOrderById(data)
@@ -677,7 +677,7 @@ getSpecificOrderById?.orderStatus==="returned"?
           
         <>
         <div className="row order-tab  " key={orderIndex}>
-        <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
+        {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
         
       <div className="col-3">
         <p  className='font12px'>{orderDetail?.color}</p>
@@ -884,7 +884,7 @@ orderDetail?.brandLogo ?
 
 {/* for mobile  */}
     <div className="row  diplay_none" >
-      <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
+      {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
       <div className="col-12 "  key={orderIndex}>
      <p >Color:  <span className='bold'>{orderDetail?.color}</span></p>
      <ul>
@@ -1023,7 +1023,7 @@ orderDetail?.brandLogo ?
       ?.map((insideDetail,orderIndex)=> 
   
         insideDetail?.individualProductArr?.map((orderDetail,itemIndex)=>
-          orderDetail?.printSide  &&
+          orderDetail?.printSide  ?
           
           <>
           <div className="row order-tab  " key={orderIndex}>
@@ -1128,7 +1128,7 @@ orderDetail?.brandLogo ?
   
   {/* for mobile  */}
       <div className="row  diplay_none" >
-        <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
+        {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
         <div className="col-12 "  key={orderIndex}>
        <p >Color:  <span className='bold'>{orderDetail?.color}</span></p>
        <ul>
@@ -1190,7 +1190,9 @@ orderDetail?.brandLogo ?
 
 <div style={{position: "relative" ,display: "inline-block"}}>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
-    <img style={{width:"100px",height:"100px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`} alt="file" className="img-fluid" />
+    <img style={{width:"100px",height:"100px"}} 
+    src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`}
+    alt="file" className="img-fluid" />
 </div>
  
   </div>
@@ -1202,6 +1204,130 @@ orderDetail?.brandLogo ?
         <hr />
       </div>
       </>
+
+      :(!orderDetail?.printSide && orderDetail?.brandLogo?.fileId)&&
+      <>
+      <div className="row order-tab  " key={orderIndex}>
+      <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3>
+      
+    <div className="col-3">
+      <p  className='font12px'>{orderDetail?.color}</p>
+    </div>
+    <div className="col-3 " style={{display:"flex",justifyContent:"center"}}>
+  
+    <ul>
+    {typeof orderDetail.teshirtSize === 'string' ? (
+      <li  className='font12px'>
+        {orderDetail.teshirtSize}- {orderDetail.quantity}
+      </li>
+    ) : (
+      Object.entries(orderDetail.teshirtSize || {}).map(
+        ([size, quantity]) => (
+          <li className='font12px' key={size}>
+           {size}- {quantity}
+          </li>
+        )
+      )
+    )}
+  </ul>
+     
+      
+    </div>
+    <div className="col-3 font12px" style={{display:"flex",justifyContent:"center"}}>
+    {orderDetail?.totalQuantity} 
+    </div>
+
+  
+  </div>
+  <div className="row  " >
+    {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
+    <div className="col-12 "  key={orderIndex}>
+  
+    {/* {orderDetail?.printSide} */}
+  
+ 
+   
+  
+     
+  
+  
+   {/* <p >Main File :<div className="file-info">
+<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
+
+</div></p> */}
+ 
+
+{
+orderDetail?.brandLogo &&
+<>
+<h4>Brang Logo :</h4>
+<div className="">
+{/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`}alt="file" className="img-fluid" />
+<a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`}>download logo</a> */}
+
+<div style={{position: "relative" ,display: "inline-block"}}>
+<a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
+<img style={{width:"100px",height:"100px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`} alt="file" className="img-fluid" />
+</div>
+</div>
+</>
+
+}
+
+    </div>
+    <hr />
+  </div>
+
+{/* for mobile  */}
+  <div className="row  diplay_none" >
+    {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
+    <div className="col-12 "  key={orderIndex}>
+   <p >Color:  <span className='bold'>{orderDetail?.color}</span></p>
+   <ul>
+    {typeof orderDetail.teshirtSize === 'string' ? (
+      <li>
+        {orderDetail.teshirtSize}- {orderDetail.quantity}
+      </li>
+    ) : (
+      Object.entries(orderDetail.teshirtSize || {}).map(
+        ([size, quantity]) => (
+          <li key={size}>
+            {size}- {quantity}
+          </li>
+        )
+      )
+    )}
+  </ul>
+   <p >Quantity : <span className='bold'> {orderDetail?.quantity}</span></p>
+ 
+ 
+   
+ 
+     
+
+{
+orderDetail?.brandLogo &&
+<>
+<p>Brang Logo :</p>
+<div className="card file">
+{/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`}alt="file" className="img-fluid" />
+<a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`}>download logo</a> */}
+
+<div style={{position: "relative" ,display: "inline-block"}}>
+<a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
+<img style={{width:"100px",height:"100px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`} alt="file" className="img-fluid" />
+</div>
+
+</div>
+</>
+
+}
+
+    </div>
+    <hr />
+  </div>
+  </>
         )
  )
     }

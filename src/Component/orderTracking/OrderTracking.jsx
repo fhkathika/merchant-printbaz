@@ -659,7 +659,7 @@ getSpecificOrderById?.orderStatus==="returned"?
         <h4>Main File</h4>
       </div> */}
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4 className='font10px d-none'>Picture</h4>
+        <h4 className='font10px d-none'>Picture </h4>
       </div>
         {/* <div className="col-1">
         <h4>BrandLogo</h4>
@@ -1027,7 +1027,7 @@ orderDetail?.brandLogo ?
           
           <>
           <div className="row order-tab  " key={orderIndex}>
-          <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3>
+          <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3>
           
         <div className="col-3">
           <p  className='font12px'>{orderDetail?.color}</p>

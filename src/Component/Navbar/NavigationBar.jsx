@@ -5,6 +5,9 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
 import '../../css/dashboardStyles.css'
 import { CartContext } from '../../context/CartProvider';
+import { Button } from 'react-bootstrap';
+import ReqPaymentTIcketPopup from '../../alertBox/ReqPaymentTIcketPopup';
+import GeneralQuerySupportTicketPopUp from '../generalQuerySupportTicketPopUp/GeneralQuerySupportTicketPopUp';
 const NavigationBar = () => {
   const {user,logoutUser}=useContext(AuthContext);
   const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
@@ -14,11 +17,13 @@ const NavigationBar = () => {
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
   const [fetchAllTicket, setFetchAllTicket] = useState([]);
+  const [fetchOverAllTicket, setFetchOverAllTicket] = useState([]);
   const { fetchedData} = useGetData(id, collections, dbData);
   const resellerInfoFromDb=fetchedData?.resellerInfoArr
   console.log("user",user)
   console.log("fetchAllTicket",fetchAllTicket)
-
+  const [showTicket, setShowTicket] = useState(false);
+  const [show,setShow]=useState(false)
   useEffect(() => {
     // Fetch the chat log from the server when the component mounts
 
@@ -72,8 +77,9 @@ const NavigationBar = () => {
       window.removeEventListener('scroll', headerScrolled);
     };
   }, []);
-  
-
+  const [reqBtnStatus, setReqBtnStatus] = useState(true);
+  const [showTicketPopUp, setShowTicketPopUp] = useState(false);
+  const closePopup = () => {setShowTicketPopUp(false);setShow(false)};
   const [showDropdown, setShowDropdown] = useState(false);
   const toggleDropdown = () => {
     setShowDropdown(prevShow => !prevShow);
@@ -123,6 +129,48 @@ const NavigationBar = () => {
 
 
 let msgCount=0;
+const [createTicket, setCreateTicket] = useState(false);
+const [showPopup, setShowPopup] = useState(false);
+const [popupId, setPopupId] = useState('');
+let idCounter = 1;
+
+
+  const fetchAllTicketData = async () => {
+    try {
+      // const response = await axios.get('http://localhost:5000/allTicketIds');
+      const response = await axios.get('https://mserver.printbaz.com/allTicketIds');
+      setFetchOverAllTicket(response.data);
+    // Find the maximum ID from the fetched data and initialize idCounter
+    const maxId = response.data.reduce((max, ticketId) => Math.max(max, parseInt(ticketId, 10)), 0);
+    idCounter = maxId + 1;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const ticketAll=   fetchAllTicketData()
+  useEffect(()=>{
+    fetchAllTicketData()
+   },[])
+   const generateId = () => {
+    const paddedId = String(idCounter).padStart(6, '0');
+  
+    if (fetchOverAllTicket?.filter(ticketId => ticketId === paddedId).length > 0) {
+      idCounter++;
+      return generateId();
+    }
+  
+    idCounter++;
+    return paddedId;
+  };
+const handleShowTicketPopUp=()=>{
+   fetchAllTicketData(); // Wait for data to be fetched and state to be updated
+  const newId = generateId(); // Generate ID after fetching data
+  setPopupId(newId);
+  setShowTicket(true)
+  setShowTicketPopUp(true)
+
+ 
+} 
     return (<>
    <meta charSet="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -265,6 +313,9 @@ let msgCount=0;
                 <Link className=''  to="/calculator">Calculator</Link> 
               </li>
               <li>
+                <Button className=''  onClick={handleShowTicketPopUp}>Create Support Ticket</Button> 
+              </li>
+              <li>
               <Link className=''  to="/printSizeDemo">Print Size Demo</Link> 
               </li>
               <li>
@@ -313,6 +364,20 @@ let msgCount=0;
         </ul>
      
     </nav>
+    {
+      showTicketPopUp &&
+       <GeneralQuerySupportTicketPopUp
+       userRegId={user?._id}
+       setShow={setShow}
+       onClose={closePopup}
+       ticketId={popupId}
+       userEmail={user?.userMail}
+       userName={user?.username}
+       
+       />
+    }
+ 
+           
     </div>
       {/* .navbar */}
     </div>

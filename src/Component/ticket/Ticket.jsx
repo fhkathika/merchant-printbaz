@@ -139,8 +139,11 @@ const Ticket = () => {
                        {
                          allTicket?.orderId?
                          <h4>Order ID: {allTicket?.orderId}</h4>
-                         :
+                         : (allTicket?.userId)?
                          <h4>Phone Number: {allTicket?.userId}</h4>
+                         : (allTicket?.userRegId)&&
+                         <h4>Reg Id: {allTicket?.userRegId}</h4>
+                         
                        } 
                      
                         <h5>Ticket ID: {allTicket?.ticketId}</h5>

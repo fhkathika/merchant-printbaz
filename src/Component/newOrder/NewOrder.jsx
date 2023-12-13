@@ -720,7 +720,7 @@ setShowLoginPopup(true)
                   </div>
                   <div class="self-product-description">
                             <h5><strong>Size chart - In inches</strong></h5>
-                            <table border="1" cellpadding="5">
+                            <table border="1" cellpadding="5" className="table-responsive">
                             <thead>
                             <tr>
                             <th>Size</th>

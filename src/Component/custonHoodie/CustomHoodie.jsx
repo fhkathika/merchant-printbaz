@@ -723,51 +723,48 @@ setShowLoginPopup(true)
                   </div>
                   <div class="self-product-description">
                             <h5><strong>Size chart - In inches</strong></h5>
-                            <table border="1" cellpadding="5">
+      
+<table border="1" cellpadding="5" className="table-responsive">
                             <thead>
                             <tr>
-                            <th class="tg-0lax_title tg-0lax">SIZE</th>
-    <th class="tg-0lax_title tg-0lax">M</th>
-    <th class="tg-0lax_title tg-0lax">L</th>
-    <th class="tg-0lax_title tg-0lax">XL</th>
-    <th class="tg-0lax_title tg-0lax">XXL</th>
-    <th class="tg-0lax_title tg-0lax">3XL</th>
+                            <th>Size</th>
+                            <th>Chest </th>
+                            <th>Length</th>
                             </tr>
                             </thead>
                             <tbody>
+                            {/* <tr>
+                            <td>XS</td>
+                            <td >13.5</td>
+                            <td >18</td>
+    
+                            </tr> */}
                             <tr>
-                            <td class="tg-0lax">CHEST</td>
-    <td class="tg-0lax">42</td>
-    <td class="tg-0lax">44</td>
-    <td class="tg-0lax">46</td>
-    <td class="tg-0lax">48</td>
-    <td class="tg-0lax">50</td>
+                            <td>M</td>
+                            <td>40</td>
+  
+                            <td >27</td>
+    
                             </tr>
                             <tr>
-                            <td class="tg-0lax">LENGHT</td>
-    <td class="tg-0lax">27</td>
-    <td class="tg-0lax">28</td>
-    <td class="tg-0lax">29</td>
-    <td class="tg-0lax">30</td>
-    <td class="tg-0lax">32</td>
+                            <td>L</td>
+                            <td>42</td>
+  
+                            <td >28</td>
+   
                             </tr>
                             <tr>
-                            <td class="tg-0lax">SHOULDER</td>
-    <td class="tg-0lax">8</td>
-    <td class="tg-0lax">8.5</td>
-    <td class="tg-0lax">9</td>
-    <td class="tg-0lax">9.5</td>
-    <td class="tg-0lax">10</td>
+                            <td>XL</td>
+                            <td >44</td>
+   
+                            <td >29</td>
+    
                             </tr>
                             <tr>
-                            <td class="tg-0lax">SLEEVE</td>
-    <td class="tg-0lax">8.5</td>
-    <td class="tg-0lax">9</td>
-    <td class="tg-0lax">9.5</td>
-    <td class="tg-0lax">9.8</td>
-    <td class="tg-0lax">10</td>
+                            <td>2XL</td>
+                            <td>45</td>
+                            <td >29</td>
                             </tr>
-                          
                             </tbody>
                             </table>
                             <p></p></div>

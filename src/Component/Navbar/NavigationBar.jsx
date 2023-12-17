@@ -12,16 +12,14 @@ const NavigationBar = () => {
   const {user,logoutUser}=useContext(AuthContext);
   const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
   useContext(CartContext);
-  console.log("cartItems",cartItems);
+  
   let id = "resellerId";
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
   const [fetchAllTicket, setFetchAllTicket] = useState([]);
   const [fetchOverAllTicket, setFetchOverAllTicket] = useState([]);
   const { fetchedData} = useGetData(id, collections, dbData);
-  const resellerInfoFromDb=fetchedData?.resellerInfoArr
-  console.log("user",user)
-  console.log("fetchAllTicket",fetchAllTicket)
+ 
   const [showTicket, setShowTicket] = useState(false);
   const [show,setShow]=useState(false)
   useEffect(() => {
@@ -87,22 +85,12 @@ const NavigationBar = () => {
   
     const [isNavbarMobile, setIsNavbarMobile] = useState(false);
     const navbarRef = useRef(null);
-    console.log("isNavbarMobile",)
+
     const toggleMobileNav = (e) => {
       console.log(e.currentTarget.nextElementSibling);
       setIsNavbarMobile(!isNavbarMobile);
     };
-    
-    const handleDropdownClick = (e) => {
-      if (isNavbarMobile) {
-        e.preventDefault();
-        const dropdownContent = e.currentTarget.nextElementSibling;
-        if (dropdownContent) {
-          dropdownContent.classList.toggle('dropdown-active');
-        }
-      }
-    };
-
+  
   const fetchOrderIddata = async () => {
     try {
         // const response = await axios.get(`http://localhost:5000/myTicket/${user?.email}`);
@@ -113,7 +101,6 @@ const NavigationBar = () => {
       console.error(err);
     }
   };
-  // console.log("fetchAllTicket",fetchAllTicket);
   const navigate=useNavigate();
   const handleLogOut=()=>{
     logoutUser();
@@ -147,7 +134,7 @@ let idCounter = 1;
       console.error(err);
     }
   };
-  const ticketAll=   fetchAllTicketData()
+
   useEffect(()=>{
     fetchAllTicketData()
    },[])
@@ -321,13 +308,9 @@ const handleShowTicketPopUp=()=>{
               <li>
               <Link className='' to="/termsConditions">Terms &amp; Conditions</Link> 
               </li>
-              {/* <li>
-                <a href="#">Log Out f</a>
-              </li> */}
+           
               {user ? (
-                // <li onClick={handleLogOut} className="" >
-                //   Log Out
-                // </li> 
+           
                   <li  onClick={handleLogOut} style={{cursor:"pointer"}}>
                  <p style={{marginLeft:"20px"}}> Log Out </p>
                   </li>
@@ -371,7 +354,7 @@ const handleShowTicketPopUp=()=>{
        setShow={setShow}
        onClose={closePopup}
        ticketId={popupId}
-       userEmail={user?.userMail}
+       userEmail={user?.email}
        userName={user?.username}
        
        />
@@ -379,7 +362,7 @@ const handleShowTicketPopUp=()=>{
  
            
     </div>
-      {/* .navbar */}
+    
     </div>
   </header>
   <section id="Hero" className="Hero"></section>

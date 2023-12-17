@@ -203,7 +203,13 @@ const [individualBlankDropSholProductCost, setIndividualBlankDropSholProductCost
 const [individualBlankDropSholQuantity, setIndividualBlankDropSholQuantity] = useState(0);
 const [individualBlankHoodieProductCost, setIndividualBlankHoodieProductCost] = useState(0);
 const [individualBlankHoodieQuantity, setIndividualBlankHoodieQuantity] = useState(0);
+let totalTshit=individualCustomRoundNeckQuantity+individualBlankRoundNeckQuantity
+let totalDropSholder=individualCustomDropSholdQuantity+individualBlankDropSholQuantity
+let totalHoodie=individualCustomHoodieQuantity+individualBlankHoodieQuantity
 
+console.log("totalTshit",totalTshit)
+console.log("totalDropSholder",totalDropSholder)
+console.log("totalHoodie",totalHoodie)
 let totalOrderItemQuantity=cartItems?.reduce((acc, item) => 
 acc + safeParseInt(item.quantity) , 0);
 
@@ -278,6 +284,8 @@ useEffect(()=>{
   const chargeForOutSideoneTo2=150;
   const chargeForOutSidetwoTo3=175;
   const weightPerShirt=0.18;
+  const weightPerHoodie=0.465;
+  const weightPerDropSholder=0.205;
   const extraInSideDhakaChange=15
   const extraOutSideDhakaChange=25
   let grandQuantity=totalOrderItemQuantity
@@ -289,6 +297,11 @@ useEffect(()=>{
     deliveryFee = deliveryCharge({
       grandQuantity: grandQuantity,
       weightPerShirt: weightPerShirt,
+      weightPerHoodie:weightPerHoodie,
+      weightPerDropSholder:weightPerDropSholder,
+      totalTshit:totalTshit,
+      totalDropSholder:totalDropSholder,
+      totalHoodie:totalHoodie,
       chargeForInSideZeroToP5: chargeForInSideZeroToP5,
       chargeForInSidep5To1: chargeForInSidep5To1,
       chargeForInSideoneTo2: chargeForInSideoneTo2,
@@ -302,7 +315,7 @@ useEffect(()=>{
       deliveryAreas: deliveryAreas
     }).deliveryFee;
   }
-  const allProductsPrintbazCost = cartItems.reduce((total, item) => {
+  const allProductsPrintbazCost = cartItems?.reduce((total, item) => {
     return total + item.printbazcost;
 }, 0);
 let addeDiscount=0 //here discount finction will be added later
@@ -907,7 +920,7 @@ placeholder=""
                   </div>
                 </div>
                 <div className="col-md-12">
-                  <input type="checkbox" className="terrms" />
+                  <input type="checkbox" required className="terrms" />
                   <span>I accept the Terrms of Use and Privacy Policy.</span>
                   <br />
                   <div className="form-group order-button">

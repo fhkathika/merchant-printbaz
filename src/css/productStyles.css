@@ -27,27 +27,30 @@ width: 100%;
 padding-left: 100px;
 }
 /* Override the Bootstrap table-responsive class */
-.table-responsive {
-    overflow-x: hidden !important; /* Change to 'hidden' or 'unset' to disable horizontal scrolling */
-}
+
 
 @media (max-width: 767px) {
 .productInformation {
 padding-left: 0 !important;
 }
-.table-responsive {
-    overflow-x: auto !important; /* Enable horizontal scrolling if necessary */
+.self-product-description .scrollable-table {
+    overflow-x: scroll; /* Enables horizontal scrolling */
+}
+.self-product-description table {
+    background: #CFE2FF;
+    font-size: 13px;
+    border-collapse: collapse; /* Added for better table structure */
+    width: 100% !important;
+}
+.marginTop10_mobile{
+    margin-top: 30px !important;
+}
+.self-product-description th, td {
+    padding: 10px !important;
+    border-style: none solid solid none;
 }
 
-/* Style adjustments for smaller screens */
-table {
-    width: 100%;
-}
 
-th, td {
-    padding: 5px; /* Adjust padding as needed */
-    font-size: 12px; /* Adjust font size as needed */
-}
 }
 
 .productTitle h2 {
@@ -186,18 +189,26 @@ input[type=number] {
         margin-top: 50px;
     }
     
+    .self-product-description .scrollable-table {
+        overflow-x: auto; /* Enables horizontal scrolling */
+    }
+    
     .self-product-description table {
         background: #CFE2FF;
         font-size: 13px;
-        border-color: #ffffff;
-        border-style: solid;
+        border-collapse: collapse; /* Added for better table structure */
+     
     }
     
-    .self-product-description table td, tr, th{
-        border-style: none solid solid none;
-        padding: 10px 85px 10px 20px;
-        /* border: 3px solid #ffffff; */
+    .self-product-description table, th, td {
+        border: 3px solid #ffffff !important;
     }
+    
+    .self-product-description th, td {
+        padding: 10px 85px 10px 20px;
+        border-style: none solid solid none;
+    }
+    
   
 
    

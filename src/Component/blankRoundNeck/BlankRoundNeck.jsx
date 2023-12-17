@@ -1,74 +1,38 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   Form,
-  Button,
-  OverlayTrigger,
-  Tooltip,
-  ProgressBar,
-  Spinner,
+ Spinner,
   Row,
   Col,
-  Card,
-  ListGroup,
-  Container,
-  Alert,
 } from "react-bootstrap";
 import { db, storage } from "../../firebase.config";
 import { useGetData } from "../../hooks/useGetData";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 // import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderConfirmationEmail';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-import tshirtFormulaCustomDropSholder from '../../Formulas/tshirtFormulaCustomDropSholder';
-import backsiideFormulaDropSholderHoodie from '../../Formulas/backsiideFormulaDropSholderHoodie';
-import useFilterProducts from "../../hooks/useFilterProducts";
-import FileInputFields from "../fileInputFields/FileInputFields";
-import useFilterValueBasedonCategory from "../../hooks/useFilterValueBasedonCategory copy";
 import useGetTshirtPrice from "../../hooks/useGetTshirtPrice";
-import teeShirtFormula from "../../Formulas/teeShirtFormula";
-import backsideFormula from "../../Formulas/backsideFormula";
 import AddtoCartAlert from "../alert/AddtoCartAlert";
 import { CartContext } from "../../context/CartProvider";
 import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import LogoFileInput from "../logoFIleInput/LogoFileInput";
-
-// import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
+import BuyNowAlert from "../alert/BuyNowAlert";
 
 const BlankRoundNeck   = () => {
-  const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
+  const { formData, setFormData, editCartItem } =
     useContext(CartContext);
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
-    console.log("formData",formData)
-  // const { itemToEdit } = useFilterProducts();
-
-  let id = "resellerOrdersId";
-  let collections = "resellerInfo";
   let idPrice = "teeShirtCampingId";
   let collectionsPrice = "productValues";
-
-  const [fileprogress, setFileProgress] = useState(0);
-  const [imageprogress, setImageProgress] = useState(0);
+  const [OpenCheckout, setOpenCheckout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dbData, setDbData] = useState({});
-  const [printSide, setPrintSide] = useState("");
-  const [addbrandLogo, setAddBrandLogo] = useState(false);
-  const [deliveryAreas, setDeliveryAreas] = useState("");
   const [alert, setAlert] = useState(false);
-  const [hasSize, setHasSize] = useState(false);
-  const [showAddtocartAlert, setShowAddtocartAlert] = useState("");
-  const { fetchedData, searchProduct, setSearchProduct } = useGetData(
-    idPrice,
-    collectionsPrice,
-    dbData
-  );
-
   const EditItemDetail = location?.state?.itemToEdit;
-  // const itemToEdit =  cartItems?.find(item => item?._id === EditItemDetail?._id);
   const [showRegPopup, setShowRegPopup] = useState(false);
+  const [showBuyNowAlert, setShowBuyNowAlert] = useState(false);
   const switchToLogin = () => {
     setShowRegPopup(false);
     setShowLoginPopup(true);
@@ -94,14 +58,9 @@ const BlankRoundNeck   = () => {
   const formattedDate = d.toLocaleDateString("en-US", options);
   const { tshirtPrice } = useGetTshirtPrice();
 
-
- 
-  let additionalCost=tshirtPrice[0]?.additionalCost
   //////////////////////////////////////////
 
   const navigate = useNavigate();
-
-  const [inputs, setInputs] = useState([{ value: "" }]);
   const safeParseInt = (str) => {
     const value = parseInt(str);
     return isNaN(value) ? 0 : value;
@@ -110,7 +69,6 @@ const BlankRoundNeck   = () => {
 
 
   const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
-  console.log("addBrandLogoArray",addBrandLogoArray)
  
 const handleFileChange = async (event, index, fileType, oldFileId = null) => {
   const { files } = event.target;
@@ -144,7 +102,7 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
       // Update the component state with the file details from the server
       setFormData(prevFormData => {
-        const newOrderDetailArr = [...prevFormData.orderDetailArrBlankDropSholder];
+        const newOrderDetailArr = [...prevFormData.orderDetailArrBlankRoundNeck];
         const fileData = {
           fileId: uploadedFileData.fileId, // File ID from the server response
           fileUrl: fileUrl, // URL for preview
@@ -165,7 +123,7 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
           newOrderDetailArr[index].brandLogo = fileData;
           }
 
-        return { ...prevFormData, orderDetailArrBlankDropSholder: newOrderDetailArr };
+        return { ...prevFormData, orderDetailArrBlankRoundNeck: newOrderDetailArr };
       });
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -184,9 +142,9 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
       updatedBrandLogoArray[index] = false; // Set false when file is unselected
       setAddBrandLogoArray(updatedBrandLogoArray);
       setFormData(prevFormData => {
-        const newOrderDetailArr = [...prevFormData.orderDetailArrBlankDropSholder];
+        const newOrderDetailArr = [...prevFormData.orderDetailArrBlankRoundNeck];
         newOrderDetailArr[index].brandLogo = {}; // Clear brand logo data
-        return { ...prevFormData, orderDetailArrBlankDropSholder: newOrderDetailArr };
+        return { ...prevFormData, orderDetailArrBlankRoundNeck: newOrderDetailArr };
       });
        // No file is selected, proceed to delete the previous file if it exists
        if (uploadedFile) {
@@ -206,7 +164,6 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
 };
 useEffect(()=>{},[addBrandLogoArray,uploadedFile,formData])
-console.log("uploadedFile.............",uploadedFile)
 const removeFileFromServer = async (fileId) => {
   try {
     // const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
@@ -227,7 +184,7 @@ const removeFileFromServer = async (fileId) => {
 };
 
  
-  formData?.orderDetailArrBlankDropSholder?.forEach((item) => {
+  formData?.orderDetailArrBlankRoundNeck?.forEach((item) => {
     item.totalQuantity =
       safeParseInt(item.quantityM) +
       safeParseInt(item.quantityL) +
@@ -236,26 +193,25 @@ const removeFileFromServer = async (fileId) => {
       safeParseInt(item.quantityXXXL);
   });
 
-  const blankHoodieFilter=tshirtPrice?.find(thsirt => thsirt.category === "Blank Hoodie")
+  const blankRoundNeckFilter=tshirtPrice?.find(thsirt => thsirt.category === "Blank Round Neck")
 let perCategoryCost=0
   let printbazcost = 0;
-  let printbazcostbase = 0;
   if(EditItemDetail?._id){
-    for (var i = 0; i < EditItemDetail?.orderDetailArrBlankDropSholder?.length; i++) 
+    for (var i = 0; i < EditItemDetail?.orderDetailArrBlankRoundNeck?.length; i++) 
     {
       if (
-        formData?.quantity &&formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity 
+        formData?.quantity &&formData?.orderDetailArrBlankRoundNeck[i]?.totalQuantity 
       ) {
        
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
   console.log("isBrandLogoSelected",isBrandLogoSelected)
-        if (EditItemDetail?.orderDetailArrBlankDropSholder[i]?.brandLogo?.fileId) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankHoodieFilter?.frontSideprice)
+        if (EditItemDetail?.orderDetailArrBlankRoundNeck[i]?.brandLogo?.fileId) {
+          perCategoryCost=5+(formData?.orderDetailArrBlankRoundNeck[i]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice)
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
-          perCategoryCost=formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankHoodieFilter?.frontSideprice
+          perCategoryCost=formData?.orderDetailArrBlankRoundNeck[i]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
   
@@ -264,21 +220,18 @@ let perCategoryCost=0
     }
   }
   else{
-    for (var j = 0; j < formData?.orderDetailArrBlankDropSholder?.length; j++) {
+    for (var j = 0; j < formData?.orderDetailArrBlankRoundNeck?.length; j++) {
       if (
-        formData?.quantity &&formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity 
+        formData?.quantity &&formData?.orderDetailArrBlankRoundNeck[j]?.totalQuantity 
       ) {
       
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
         if (isBrandLogoSelected) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankHoodieFilter?.frontSideprice)
-          console.log("perCategoryCost",perCategoryCost);
+          perCategoryCost=5+(formData?.orderDetailArrBlankRoundNeck[j]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice)
           printbazcost +=perCategoryCost
         } else {
-          perCategoryCost=formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankHoodieFilter?.frontSideprice
-          console.log("perCategoryCost",perCategoryCost);
+          perCategoryCost=formData?.orderDetailArrBlankRoundNeck[j]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice
           printbazcost +=perCategoryCost
   
         }
@@ -291,10 +244,9 @@ let perCategoryCost=0
     const { name, value } = event.target;
     const color = event.target.getAttribute("data-color");
     const size = event.target.getAttribute("data-size");
-    const newOrderDetailArr = [...formData.orderDetailArrBlankDropSholder];
+    const newOrderDetailArr = [...formData.orderDetailArrBlankRoundNeck];
 
     let itemIndex = newOrderDetailArr.findIndex((item) => item.color === color);
-    // console.log("printSIde",value)
     if (
       name === "color" ||
       name === "teshirtSize" ||
@@ -347,7 +299,7 @@ let perCategoryCost=0
     // Update state
     setFormData((prevState) => ({
       ...prevState,
-      orderDetailArrBlankDropSholder: newOrderDetailArr,
+      orderDetailArrBlankRoundNeck: newOrderDetailArr,
       quantity: parseInt(newGrandQuantity),
       printbazcost: printbazcost,
     }));
@@ -366,9 +318,7 @@ let perCategoryCost=0
           return () => clearTimeout(timeoutId);
       
     }
-    // if (isAddToCartEnabled(formData?.orderDetailArr)) {
-   
-      editCartItem(EditItemDetail?._id, formData); // Pass the unique ID and the updated form data
+    editCartItem(EditItemDetail?._id, formData); // Pass the unique ID and the updated form data
      
   
      // Reset the form or navigate away after successful edit
@@ -377,15 +327,13 @@ let perCategoryCost=0
   };
 
   useEffect(() => {
-    // Calculate newPrintbazcost based on formData
-
-    // Update the state with the new value
+   // Update the state with the new value
     setFormData((prevState) => ({
       ...prevState,
 
       printbazcost: printbazcost,
     }));
-  }, [formData.quantity, formData.orderDetailArrBlankDropSholder,formData]); // Dependencies
+  }, [formData.quantity, formData.orderDetailArrBlankRoundNeck,formData]); // Dependencies
 
   const handleBack = () => {
     navigate("/");
@@ -421,13 +369,6 @@ let perCategoryCost=0
     userEmail:user?.email,userRegId:user?._id
   };
 
-  // Add the filled items to the cart
-  // addToCart(filledItems);
-  // setCartItems(prevItems => {
-  //   const updatedItems = [...prevItems, filledItems];
-  //   localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-  //   return updatedItems;
-  // });
   const newItem = {
     ...formData,
     orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
@@ -477,7 +418,103 @@ let perCategoryCost=0
           quantity: 0,
           printbazcost: 0,
           uniqueId: Date.now(), // Note: This will set the uniqueId to the current timestamp, which might not be reset to initial state
-          orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder.map((item) => ({
+          orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck.map((item) => ({
+            ...item,
+            quantityM: "",
+            quantityL: "",
+            quantityXL: "",
+            quantityXXL: "",
+            quantityXXXL: "",
+            totalQuantity: 0,
+            printSide: "",
+            printSize: "",
+            printSizeBack: "",
+            file: null,
+            image: null,
+          })),
+        });
+        // setShowAlert(true);
+  
+  }
+  else{
+setShowLoginPopup(true)
+  }
+  
+  };
+  const handleGotoCheckout = async(e) => {
+    e.preventDefault();
+  
+    if (formData?.quantity <= 0) {
+      // Handle the case where no quantity is selected
+      setAlert(true);
+      const timeoutId = setTimeout(() => {
+        setAlert(false);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  if(user){
+  // Filter the items that have been filled out
+  const filledItems = {
+    ...formData,
+    orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomDropSholder: formData.orderDetailArrCustomDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomHoodie: formData.orderDetailArrCustomHoodie?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankHoodie: formData.orderDetailArrBlankHoodie?.filter(item => isItemFilled(item)),
+    userEmail:user?.email,userRegId:user?._id
+  };
+
+  const newItem = {
+    ...formData,
+    orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomDropSholder: formData.orderDetailArrCustomDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomHoodie: formData.orderDetailArrCustomHoodie?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankHoodie: formData.orderDetailArrBlankHoodie?.filter(item => isItemFilled(item)),
+  
+    userEmail: user?.email,
+    userRegId: user?._id
+  };
+  try {
+    // Make a POST request to your server with the order data
+    const response = await fetch('https://mserver.printbaz.com/addToCart', {
+    // const response = await fetch('http://localhost:5000/addToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newItem),
+    });
+
+    if (response.ok) {
+      // Order data sent successfully
+      console.log('add tocart data sent to server successfully');
+      setShowBuyNowAlert(true);
+    } else {
+      // Handle errors
+      console.error('Error sending order data to server');
+    }
+  } catch (error) {
+    // Handle network errors
+    console.error('Network error:', error);
+  }
+  // Reset formData to its initial state
+  setFormData({
+          name: "",
+          phone: "",
+          address: "",
+          instruction: "",
+          collectAmount: "",
+          productType: "Blank Drop Sholder",
+          districts: "",
+          zones: "",
+          areas: "",
+          quantity: 0,
+          printbazcost: 0,
+          uniqueId: Date.now(), // Note: This will set the uniqueId to the current timestamp, which might not be reset to initial state
+          orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck.map((item) => ({
             ...item,
             quantityM: "",
             quantityL: "",
@@ -537,12 +574,12 @@ setShowLoginPopup(true)
                 alter="backTocategory"
               />
             </span>{" "}
-            Blank Drop Sholder
+            Blank Round Neck
           </h3>
         </Col>
       </Row>
 
-      <Form onSubmit={EditItemDetail?handleEdit:handleGotoAddToCart} className="mb-4">
+      <Form onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart} className="mb-4">
     
      
 
@@ -602,8 +639,8 @@ setShowLoginPopup(true)
               <div className="col-lg-7">
                 <div className="productInformation">
                   {/*====== Product Title ======*/}
-                  <div className="productTitle" >
-                    <h2 style={{textAlign:"left"}}>Blank Hoodie</h2>
+                  <div className="productTitle marginTop10_mobile" >
+                    <h2 style={{textAlign:"left"}}>Blank Round Neck</h2>
                   </div>
                  
                   {/*====== Product Color/Size/Files/Price/Button ======*/}
@@ -615,7 +652,7 @@ setShowLoginPopup(true)
                         <div className="accordion" id="accordionExample">
                        
 
-{formData.orderDetailArrBlankDropSholder?.map((item, index) => (
+{formData.orderDetailArrBlankRoundNeck?.map((item, index) => (
   <div className="accordion-item" key={index}>
     <h2 className="accordion-header" id={`heading${index}`}>
       <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>
@@ -717,8 +754,9 @@ setShowLoginPopup(true)
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="productButton">
-                          <button>Buy Now</button>
-                         {  !EditItemDetail && <button  type="submit">Add To Cart</button>}
+                        {  !EditItemDetail && 
+                         <><button type="submit" onClick={()=>setOpenCheckout(true)}>Buy Now</button>
+                         <button  type="submit">Add To Cart</button></>}
                          {   EditItemDetail &&  <button  type="submit"> Update Cart</button>}
 
                         </div>
@@ -750,17 +788,7 @@ setShowLoginPopup(true)
         )} */}
 
         <div className="col-md-12 d-flex flex-column align-items-center ">
-          {/* {
-            !itemToEdit &&   <Button  className='orderSubmit_btn' type="submit">
-            Add to cart
-            </Button>
-          }
-          {
-            itemToEdit &&   <Button  className='orderSubmit_btn' type="submit">
-           Update Cart
-            </Button>
-          } */}
-      
+         
           {/* {!itemToEdit && (
             <Button
               className="orderSubmit_btn"
@@ -780,7 +808,6 @@ setShowLoginPopup(true)
               Update Cart
             </Button>
           )} */}
-
           {isLoading === true && (
             <>
               <div className="alert-overlay" />
@@ -795,14 +822,7 @@ setShowLoginPopup(true)
               </div>
             </>
           )}
-          {/* {
-            showLoginPopup===true &&
-            <LoginPopup
-            onClose={()=>setShowLoginPopup(false)}
-            onSwitchToRegister={switchToRegister}
-            closeAllPopup={closeAllPopup}
-            />
-          } */}
+        
         </div>
       </Form>
       <ProductTab describtion="describtion here........"/>
@@ -811,6 +831,12 @@ setShowLoginPopup(true)
         <AddtoCartAlert
           message="Item Added to Cart"
           onClose={() => setShowAlert(false)}
+        />
+      )}
+        {showBuyNowAlert === true && (
+        <BuyNowAlert
+          message="Go to proceed to checkout"
+          onClose={() => setShowBuyNowAlert(false)}
         />
       )}
     </div>

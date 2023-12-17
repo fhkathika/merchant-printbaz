@@ -1027,7 +1027,7 @@ orderDetail?.brandLogo ?
           
           <>
           <div className="row order-tab  " key={orderIndex}>
-          <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3>
+          {/* <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3> */}
           
         <div className="col-3">
           <p  className='font12px'>{orderDetail?.color}</p>
@@ -1077,9 +1077,10 @@ orderDetail?.brandLogo ?
       
         {/* {orderDetail?.printSide} */}
       
+        <p >productType: <span style={{fontweight:'700'}}> {orderDetail?.productType}</span></p>
         <p >Print side : <span style={{fontweight:'700'}}> {orderDetail?.printSide}</span></p>
-        <p >FrontSide : <span className='bold'>{orderDetail?.printSize?orderDetail?.printSize:"N/A"}</span></p>
-        <p>BackSide: {orderDetail?.printSizeBack ? orderDetail?.printSizeBack :"N/A"}</p>
+        <p >FrontSide : <span className='bold'>{orderDetail?.printSide==="frontSide"?orderDetail?.printSize:"N/A"}</span></p>
+        <p>BackSide: {orderDetail?.printSizeBack ? orderDetail?.printSizeBack :orderDetail?.printSize==="backSide"?orderDetail?.printSize:"N/A"}</p>
        
       
          
@@ -1208,7 +1209,7 @@ orderDetail?.brandLogo ?
       :(!orderDetail?.printSide && orderDetail?.brandLogo?.fileId)&&
       <>
       <div className="row order-tab  " key={orderIndex}>
-      <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3>
+      {/* <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3> */}
       
     <div className="col-3">
       <p  className='font12px'>{orderDetail?.color}</p>

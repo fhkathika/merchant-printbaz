@@ -20,32 +20,18 @@ import BackToTop from '../Component/backToTop/BackToTop';
 import ProductInfoTab from '../Component/productInfoTab/ProductInfoTab';
 const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
-  let id = "resellerOrdersId";
-  let collections = "resellerInfo";
+
   const navigate=useNavigate()
-  const [dbData, setDbData] = useState({});
-  // const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-  // const resellerOrdersFromDb=fetchedData?.orders
-console.log("user",user);
   const {info}=useGetMongoData()
-  const [usersTickets, setUsersTickets] = useState([]);
-    const [activeTab, setActiveTab] = useState("Dashboard");
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const[fetchAllTicket,setFetchAllTicket]=useState([])
     const [popupId, setPopupId] = useState('');
     const [createTicket, setCreateTicket] = useState(false);
     const [reqBtnStatus, setReqBtnStatus] = useState(true);
-    const [totalBill, setTotalBill] = useState(0);
     const [reqAlert, setReqAlert] = useState('');
     const closePopup = () => {setShowPopup(false);};
-    // function closePopup() {
-    //   document.getElementById("popup1").style.display = "none";
-    // }
-
-    const handleDropdownClick = () => {
-      setDropdownOpen(!dropdownOpen);
-    };
+    
    useEffect(()=>{
     fetchAllTicketData()
    },[])
@@ -120,7 +106,6 @@ console.log("user",user);
   // pending delivery
   const orderStatusPending=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="Pending" )
-  // console.log("orderStatus pending",orderStatusPending);
   let pendingstatusCount=0
   for(let i=1;i<=orderStatusPending?.length;i++){
      pendingstatusCount++
@@ -129,7 +114,6 @@ console.log("user",user);
   // Returned
    const orderStatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
-  // console.log("orderStatus return",orderStatusReturned);
    const orderStatusDelivered=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="delivered" ) 
   // on hold artwork issue
@@ -182,95 +166,52 @@ const handleRequestAlert=(e)=>{
   },2000)
 }
   const totalHold=Number(onHoldArtWorkstatusCount+onHoldBillingstatusCount+onHoldoutofstockCount)
- 
-  console.log("returnstatusCount",returnedstatusCount);  
-  
-  // Payment Released
-   const orderStatusPaymentReleased=info
-  ?.filter(order => order.userMail === user?.email && order.orderStatus==="payment-released" ) 
+
   //return amount
     const orderSatatusReturned=info
   ?.filter(order => order.userMail === user?.email && order.orderStatus==="returned" )
-  // console.log("orderStatus pament released",orderStatusPaymentReleased);
-console.log("user",user);
-// if (!user?.payments || user.payments.length === 0) {
-//   // This merchant has no payments, so return null or a placeholder row
-//   return 0;
-// }
 const lastPayment = user.payments && user.payments.length > 0 ? user.payments[user.payments.length - 1] : null;
   let totalReceiveBase=0,totalReturnAmmountBase=0;
   if (lastPayment) {
     for(let i=0;i<user.payments?.length;i++){
   let totalReceive=Number(user.payments[i]?.paymentReleasedAmount?user.payments[i]?.paymentReleasedAmount:0);
-  // totalReceiveBase = lastPayment?.paymentReleasedAmount;
   totalReceiveBase +=totalReceive;
-// console.log("totalReceiveBase",totalReceiveBase);
 }
    
-    // ... any other logic related to lastPayment.
 }
-// for(let i=0;i<orderStatusPaymentReleased?.length;i++){
-//   let totalReceive=orderStatusPaymentReleased[i]?.recvMoney;
-//   totalReceiveBase +=totalReceive;
-// // console.log("totalReceiveBase",totalReceiveBase);
-// }
+
 for(let i=0;i<orderSatatusReturned?.length;i++){
   let totalReturn=Number(orderSatatusReturned[i]?.returnedAmount);
   if(totalReturn){
-    // totalReturnAmmountBase +=totalReturn;
     const deliveryFee = Number(orderSatatusReturned[i]?.deliveryFee);
-    
-    // If totalReturn and deliveryFee exist and are numbers, add them to totalReturnAmountBase
-   
-      totalReturnAmmountBase += (totalReturn +deliveryFee+deliveryFee/2);
+   totalReturnAmmountBase += (totalReturn +deliveryFee+deliveryFee/2);
     
   }
 
 
 }
 
-// Check if orderStatusReturned is an array before looping
-// if (Array.isArray(orderSatatusReturned)) {
-//   for (let i = 0; i < orderSatatusReturned.length; i++) {
-//     const totalReturn = Number(orderSatatusReturned[i]?.returnedAmount);
-//     const deliveryFee = Number(orderSatatusReturned[i]?.deliveryFee);
-    
-//     // If totalReturn and deliveryFee exist and are numbers, add them to totalReturnAmountBase
-   
-//       totalReturnAmmountBase += (totalReturn + deliveryFee);
-    
-//   }
-// }
 
-//patmnet status =paid,orderstatus :delivered
 const PaymentStausPaid=info
 ?.filter(order => order.userMail === user?.email && order.paymentStatus==="paid" && order?.orderStatus==="delivered")
 
 const returnValueFilter=info?.filter(order => order.userMail === user?.email && order?.orderStatus==="returned")
-
 
 let statusPaidbase=0; let totalpaid
 for(let i=0;i<PaymentStausPaid?.length;i++){
    totalpaid=Number(PaymentStausPaid[i]?.recvMoney);
   statusPaidbase =Number(statusPaidbase+totalpaid);
  
-  // setTotalBill(totalBill+totalpaid);
-
 }
 
 // returned amount 
-let returnAmountBase=0;
 for(let i=0;i<returnValueFilter?.length;i++){
   let totalreturned=returnValueFilter[i]?.recvMoney;
-  // returnAmountBase =returnAmountBase+totalreturned;
 
 }
 
 let dueAmount=statusPaidbase-(totalReceiveBase+totalReturnAmmountBase)
-// console.log("totalReturnAmmountBase",totalReturnAmmountBase);
 
-// let dueAmount=statusPaidbase-(totalReceiveBase-)
-// console.log("dueAmount",dueAmount);
  // Fetch the latest payment made by user
 let lastPayementDetail = user?.payments?.length > 0 ? 
 user.payments[user.payments.length-1] : null;
@@ -278,23 +219,10 @@ user.payments[user.payments.length-1] : null;
 // Calculate the grand due amount
 let grandDueNow = dueAmount;
 
-// if (lastPayementDetail && lastPayementDetail.paymentReleasedAmount) {
-// grandDueNow -= lastPayementDetail.totalReleasedAmount;
-// }
-
-console.log("Initial dueAmount:", dueAmount);
-console.log("Last payment amount:", lastPayementDetail?.paymentReleasedAmount);
-console.log("Grand Due Amount:", grandDueNow);
-
-console.log("totalReturnAmmountBase test",totalReturnAmmountBase);
 useEffect(() => {
   const getOrderById = async () => {
       // Ensure there's an ID before making a request
-      console.log("totalBill test",statusPaidbase);
-      console.log("dueAmount test",dueAmount);
-      console.log("totalReceiveBase test",totalReceiveBase);
-      console.log("totalReturnAmmountBase test",totalReturnAmmountBase);
-      if (user?._id) {
+    if (user?._id) {
           try {
         
               const response = await fetch(
@@ -317,7 +245,7 @@ useEffect(() => {
               const data = await response.json();
               if (response.status === 200) {
                   // Handle success, for instance:
-                  console.log("Total bill updated successfully:", data);
+                 
               } else {
                   // Handle error
                   console.error("Error updating the bill:", data.message);
@@ -453,12 +381,7 @@ useEffect(() => {
 
 
 }, []);
-const handleLogOut=()=>{
-  logoutUser();
-  navigate('/login')
-}
 
-// new PureCounter();
   return (
     <>
   <meta charSet="utf-8" />
@@ -695,15 +618,7 @@ const handleLogOut=()=>{
             </div>
           </div>
         </div>
-        {/* <div className="row">
-          <div className="col-12" style={{ textAlign: "center" }}>
-            <a href="#" style={{textDecoration:"none"}} className="btn-buy">
-              Request
-            </a>
-          </div>
-           
-            
-        </div>  */}
+       
         <div className="row">
           <div className="col-12" style={{ textAlign: "center" }}>
          
@@ -841,130 +756,7 @@ const handleLogOut=()=>{
   </main>
   {/* End #main */}
   {/* ======= Footer ======= */}
-  {/* <footer id="footer" className="footer">
-    <div className="footer-top">
-      <div className="container">
-        <div className="row gy-4">
-          <div className="col-lg-5 col-md-12 footer-info">
-            <a href="index.html" className="logo d-flex align-items-center">
-              <img
-                src="https://media.discordapp.net/attachments/1128921638977683526/1163815250013978686/Logo-01.png?ex=6540f26a&is=652e7d6a&hm=1628865bf04319b5155b3e0c730e5c3225436817412a8ed31018437d696bd53e&=&width=1440&height=392"
-                alt=""
-              />
-            </a>
-            <p style={{ fontWeight: "bold" }}>
-              বিনা পুজিতে টিশার্ট ব্যবসা করুন। <br />
-              আপনার শুধু ডিজাইনের কাজ, বাকি দ্বায়িত্বে প্রিন্টবাজ
-            </p>
-            <div className="social-links mt-3">
-              <a
-                href="https://api.whatsapp.com/send/?phone=%2B8801927854949&text&type=phone_number&app_absent=0"
-                className="twitter"
-              >
-                <i className="bi bi-whatsapp" />
-              </a>
-              <a href="https://www.facebook.com/Printbaz/" className="facebook">
-                <i className="bi bi-facebook" />
-              </a>
-              <a
-                href="https://www.instagram.com/printbaz.com.bd/"
-                className="instagram"
-              >
-                <i className="bi bi-instagram" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/printbaz/"
-                className="linkedin"
-              >
-                <i className="bi bi-linkedin" />
-              </a>
-              <a href="https://www.behance.net/printbaz" className="instagram">
-                <i className="bi bi-behance" />
-              </a>
-              <a href="https://www.youtube.com/@printbaz" className="linkedin">
-                <i className="bi bi-youtube" />
-              </a>
-            </div>
-          </div>
-          <div className="col-lg-2 col-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li>
-                <i className="bi bi-chevron-right" /> <a href="#">Blogs</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" /> <a href="#">Orders</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" /> <a href="#">New Order</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" /> <a href="#">Calculator</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Print Size Demo</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Terms &amp; Conditions</a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-lg-2 col-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Blank Round Neck</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Custom Round Neck</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Blank Drop Shoulder</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Custom Drop Shoulder</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Blank Hoodies</a>
-              </li>
-              <li>
-                <i className="bi bi-chevron-right" />{" "}
-                <a href="#">Custom Hoodies</a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4>Contact Us</h4>
-            <p>
-              Block- F, House # 76, Road # 2, Charimanbari, Banani, Dhaka,
-              Bangladesh <br />
-              <br />
-              <strong>Phone:</strong> +8801927-854949
-              <br />
-              <strong>Email:</strong> merchants@printbaz.com
-              <br />
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div className="container">
-      <div className="copyright">
-        © Copyright{" "}
-        <strong>
-          <span>Printbaz</span>
-        </strong>
-        . All Rights Reserved
-      </div>
-    </div>
-  </footer> */}
+  
   <Footer/>
   {/* End Footer */}
   <BackToTop/>

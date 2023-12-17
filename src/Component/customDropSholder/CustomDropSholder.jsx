@@ -32,6 +32,7 @@ import AddtoCartAlert from "../alert/AddtoCartAlert";
 import { CartContext } from "../../context/CartProvider";
 import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
+import BuyNowAlert from "../alert/BuyNowAlert";
 
 // import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
 
@@ -59,6 +60,7 @@ const CustomDropSholder = () => {
   const [alert, setAlert] = useState(false);
   const [hasSize, setHasSize] = useState(false);
   const [showAddtocartAlert, setShowAddtocartAlert] = useState("");
+  const [showBuyNowAlert, setShowBuyNowAlert] = useState(false);
   const { fetchedData, searchProduct, setSearchProduct } = useGetData(
     idPrice,
     collectionsPrice,
@@ -84,6 +86,7 @@ const CustomDropSholder = () => {
   console.log("user",user)
   const userEmail = user?.email;
   const [isLoading, setIsLoading] = useState(false);
+  const [OpenCheckout, setOpenCheckout] = useState(false);
   const [recvAmount, setRecvAmount] = useState();
   const [formValid, setFormValid] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
@@ -613,6 +616,110 @@ setShowLoginPopup(true)
   }
   
   };
+  const handleGotoCheckout = async(e) => {
+    e.preventDefault();
+  
+    if (formData?.quantity <= 0) {
+      // Handle the case where no quantity is selected
+      setAlert(true);
+      const timeoutId = setTimeout(() => {
+        setAlert(false);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  if(user){
+  // Filter the items that have been filled out
+  const filledItems = {
+    ...formData,
+    orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomDropSholder: formData.orderDetailArrCustomDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomHoodie: formData.orderDetailArrCustomHoodie?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankHoodie: formData.orderDetailArrBlankHoodie?.filter(item => isItemFilled(item)),
+    userEmail:user?.email,userRegId:user?._id
+  };
+
+  // Add the filled items to the cart
+  // addToCart(filledItems);
+  // setCartItems(prevItems => {
+  //   const updatedItems = [...prevItems, filledItems];
+  //   localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+  //   return updatedItems;
+  // });
+  const newItem = {
+    ...formData,
+    orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomDropSholder: formData.orderDetailArrCustomDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomHoodie: formData.orderDetailArrCustomHoodie?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankHoodie: formData.orderDetailArrBlankHoodie?.filter(item => isItemFilled(item)),
+  
+    userEmail: user?.email,
+    userRegId: user?._id
+  };
+  try {
+    // Make a POST request to your server with the order data
+    // const response = await fetch('https://server.printbaz.com/addToCart', {
+    // const response = await fetch('http://localhost:5000/addToCart', {
+    const response = await fetch('https://mserver.printbaz.com/addToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newItem),
+    });
+
+    if (response.ok) {
+      // Order data sent successfully
+      console.log('add tocart data sent to server successfully');
+      setShowBuyNowAlert(true);
+    } else {
+      // Handle errors
+      console.error('Error sending order data to server');
+    }
+  } catch (error) {
+    // Handle network errors
+    console.error('Network error:', error);
+  }
+  // Reset formData to its initial state
+  setFormData({
+          name: "",
+          phone: "",
+          address: "",
+          instruction: "",
+          collectAmount: "",
+          productType: "Custom Drop Sholder",
+          districts: "",
+          zones: "",
+          areas: "",
+          quantity: 0,
+          printbazcost: 0,
+          uniqueId: Date.now(), // Note: This will set the uniqueId to the current timestamp, which might not be reset to initial state
+          orderDetailArrCustomDropSholder: formData.orderDetailArrCustomDropSholder.map((item) => ({
+            ...item,
+            quantityM: "",
+            quantityL: "",
+            quantityXL: "",
+            quantityXXL: "",
+            quantityXXXL: "",
+            totalQuantity: 0,
+            printSide: "",
+            printSize: "",
+            printSizeBack: "",
+            file: null,
+            image: null,
+          })),
+        });
+        // setShowAlert(true);
+  
+  }
+  else{
+setShowLoginPopup(true)
+  }
+  
+  };
   
 
   return (
@@ -655,7 +762,8 @@ setShowLoginPopup(true)
         </Col>
       </Row>
 
-      <Form onSubmit={EditItemDetail?handleEdit:handleGotoAddToCart} className="mb-4">
+      <Form onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart} className="mb-4">
+    
     
      
 
@@ -714,13 +822,13 @@ setShowLoginPopup(true)
               <div className="col-lg-7">
                 <div className="productInformation">
                   {/*====== Product Title ======*/}
-                  <div className="productTitle" >
+                  <div className="productTitle marginTop10_mobile" >
                     <h2 style={{textAlign:"left"}}>Custom Drop Sholder</h2>
                   </div>
-                  <div class="self-product-description">
+                  <div className="self-product-description">
                             <h5><strong>Size chart - In inches</strong></h5>
                           
-                            <table border="1" cellpadding="5" className="table-responsive">
+                            <table border="1" cellpadding="5" className="scrollable-table">
                             <thead>
                             <tr>
                             <th>Size</th>
@@ -876,12 +984,41 @@ setShowLoginPopup(true)
          <option value="bothSide">Both Side</option>
        </select>
        {
- ( item.printSide==="frontSide" || item.printSide==="backSide") &&
+ ( item.printSide==="frontSide") &&
  <>
  <label htmlFor="formFile" className="form-label fileUploadTitle">Front
  Side
  Print Size</label>
 <select className="form-select" aria-label="Default select example"
+ data-color={item.color}
+ value={item.printSize}
+ onChange={(e) => {
+    handleInputChange(e,index);
+ }}
+ name="printSize"
+ required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
+>
+ <option selected>Select Print Size</option>
+ 
+                          {/* <option value="">select print size</option>  */}
+                          <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
+                          <option value="10 x 14">10″ x 14″</option>
+                          <option value="10 x 10">10″ x 10″(A4)</option>
+                          <option value="10 x 5">10″ x 5″</option>
+                          <option value="5 X 5">5″ x 5″</option>
+                          <option value="2.5 X 5">2.5″ x 5″</option>
+                          <option value="2.5 X 2.5">2.5″ x 2.5″</option>
+                        
+</select>
+</>
+       }
+       {
+ ( item.printSide==="backSide") &&
+ <>
+   <label htmlFor="formFile" className="form-label fileUploadTitle">Back
+         Side
+         Print Size</label>
+         <select className="form-select" aria-label="Default select example"
  data-color={item.color}
  value={item.printSize}
  onChange={(e) => {
@@ -1009,8 +1146,10 @@ onChange={(e) => handleFileChange(e, index)}/> */}
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="productButton">
-                          <button>Buy Now</button>
-                         {  !EditItemDetail && <button  type="submit">Add To Cart</button>}
+                       
+                          {  !EditItemDetail && 
+                         <><button type="submit" onClick={()=>setOpenCheckout(true)}>Buy Now</button>
+                         <button  type="submit">Add To Cart</button></>}
                          {   EditItemDetail &&  <button  type="submit"> Update Cart</button>}
 
                         </div>
@@ -1103,6 +1242,12 @@ onChange={(e) => handleFileChange(e, index)}/> */}
         <AddtoCartAlert
           message="Item Added to Cart"
           onClose={() => setShowAlert(false)}
+        />
+      )}
+        {showBuyNowAlert === true && (
+        <BuyNowAlert
+          message="Go to proceed to checkout"
+          onClose={() => setShowBuyNowAlert(false)}
         />
       )}
     </div>

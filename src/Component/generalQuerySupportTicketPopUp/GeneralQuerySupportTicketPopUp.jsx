@@ -28,7 +28,6 @@ const GeneralQuerySupportTicketPopUp = ({userRegId,
     const [selectIssue,setSelectIssue] = useState(false);
     const [clientTicketIssue,setClientTicketIssue] = useState("");
     const {user}=useContext(AuthContext);
-    console.log("selectIssue",selectIssue);
     const { quill, quillRef, Quill } = useQuill({
       modules: { blotFormatter: {} }
     });
@@ -40,29 +39,16 @@ const GeneralQuerySupportTicketPopUp = ({userRegId,
     useEffect(() => {
       if (quill) {
         quill.on('text-change', (delta, oldContents) => {
-          // const text =  quillRef.current.getEditor().getText();
-          // setNewMsg(text)
-          console.log("delta,delta",delta);
+       
           delta.ops.forEach((op) => {
             if (typeof op.insert === 'string') {
-              console.log('Inserted text:', op.insert);
-              console.log('Applied formats:', op.attributes);
             } else if (op.insert && typeof op.insert === 'object') {
               // handle embeds like images, video etc.
               Object.keys(op.insert).forEach((key) => {
-                console.log('Inserted object of type:', key);
-                console.log('Object value:', op.insert[key]);
-                console.log('Applied formats:', op.attributes);
               });
             }
           });
-          const currentContents = quill.getContents();
-          console.log(currentContents.diff(oldContents));
-  
-          const text = quill.getText();
-          const format=quill.getFormat();
-          console.log('Typed text:', format);
-          // setNewMsg(text)
+         
           setNewMsg(quill.root.innerHTML);
         });
       }
@@ -84,11 +70,6 @@ const GeneralQuerySupportTicketPopUp = ({userRegId,
         console.error(err);
       }
     };
-    const handleNewMessageChange = (e) => {
-      console.log(e.target.value);
-      setNewMsg(e.target.value);
-  };
- console.log("chatLog",chatLog); 
 
  const getViewClientColor = (status) => {
   if (status === "onHold artwork issue") {
@@ -110,36 +91,17 @@ const GeneralQuerySupportTicketPopUp = ({userRegId,
     return "red";
   }
    
-  // you can add more conditions here or just return a default color
-  // return "defaultColor";
+
 };
 
 const handleInputTicketIssueChange = async (e) => {
   e.preventDefault()
-  console.log("e.target.value",e.target.value);
   setClientTicketIssue(e.target.value)
-if(e.target.value==="billing issue for wrong order"){
-    setTicketIssue("onHold billing issue")
-}
-if(e.target.value==="billing issue for wrong deli info"){
-    setTicketIssue("onHold billing issue")
-}
-if(e.target.value==="billing issue"){
-    setTicketIssue("onHold billing issue")
-}
-if(e.target.value==="artwork issue"){
-    setTicketIssue("onHold artwork issue")
-}
-if(e.target.value==="cancellation"){
-    setTicketIssue("cancellation")
-}
+
 if(e.target.value==="general query"){
     setTicketIssue("general query")
 }
-
- 
  }
- console.log("ticketIssue",ticketIssue);
      //upload files
      const handleFileChange = (e) => {
       setSelectedFiles(e.target.files);
@@ -165,7 +127,7 @@ if(e.target.value==="general query"){
 
     const chatMessage = {
       ticketId: newMessage.ticketId,  // added this line
-      userRegId:newMessage.userRegId,
+      userId:newMessage.userRegId,
       content: newMessage.content,
       ticketStatus: newMessage.ticketStatus,
       ticketIssue: newMessage.ticketIssue,
@@ -204,7 +166,6 @@ headers: {
     fetchChatLog();
      setCreateTicketnotify(true)
      
-    console.log("chatLog",chatLog);
   } catch (err) {
     console.error(err);
   }

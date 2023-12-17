@@ -1,40 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   Form,
-  Button,
-  OverlayTrigger,
-  Tooltip,
-  ProgressBar,
   Spinner,
   Row,
   Col,
-  Card,
-  ListGroup,
-  Container,
-  Alert,
 } from "react-bootstrap";
 import { db, storage } from "../../firebase.config";
 import { useGetData } from "../../hooks/useGetData";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 // import SendOrderConfirmationEmail from '../../confirmationMailOrder/SendOrderConfirmationEmail';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-import tshirtFormulaCustomDropSholder from '../../Formulas/tshirtFormulaCustomDropSholder';
-import backsiideFormulaDropSholderHoodie from '../../Formulas/backsiideFormulaDropSholderHoodie';
-import useFilterProducts from "../../hooks/useFilterProducts";
-import FileInputFields from "../fileInputFields/FileInputFields";
-import useFilterValueBasedonCategory from "../../hooks/useFilterValueBasedonCategory copy";
 import useGetTshirtPrice from "../../hooks/useGetTshirtPrice";
-import teeShirtFormula from "../../Formulas/teeShirtFormula";
-import backsideFormula from "../../Formulas/backsideFormula";
 import AddtoCartAlert from "../alert/AddtoCartAlert";
 import { CartContext } from "../../context/CartProvider";
 import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import LogoFileInput from "../logoFIleInput/LogoFileInput";
-
-// import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
+import BuyNowAlert from "../alert/BuyNowAlert";
 
 const BlankDropSholder  = () => {
   const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
@@ -42,23 +24,15 @@ const BlankDropSholder  = () => {
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
     console.log("formData",formData)
-  // const { itemToEdit } = useFilterProducts();
 
-  let id = "resellerOrdersId";
-  let collections = "resellerInfo";
   let idPrice = "teeShirtCampingId";
   let collectionsPrice = "productValues";
-
-  const [fileprogress, setFileProgress] = useState(0);
-  const [imageprogress, setImageProgress] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dbData, setDbData] = useState({});
-  const [printSide, setPrintSide] = useState("");
-  const [addbrandLogo, setAddBrandLogo] = useState(false);
-  const [deliveryAreas, setDeliveryAreas] = useState("");
   const [alert, setAlert] = useState(false);
-  const [hasSize, setHasSize] = useState(false);
+  const [showBuyNowAlert, setShowBuyNowAlert] = useState(false);
+  const [OpenCheckout, setOpenCheckout] = useState(false);
   const [showAddtocartAlert, setShowAddtocartAlert] = useState("");
   const { fetchedData, searchProduct, setSearchProduct } = useGetData(
     idPrice,
@@ -192,7 +166,6 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
        if (uploadedFile) {
         await removeFileFromServer(uploadedFile.fileId);
         setUploadedFile(null);
-        console.log("File is deleted")
         alert('File is deleted.'); // Display confirmation message
   
        
@@ -206,7 +179,6 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
 };
 useEffect(()=>{},[addBrandLogoArray,uploadedFile,formData])
-console.log("uploadedFile.............",uploadedFile)
 const removeFileFromServer = async (fileId) => {
   try {
     // const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
@@ -236,7 +208,7 @@ const removeFileFromServer = async (fileId) => {
       safeParseInt(item.quantityXXXL);
   });
 
-  const blankHoodieFilter=tshirtPrice?.find(thsirt => thsirt.category === "Blank Hoodie")
+  const blankDropSholderFilter=tshirtPrice?.find(thsirt => thsirt.category === "Blank Drop Sholder")
 let perCategoryCost=0
   let printbazcost = 0;
   let printbazcostbase = 0;
@@ -251,11 +223,11 @@ let perCategoryCost=0
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
   console.log("isBrandLogoSelected",isBrandLogoSelected)
         if (EditItemDetail?.orderDetailArrBlankDropSholder[i]?.brandLogo?.fileId) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankHoodieFilter?.frontSideprice)
+          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
-          perCategoryCost=formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankHoodieFilter?.frontSideprice
+          perCategoryCost=formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankDropSholderFilter?.frontSideprice
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
   
@@ -273,11 +245,11 @@ let perCategoryCost=0
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
   console.log("isBrandLogoSelected",isBrandLogoSelected)
         if (isBrandLogoSelected) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankHoodieFilter?.frontSideprice)
+          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
-          perCategoryCost=formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankHoodieFilter?.frontSideprice
+          perCategoryCost=formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankDropSholderFilter?.frontSideprice
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
   
@@ -500,6 +472,109 @@ setShowLoginPopup(true)
   }
   
   };
+  const handleGotoCheckout = async(e) => {
+    e.preventDefault();
+  
+    if (formData?.quantity <= 0) {
+      // Handle the case where no quantity is selected
+      setAlert(true);
+      const timeoutId = setTimeout(() => {
+        setAlert(false);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  if(user){
+  // Filter the items that have been filled out
+  const filledItems = {
+    ...formData,
+    orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomDropSholder: formData.orderDetailArrCustomDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomHoodie: formData.orderDetailArrCustomHoodie?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankHoodie: formData.orderDetailArrBlankHoodie?.filter(item => isItemFilled(item)),
+    userEmail:user?.email,userRegId:user?._id
+  };
+
+  // Add the filled items to the cart
+  // addToCart(filledItems);
+  // setCartItems(prevItems => {
+  //   const updatedItems = [...prevItems, filledItems];
+  //   localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+  //   return updatedItems;
+  // });
+  const newItem = {
+    ...formData,
+    orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomDropSholder: formData.orderDetailArrCustomDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrCustomHoodie: formData.orderDetailArrCustomHoodie?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankRoundNeck: formData.orderDetailArrBlankRoundNeck?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder?.filter(item => isItemFilled(item)),
+    orderDetailArrBlankHoodie: formData.orderDetailArrBlankHoodie?.filter(item => isItemFilled(item)),
+  
+    userEmail: user?.email,
+    userRegId: user?._id
+  };
+  try {
+    // Make a POST request to your server with the order data
+    const response = await fetch('https://mserver.printbaz.com/addToCart', {
+    // const response = await fetch('http://localhost:5000/addToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newItem),
+    });
+
+    if (response.ok) {
+      // Order data sent successfully
+      console.log('add tocart data sent to server successfully');
+      setShowBuyNowAlert(true);
+    } else {
+      // Handle errors
+      console.error('Error sending order data to server');
+    }
+  } catch (error) {
+    // Handle network errors
+    console.error('Network error:', error);
+  }
+  // Reset formData to its initial state
+  setFormData({
+          name: "",
+          phone: "",
+          address: "",
+          instruction: "",
+          collectAmount: "",
+          productType: "Blank Drop Sholder",
+          districts: "",
+          zones: "",
+          areas: "",
+          quantity: 0,
+          printbazcost: 0,
+          uniqueId: Date.now(), // Note: This will set the uniqueId to the current timestamp, which might not be reset to initial state
+          orderDetailArrBlankDropSholder: formData.orderDetailArrBlankDropSholder.map((item) => ({
+            ...item,
+            quantityM: "",
+            quantityL: "",
+            quantityXL: "",
+            quantityXXL: "",
+            quantityXXXL: "",
+            totalQuantity: 0,
+            printSide: "",
+            printSize: "",
+            printSizeBack: "",
+            file: null,
+            image: null,
+          })),
+        });
+        // setShowAlert(true);
+  
+  }
+  else{
+setShowLoginPopup(true)
+  }
+  
+  };
   
 
   return (
@@ -542,7 +617,8 @@ setShowLoginPopup(true)
         </Col>
       </Row>
 
-      <Form onSubmit={EditItemDetail?handleEdit:handleGotoAddToCart} className="mb-4">
+     
+      <Form onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart} className="mb-4">
     
      
 
@@ -602,8 +678,8 @@ setShowLoginPopup(true)
               <div className="col-lg-7">
                 <div className="productInformation">
                   {/*====== Product Title ======*/}
-                  <div className="productTitle" >
-                    <h2 style={{textAlign:"left"}}>Blank Hoodie</h2>
+                  <div className="productTitle marginTop10_mobile" >
+                    <h2 style={{textAlign:"left"}}>Blank Drop Sholder</h2>
                   </div>
                  
                   {/*====== Product Color/Size/Files/Price/Button ======*/}
@@ -717,8 +793,9 @@ setShowLoginPopup(true)
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="productButton">
-                          <button>Buy Now</button>
-                         {  !EditItemDetail && <button  type="submit">Add To Cart</button>}
+                        {  !EditItemDetail && 
+                         <><button type="submit" onClick={()=>setOpenCheckout(true)}>Buy Now</button>
+                         <button  type="submit">Add To Cart</button></>}
                          {   EditItemDetail &&  <button  type="submit"> Update Cart</button>}
 
                         </div>
@@ -811,6 +888,12 @@ setShowLoginPopup(true)
         <AddtoCartAlert
           message="Item Added to Cart"
           onClose={() => setShowAlert(false)}
+        />
+      )}
+        {showBuyNowAlert === true && (
+        <BuyNowAlert
+          message="Go to proceed to checkout"
+          onClose={() => setShowBuyNowAlert(false)}
         />
       )}
     </div>

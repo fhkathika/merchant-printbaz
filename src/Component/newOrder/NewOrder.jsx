@@ -674,7 +674,7 @@ setShowLoginPopup(true)
     if (response.ok) {
       // Order data sent successfully
       console.log('add tocart data sent to server successfully');
-      setShowBuyNowAlert(true)
+      setShowBuyNowAlert(true);
     } else {
       // Handle errors
       console.error('Error sending order data to server');

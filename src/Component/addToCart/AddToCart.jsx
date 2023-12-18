@@ -2,14 +2,17 @@ import React, { useContext, useEffect } from 'react';
 import { CartContext } from '../../context/CartProvider';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../Navbar/NavigationBar';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
 const AddToCart = () => {
     const { formData,setFormData,cartItems,deleteCartItem} = useContext(CartContext)
+    const {user}=useContext(AuthContext)
+    const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
     const navigate=useNavigate()
     const handleBackToHomepage=()=>{
       navigate('/')
     }
-    console.log("cartItems",cartItems)
+   
   //custom round neck filter 
  
     // const startEdit = (e,itemIdentifier) => {
@@ -507,7 +510,7 @@ const AddToCart = () => {
 const startEdit = (e, itemIdentifier) => {
   e.preventDefault();
   
-  const itemToEdit = cartItems?.find(item => item._id === itemIdentifier);
+  const itemToEdit = mycartItems?.find(item => item._id === itemIdentifier);
   console.log("itemToEdit",itemToEdit)
   if (itemToEdit) {
     let updatedFormData = { ...itemToEdit };
@@ -582,7 +585,7 @@ const startEdit = (e, itemIdentifier) => {
         const handleCheckOut=()=>{
           navigate("/checkout")
         }
-        const allProductsPrintbazCost = cartItems?.reduce((total, item) => {
+        const allProductsPrintbazCost = mycartItems?.reduce((total, item) => {
           return total + item.printbazcost;
       }, 0);
       
@@ -623,7 +626,7 @@ const startEdit = (e, itemIdentifier) => {
                          
                             {
                              
-                              cartItems
+                             mycartItems
                               ?.map((selectedProduct,index)=><>
                             <tr key={selectedProduct?.uniqueId}> 
                             <table className="table table-bordered"><thead>
@@ -967,7 +970,7 @@ const startEdit = (e, itemIdentifier) => {
                         </div>
                         <div className="row mb-5">
                           {
-                            cartItems?.length>0 &&
+                            mycartItems?.length>0 &&
                             <div className="col-md-12">
                             <button className="btn btn-primary btn-lg py-3 btn-block" style={{backgroundColor:"#012652",border:"none"}} onClick={handleCheckOut}>Proceed To Checkout</button>
                           </div>

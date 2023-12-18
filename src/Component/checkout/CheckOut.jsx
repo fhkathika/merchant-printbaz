@@ -12,6 +12,7 @@ import AuthProvider, { AuthContext } from '../../context/AuthProvider/AuthProvid
 const CheckOut = () => {
   const { setFormData,setCartItems,editCartItem,cartItems} = useContext(CartContext);
   const {user,logoutUser}=useContext(AuthContext);
+  const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
   console.log("user............",user)
   const [isConfirmAlertOpen, setIsConfirmAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +44,7 @@ useEffect(()=>{fetchOrders()},[])
     });
     return newObj;
   }
- const copyCartOrders=cartItems?.map(items=>removeEmptyArraysFromObject(items))
+ const copyCartOrders=mycartItems?.map(items=>removeEmptyArraysFromObject(items))
   console.log("ordersAll",copyCartOrders)
   const currentDate = new Date();
 const options = {
@@ -162,8 +163,6 @@ console.log("totalDelivFee",totalDelivFee)
       }
     }, [formDataSelected?.districts ,formDataSelected?.zones , formDataSelected?.areas]);
   
-        console.log("cartItems",cartItems)
-
 
 // const allCustomRoundNeckProducts = cartItems.flatMap(item => 
 //   item.orderDetailArr.filter(roundNeck => roundNeck.productType === 'Custom Round Neck tshirt')
@@ -210,7 +209,7 @@ let totalHoodie=individualCustomHoodieQuantity+individualBlankHoodieQuantity
 console.log("totalTshit",totalTshit)
 console.log("totalDropSholder",totalDropSholder)
 console.log("totalHoodie",totalHoodie)
-let totalOrderItemQuantity=cartItems?.reduce((acc, item) => 
+let totalOrderItemQuantity=mycartItems?.reduce((acc, item) => 
 acc + safeParseInt(item.quantity) , 0);
 
 const getIndividualProductCostSumAndQuantity=(indiviaualFilterProduct)=>{
@@ -315,7 +314,7 @@ useEffect(()=>{
       deliveryAreas: deliveryAreas
     }).deliveryFee;
   }
-  const allProductsPrintbazCost = cartItems?.reduce((total, item) => {
+  const allProductsPrintbazCost = mycartItems?.reduce((total, item) => {
     return total + item.printbazcost;
 }, 0);
 let addeDiscount=0 //here discount finction will be added later
@@ -359,7 +358,7 @@ const validateForm = () => {
   }
 };
 
-let orderTotalCalculation=cartItems?.reduce((total, item) => {
+let orderTotalCalculation=mycartItems?.reduce((total, item) => {
   return total + item.printbazcost;
 }, 0)+deliveryFee-Number(addeDiscount);
 

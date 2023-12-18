@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Container, Overlay, Tooltip } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
@@ -277,12 +277,21 @@ const filerByOrderDate=info.filter(order=>{
     
     let formattedDate = `${day}/${month}/${year}`;
     const actualIndexOfLastItem = indexOfLastItem > orderMap.length ? orderMap.length : indexOfLastItem;
-    const sortedOrder = orderMap.sort((a, b) => {
-      const dateA = new Date(a.createdAt.$date);
-      const dateB = new Date(b.createdAt.$date);
-    
-      return dateB - dateA;  // Return a positive number for descending order
-    });
+   
+    const sortedOrders = useMemo(() => {
+      return orderMap
+        .sort((a, b) => {
+          const statusDateA = new Date(a.updatedAt || a.statusDate?.replace(" at ", " "));
+          const statusDateB = new Date(b.updatedAt || b.statusDate?.replace(" at ", " "));
+          const createdAtA = new Date(a.createdAt);
+          const createdAtB = new Date(b.createdAt);
+  
+          const latestA = statusDateA > createdAtA ? statusDateA : createdAtA;
+          const latestB = statusDateB > createdAtB ? statusDateB : createdAtB;
+  
+          return latestB - latestA; // Descending sort
+        });
+    }, [orderMap]);
     
     return (
         <div className='payment_container'>
@@ -451,23 +460,9 @@ const filerByOrderDate=info.filter(order=>{
             </div>
             {/* filter by order Id  */}
             {
-                orderMap
-                ?.slice(indexOfFirstItem, indexOfLastItem)
-                .sort((a, b) => {
-                  const statusDateA = new Date(a.updatedAt || a.statusDate?.replace(" at ", " "));
-                  const statusDateB = new Date(b.updatedAt || b.statusDate?.replace(" at ", " "));
-                  const createdAtA = new Date(a.createdAt);
-                  const createdAtB = new Date(b.createdAt);
-                
-                  const latestA = statusDateA > createdAtA ? statusDateA : createdAtA;
-                  const latestB = statusDateB > createdAtB ? statusDateB : createdAtB;
-                
-                  if (latestA > latestB) return -1;
-                  if (latestA < latestB) return 1;
-                  return 0;
-                })
-                
-                
+                sortedOrders
+                // ?.slice(indexOfFirstItem, indexOfLastItem)
+             
               
              .map((orderInfo,index) => (
                // Your order item JSX code

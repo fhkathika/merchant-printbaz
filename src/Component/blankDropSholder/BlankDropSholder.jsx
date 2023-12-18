@@ -223,7 +223,7 @@ let perCategoryCost=0
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
   console.log("isBrandLogoSelected",isBrandLogoSelected)
         if (EditItemDetail?.orderDetailArrBlankDropSholder[i]?.brandLogo?.fileId) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
+          perCategoryCost=(5*formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity)+(formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
@@ -245,7 +245,7 @@ let perCategoryCost=0
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
   console.log("isBrandLogoSelected",isBrandLogoSelected)
         if (isBrandLogoSelected) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
+          perCategoryCost=(5*formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity)+(formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {

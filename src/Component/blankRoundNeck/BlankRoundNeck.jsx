@@ -207,7 +207,7 @@ let perCategoryCost=0
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
   console.log("isBrandLogoSelected",isBrandLogoSelected)
         if (EditItemDetail?.orderDetailArrBlankRoundNeck[i]?.brandLogo?.fileId) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankRoundNeck[i]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice)
+          perCategoryCost=(5*formData?.orderDetailArrBlankRoundNeck[i]?.totalQuantity)+(formData?.orderDetailArrBlankRoundNeck[i]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice)
           console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
@@ -228,7 +228,7 @@ let perCategoryCost=0
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
         if (isBrandLogoSelected) {
-          perCategoryCost=5+(formData?.orderDetailArrBlankRoundNeck[j]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice)
+          perCategoryCost=(5*formData?.orderDetailArrBlankRoundNeck[j]?.totalQuantity)+(formData?.orderDetailArrBlankRoundNeck[j]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice)
           printbazcost +=perCategoryCost
         } else {
           perCategoryCost=formData?.orderDetailArrBlankRoundNeck[j]?.totalQuantity  * blankRoundNeckFilter?.frontSideprice

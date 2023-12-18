@@ -299,9 +299,9 @@ const handleShowTicketPopUp=()=>{
               <li>
                 <Link className=''  to="/calculator">Calculator</Link> 
               </li>
-              <li>
+              {/* <li>
                 <Button className=''  onClick={handleShowTicketPopUp}>Create Support Ticket</Button> 
-              </li>
+              </li> */}
               <li>
               <Link className=''  to="/printSizeDemo">Print Size Demo</Link> 
               </li>

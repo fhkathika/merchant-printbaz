@@ -37,7 +37,7 @@ let deliveryFeeForDropSHolder=0
 
     if(deliveryAreas==="outsideDhaka"){
      ///////////////round neck tshirt //////////////
-    if(total_tshirt_weight>=0 && total_tshirt_weight<=0.5){
+    if(total_tshirt_weight>0 && total_tshirt_weight<=0.5){
         deliveryFeeForTshirt=chargeForOutSideZeroToP5
     } 
     else if(total_tshirt_weight>0.5 && total_tshirt_weight<=1){
@@ -54,7 +54,7 @@ let deliveryFeeForDropSHolder=0
     deliveryFeeForTshirt = chargeForOutSidetwoTo3 + (extraOutSideDhakaChange * Math.ceil(extraKgs)); // Add the extra charge for each extra kilogram, rounding up to the nearest whole kg
 }
 //////////////////hoodie//////////////////////
-    if(total_Hoodie_weight>=0 && total_Hoodie_weight<=0.5){
+    if(total_Hoodie_weight>0 && total_Hoodie_weight<=0.5){
         deliveryFeeForHoodie=chargeForOutSideZeroToP5
     } 
     else if(total_Hoodie_weight>0.5 && total_Hoodie_weight<=1){
@@ -72,7 +72,7 @@ let deliveryFeeForDropSHolder=0
 }
 
  /////////////////drop sholder ///////////////////
-    if(total_DropSHolder_weight>=0 && total_DropSHolder_weight<=0.5){
+    if(total_DropSHolder_weight>0 && total_DropSHolder_weight<=0.5){
         deliveryFeeForDropSHolder=chargeForOutSideZeroToP5
     } 
     else if(total_DropSHolder_weight>0.5 && total_DropSHolder_weight<=1){
@@ -92,7 +92,7 @@ let deliveryFeeForDropSHolder=0
 }
 else{
     //round neck//////////
-    if(total_tshirt_weight>=0 && total_tshirt_weight<=0.5){
+    if(total_tshirt_weight>0 && total_tshirt_weight<=0.5){
         deliveryFeeForTshirt=chargeForInSideZeroToP5
     } 
     else if(total_tshirt_weight>0.5 && total_tshirt_weight<=1){
@@ -109,7 +109,7 @@ else{
         deliveryFeeForTshirt = chargeForInSidetwoTo3 + (extraInSideDhakaChange * extraKgs); // Add the extra charge for each extra kilogram
     }
     ///////////hoodie//////////////////
-    if(total_Hoodie_weight>=0 && total_Hoodie_weight<=0.5){
+    if(total_Hoodie_weight>0 && total_Hoodie_weight<=0.5){
         deliveryFeeForHoodie=chargeForInSideZeroToP5
     } 
     else if(total_Hoodie_weight>0.5 && total_Hoodie_weight<=1){
@@ -126,7 +126,7 @@ else{
         deliveryFeeForHoodie = chargeForInSidetwoTo3 + (extraInSideDhakaChange * extraKgs); // Add the extra charge for each extra kilogram
     }
     //////////// drop sholder ////////////////////////
-    if(total_DropSHolder_weight>=0 && total_DropSHolder_weight<=0.5){
+    if(total_DropSHolder_weight>0 && total_DropSHolder_weight<=0.5){
         deliveryFeeForDropSHolder=chargeForInSideZeroToP5
     } 
     else if(total_DropSHolder_weight>0.5 && total_DropSHolder_weight<=1){

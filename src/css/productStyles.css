@@ -211,4 +211,15 @@ input[type=number] {
     
   
 
-   
+    .popup-content {
+        position: absolute;
+   color: white;
+      overflow: scroll;
+   bottom: 60%;
+     width: auto;
+        background-color: rgb(5, 5, 48);
+        border: 1px solid #ccc;
+        padding: 10px;
+        z-index: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }

@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../../context/CartProvider';
 import axios from 'axios';
 import RecipientDetail from '../recipientDetail/RecipientDetail';
-import { Button, Form, Spinner } from 'react-bootstrap';
+import { Button, Form, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import deliveryCharge from '../../Formulas/deliveryCharge';
 import NavigationBar from '../Navbar/NavigationBar';
 import OrderSubmitDoneAlert from '../alert/OrderSubmitDoneAlert';
 import ConfirmOrderAlert from '../alert/ConfirmOrderAlert';
 import AuthProvider, { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CheckOut = () => {
   const { setFormData,setCartItems,editCartItem,cartItems} = useContext(CartContext);
@@ -19,12 +20,14 @@ const CheckOut = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [fetchCartItems,setFetchCartItems]=useState([])
   const [noPaymentSystem, setNoPaymentSystem] = useState(false);
+  const navigate=useNavigate()
   // State to hold handlers
 const [confirmHandlers, setConfirmHandlers] = useState({ onConfirm: () => {}, onClose: () => {} });
+const id=user?._id
 const fetchOrders = async () => {
   try {
-      // const response = await fetch(`http://localhost:5000/getCartItems`);
-      const response = await fetch(`https://mserver.printbaz.com/getCartItems`);
+      // const response = await fetch(`http://localhost:5000/getCartItemsbyregid/${id}`);
+      const response = await fetch(`https://mserver.printbaz.com/getCartItemsbyregid/${id}`);
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
@@ -34,7 +37,7 @@ const fetchOrders = async () => {
       console.error('Error fetching orders:', error);
   }
 };
-useEffect(()=>{fetchOrders()},[])
+useEffect(()=>{fetchOrders()},[fetchCartItems])
   function removeEmptyArraysFromObject(obj) {
     const newObj = { ...obj }; // Start with a shallow copy of the object
     Object.keys(newObj).forEach(key => {
@@ -42,7 +45,11 @@ useEffect(()=>{fetchOrders()},[])
         delete newObj[key]; // Remove the property if it's an empty array
       }
     });
+    
     return newObj;
+  }
+  const backtoCart=()=>{
+    navigate('/addToCart')
   }
  const copyCartOrders=mycartItems?.map(items=>removeEmptyArraysFromObject(items))
   console.log("ordersAll",copyCartOrders)
@@ -188,7 +195,15 @@ const allBlankHoodieProducts = fetchCartItems?.filter(obj =>
 );
 
 console.log("allCustomHoodieProducts",allCustomHoodieProducts)
+const [showContent, setShowContent] = useState(false);
 
+const handleMouseEnter = () => {
+  setShowContent(true);
+};
+
+const handleMouseLeave = () => {
+  setShowContent(false);
+};
 // get individual product cost and quantity 
 const [individualCostCustomRoundNeckProductCost, setIndividualProductCost] = useState(0);
 const [individualCustomRoundNeckQuantity, setIndividualProductQuantity] = useState(0);
@@ -372,52 +387,7 @@ const handleInputChange = (event, index) => {
 
  
     setFormDataSelected({ ...formDataSelected, [name]: value });
-    // Flatten all the product arrays into one array
-    // const allProducts = copyCartOrders?.flatMap(cartItem => {
-    //   // Extract all product arrays from the cartItem, ignoring non-array properties
-    //   return Object.values(cartItem).flat().filter(item => Array.isArray(item));
-    // });
-    // const allProducts = copyCartOrders?.flatMap(cartItem => {
-    //   // Get all values that are arrays
-    //   const productArrays = Object.values(cartItem).filter(value => Array.isArray(value));
-    //   // Flatten the arrays of products and return them
-    //   return productArrays.flat();
-    // });
-    
-    // console.log("allProducts", allProducts);
-    // // Transform the product items to fit the structure required by selectedItemsDetailArr
-    // const newItems = allProducts.map(product => ({
-    //   productType: product.productType,
-    //   perItemQuantity: product.quantityM + product.quantityL + product.quantityXL + product.quantityXXL, // Summing quantities as an example
-    //   printbazcost: product.printbazcost,
-    //   individualProductArr: [
-    //     {
-    //       color: product.color,
-    //       teshirtSize: product.teshirtSize,
-    //       quantityM: product.quantityM,
-    //       quantityL: product.quantityL,
-    //       quantityXL: product.quantityXL,
-    //       quantityXXL: product.quantityXXL,
-    //       individualItemQuantity: product.quantityM + product.quantityL + product.quantityXL + product.quantityXXL, // Example calculation
-    //       printSide: product.printSide,
-    //       printSize: product.printSize,
-    //       printSizeBack: product.printSizeBack,
-    //       file: product.file,
-    //       image: product.image
-    //     }
-    //   ]
-    // }));
-  
    
- 
-  // Update state
-  // setFormDataSelected(prevState => ({
-  //     ...prevState,
-  //     selectedItemsDetailArr: newOrderDetailArr,
-     
-      
-  // }));
-
  
 }
 
@@ -478,14 +448,7 @@ const getToBeOrerDetail=()=>{
 
     ],
     grandQuantity:grandQuantity,
-    // grandQuantity: parseInt(
-    //   individualCustomRoundNeckQuantity+
-    //   individualCustomDropSholdQuantity+
-    //   individualCustomHoodieQuantity+
-    //   individualBlankRoundNeckQuantity+
-    //   individualBlankDropSholQuantity+
-    //   individualBlankHoodieQuantity),
-      grandCost:orderTotal,
+     grandCost:orderTotal,
       deliveryFee:deliveryFee,
       discount:addeDiscount
   }));
@@ -634,27 +597,7 @@ await fetch(`https://mserver.printbaz.com/deleteAllCartItems`, {
         discount:0,
         orderCreatedAt:formattedDate,
         selectedItemsDetailArr: [
-          // {
-          //   productType:'',
-          //   perItemQuantity:0,
-          //   printbazcost:0,
-          //  individualProductArr: [
-          //   {color: '',
-          //   teshirtSize: {},
-          //  quantityM: '',
-          //   quantityL: '',
-          //   quantityXL: '',
-          //   quantityXXL: '',
-          //  individualItemQuantity:0,
-          // printSide: '',
-          //   printSize: '',
-          //   printSizeBack: '',
-          //   file: null,
-          //   image: null
-          // }
-          //   ]
-           
-          // }
+         
          
         ],
         
@@ -674,6 +617,7 @@ await fetch(`https://mserver.printbaz.com/deleteAllCartItems`, {
  
 }
 
+
   return (
     <>
      
@@ -681,12 +625,13 @@ await fetch(`https://mserver.printbaz.com/deleteAllCartItems`, {
         <title>Printbaz</title>
         <meta name="description" content />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <NavigationBar/>
         {/*====== Favicon Icon ======*/}
         <link rel="shortcut icon" href="https://media.discordapp.net/attachments/1128921638977683526/1163824367923368007/Logo-01.jpg?ex=6565e4e8&is=65536fe8&hm=1708566566dde136fc9b7940d92367098c9c3eebe0283875d0f452ff0dbe4ad0&=&width=612&height=612" type="image/png" />
         {/*====== Bootstrap CSS ======*/}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" />
         <style dangerouslySetInnerHTML={{__html: "\n    /* Blocks */\n    .site-blocks-cover {\n      background-size: cover;\n      background-repeat: no-repeat;\n      background-position: center center;\n    }\n\n    .site-blocks-cover,\n    .site-blocks-cover .row {\n      min-height: 600px;\n      height: calc(100vh - 174px);\n    }\n\n    .site-blocks-cover h1 {\n      font-size: 30px;\n      font-weight: 900;\n      color: #000;\n    }\n\n    @media (min-width: 768px) {\n      .site-blocks-cover h1 {\n        font-size: 50px;\n      }\n    }\n\n    .site-blocks-cover p {\n      color: #333333;\n      font-size: 20px;\n      line-height: 35px;\n    }\n\n    .site-blocks-cover .intro-text {\n      font-size: 16px;\n      line-height: 1.5;\n    }\n\n    .site-blocks-1 {\n      border-bottom: 1px solid #edf0f5;\n    }\n\n    .site-blocks-1 .divider {\n      position: relative;\n    }\n\n    .site-blocks-1 .divider:after {\n      content: \"\";\n      position: absolute;\n      height: 100%;\n      width: 1px;\n      right: 10px;\n      background: #edf0f5;\n    }\n\n    .site-blocks-1 .divider:last-child:after {\n      display: none;\n    }\n\n    .site-blocks-1 .icon span {\n      position: relative;\n      color: #012652;\n      top: -10px;\n      font-size: 50px;\n      display: inline-block;\n    }\n\n    .site-blocks-1 .text h2 {\n      color: #25262a;\n      letter-spacing: .05em;\n      font-size: 18px;\n    }\n\n    .site-blocks-1 .text p:last-child {\n      margin-bottom: 0;\n    }\n\n    .site-blocks-2 .block-2-item {\n      display: block;\n      position: relative;\n    }\n\n    .site-blocks-2 .block-2-item:before {\n      z-index: 1;\n      content: '';\n      position: absolute;\n      top: 0;\n      right: 0;\n      bottom: 0;\n      left: 0;\n      background: -moz-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      background: -webkit-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(18%, transparent), color-stop(99%, rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0.8)));\n      background: -o-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      background: linear-gradient(to bottom, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#cc000000', GradientType=0);\n    }\n\n    .site-blocks-2 .block-2-item .image {\n      position: relative;\n      margin-bottom: 0;\n      overflow: hidden;\n    }\n\n    .site-blocks-2 .block-2-item .image img {\n      margin-bottom: 0;\n      -webkit-transition: .3s all ease-in-out;\n      -o-transition: .3s all ease-in-out;\n      transition: .3s all ease-in-out;\n    }\n\n    .site-blocks-2 .block-2-item .text {\n      z-index: 2;\n      bottom: 0;\n      padding-left: 20px;\n      position: absolute;\n      width: 100%;\n    }\n\n    .site-blocks-2 .block-2-item .text>span,\n    .site-blocks-2 .block-2-item .text h3 {\n      color: #fff;\n    }\n\n    .site-blocks-2 .block-2-item .text>span {\n      font-size: 12px;\n      letter-spacing: .1em;\n      font-weight: 900;\n    }\n\n    .site-blocks-2 .block-2-item .text h3 {\n      font-size: 40px;\n    }\n\n    .site-blocks-2 .block-2-item:hover .image img {\n      -webkit-transform: scale(1.1);\n      -ms-transform: scale(1.1);\n      transform: scale(1.1);\n    }\n\n    .block-3 .owl-stage {\n      padding-top: 40px;\n      padding-bottom: 40px;\n    }\n\n    .block-3 .owl-nav {\n      position: relative;\n      position: absolute;\n      bottom: -50px;\n      left: 50%;\n      -webkit-transform: translateX(-50%);\n      -ms-transform: translateX(-50%);\n      transform: translateX(-50%);\n    }\n\n    .block-3 .owl-nav .owl-prev,\n    .block-3 .owl-nav .owl-next {\n      position: relative;\n      display: inline-block;\n      padding: 20px;\n      font-size: 30px;\n      color: #5c626e;\n    }\n\n    .block-3 .owl-nav .owl-prev:hover,\n    .block-3 .owl-nav .owl-next:hover {\n      color: #25262a;\n    }\n\n    .block-3 .owl-nav .owl-prev.disabled,\n    .block-3 .owl-nav .owl-next.disabled {\n      opacity: .2;\n    }\n\n    .block-4 {\n      -webkit-box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);\n      box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);\n      background: #fff;\n    }\n\n    .block-4 .block-4-text h3 {\n      font-size: 20px;\n      margin-bottom: 0;\n    }\n\n    .block-4 .block-4-text h3 a {\n      text-decoration: none;\n    }\n\n    .block-5 ul,\n    .block-5 ul li {\n      list-style: none;\n      padding: 0;\n      margin: 0;\n      line-height: 1.5;\n    }\n\n    .block-5 ul li {\n      padding-left: 30px;\n      position: relative;\n      margin-bottom: 15px;\n      color: #25262a;\n    }\n\n    .block-5 ul li:before {\n      top: 0;\n      font-family: \"icomoon\";\n      content: \"\";\n      position: absolute;\n      left: 0;\n      font-size: 20px;\n      line-height: 1;\n      color: #012652;\n    }\n\n    .block-5 ul li.address:before {\n      content: \"\\e8b4\";\n    }\n\n    .block-5 ul li.email:before {\n      content: \"\\f0e0\";\n    }\n\n    .block-5 ul li.phone:before {\n      content: \"\\f095\";\n    }\n\n    .block-6 {\n      display: block;\n    }\n\n    .block-6 img {\n      display: block;\n    }\n\n    .block-6 h3 {\n      font-size: 18px;\n    }\n\n    .block-6 p {\n      color: #737b8a;\n    }\n\n    .block-7 .form-group {\n      position: relative;\n      margin-top: 25px;\n    }\n\n    .block-7 .form-control {\n      padding-right: 96px;\n    }\n\n    .block-7 .btn {\n      position: absolute;\n      width: 80px;\n      top: 50%;\n      -webkit-transform: translateY(-50%);\n      -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n      right: 3px;\n    }\n\n    .block-8 .post-meta {\n      color: #c4c7ce;\n    }\n\n    .block-8 .block-8-sep {\n      margin-left: 10px;\n      margin-right: 10px;\n    }\n\n    .site-blocks-table {\n      overflow: auto;\n    }\n\n    .site-blocks-table .product-thumbnail {\n      width: 200px;\n    }\n\n    .site-blocks-table thead th {\n      padding: 30px;\n      text-align: center;\n      border-width: 1px !important;\n      vertical-align: middle;\n      color: #212529;\n      font-size: 18px;\n    }\n\n    .site-blocks-table td {\n      padding: 20px;\n      text-align: center;\n      vertical-align: middle;\n      color: #212529;\n    }\n\n    .site-blocks-table tbody tr:first-child td {\n      border-top: 1px solid #012652 !important;\n    }\n\n    .site-block-order-table th {\n      border-top: none !important;\n      border-bottom-width: 1px !important;\n    }\n\n    .site-block-order-table td,\n    .site-block-order-table th {\n      color: #000;\n    }\n\n    .site-block-top-search {\n      position: relative;\n    }\n\n    .site-block-top-search .icon {\n      position: absolute;\n      left: 0;\n      top: 50%;\n      -webkit-transform: translateY(-50%);\n      -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n    }\n\n    .site-block-top-search input {\n      padding-left: 40px;\n      -webkit-transition: .3s all ease-in-out;\n      -o-transition: .3s all ease-in-out;\n      transition: .3s all ease-in-out;\n    }\n\n    .site-block-top-search input:focus,\n    .site-block-top-search input:active {\n      padding-left: 25px;\n    }\n\n    .site-block-27 ul,\n    .site-block-27 ul li {\n      padding: 0;\n      margin: 0;\n    }\n\n    .site-block-27 ul li {\n      display: inline-block;\n      margin-bottom: 4px;\n    }\n\n    .site-block-27 ul li a,\n    .site-block-27 ul li span {\n      text-align: center;\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      line-height: 40px;\n      border-radius: 50%;\n      border: 1px solid #ccc;\n    }\n\n    .site-block-27 ul li.active a,\n    .site-block-27 ul li.active span {\n      background: #012652;\n      color: #fff;\n      border: 1px solid transparent;\n    }\n\n    #slider-range {\n      height: 8px;\n    }\n\n    #slider-range .ui-slider-handle {\n      width: 16px;\n      height: 16px;\n      border-radius: 50%;\n      border: none !important;\n      background: #012652;\n    }\n\n    #slider-range .ui-slider-handle:focus,\n    #slider-range .ui-slider-handle:active {\n      outline: none;\n    }\n\n    #slider-range .ui-slider-range {\n      background-color: #012652;\n    }\n\n    .color-item .color {\n      width: 14px;\n      height: 14px;\n    }\n\n    .block-16 figure {\n      position: relative;\n    }\n\n    .block-16 figure .play-button {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n      -ms-transform: translate(-50%, -50%);\n      transform: translate(-50%, -50%);\n      font-size: 40px;\n      width: 90px;\n      height: 90px;\n      background: #fff;\n      display: block;\n      border-radius: 50%;\n      border: none;\n    }\n\n    .block-16 figure .play-button:hover {\n      opacity: 1;\n    }\n\n    .block-16 figure .play-button>span {\n      position: absolute;\n      left: 55%;\n      top: 50%;\n      -webkit-transform: translate(-50%, -45%);\n      -ms-transform: translate(-50%, -45%);\n      transform: translate(-50%, -45%);\n    }\n\n    .block-38 .block-38-header .block-38-heading {\n      color: #000;\n      margin: 0;\n      font-weight: 300;\n    }\n\n    .block-38 .block-38-header .block-38-subheading {\n      color: #b3b3b3;\n      margin: 0 0 20px 0;\n      text-transform: uppercase;\n      font-size: 15px;\n      letter-spacing: .1em;\n    }\n\n    .block-38 .block-38-header img {\n      width: 120px;\n      border-radius: 50%;\n      margin-bottom: 20px;\n    }\n\n    .product-name p {\n      margin: 0;\n    }\n\n    /* Chrome, Safari, Edge, Opera */\n    input::-webkit-outer-spin-button,\n    input::-webkit-inner-spin-button {\n      -webkit-appearance: none;\n      margin: 0;\n    }\n\n    /* Firefox */\n    input[type=number] {\n      -moz-appearance: textfield;\n    }\n\n    .btn-primary {\n      color: #fff;\n      background-color: #FE2202;\n      border-color: #FE2202;\n      padding: 10px 15px;\n    }\n\n    .btn-primary:hover {\n      color: #FE2202;\n      background-color: transparent;\n      border-color: #FE2202;\n    }\n\n    .btn-outline-primary {\n      color: #012652;\n      background-color: transparent;\n      background-image: none;\n      border-color: #012652;\n    }\n\n    .btn-outline-primary:hover {\n      color: #ffffff;\n      background-color: #012652;\n      background-image: none;\n      border-color: #012652;\n    }\n\n    .form-group input {\n      margin-bottom: 20px;\n    }\n\n    .border {\n      padding: 40px;\n    }\n\n    .border th {\n      font-size: 25px;\n      color: #FE2202;\n    }\n\n    .border-payment {\n      padding: 10px;\n      margin-bottom: 20px;\n    }\n\n    .form-group-payment th {\n      color: #FE2202;\n    }\n\n    .terrms {\n      margin-top: 20px;\n    }\n\n    .order-button {\n      display: inline-block;\n      margin-top: 15px;\n      margin-right: 25px;\n    }\n\n    .btn-buy {\n      padding: 8px 20px 10px 20px;\n      color: #ffffff;\n      background-color: #FE2202;\n      transition: none;\n      font-size: 16px;\n      font-weight: 400;\n      font-family: \"Nunito\", sans-serif;\n      font-weight: 600;\n      transition: 0.3s;\n      border: 1px solid #FE2202;\n    }\n\n    .btn-buy:hover {\n      color: #FE2202;\n      background-color: transparent;\n      border: 1px solid #FE2202;\n    }\n\n    .site-wrap {\n      margin-top: 50px;\n      margin-bottom: 50px;\n    }\n\n    .box-title {\n      font-weight: 800;\n      color: #012652;\n      margin-bottom: 20px;\n      text-transform: uppercase;\n    }\n  " }} />
-        <NavigationBar/>
+      
         <div className="site-wrap">
           <div className="site-section">
             <div className="container">
@@ -918,15 +863,66 @@ placeholder=""
                     </div>
                   </div>
                 </div>
-                <div className="col-md-12">
-                  <input type="checkbox" required className="terrms" />
-                  <span>I accept the Terrms of Use and Privacy Policy.</span>
-                  <br />
+             <div className='col-md-12' style={{position:"relative"}}>
+             {showContent && (
+        <div id="Terms & Condition" className="popup-content">
+        <div className="row m45 m_1responsive700 mb-3">
+                <div className="col-12">
+                  <h3>Terms and Conditions</h3>
+                  <ul>
+                    <li>
+                      সকাল ১১ টার পরে প্লেইস করা অর্ডার পরের দিন থেকে শিডিউল করা হবে।
+                    </li>
+                    <li>
+                      ভিন্ন ডেলিভারি এড্রেসে ডেলিভারি এর জন্য অবশ্যই “New Order”
+                      ক্রিয়েট করতে হবে।{" "}
+                    </li>
+                    <li>
+                      প্রোমোশনাল এড অন্সঃ হ্যাংটাগ, ব্র্যান্ড লেবেল, থ্যাংক ইউ কার্ড,
+                      অথবা স্পেশাল নোটসহ ডেলিভারি এর জন্য অবশ্যই আলাদা ইনভয়েসিং করা
+                      হবে। (কাস্টমার কেয়ারে যোগাযোগ করতে হবে)
+                    </li>
+                    <li>
+                      সঠিক প্রিন্ট সাইজ সিলেক্ট করতে হবে এবং মেইন ফাইলে প্রিন্ট সাইজ
+                      উল্লিখিত থাকতে হবে। (যেমনঃ 2.5” x 2” সাইজের কোন প্রিন্ট থাকলে
+                      সেটার জন্য 2.5” x 5” এর প্রিন্টিং প্যারামিটার সিলেক্ট করতে হবে)
+                    </li>
+                    <li>
+                      একই টিশার্টে একের অধিক প্রিন্টের রিকোয়ারমেন্ট থাকলেঃ ১। অবশ্যই
+                      Special Instructions বক্সে লিখে দিতে হবে ২। মকআপ দিতে হবে ৩।
+                      অর্ডার প্লেইস করার পর ১ ঘন্টার ভিতরে কাস্টমার সার্ভিসে কল করে
+                      জানাতে হবে। ৪। বিল এডজাস্ট করে নিতে হবে।
+                    </li>
+                  </ul>
+                  <span style={{fontWeight:"bold"}}>
+                    {" "}
+                    ফেইক কাস্টোমার অথবা রিটার্নের ব্যপারে সতর্ক থাকুন। রিটার্নের
+                    খরচ ব্র্যান্ডকেই বিয়ার করতে হবে এবং অত্যাধিক (৩ পিস+) আনপেইড
+                    রিটার্নের ক্ষেত্রে একাউন্ট সাস্পেন্ডেড হতে পারে
+                  </span>
+                </div>
+              </div>
+        </div>
+             )}
+                <input type="checkbox" required className="terrms" />
+                <span
+        style={{ cursor: 'pointer' }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        I accept the Terms of Use and Privacy Policy.
+      </span>
+
+             </div>
+                <div className="col-md-12" >
+           
+     
+  <br />
                   <div className="form-group order-button">
                     <button className="btn btn-buy" type='submit'>Place Order</button>
                   </div>
                   <div className="form-group order-button">
-                    <button className="btn btn-buy" >Cancel Order</button>
+                    <button onClick={backtoCart} className="btn btn-buy" >Cancel Order</button>
                   </div>
                 </div>
                 {

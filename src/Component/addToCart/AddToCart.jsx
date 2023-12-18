@@ -7,6 +7,8 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 const AddToCart = () => {
     const { formData,setFormData,cartItems,deleteCartItem} = useContext(CartContext)
     const {user}=useContext(AuthContext)
+    console.log("user........",user)
+    console.log("cartItems........",cartItems)
     const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
     const navigate=useNavigate()
     const handleBackToHomepage=()=>{

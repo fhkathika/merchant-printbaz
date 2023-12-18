@@ -141,7 +141,7 @@ let idCounter = 1;
    const generateId = () => {
     const paddedId = String(idCounter).padStart(6, '0');
   
-    if (fetchOverAllTicket?.filter(ticketId => ticketId === paddedId).length > 0) {
+    if (fetchOverAllTicket?.filter(ticketId => ticketId === paddedId)?.length > 0) {
       idCounter++;
       return generateId();
     }
@@ -325,8 +325,8 @@ const handleShowTicketPopUp=()=>{
           <li>
           <Link className="nav-link scrollto " to="/addToCart">
 <img  style={{width:"35px",height:"30px"}}src="https://media.discordapp.net/attachments/1181515624455872602/1182942257658200106/shopping-cart.png?ex=658687d4&is=657412d4&hm=68969a99571dfa5dd6f0cf3da17e7054a28f34aeeec045de7e718bbc9fbc9812&=&format=webp&quality=lossless" alt="Icon" />
-                        {mycartItems.length > 0 &&
-                        <span className="notification-badge" >{mycartItems.length}</span>}
+                        {mycartItems?.length > 0 &&
+                        <span className="notification-badge" >{mycartItems?.length}</span>}
             </Link>
             {
    fetchAllTicket?.forEach(readMsg => {

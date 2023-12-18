@@ -658,9 +658,9 @@ getSpecificOrderById?.orderStatus==="returned"?
       {/* <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
         <h4>Main File</h4>
       </div> */}
-      <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4 className='font10px d-none'>Picture </h4>
-      </div>
+      {/* <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
+        <h4 className='font10px'>Picture </h4>
+      </div> */}
         {/* <div className="col-1">
         <h4>BrandLogo</h4>
       </div> */}
@@ -746,8 +746,8 @@ return (
       {/* {orderDetail?.printSide} */}
     
       <p >Print side : <span style={{fontweight:'700'}}> {orderDetail?.printSide}</span></p>
-      <p >FrontSide : <span className='bold'>{orderDetail?.printSize?orderDetail?.printSize:"N/A"}</span></p>
-      <p>BackSide: {orderDetail?.printSizeBack ? orderDetail?.printSizeBack :"N/A"}</p>
+      <p >FrontSide : <span className='bold'>{orderDetail?.printSide==="frontSide"?orderDetail?.printSize:"N/A"}</span></p>
+        <p>BackSide: {orderDetail?.printSizeBack ? orderDetail?.printSizeBack :orderDetail?.printSide==="backSide"?orderDetail?.printSize:"N/A"}</p>
      
     
        
@@ -1064,6 +1064,7 @@ orderDetail?.brandLogo ?
   </div> */}
 
 <div style={{position: "relative" ,display: "inline-block"}}>
+<h4>Picture :</h4>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.image?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
     <img style={{width:"100px",height:"100px"}} src={`https://drive.google.com/uc?id=${orderDetail?.image?.fileId}`} alt="file" className="img-fluid" />
 </div>
@@ -1077,14 +1078,11 @@ orderDetail?.brandLogo ?
       
         {/* {orderDetail?.printSide} */}
       
-        <p >productType: <span style={{fontweight:'700'}}> {orderDetail?.productType}</span></p>
+        <p style={{color:"orange",fontWeight:"800"}}> {orderDetail?.productType}</p>
         <p >Print side : <span style={{fontweight:'700'}}> {orderDetail?.printSide}</span></p>
         <p >FrontSide : <span className='bold'>{orderDetail?.printSide==="frontSide"?orderDetail?.printSize:"N/A"}</span></p>
-        <p>BackSide: {orderDetail?.printSizeBack ? orderDetail?.printSizeBack :orderDetail?.printSize==="backSide"?orderDetail?.printSize:"N/A"}</p>
+        <p>BackSide: {orderDetail?.printSizeBack ? orderDetail?.printSizeBack :orderDetail?.printSide==="backSide"?orderDetail?.printSize:"N/A"}</p>
        
-      
-         
-      
        <div className="col-lg-12" >
        <h4>Main File :</h4>
         <div className='phone_flex_center' style={{display:"flex"}}>
@@ -1211,9 +1209,15 @@ orderDetail?.brandLogo ?
       <div className="row order-tab  " key={orderIndex}>
       {/* <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3> */}
       
+   
     <div className="col-3">
+
       <p  className='font12px'>{orderDetail?.color}</p>
     </div>
+     {/* <div className="col-3">
+
+    <p > <span style={{fontweight:'700'}}> {orderDetail?.productType}</span></p>
+    </div> */}
     <div className="col-3 " style={{display:"flex",justifyContent:"center"}}>
   
     <ul>
@@ -1258,7 +1262,7 @@ orderDetail?.brandLogo ?
 
 </div></p> */}
  
-
+  <p style={{color:"orange",fontWeight:"800"}}> {orderDetail?.productType}</p>
 {
 orderDetail?.brandLogo &&
 <>
@@ -1285,6 +1289,7 @@ orderDetail?.brandLogo &&
     {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
     <div className="col-12 "  key={orderIndex}>
    <p >Color:  <span className='bold'>{orderDetail?.color}</span></p>
+  
    <ul>
     {typeof orderDetail.teshirtSize === 'string' ? (
       <li>
@@ -1301,7 +1306,7 @@ orderDetail?.brandLogo &&
     )}
   </ul>
    <p >Quantity : <span className='bold'> {orderDetail?.quantity}</span></p>
- 
+   {/* <p >productType: <span style={{fontweight:'700'}}> {orderDetail?.productType}</span></p> */}
  
    
  

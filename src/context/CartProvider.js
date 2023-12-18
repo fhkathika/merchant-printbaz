@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "./AuthProvider/AuthProvider";
 export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const navigate=useNavigate()
@@ -478,7 +479,7 @@ brandLogo:null
             ],
 
       });
-  
+  const {user}=useContext(AuthContext)
     //   const [cartItems, setCartItems] = useState(() => {
     //     const savedCartItems = localStorage.getItem('cartItems');
     //     return savedCartItems ? JSON.parse(savedCartItems) : [];
@@ -495,10 +496,12 @@ brandLogo:null
         setCartItems((prevItems) => [...prevItems, item]);
       }
     };
+    console.log("user?._id",user?._id)
+    const id=user?._id
     const fetchOrders = async () => {
       try {
-          // const response = await fetch(`http://localhost:5000/getCartItems`);
-          const response = await fetch(`https://mserver.printbaz.com/getCartItems`);
+          // const response = await fetch(`http://localhost:5000/getCartItemsbyregid/${id}`);
+          const response = await fetch(`https://mserver.printbaz.com/getCartItemsbyregid/${id}`);
           if (!response.ok) {
               throw new Error('Network response was not ok');
           }
@@ -508,7 +511,7 @@ brandLogo:null
           console.error('Error fetching orders:', error);
       }
     };
-    useEffect(()=>{fetchOrders()},[])
+    useEffect(()=>{fetchOrders()},[cartItems])
   // Function to get filled cart items
   const getFilledCartItems = () => {
     // Filter each array in formData for filled items
@@ -633,12 +636,12 @@ const editCartItem = async (itemIdentifier, newData) => {
 
 
 
-    useEffect(() => {
-      const savedCartItems = localStorage.getItem('cartItems');
-      if (savedCartItems) {
-          setCartItems(JSON.parse(savedCartItems));
-      }
-  }, []);
+  //   useEffect(() => {
+  //     const savedCartItems = localStorage.getItem('cartItems');
+  //     if (savedCartItems) {
+  //         setCartItems(JSON.parse(savedCartItems));
+  //     }
+  // }, []);
   
     return (
       <CartContext.Provider value={{ formData,setFormData ,cartItems, setCartItems,deleteCartItem,editCartItem,addToCart}}>

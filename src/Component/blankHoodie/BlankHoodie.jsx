@@ -65,6 +65,11 @@ const BlankHoodie = () => {
     collectionsPrice,
     dbData
   );
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg');
+
+  const handleThumbnailClick = (imageUrl) => {
+    setMainImage(imageUrl);
+  };
 
   const EditItemDetail = location?.state?.itemToEdit;
   // const itemToEdit =  cartItems?.find(item => item?._id === EditItemDetail?._id);
@@ -418,13 +423,7 @@ let perCategoryCost=0
     userEmail:user?.email,userRegId:user?._id
   };
 
-  // Add the filled items to the cart
-  // addToCart(filledItems);
-  // setCartItems(prevItems => {
-  //   const updatedItems = [...prevItems, filledItems];
-  //   localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-  //   return updatedItems;
-  // });
+ 
   const newItem = {
     ...formData,
     orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
@@ -520,13 +519,7 @@ setShowLoginPopup(true)
     userEmail:user?.email,userRegId:user?._id
   };
 
-  // Add the filled items to the cart
-  // addToCart(filledItems);
-  // setCartItems(prevItems => {
-  //   const updatedItems = [...prevItems, filledItems];
-  //   localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-  //   return updatedItems;
-  // });
+  
   const newItem = {
     ...formData,
     orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
@@ -665,38 +658,57 @@ setShowLoginPopup(true)
             
                 {/*====== Product Image ======*/}
                 <div className="row">
-                  <div className="col-12">
-                    <div className="productMainImg active show" id="preview1">
-                      <img src="https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="hhttps://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg" id="preview2">
-                      <img src="https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/h1svWPZ/Hoodies-Neon-Green.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                 
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/tM08Ww7/Hoodies-Black.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                </div>
+      <div className="col-12">
+        <div className="productMainImg active show" id="preview1">
+          <img src={mainImage} alt="Custom T-shirt" />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg" id="preview2">
+          <img
+            src="https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/h1svWPZ/Hoodies-Neon-Green.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/h1svWPZ/Hoodies-Neon-Green.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/tM08Ww7/Hoodies-Black.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/tM08Ww7/Hoodies-Black.jpg')}
+          />
+        </div>
+      </div>
+    </div>
            
   
                 
@@ -909,7 +921,7 @@ setShowLoginPopup(true)
           } */}
         </div>
       </Form>
-      <ProductTab describtion="describtion here........"/>
+      <ProductTab describtion=""/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert

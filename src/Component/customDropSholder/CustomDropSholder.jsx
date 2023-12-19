@@ -81,6 +81,11 @@ const CustomDropSholder = () => {
     setShowRegPopup(false);
     setShowLoginPopup(false);
   };
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg');
+
+  const handleThumbnailClick = (imageUrl) => {
+    setMainImage(imageUrl);
+  };
   const { user } = useContext(AuthContext);
  
   const userEmail = user?.email;
@@ -772,7 +777,7 @@ setShowLoginPopup(true)
               <div className="col-lg-5">
             
                 {/*====== Product Image ======*/}
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-12">
                     <div className="productMainImg active show" id="preview1">
                       <img src="https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg" alt="Custom T-shirt" />
@@ -799,9 +804,51 @@ setShowLoginPopup(true)
                       <img src="https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg" alt="Custom T-shirt" />
                     </div>
                   </div>
-                </div>
+                </div> */}
            
-  
+           <div className="row">
+      <div className="col-12">
+        <div className="productMainImg active show" id="preview1">
+          <img src={mainImage} alt="Custom T-shirt" />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/QHPTMkX/Drop-Shoulder-White-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/QHPTMkX/Drop-Shoulder-White-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/VjrwxkT/Drop-Shoulder-Black-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/VjrwxkT/Drop-Shoulder-Black-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg')}
+          />
+        </div>
+      </div>
+    </div>
                 
               </div>
               {/*====== Product Information ======*/}
@@ -1222,7 +1269,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           } */}
         </div>
       </Form>
-      <ProductTab describtion="describtion here........"/>
+      <ProductTab describtion=""/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert

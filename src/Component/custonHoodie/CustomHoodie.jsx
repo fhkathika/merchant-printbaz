@@ -46,7 +46,11 @@ const CustomHoodie = () => {
   let collections = "resellerInfo";
   let idPrice = "teeShirtCampingId";
   let collectionsPrice = "productValues";
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg');
 
+  const handleThumbnailClick = (imageUrl) => {
+    setMainImage(imageUrl);
+  };
   const [fileprogress, setFileProgress] = useState(0);
   const [imageprogress, setImageProgress] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
@@ -776,38 +780,57 @@ setShowLoginPopup(true)
             
                 {/*====== Product Image ======*/}
                 <div className="row">
-                  <div className="col-12">
-                    <div className="productMainImg active show" id="preview1">
-                      <img src="https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg" id="preview2">
-                      <img src="https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                 
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                </div>
+      <div className="col-12">
+        <div className="productMainImg active show" id="preview1">
+          <img src={mainImage} alt="Custom T-shirt" />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg" id="preview2">
+          <img
+            src="https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-2">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg')}
+          />
+        </div>
+      </div>
+    </div>
            
   
                 
@@ -1219,7 +1242,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           } */}
         </div>
       </Form>
-      <ProductTab describtion="describtion here........"/>
+      <ProductTab describtion=""/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert

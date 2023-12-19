@@ -123,8 +123,11 @@ const NewOrder = () => {
   let backSideDtfprice_2p5X2p5 = customRoundNeckinputBack2p5X2p5?.backSideprice;
   let additionalCost = tshirtPrice[0]?.additionalCost;
 
-  //////////////////////////////////////////
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg');
 
+  const handleThumbnailClick = (imageUrl) => {
+    setMainImage(imageUrl);
+  };
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState([{ value: "" }]);
@@ -768,34 +771,48 @@ setShowLoginPopup(true)
             
                 {/*====== Product Image ======*/}
                 <div className="row">
-                  <div className="col-12">
-                    <div className="productMainImg active show" id="preview1">
-                      <img src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="productMoreImg" id="preview2">
-                      <img src="https://i.ibb.co/7VtxHWr/Round-Neck-White-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/bQRDfhL/Round-Neck-Bottle-Green-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                 
-                  <div className="col-3">
-                    <div className="productMoreImg">
-                      <img src="https://i.ibb.co/NtznFwg/Round-Neck-Maroon-Custom.jpg" alt="Custom T-shirt" />
-                    </div>
-                  </div>
-                </div>
-           
+      <div className="col-12">
+        <div className="productMainImg active show" id="preview1">
+          <img src={mainImage} alt="Custom T-shirt" />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg" id="preview2">
+          <img
+            src="https://i.ibb.co/7VtxHWr/Round-Neck-White-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/7VtxHWr/Round-Neck-White-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/bQRDfhL/Round-Neck-Bottle-Green-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/bQRDfhL/Round-Neck-Bottle-Green-Custom.jpg')}
+          />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/NtznFwg/Round-Neck-Maroon-Custom.jpg"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/NtznFwg/Round-Neck-Maroon-Custom.jpg')}
+          />
+        </div>
+      </div>
+    </div>
   
                 
               </div>
@@ -1197,7 +1214,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           } */}
         </div>
       </Form>
-      <ProductTab describtion="describtion here........"/>
+      <ProductTab describtion=""/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert

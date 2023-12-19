@@ -7,41 +7,13 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 const AddToCart = () => {
     const { formData,setFormData,cartItems,deleteCartItem} = useContext(CartContext)
     const {user}=useContext(AuthContext)
-    console.log("user........",user)
-    console.log("cartItems........",cartItems)
     const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
     const navigate=useNavigate()
     const handleBackToHomepage=()=>{
       navigate('/')
     }
    
-  //custom round neck filter 
- 
-    // const startEdit = (e,itemIdentifier) => {
-    //   e.preventDefault()
-    //   const itemToEdit =  cartItems?.find(item => item?.uniqueId === itemIdentifier);
-    //   console.log("itemToEdit",itemToEdit)
-      
-    // console.log("formData?.orderDetailArrCustomDropSholder[0].productType",formData?.orderDetailArrCustomDropSholder[0].productType)
-    //   // Navigate to the form page if necessary or show the form
   
-    //   if(formData?.productType==="Custom Drop Sholder tshirt"){
-    //     navigate('/customRoundNeck');
-    //   }
-    //   else  if(formData?.productType==="Custom Hoodie"){
-    //     navigate('/customRoundNeck');
-    //   }
-    
-    
-    //   if (itemToEdit) {
-    //     console.log("itemToEdit.....",itemToEdit)
-    //     // setFormData(itemToEdit);
-    //     setFormData(itemToEdit);
-      
-    //   }
-     
-     
-    // };
     const initialRoundNeckOptions =  [
       {
         productType:"Custom Round Neck tshirt",
@@ -513,7 +485,7 @@ const startEdit = (e, itemIdentifier) => {
   e.preventDefault();
   
   const itemToEdit = mycartItems?.find(item => item._id === itemIdentifier);
-  console.log("itemToEdit",itemToEdit)
+ 
   if (itemToEdit) {
     let updatedFormData = { ...itemToEdit };
 
@@ -531,8 +503,7 @@ const startEdit = (e, itemIdentifier) => {
     }
      else if (itemToEdit.orderDetailArrBlankRoundNeck?.length > 0) {
       updatedFormData.orderDetailArrBlankRoundNeck = mergeOptionsWithSelectedData(itemToEdit.orderDetailArrBlankRoundNeck, initialBankRoundNackOptions);
-      console.log("updatedFormData",updatedFormData)
-      navigate('/blankRoundNeck', { state: { itemToEdit: updatedFormData } });
+    navigate('/blankRoundNeck', { state: { itemToEdit: updatedFormData } });
     }
      else if (itemToEdit.orderDetailArrBlankDropSholder?.length > 0) {
       updatedFormData.orderDetailArrBlankDropSholder = mergeOptionsWithSelectedData(itemToEdit.orderDetailArrBlankDropSholder, initialBankDropSholderOptions);
@@ -547,37 +518,7 @@ const startEdit = (e, itemIdentifier) => {
   }
 };
 
-    // const startEdit = (e, itemIdentifier) => {
-    //   e.preventDefault();
-    //   let productType = null;
-    
-    //   // Find the item in cartItems
-    //   const itemToEdit = cartItems.find(item => item.uniqueId === itemIdentifier);
-    
-    //   if (itemToEdit) {
-    //     // Check which product array the item belongs to
-    //     if (itemToEdit.orderDetailArr?.length > 0) {
-    //       productType = "Custom Round Neck tshirt";
-    //     } else if (itemToEdit.orderDetailArrCustomDropSholder?.length > 0) {
-    //       productType = "Custom Drop Shoulder";
-    //     } else if (itemToEdit.orderDetailArrCustomHoodie?.length > 0) {
-    //       productType = "Custom Hoodie";
-    //     }
-    
-    //     // Navigate based on the product type
-    //     if (productType === "Custom Round Neck tshirt") {
-    //       navigate('/customRoundNeck');
-    //     }  if (productType === "Custom Drop Shoulder") {
-    //       navigate('/customDropSholder');
-    //     }  if (productType === "Custom Hoodie") {
-    //       navigate('/customHoodie');
-    //     }
-    
-    //     // Set the form data for editing
-    //     setFormData(itemToEdit);
-    //   }
-    // };
-    
+   
 
     useEffect(()=>{
 
@@ -691,7 +632,7 @@ const startEdit = (e, itemIdentifier) => {
                               <>
                               <td className="product-thumbnail">
                               <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/WzhzNv1/Drop-Shoulder-Bottle-Green.jpg" alt="" className="img-fluid" />
-                              {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" /> */}
+                           
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -702,13 +643,7 @@ const startEdit = (e, itemIdentifier) => {
                         {item?.quantityXL&& "XL: " + item?.quantityXL}  
                         {item?.quantityXXL&& "2XL: " + item?.quantityXXL}  
                         {item?.quantityXXXL&& "3XL: " + item?.quantityXXXL}   
-                          {/* {item?.teshirtSize?.L&& "L: " + item?.teshirtSize?.L}  
-                          {item?.tshirtSize?.M&& "M: " +  item?.tshirtSize?.M}  
-                        {item?.teshirtSize?.XL&& "XL: " + item?.teshirtSize?.XL}  
-                        {item?.teshirtSize?.XXL&& "XXL: " + item?.teshirtSize?.XXL}   */}
-                                  
-                                  
-                                  </p>
+                          </p>
                              
                              </td>
                              <td>{item?.totalQuantity}</td>
@@ -731,7 +666,7 @@ const startEdit = (e, itemIdentifier) => {
                               <>
                               <td className="product-thumbnail">
                               <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg" alt="" className="img-fluid" />
-                              {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" /> */}
+                             
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -752,15 +687,7 @@ const startEdit = (e, itemIdentifier) => {
                              </>
                                     } 
                                     </tr> 
-                           
-                                
-                                 
-                                
-                                  
-                                  
-                          
-                           
-                                  )
+                            )
                                  
                               }
                                {
@@ -771,23 +698,17 @@ const startEdit = (e, itemIdentifier) => {
                               <tr>
 
                                   {  
-                                    // item?.totalQuantity>0 &&(item?.printSide &&  
-                                    //  ( item?.printSize|| item?.printSizeBack) ) &&
+                                  
                               <>
                               <td className="product-thumbnail">
-                              {/* {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" /> */}
+                            
                               <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/sQfVyNz/Round-Neck-Black.jpg" alt="file" className="img-fluid" /> 
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
                            
                                  <p>{item?.color}:
-                                 
-                      {/* {item?.teshirtSize?.L && "L: " + item?.teshirtSize?.L}  
-                       {item?.tshirtSize?.M && "M: " +  item?.tshirtSize?.M}  
-                        {item?.teshirtSize?.XL && "XL: " + item?.teshirtSize?.XL}  
-                        {item?.teshirtSize?.XXL && "XXL: " + item?.teshirtSize?.XXL}   */}
-                                  
+                               
                                   {item?.quantityL&& "L: " + item?.quantityL}  
                         {item?.quantityM&& "M: " +  item?.quantityM}  
                         {item?.quantityXL&& "XL: " + item?.quantityXL}  
@@ -800,15 +721,7 @@ const startEdit = (e, itemIdentifier) => {
                              </>
                                     } 
                                     </tr> 
-                           
-                                
-                                 
-                                
-                                  
-                                  
-                          
-                           
-                                  )
+                            )
                                  
                               }
                                {
@@ -819,22 +732,16 @@ const startEdit = (e, itemIdentifier) => {
                               <tr>
 
                                   {  
-                                    // item?.totalQuantity>0 &&(item?.printSide &&  
-                                    //  ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              {/* {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" /> */}
+                           
                               <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/kxwpVfX/Drop-Shoulder-Black.jpg" alt="file" className="img-fluid" /> 
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
                            
                                  <p>{item?.color}:
-                                 
-                          {/* {item?.teshirtSize?.L&& "L: " + item?.teshirtSize?.L}  
-                          {item?.tshirtSize?.M&& "M: " +  item?.tshirtSize?.M}  
-                        {item?.teshirtSize?.XL&& "XL: " + item?.teshirtSize?.XL}  
-                        {item?.teshirtSize?.XXL&& "XXL: " + item?.teshirtSize?.XXL}   */}
+                           
                                 {item?.quantityL&& "L: " + item?.quantityL}  
                         {item?.quantityM&& "M: " +  item?.quantityM}  
                         {item?.quantityXL&& "XL: " + item?.quantityXL}  
@@ -859,11 +766,10 @@ const startEdit = (e, itemIdentifier) => {
                               <tr>
 
                                   {  
-                                    // item?.totalQuantity>0 &&(item?.printSide &&  
-                                    //  ( item?.printSize|| item?.printSizeBack) ) &&
+                                   
                               <>
                               <td className="product-thumbnail">
-                              {/* {/* <img style={{width:"60px",height:"60px"}} src={item?.image} alt="Image" className="img-fluid" /> */}
+                             
                               <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg" alt="file" className="img-fluid" /> 
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
@@ -871,11 +777,7 @@ const startEdit = (e, itemIdentifier) => {
                            
                                  <p>{item?.color}:
                                  
-                          {/* {item?.teshirtSize?.L&& "L: " + item?.teshirtSize?.L}  
-                          {item?.tshirtSize?.M&& "M: " +  item?.tshirtSize?.M}  
-                        {item?.teshirtSize?.XL&& "XL: " + item?.teshirtSize?.XL}  
-                        {item?.teshirtSize?.XXL&& "XXL: " + item?.teshirtSize?.XXL}   */}
-                                  
+                           
                                   {item?.quantityL&& "L: " + item?.quantityL}  
                         {item?.quantityM&& "M: " +  item?.quantityM}  
                         {item?.quantityXL&& "XL: " + item?.quantityXL}  
@@ -914,25 +816,7 @@ const startEdit = (e, itemIdentifier) => {
                             }
                             
                         
-                          {/* <tr>
-                            <td className="product-thumbnail">
-                              <img src="images/cloth_1.jpg" alt="Image" className="img-fluid" />
-                            </td>
-                            <td className="product-name" style={{textAlign: 'left'}}>
-                              <h5>Custom Round Neck T-Shirt</h5>
-                              <p>White: M-1</p>
-                              <p>Black: M-1, L-1</p>
-                              <p>Red: M-1, L-1, XL-1</p>
-                              <p>Green: M-1, L-1, XL-1, XXL-1</p>
-                            </td>
-                            <td><span style={{fontWeight: 800}}>৳</span>490</td>
-                            <td>1</td>
-                            <td><span style={{fontWeight: 800}}>৳</span>490</td>
-                            <td>
-                              <a href="#" className="btn btn-primary btn-sm">X</a>
-                              <a href="#" className="btn btn-primary btn-sm">E</a>
-                            </td>
-                          </tr> */}
+                         
                         </tbody>
                       </table>
                     </div>
@@ -954,14 +838,7 @@ const startEdit = (e, itemIdentifier) => {
                             <h3 className="text-black h4 text-uppercase">Cart Totals</h3>
                           </div>
                         </div>
-                        {/* <div className="row mb-3">
-                          <div className="col-md-6">
-                            <span className="text-black">Subtotal</span>
-                          </div>
-                          <div className="col-md-6 text-right">
-                            <strong className="text-black"><span style={{fontWeight: 800}}>৳</span>230.00</strong>
-                          </div>
-                        </div> */}
+                       
                         <div className="row mb-5">
                           <div className="col-md-6">
                             <span className="text-black">Total</span>

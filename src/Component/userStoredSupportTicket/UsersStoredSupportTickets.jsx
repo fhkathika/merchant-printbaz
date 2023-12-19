@@ -8,7 +8,7 @@ import BlotFormatter from 'quill-blot-formatter';
 import 'quill/dist/quill.snow.css';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, onClose,adminUser,userEmail,userName }) => {
-  console.log("adminUser",adminUser);
+ 
   const [chatLog, setChatLog] = useState([]);
   const [newMsg, setNewMsg] = useState('');
   const [usersStoredTickets, setUsersStoredTickets] = useState([]);
@@ -28,28 +28,24 @@ const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, o
   useEffect(() => {
     if (quill) {
       quill.on('text-change', (delta, oldContents) => {
-        // const text =  quillRef.current.getEditor().getText();
-        // setNewMsg(text)
-        console.log("delta,delta",delta);
+        
+       
         delta.ops.forEach((op) => {
           if (typeof op.insert === 'string') {
-            console.log('Inserted text:', op.insert);
-            console.log('Applied formats:', op.attributes);
+         
           } else if (op.insert && typeof op.insert === 'object') {
             // handle embeds like images, video etc.
             Object.keys(op.insert).forEach((key) => {
-              console.log('Inserted object of type:', key);
-              console.log('Object value:', op.insert[key]);
-              console.log('Applied formats:', op.attributes);
+             
             });
           }
         });
         const currentContents = quill.getContents();
-        console.log(currentContents.diff(oldContents));
+       
 
         const text = quill.getText();
         const format=quill.getFormat();
-        console.log('Typed text:', format);
+       
         // setNewMsg(text)
         setNewMsg(quill.root.innerHTML);
       });
@@ -57,7 +53,7 @@ const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, o
   }, [quill, Quill]);
 
   
- console.log("userOrderId",userOrderId);
+ 
   useEffect(() => {
     // Fetch the chat log from the server when the component mounts
    
@@ -76,24 +72,15 @@ const UsersStoredSupportTickets = ({ message,ticketId,userOrderId,ticketIssue, o
   
   let filterByTicketId=usersStoredTickets?.find(ticket=>ticket.ticketId===ticketId)
   let filterByAdminUser=usersStoredTickets?.filter(ticket=>ticket.adminUser===adminUser)
-console.log("usersStoredTickets",usersStoredTickets);
+
 const lastTicketStatus = filterByTicketId?.ticketStatus
-console.log("filterByTicketId?.adminUser",filterByTicketId);
-const handleNewMessageChange = (e) => {
-      console.log(e.target.value);
-      setNewMsg(e.target.value);
-  };
+
       //upload files
       const handleFileChange = (e) => {
         const filesArray = Array.from(e.target.files);
       setSelectedFiles(filesArray);
       };
-      
- console.log("newMessage",newMsg); 
- const handleInputTicketIssueChange = async (e) => {
-  const status = e.target.value; // the new status
-console.log("status",status);
- }
+
 
     
  const handleSendMessage = async (e) => {
@@ -151,7 +138,7 @@ headers: {
     setNewMsg('');
     setSelectedFiles('');
    fetchOrderIddata();
-    console.log("chatLog",chatLog);
+  
   } catch (err) {
     console.error(err);
   }

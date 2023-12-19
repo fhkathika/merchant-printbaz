@@ -41,8 +41,7 @@ else if(printSide==="bothSide" && printSizeBack==="2.5 X 5"){
 }
 
 
-
-  console.log("backDtfAndAdditionalCost",backDtfAndAdditionalCost);  
+ 
   return ({ backDtfAndAdditionalCost: backDtfAndAdditionalCost });
 };
 

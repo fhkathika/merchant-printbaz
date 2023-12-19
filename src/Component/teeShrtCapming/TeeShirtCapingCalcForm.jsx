@@ -54,13 +54,10 @@ const blankHoodieFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank
 const customDropSholderinputFilter=customDropSholderFilter?.find(thsirt => thsirt.printSizeFront === printSize)
 const customHoodieBackinputFilter=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === printSizeBack)
 
-console.log("customHoodieBackinputFilter",customHoodieBackinputFilter)
 
 const [selectProductType, setSelectProductType] = useState('Round Neck');
 const [printSide, setPrintSide] = useState('frontSide');
-console.log("printSize",printSize)
-console.log("printSizeBack",printSizeBack)
-console.log("printSide",printSide)
+
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     switch (id) {
@@ -81,43 +78,7 @@ console.log("printSide",printSide)
       
               <Container className="sbcalc  lg xs md  mt-4">
   
-              {/* {
-                  !user && <div id="popup1" className="overlay">
-                  <div className="popup">
-                     
-                      <div className="content">
-                      <div style={{ display: display }}>
-                      <Login id ="login" closePopup={()=>closePopup}/>
-                      </div>
-                      
-                      <div style={{marginTop: "15px" }}>
-                      <div>
-                          {
-                              displayNone==="none" &&
-                              <p  style={{ backgroundColor:"none",border:"none",textDecoration:"none",color:"#124",fontWeight:"500",cursor:"pointer",textAlign:"center"}} onClick={showRegister}> Sign Up</p>
-                              
-                             
-                          }
-     
-      <div id="register"style={{ display: displayNone }}> <Register/></div>
-      {
-                          displayNone==="block" && 
-                          <p  style={{ backgroundColor:"none",border:"none",textDecoration:"none",color:"#124",fontWeight:"500",cursor:"pointer",textAlign:"center",marginTop:"12px"}} onClick={showLogin}> Log in</p>
-                      }
-    </div>
-               
-
-                      </div>
-                    
-                    
-                      </div>
-                    
-                  </div>
-                  </div>
               
-} */}
-    
-           {/* <GotoAnotherPathBtn path="/" className="section-title" title="Tee Shirt  Price Calculator"></GotoAnotherPathBtn> */}
           
            <div className="panel-title seals_report_title mb-4">
                     <h2>{selectProductType} Calculator <span style={{float: 'right'}}>    <select 
@@ -559,7 +520,7 @@ console.log("printSide",printSide)
                   <Col  xs={12} md={4} className="mt-25"  >
                     
                     <div  className="printSizeDemoCol" >
-                    <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg' className='img-fluid' alt='10X14' />
+                    <img src="https://i.ibb.co/g7n7TZQ/Round-Neck-F-10-X-14.jpg" className='img-fluid' alt='10X14' />
                     </div>
                      
               <div className='printSizeTextDiv'>
@@ -572,7 +533,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4}  className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 5.jpg' className='img-fluid' alt='2.5X5' />
+                  <img src="https://i.ibb.co/xL3q0nJ/Round-Neck-F-2-5-X-5.jpg" className='img-fluid' alt='2.5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -584,7 +545,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4}  className="mt-25" >
             
             <div  className="printSizeDemoCol" >
-            <img  src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 10.jpg' className='img-fluid' alt='10X10' />
+            <img  src="https://i.ibb.co/BNLYGK4/Round-Neck-F-10-X-10.jpg" className='img-fluid' alt='10X10' />
             </div>
              
       <div className='printSizeTextDiv'>
@@ -596,7 +557,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4}  className="mt-25" >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 5.jpg' className='img-fluid' alt='10X5' />
+                  <img src="https://i.ibb.co/8mXpGDT/Round-Neck-F-10-X-5.jpg" className='img-fluid' alt='10X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -609,7 +570,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/7NjsN7V/Round-Neck-F-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -621,7 +582,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/cxLWxLV/Round-Neck-F-2-5-X-2-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -636,7 +597,7 @@ console.log("printSide",printSide)
                   <Col  xs={12} md={4} className="mt-25"  >
                     
                     <div  className="printSizeDemoCol" >
-                    <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 14.jpg' className='img-fluid' alt='10X14' />
+                    <img src="https://i.ibb.co/jzCSLm4/Round-Neck-B-10-X-14.jpg" className='img-fluid' alt='10X14' />
                     </div>
                      
               <div className='printSizeTextDiv'>
@@ -649,7 +610,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4}  className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 2.5 X 5.jpg' className='img-fluid' alt='2.5X5' />
+                  <img src="https://i.ibb.co/VVNydtF/Round-Neck-B-2-5-X-5.jpg" className='img-fluid' alt='2.5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -661,7 +622,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4}  className="mt-25" >
             
             <div  className="printSizeDemoCol" >
-            <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 10.jpg' className='img-fluid' alt='10X10' />
+            <img src="https://i.ibb.co/ZXs96Xt/Round-Neck-B-10-X-10.jpg" className='img-fluid' alt='10X10' />
             </div>
              
       <div className='printSizeTextDiv'>
@@ -673,7 +634,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4}  className="mt-25" >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 5.jpg' className='img-fluid' alt='10X5' />
+                  <img src="https://i.ibb.co/BZQX21W/Round-Neck-B-10-X-5.jpg" className='img-fluid' alt='10X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -686,7 +647,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/K7LGn3J/Round-Neck-B-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -698,7 +659,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Round Neck/Round Neck B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/wBp0XWK/Round-Neck-B-2-5-X-2-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -714,7 +675,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/BLphCC2/Hoodies-F-10-X-14.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -727,7 +688,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/RgGRccm/Hoodies-F-10-X-10.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -740,7 +701,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/drgVQsf/Hoodies-F-10-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -748,7 +709,7 @@ console.log("printSide",printSide)
             </div>
                 </Col> 
                 } 
-                 {
+                 {/* {
                   printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
                   <Col xs={12} md={4} className="mt-25"  >
             
@@ -760,13 +721,13 @@ console.log("printSide",printSide)
             <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
             </div>
                 </Col> 
-                } 
+                }  */}
                  {
                   printSize==="5 x 5" &&   selectProductType==="Hoodie" && printSide==="frontSide" &&
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/Mpyy9Xn/Hoodies-F-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -779,7 +740,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/x1M5Drs/Hoodies-F-2-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -792,7 +753,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/3CVLxk9/Hoodies-F-2-5-X-2-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -808,7 +769,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/NZKG5Xx/Hoodies-B-10-X-14.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -821,7 +782,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/jDdd1pW/Hoodies-B-10-X-10.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -834,7 +795,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/Zm6T4nS/Hoodies-B-10-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -847,7 +808,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/pdm0D4C/Hoodies-B-11-7-X-16-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -860,7 +821,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/xDYJhvW/Hoodies-B-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -873,7 +834,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/TwQpwYv/Hoodies-B-2-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -886,7 +847,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/3mGkgXj/Hoodies-B-2-5-X-2-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -894,20 +855,7 @@ console.log("printSide",printSide)
             </div>
                 </Col> 
                 }
-                 {
-                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Hoodie" && printSide==="backSide" &&
-                  <Col xs={12} md={4} className="mt-25"  >
-            
-                  <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Hoodies/Hoodies B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
-                  </div>
-                   
-            <div className='printSizeTextDiv'>
-            <p className='printSizeText'>print size : 2.5 x 2.5</p>
-            </div>
-                </Col> 
-                } 
-               
+                
                 {/* Drop sholder front side  */}
                 
                 {
@@ -915,7 +863,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/F4fqhVH/Drop-Sholder-F-11-7-X-16-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -927,31 +875,20 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/xjLc8qt/Drop-Sholder-F-10-X-14.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
             <p className='printSizeText'>print size : 10 x 14</p>
             </div>
                 </Col> 
-                }     {
-                  printSize==="11.7 x 16.5 (A3)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
-                  <Col xs={12} md={4} className="mt-25"  >
-            
-                  <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
-                  </div>
-                   
-            <div className='printSizeTextDiv'>
-            <p className='printSizeText'>print size : 11.7 x 16.5 (A3)</p>
-            </div>
-                </Col> 
-                }     {
+                }   
+                       {
                   printSize==="10 x 10 (A4)" &&   selectProductType==="Drop Sholder" && printSide==="frontSide" &&
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  <img src='https://i.ibb.co/61KcTNN/Drop-Sholder-F-10-X-10.jpg' className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -963,7 +900,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/HxyYMGW/Drop-Sholder-F-10-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -975,7 +912,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/KKphwBk/Drop-Sholder-F-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -987,7 +924,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/F4nr3hS/Drop-Sholder-F-2-5-X-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1000,11 +937,11 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder F 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/DKDmzsW/Drop-Sholder-F-2-5-X-2-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
-            <p className='printSizeText'>print size : 2.5 x 2.5)</p>
+            <p className='printSizeText'>print size : 2.5 x 2.5</p>
             </div>
                 </Col> 
                 } 
@@ -1016,7 +953,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/w6zt19W/Drop-Sholder-B-11-7-X-16-5.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1028,7 +965,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 14.jpg' className='img-fluid' alt='5X5' />
+                  <img src="https://i.ibb.co/ZLSxWvz/Drop-Sholder-B-10-X-14.jpg" className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1040,7 +977,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 11.7 X 16.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src='https://i.ibb.co/w6zt19W/Drop-Sholder-B-11-7-X-16-5.jpg' className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1052,7 +989,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 10.jpg' className='img-fluid' alt='5X5' />
+                  <img src='https://i.ibb.co/qNHM8yp/Drop-Sholder-B-10-X-10.jpg' className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1064,7 +1001,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 10 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src='https://i.ibb.co/9NQ3KfP/Drop-Sholder-B-10-X-5.jpg' className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1076,7 +1013,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src='https://i.ibb.co/cD4bJvh/Drop-Sholder-B-5-X-5.jpg' className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1088,7 +1025,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 2.5 X 5.jpg' className='img-fluid' alt='5X5' />
+                  <img src='https://i.ibb.co/9sYThfJ/Drop-Sholder-B-2-5-X-5.jpg' className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1101,7 +1038,7 @@ console.log("printSide",printSide)
                   <Col xs={12} md={4} className="mt-25"  >
             
                   <div  className="printSizeDemoCol" >
-                  <img src='/T-Shirt Size Picture/Drop Sholder/Drop Sholder B 2.5 X 2.5.jpg' className='img-fluid' alt='5X5' />
+                  <img src='https://i.ibb.co/wsFdX75/Drop-Sholder-B-2-5-X-2-5.jpg' className='img-fluid' alt='5X5' />
                   </div>
                    
             <div className='printSizeTextDiv'>
@@ -1190,20 +1127,7 @@ console.log("printSide",printSide)
        
         </Row>
       } 
-
-
-
-
-          
-        {/* {
-          ( (user?.email==="fariha.printbaz@gmail.com" ) ||
-           (user?.email==="shuvro.printbaz@gmail.com")) &&
-           <UpdateValue path="/tee_shirt_camping/update"></UpdateValue>
-        } */}
-          
-       
-          
-        </Container>
+ </Container>
         <Footer/>
         <BackToTop/>
         </div>  

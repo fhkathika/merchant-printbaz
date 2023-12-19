@@ -23,7 +23,6 @@ const BlankDropSholder  = () => {
     useContext(CartContext);
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
-    console.log("formData",formData)
 
   let idPrice = "teeShirtCampingId";
   let collectionsPrice = "productValues";
@@ -56,7 +55,7 @@ const BlankDropSholder  = () => {
     setShowLoginPopup(false);
   };
   const { user } = useContext(AuthContext);
-  console.log("user",user)
+
   const userEmail = user?.email;
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount, setRecvAmount] = useState();
@@ -84,13 +83,13 @@ const BlankDropSholder  = () => {
 
 
   const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
-  console.log("addBrandLogoArray",addBrandLogoArray)
+ 
  
 const handleFileChange = async (event, index, fileType, oldFileId = null) => {
   const { files } = event.target;
   const updatedBrandLogoArray = [...addBrandLogoArray];
   if (files && files.length > 0) {
-    console.log("has file")
+  
     const file = files[0];
     const formData = new FormData();
     formData.append('file', file);
@@ -190,8 +189,7 @@ const removeFileFromServer = async (fileId) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    // Handle the response from the server confirming the file has been deleted
-    console.log('File removed from server');
+   
 
   } catch (error) {
     console.error('Error removing file from server:', error);
@@ -221,14 +219,12 @@ let perCategoryCost=0
        
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+ 
         if (EditItemDetail?.orderDetailArrBlankDropSholder[i]?.brandLogo?.fileId) {
           perCategoryCost=(5*formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity)+(formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
           perCategoryCost=formData?.orderDetailArrBlankDropSholder[i]?.totalQuantity  * blankDropSholderFilter?.frontSideprice
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
   
         }
@@ -243,14 +239,12 @@ let perCategoryCost=0
       
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+ 
         if (isBrandLogoSelected) {
           perCategoryCost=(5*formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity)+(formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankDropSholderFilter?.frontSideprice)
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
           perCategoryCost=formData?.orderDetailArrBlankDropSholder[j]?.totalQuantity  * blankDropSholderFilter?.frontSideprice
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
   
         }
@@ -266,7 +260,7 @@ let perCategoryCost=0
     const newOrderDetailArr = [...formData.orderDetailArrBlankDropSholder];
 
     let itemIndex = newOrderDetailArr.findIndex((item) => item.color === color);
-    // console.log("printSIde",value)
+  
     if (
       name === "color" ||
       name === "teshirtSize" ||
@@ -425,7 +419,6 @@ let perCategoryCost=0
 
     if (response.ok) {
       // Order data sent successfully
-      console.log('add tocart data sent to server successfully');
       setShowAlert(true);
     } else {
       // Handle errors
@@ -528,7 +521,6 @@ setShowLoginPopup(true)
 
     if (response.ok) {
       // Order data sent successfully
-      console.log('add tocart data sent to server successfully');
       setShowBuyNowAlert(true);
     } else {
       // Handle errors

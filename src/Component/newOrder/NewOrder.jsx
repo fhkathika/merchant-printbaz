@@ -107,15 +107,7 @@ const NewOrder = () => {
   const options = { month: "long", day: "numeric", year: "numeric" };
   const formattedDate = d.toLocaleDateString("en-US", options);
   const { tshirtPrice } = useGetTshirtPrice();
-  //  console.log("dynamicBackPrices",dynamicBackPrices)
-  // console.log("dynamicFrontPrices",dynamicFrontPrices)
-  // these will come from database
-  // let price_10x14=358
-  // let price_10x10=301
-  // let price_10x5=272
-  // let price_5X5=257
-  // let price_2p5X5=250
-  // let price_2p5X2p5=247
+ 
   let price_10x14 = customRoundNeckinputFront10X14?.frontSideprice;
   let price_10x10 = customRoundNeckinputFront10X10?.frontSideprice;
   let price_10x5 = customRoundNeckinputFront10X5?.frontSideprice;
@@ -123,13 +115,6 @@ const NewOrder = () => {
   let price_2p5X5 = customRoundNeckinputFront2p5X5?.frontSideprice;
   let price_2p5X2p5 = customRoundNeckinputFront2p5X2p5?.frontSideprice;
 
-  // let backSideDtfprice_10x14=113
-  // let backSideDtfprice_10x10=57
-  // let backSideDtfprice_10x5=29
-  // let backSideDtfprice_5X5=15
-  // let backSideDtfprice_2p5X5=8
-  // let backSideDtfprice_2p5X2p5=4
-  // let additionalCost=10
   let backSideDtfprice_10x14 = customRoundNeckinputBack10X14?.backSideprice;
   let backSideDtfprice_10x10 = customRoundNeckinputBack10X10?.backSideprice;
   let backSideDtfprice_10x5 = customRoundNeckinputBack10X5?.backSideprice;
@@ -151,13 +136,12 @@ const NewOrder = () => {
 
 
   const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
-  console.log("addBrandLogoArray",addBrandLogoArray)
  
 const handleFileChange = async (event, index, fileType, oldFileId = null) => {
   const { files } = event.target;
   const updatedBrandLogoArray = [...addBrandLogoArray];
   if (files && files.length > 0) {
-    console.log("has file")
+   
     const file = files[0];
     const formData = new FormData();
     formData.append('file', file);
@@ -322,14 +306,13 @@ const removeFileFromServer = async (fileId) => {
         ).backDtfAndAdditionalCost;
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+ 
         if (EditItemDetail?.orderDetailArr[i]?.brandLogo?.fileId) {
           // printbazcost=parseInt(printbazcostbase+5)
           let brandLogoCost = 5 * formData?.orderDetailArr[i]?.totalQuantity;
           printbazcostbase =
             Number(totalPrice) + backSidePrintCost + brandLogoCost;
-          // console.log("brandLogoCost",brandLogoCost);
-          // console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
+       
           printbazcost += printbazcostbase;
           const test = printbazcost + backSidePrintCost;
           // console.log("addbrandLogo",addbrandLogo);

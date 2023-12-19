@@ -42,7 +42,6 @@ const BlankHoodie = () => {
     useContext(CartContext);
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
-    console.log("formData",formData)
   // const { itemToEdit } = useFilterProducts();
   const [OpenCheckout, setOpenCheckout] = useState(false);
   let id = "resellerOrdersId";
@@ -83,7 +82,7 @@ const BlankHoodie = () => {
     setShowLoginPopup(false);
   };
   const { user } = useContext(AuthContext);
-  console.log("user",user)
+
   const userEmail = user?.email;
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount, setRecvAmount] = useState();
@@ -112,13 +111,13 @@ const BlankHoodie = () => {
 
 
   const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
-  console.log("addBrandLogoArray",addBrandLogoArray)
+
  
 const handleFileChange = async (event, index, fileType, oldFileId = null) => {
   const { files } = event.target;
   const updatedBrandLogoArray = [...addBrandLogoArray];
   if (files && files.length > 0) {
-    console.log("has file")
+  
     const file = files[0];
     const formData = new FormData();
     formData.append('file', file);
@@ -194,7 +193,7 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
        if (uploadedFile) {
         await removeFileFromServer(uploadedFile.fileId);
         setUploadedFile(null);
-        console.log("File is deleted")
+      
         alert('File is deleted.'); // Display confirmation message
   
        
@@ -208,7 +207,7 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
 };
 useEffect(()=>{},[addBrandLogoArray,uploadedFile,formData])
-console.log("uploadedFile.............",uploadedFile)
+
 const removeFileFromServer = async (fileId) => {
   try {
     // const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
@@ -221,7 +220,7 @@ const removeFileFromServer = async (fileId) => {
     }
 
     // Handle the response from the server confirming the file has been deleted
-    console.log('File removed from server');
+  
 
   } catch (error) {
     console.error('Error removing file from server:', error);
@@ -251,14 +250,12 @@ let perCategoryCost=0
        
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+ 
         if (EditItemDetail?.orderDetailArrBlankHoodie[i]?.brandLogo?.fileId) {
           perCategoryCost=(5*formData?.orderDetailArrBlankHoodie[i]?.totalQuantity)+(formData?.orderDetailArrBlankHoodie[i]?.totalQuantity  * blankHoodieFilter?.frontSideprice)
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
           perCategoryCost=formData?.orderDetailArrBlankHoodie[i]?.totalQuantity  * blankHoodieFilter?.frontSideprice
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
   
         }
@@ -273,14 +270,12 @@ let perCategoryCost=0
       
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+ 
         if (isBrandLogoSelected) {
           perCategoryCost=(5*formData?.orderDetailArrBlankHoodie[j]?.totalQuantity)+(formData?.orderDetailArrBlankHoodie[j]?.totalQuantity  * blankHoodieFilter?.frontSideprice)
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
         } else {
           perCategoryCost=formData?.orderDetailArrBlankHoodie[j]?.totalQuantity  * blankHoodieFilter?.frontSideprice
-          console.log("perCategoryCost",perCategoryCost);
           printbazcost +=perCategoryCost
   
         }
@@ -296,7 +291,7 @@ let perCategoryCost=0
     const newOrderDetailArr = [...formData.orderDetailArrBlankHoodie];
 
     let itemIndex = newOrderDetailArr.findIndex((item) => item.color === color);
-    // console.log("printSIde",value)
+    
     if (
       name === "color" ||
       name === "teshirtSize" ||
@@ -455,7 +450,6 @@ let perCategoryCost=0
 
     if (response.ok) {
       // Order data sent successfully
-      console.log('add tocart data sent to server successfully');
       setShowAlert(true);
     } else {
       // Handle errors
@@ -558,7 +552,6 @@ setShowLoginPopup(true)
 
     if (response.ok) {
       // Order data sent successfully
-      console.log('add tocart data sent to server successfully');
       setShowBuyNowAlert(true);
     } else {
       // Handle errors

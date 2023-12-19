@@ -83,14 +83,10 @@ useEffect(() => {
     const adminUser = filterByTicketId?.adminUser
 
 
-    // console.log("adminUser from client",adminUser);
     useEffect(() => {
       // Fetch the chat log from the server when the component mounts
       fetchOrderIddata();
-      // fetchUserIddata()
-      // Scroll to the bottom of the chat log on initial load
      
-    
       // Fetch the chat log every 10 seconds
       const intervalId = setInterval(() => {
         fetchOrderIddata();
@@ -124,19 +120,9 @@ useEffect(() => {
           console.error(err);
         }
       };
-    
 
-  //  console.log("filterByTicketId",filterByTicketId);  
-
-
-    ///input text
-      const handleNewMessageChange = (e) => {
-        // console.log(e.target.value);
-        setNewMsg(e.target.value);
-    };
     //upload files
     const handleFileChange = (e) => {
-      console.log(e.target.files.length)
       setSelectedFiles(e.target.files);
     };
     
@@ -355,7 +341,7 @@ return (
               <h3 >{timeSince(new Date(viewTick?.timestamp))} ({new Date(viewTick?.timestamp).toLocaleString("en-US", { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' })})</h3>
               <hr className='hr_lineStyle'/>
        
-              {/* <p>   {viewTick.content}</p> */}
+           
               <div dangerouslySetInnerHTML={{ __html: viewTick.content }} />
             
               {/* // upload image  */}
@@ -388,15 +374,7 @@ return (
               <div ref={messagesEndRef} />
          
           </div>
-          {/* <div className="row">
-            <div className="col-12">
-             
-             
-              
-              
-            
-            </div>
-          </div> */}
+          
             <div className="row">
               <div className='col-lg-12 col-sm-12  '>
               {
@@ -407,19 +385,9 @@ return (
             :
              <form className="input-group chat-messages p-4 " onSubmit={handleSendMessage}>
     <div   ref={quillRef}  />
-    {/* <textarea  className='col-12'
-                       type="text"
-                       rows="11" cols="33"
-                       value={newMsg}
-                       onChange={handleNewMessageChange}
-                       placeholder="Type your message here..."
-                       required
-                     /> */}
-                     
+    
                      <div className=' col-lg-12 col-sm-12' style={{marginTop:"20px"}} >
-                     {/* <button  className="btn"><i className="fa fa-paperclip" aria-hidden="true" /></button> */}
-                   
-      
+                     
                      </div>  
                      <div className='flex block-mobile col-12' style={{marginTop:"20px"}} >
            
@@ -442,22 +410,10 @@ return (
                    
                      </div>
 
-                  
-                     
-                    
-                  
-                     {/* <input type="text" className="form-control"   value={newMessage}
-                       onChange={handleNewMessageChange} placeholder="Type your message" />
-                                   <button className="btn"><i className="fa fa-paperclip" aria-hidden="true" /></button>
-                                   <button className="btn btn-primary">Reply</button> */}
                    </form>
 }
               </div>
-        
-           
-                     
-           
-          </div>
+        </div>
         </div>
         
        

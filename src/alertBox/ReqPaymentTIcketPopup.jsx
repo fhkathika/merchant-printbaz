@@ -25,7 +25,7 @@ const ReqPaymentTIcketPopup = ({ userId,
   const [usersStoredTickets, setUsersStoredTickets] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
     const {user}=useContext(AuthContext);
-   console.log("user",user);
+ 
 
     const [countdown, setCountdown] = useState(null);
 
@@ -142,13 +142,11 @@ headers: {
      
     } else {
       // Not 24 hours yet, don't allow
-      console.log("You can't create another ticket yet.");
       setShowPopup(false)
         setReqBtnStatus(false)
     }
   }
 
-console.log("createTicket from reqPayment",createTicket);
 
 
   return (

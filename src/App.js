@@ -51,32 +51,6 @@ function App() {
   const location=useLocation();
   const from=location.state?.from?.pathname || '/dashboard'
 
-//   useEffect(() => {
-//     if (!loading) {
-//         if (!user && location.pathname !== "/login") {
-//             navigate("/login");
-//             console.log("no user");
-//         } else if (user && location.pathname === "/login") {
-//             navigate(from, {replace: true} );
-//         }
-//     }
-// }, [user, location.pathname, navigate, loading]);
-
-
- 
-    // return (
-    //   <>
-    //     <div className="alert-overlay"  />
-    //     <div className="alert-box" >
-    //       <Spinner   animation="grow" variant="danger" />
-    //       <Spinner  style={{padding:"20px"}} animation="grow" variant="warning" />
-    //       <Spinner  animation="grow" variant="light" />
-    //       <Spinner  animation="grow" variant="primary" />
-    //       <h2>Please wait!</h2>
-    //     </div>
-    //   </>
-    // );
-  
   return (
     <div className="App">
        

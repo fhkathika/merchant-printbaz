@@ -5,35 +5,7 @@ import NavigationBar from '../Navbar/NavigationBar';
 import BackToTop from '../backToTop/BackToTop';
 
 const PrintSizeDemo = () => {
-  const demoImages=[
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 5.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 10.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 5.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 5 X 5.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 2.5 X 2.5.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck B 10 X 14'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-    {img:'/T-Shirt Size Picture/Round Neck/Round Neck F 10 X 14.jpg'},
-  
-  ]
+ 
     return (
       <>
       <NavigationBar/>
@@ -45,7 +17,7 @@ const PrintSizeDemo = () => {
   <Col xs={6} md={4}  className="mt-25"  >
       
       <div  className="printSizeDemoCol" >
-      <img src='/T-Shirt Size Picture/2.5X5.png' className='img-fluid' alt='2.5X5' />
+      <img src='https://i.ibb.co/ThV27Qy/2-5X5.png' className='img-fluid' alt='2.5X5' />
       </div>
        
 <div className='printSizeTextDiv'>
@@ -55,7 +27,7 @@ const PrintSizeDemo = () => {
     <Col xs={6} md={4} className="mt-25"  >
       
       <div  className="printSizeDemoCol" >
-      <img src='/T-Shirt Size Picture/5X5.png' className='img-fluid' alt='5X5' />
+      <img src='https://i.ibb.co/jk26jbx/5X5.png' className='img-fluid' alt='5X5' />
       </div>
        
 <div className='printSizeTextDiv'>
@@ -64,7 +36,7 @@ const PrintSizeDemo = () => {
     </Col> <Col xs={6} md={4}  className="mt-25" >
       
       <div  className="printSizeDemoCol" >
-      <img src='/T-Shirt Size Picture/10X5.png' className='img-fluid' alt='10X5' />
+      <img src='https://i.ibb.co/mTn7WPn/10X5.png' className='img-fluid' alt='10X5' />
       </div>
        
 <div className='printSizeTextDiv'>
@@ -73,7 +45,7 @@ const PrintSizeDemo = () => {
     </Col> <Col xs={6} md={4}  className="mt-25" >
       
       <div  className="printSizeDemoCol" >
-      <img src='/T-Shirt Size Picture/10X10.png' className='img-fluid' alt='10X10' />
+      <img src='https://i.ibb.co/TMkKGbN/10X10.png' className='img-fluid' alt='10X10' />
       </div>
        
 <div className='printSizeTextDiv'>
@@ -83,7 +55,7 @@ const PrintSizeDemo = () => {
     <Col xs={6} md={4} className="mt-25"  >
       
       <div  className="printSizeDemoCol" >
-      <img src='/T-Shirt Size Picture/10X14.png' className='img-fluid' alt='10X14' />
+      <img src='https://i.ibb.co/ThKdXD8/10X14.png' className='img-fluid' alt='10X14' />
       </div>
        
 <div className='printSizeTextDiv'>

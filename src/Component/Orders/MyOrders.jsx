@@ -303,41 +303,11 @@ const filerByOrderDate=info.filter(order=>{
               <div className="col-sm-6">
                 <h1>Order List</h1>
               </div>
-              {/* <div className="col-sm-6 text-right">
-                <button onClick={handlePage} className="btn btn-primary" id="newOrderBtn">New Order</button>
-              </div> */}
-            </div>
-            {/* Order tabs */} 
-            {/* <ul className="nav nav-tabs mt-4" id="orderTabs">
-              <li className="nav-item ">
-                <a className=" tab-link  active " id="all-tab" data-toggle="tab" href="#all"  style={{color: '#001846 !important'}}>All</a>
-              </li>
-              <li className="nav-item ">
-                <a className="tab-link " id="active-tab" data-toggle="tab" href="#active" style={{color: '#001846 !important'}}>Active</a>
-              </li>
-              <li className="nav-item ">
-                <a className="tab-link " id="delivered-tab" data-toggle="tab" href="#delivered" style={{color: '#001846 !important'}}>Delivered</a>
-              </li>
-              <li className="nav-item ">
-                <a className="tab-link "  id="returned-tab" data-toggle="tab" href="#returned" style={{color: '#001846 !important'}}>Returned</a>
-              </li>
-            </ul> */}
-
-{/* <ul className="nav nav-tabs mt-4" id="orderTabs">
-        <li  className={`nav-item ${activeTab === 'all' ? 'active' : ''}`}>
-          <a className="tab-link" id="all-tab" data-toggle="tab" href="#all" onClick={() => handleTabClick('all')}>All</a>
-        </li>
-        <li className={`nav-item ${activeTab === 'active' ? 'active' : ''}`}>
-          <a className="tab-link" id="active-tab" data-toggle="tab" href="#active" onClick={() => handleTabClick('active')}>Active</a>
-        </li>
-        <li className={`nav-item ${activeTab === 'delivered' ? 'active' : ''}`}>
-          <a className="tab-link" id="delivered-tab" data-toggle="tab" href="#delivered" onClick={() => handleTabClick('delivered')}>Delivered</a>
-        </li>
-        <li className={`nav-item ${activeTab === 'returned' ? 'active' : ''}`}>
-          <a className="tab-link" id="returned-tab" data-toggle="tab" href="#returned" onClick={() => handleTabClick('returned')}>Returned</a>
-        </li>
-      </ul> */}
          
+            </div>
+            
+
+  
             {/* filter */}
             <form id="filter-form">
               <div className="row">
@@ -350,10 +320,7 @@ const filerByOrderDate=info.filter(order=>{
                 <label htmlFor="id-filter" style={{marginBottom:"8px"}}>Order Id:</label>
                 <input type="text" id="id-filter" className="form-control" value={filterOrderId}  onChange={handleInputChange} />
               </div>
-              {/* <div className="col-lg-1 col-sm-12">
-                <label htmlFor="brand-filter" style={{marginBottom:"8px"}}>Brand Name</label>
-                <input type="text" id="brand-filter" value={filterBrand} onChange={(e) =>  handleInputChange(e)}  className="form-control" />
-              </div> */}
+              
                  <div className="col-lg-2 col-sm-12">
                 <label htmlFor="productType-filter" style={{marginBottom:"8px"}}>Product Type:</label>
                 <select id="productType-filter" value={filterProductType} className="form-control" onChange={(e) =>  handleInputChange(e)}>
@@ -366,13 +333,7 @@ const filerByOrderDate=info.filter(order=>{
                   <option value="Custom Hoodie">Custom Hoodie</option>
                 </select>
               </div> 
-              
-             
-             
-
-
-                     
-              <div className="col-lg-2 col-sm-12">
+               <div className="col-lg-2 col-sm-12">
                   <label htmlFor="startDate" className="form-label">Start Date</label>
 
                                    <input type='date' id='startDate' className='form-control' value={startDate} onChange={handleInputChange} />

@@ -27,35 +27,27 @@ const SupportTicketPopUp = ({ message,ticketId,userOrderId,onClose,fetchTickets,
       modules: { blotFormatter: {} }
     });
     if (Quill && !quill) {
-      // const BlotFormatter = require('quill-blot-formatter');
       Quill.register('modules/blotFormatter', BlotFormatter);
     }
   
     useEffect(() => {
       if (quill) {
         quill.on('text-change', (delta, oldContents) => {
-          // const text =  quillRef.current.getEditor().getText();
-          // setNewMsg(text)
-          console.log("delta,delta",delta);
+          
           delta.ops.forEach((op) => {
             if (typeof op.insert === 'string') {
-              console.log('Inserted text:', op.insert);
-              console.log('Applied formats:', op.attributes);
             } else if (op.insert && typeof op.insert === 'object') {
               // handle embeds like images, video etc.
               Object.keys(op.insert).forEach((key) => {
-                console.log('Inserted object of type:', key);
-                console.log('Object value:', op.insert[key]);
-                console.log('Applied formats:', op.attributes);
+              
               });
             }
           });
           const currentContents = quill.getContents();
-          console.log(currentContents.diff(oldContents));
   
           const text = quill.getText();
           const format=quill.getFormat();
-          console.log('Typed text:', format);
+     
           // setNewMsg(text)
           setNewMsg(quill.root.innerHTML);
         });
@@ -78,11 +70,8 @@ const SupportTicketPopUp = ({ message,ticketId,userOrderId,onClose,fetchTickets,
         console.error(err);
       }
     };
-    const handleNewMessageChange = (e) => {
-      console.log(e.target.value);
-      setNewMsg(e.target.value);
-  };
- console.log("chatLog",chatLog); 
+ 
+
 
  const getViewClientColor = (status) => {
   if (status === "onHold artwork issue") {
@@ -110,7 +99,6 @@ const SupportTicketPopUp = ({ message,ticketId,userOrderId,onClose,fetchTickets,
 
 const handleInputTicketIssueChange = async (e) => {
   e.preventDefault()
-  console.log("e.target.value",e.target.value);
   setClientTicketIssue(e.target.value)
 if(e.target.value==="billing issue for wrong order"){
     setTicketIssue("onHold billing issue")
@@ -133,7 +121,6 @@ if(e.target.value==="general query"){
 
  
  }
- console.log("ticketIssue",ticketIssue);
      //upload files
      const handleFileChange = (e) => {
       setSelectedFiles(e.target.files);
@@ -197,7 +184,7 @@ headers: {
     fetchChatLog();
      setCreateTicketnotify(true)
       fetchTickets()
-    console.log("chatLog",chatLog);
+    
   } catch (err) {
     console.error(err);
   }
@@ -276,29 +263,14 @@ headers: {
                     </div>
                   </div>
                   <div className="position-relative">
-                  {/* <div className="chat-messages p-4">
-      { chatLog?.map(msg => (
-        <div className={msg.admin === 'user' ? 'chat-message-right pb-4' : 'chat-message-left pb-4'}>
-          <div>
-            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" className="rounded-circle mr-1" alt={msg.sender} width={40} height={40} />
-            <div className="text-muted small text-nowrap mt-2">{new Date(msg.id).toLocaleTimeString()}</div>
-          </div>
-          <div className="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-            <div className="font-weight-bold mb-1">{msg?.admin}</div>
-            {msg.content}
-          </div>
-        </div>
-      ))}
-     
-     
-    </div> */}
+                 
                   </div>
                   <div className="flex-grow-0 py-3 px-2 border-top">
                   
                     <form className="input-group chat-messages  " onSubmit={handleSendMessage}>
                     <div   ref={quillRef}  />
              <div style={{ position:"relative"}}>
-             {/* <i  className="fa fa-paperclip "  aria-hidden="true" />  */}
+           
   
                       <input
                   className="btn"
@@ -311,13 +283,9 @@ headers: {
                 />
                  
                 </div>
-         {/* <button style={{textAlign:"right"}} className="btn"><i className="fa fa-paperclip" aria-hidden="true" /></button> */}
+         
       <button className="btn btn-primary" style={{}} type="submit">Create Ticket</button>
      
-        {/* <input type="text" className="form-control"   value={newMessage}
-          onChange={handleNewMessageChange} placeholder="Type your message" />
-                      <button className="btn"><i className="fa fa-paperclip" aria-hidden="true" /></button>
-                      <button className="btn btn-primary">Reply</button> */}
       </form>
       {
         createTicketnotify &&

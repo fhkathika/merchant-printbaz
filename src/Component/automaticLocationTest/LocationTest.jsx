@@ -1,88 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-
-// function LocationTest() {
-//   const [districts, setDistricts] = useState([]);
-//   const [inputDistrict, setInputDistrict] = useState('');
-//   const [zones, setZones] = useState([]);
-//   const [selectedZone, setSelectedZone] = useState('');
-//   const [selectedArea, setSelectedArea] = useState('');
-//   const [areas, setAreas] = useState([]);
-// console.log("inputDistrict",inputDistrict);
-// console.log("selectedZone",selectedZone);
-// console.log("selectedArea",selectedArea);
-//   // Fetch unique districts when the component mounts
-//   useEffect(() => {
-//     axios.get('http://localhost:5000/unique-districts')
-//       .then(response => {
-//         setDistricts(response.data);
-//       })
-//       .catch(error => {
-//         console.error('Error fetching unique districts:', error);
-//       });
-//   }, []);
-
-//   useEffect(() => {
-//     if (inputDistrict) {
-//       axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(inputDistrict)}`)
-//         .then(response => {
-//           setZones(response.data);
-//           console.log("response.data", response.data);
-//         })
-//         .catch(error => {
-//           console.error('Error fetching zones:', error);
-//           setZones([]);  // Optionally, clear zones if the fetch fails
-//         });
-//     } else {
-//       setZones([]); // Clear zones if the district is not selected
-//       setAreas([]); // Clear areas as well, as they depend on the zone
-//     }
-//   }, [inputDistrict]);
-  
-//     // Fetch areas based on selected zone
-//     useEffect(() => {
-//       if (selectedZone) {
-//         axios.get(`http://localhost:5000/areas/${encodeURIComponent(selectedZone)}`)
-//           .then(response => {
-//             setAreas(response.data);
-//           })
-//           .catch(error => {
-//             console.error('Error fetching areas:', error);
-//             setAreas([]);  // Optionally, clear areas if the fetch fails
-//           });
-//       } else {
-//         setAreas([]); // Clear areas if the zone is not selected
-//       }
-//     }, [selectedZone]);
-
-//   return (
-//     <div>
-  
-//       <select
-//         value={inputDistrict}
-//         onChange={e => setInputDistrict(e.target.value)}
-//       >
-//         <option value="">Select District</option>
-//         {districts.map(d => <option key={d} value={d}>{d}</option>)}
-//       </select>
-
-//       <select onChange={e => setSelectedZone(e.target.value)}>
-//         <option value=''>Select Zone</option>
-//         {zones.map(z => <option key={z} value={z}>{z}</option>)}
-//       </select>
-
-//       <select  onChange={e => setSelectedArea(e.target.value)}>
-//         <option value=''>Select Area</option>
-//         {areas.map(a => <option key={a} value={a}>{a}</option>)}
-//       </select>
-//     </div>
-//   );
-// }
-
-// export default LocationTest;
-
-
-
 
 import React, { useContext, useEffect, useState } from 'react';
 import {  Form ,Button, OverlayTrigger, Tooltip, ProgressBar, Spinner, Row, Col, Card, ListGroup} from 'react-bootstrap';
@@ -159,14 +74,12 @@ const NewOrder = () => {
         console.error('Error fetching unique districts:', error);
       });
   }, []);
-console.log(formData?.districts);
   useEffect(() => {
     if (formData?.districts) {
       // axios.get(`http://localhost:5000/zones?district=${encodeURIComponent(formData?.districts)}`)
       axios.get(`https://mserver.printbaz.com/zones?district=${encodeURIComponent(formData?.districts)}`)
         .then(response => {
           setZones(response.data);
-          console.log("response.data", response.data);
         })
         .catch(error => {
           console.error('Error fetching zones:', error);
@@ -208,8 +121,7 @@ console.log(formData?.districts);
     }, [formData?.districts ,formData?.zones , formData?.areas]);
   
   
-    console.log("deliveryAreas", deliveryAreas);
-
+  
 
   const d = new Date();
     const options = { month: "long", day: "numeric", year: "numeric" };
@@ -384,7 +296,7 @@ let updatedPrintbazcost=0
       else if(formData?.orderDetailArr[i]?.printSizeBack==="2.5 X 5"){
         backSidePrintCost= formData?.orderDetailArr[i]?.quantity * 15
       }
-      console.log("formData?.orderDetailArr[i]?.printSizeBack",(formData?.orderDetailArr[i]?.quantity * 80));
+    
       if(addbrandLogo===true){
         // printbazcost=parseInt(printbazcostbase+5)
         printbazcostbase = Number(totalPrice)+backSidePrintCost+5;
@@ -395,7 +307,6 @@ let updatedPrintbazcost=0
         printbazcost += printbazcostbase;
       }
 
-  // console.log("printbazcost",Number(printbazcost),"+",printbazcostbase)
     } else {
       if(printbazcostbase){
       
@@ -464,13 +375,9 @@ let updatedPrintbazcost=0
     }
     let deliveryFee;
     if (deliveryAreas === "outsideDhaka") {
-      console.log("from deliveryAreas",deliveryAreas);
       deliveryFee = deliveryFeeOutSideDhaka;
-      console.log("deliveryFee outsideDhaka ",deliveryFee);
     } else {
-      console.log("from deliveryAreas others",deliveryAreas);
       deliveryFee = deliveryFeeInsideDhaka;
-      console.log("deliveryFee inside ",deliveryFee);
     }
   
     let recvMoney = 0;
@@ -484,8 +391,7 @@ let updatedPrintbazcost=0
     recvMoney = recvMoneyWithouthandling - costHandlingfee;
    
     let suggestedCollectAmount = Math.ceil((1 + printbazcost + deliveryFee) / 0.97);
-    // console.log("recvMoney",recvMoney)
-    // console.log("suggestedCollectAmount",suggestedCollectAmount)
+   
     const validateForm = () => {
       if (recvMoney < 0) {
         setFormValid(true);
@@ -514,7 +420,6 @@ const handleSubmit = async (e) => {
 
     orderDetailArr?.forEach((item, index) => {
       const fileAndImageData = {};
-      // console.log("item.brandLogo",item.brandLogo);
       if (item.file) {
         item.file.forEach((file, fileIndex) => {
           formData2.append(`file${index}_${fileIndex}`, file); // Append each file
@@ -586,8 +491,6 @@ const handleSubmit = async (e) => {
     });
     if (response.ok) {
       const result = await response.json();
-      // console.log("Success:", result.insertedId);
-      // console.log('API response:', response);
       const orderConfirmationData = { id: result.insertedId, userMail: userEmail };
       SendOrderConfirmationEmail(orderConfirmationData); // Send email confirmation
     

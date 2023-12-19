@@ -149,14 +149,6 @@ deliveryFee=
 deliveryFeeForTshirt+
 deliveryFeeForHoodie+
 deliveryFeeForDropSHolder
-console.log("total_tshirt_weight",total_tshirt_weight)
-console.log("total_Hoodie_weight",total_Hoodie_weight)
-console.log("total_DropSHolder_weight",total_DropSHolder_weight)
-
-console.log("deliveryFee..........",deliveryFee)
-console.log("deliveryFeeForTshirt..........",deliveryFeeForTshirt)
-console.log("deliveryFeeForHoodie..........",deliveryFeeForHoodie)
-console.log("deliveryFeeForDropSHolder..........",deliveryFeeForDropSHolder)
   return({deliveryFee:deliveryFee}) 
 };
 

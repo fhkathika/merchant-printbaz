@@ -41,7 +41,6 @@ const CustomDropSholder = () => {
     useContext(CartContext);
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
-    console.log("formData",formData)
   // const { itemToEdit } = useFilterProducts();
 
   let id = "resellerOrdersId";
@@ -83,7 +82,7 @@ const CustomDropSholder = () => {
     setShowLoginPopup(false);
   };
   const { user } = useContext(AuthContext);
-  console.log("user",user)
+ 
   const userEmail = user?.email;
   const [isLoading, setIsLoading] = useState(false);
   const [OpenCheckout, setOpenCheckout] = useState(false);
@@ -141,13 +140,13 @@ const CustomDropSholder = () => {
 
 
   const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
-  console.log("addBrandLogoArray",addBrandLogoArray)
+
  
 const handleFileChange = async (event, index, fileType, oldFileId = null) => {
   const { files } = event.target;
   const updatedBrandLogoArray = [...addBrandLogoArray];
   if (files && files.length > 0) {
-    console.log("has file")
+ 
     const file = files[0];
     const formData = new FormData();
     formData.append('file', file);
@@ -223,7 +222,7 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
        if (uploadedFile) {
         await removeFileFromServer(uploadedFile.fileId);
         setUploadedFile(null);
-        console.log("File is deleted")
+       
         alert('File is deleted.'); // Display confirmation message
   
        
@@ -316,17 +315,15 @@ const removeFileFromServer = async (fileId) => {
   ).backDtfAndAdditionalCost;
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+ 
         if (EditItemDetail?.orderDetailArrCustomDropSholder[i]?.brandLogo?.fileId) {
           // printbazcost=parseInt(printbazcostbase+5)
           let brandLogoCost = 5 * formData?.orderDetailArrCustomDropSholder[i]?.totalQuantity;
           printbazcostbase =
             Number(totalPrice) + backSidePrintCost + brandLogoCost;
-          // console.log("brandLogoCost",brandLogoCost);
-          // console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
+         
           printbazcost += printbazcostbase;
           const test = printbazcost + backSidePrintCost;
-          // console.log("addbrandLogo",addbrandLogo);
         } else {
           printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
           printbazcost += printbazcostbase;
@@ -383,15 +380,12 @@ const removeFileFromServer = async (fileId) => {
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
   console.log("isBrandLogoSelected",isBrandLogoSelected)
         if (isBrandLogoSelected) {
-          // printbazcost=parseInt(printbazcostbase+5)
           let brandLogoCost = 5 * formData?.orderDetailArrCustomDropSholder[j]?.totalQuantity;
           printbazcostbase =
             Number(totalPrice) + backSidePrintCost + brandLogoCost;
-          // console.log("brandLogoCost",brandLogoCost);
-          // console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
+        
           printbazcost += printbazcostbase;
           const test = printbazcost + backSidePrintCost;
-          // console.log("addbrandLogo",addbrandLogo);
         } else {
           printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
           printbazcost += printbazcostbase;
@@ -409,7 +403,7 @@ const removeFileFromServer = async (fileId) => {
     const newOrderDetailArr = [...formData.orderDetailArrCustomDropSholder];
 
     let itemIndex = newOrderDetailArr.findIndex((item) => item.color === color);
-    // console.log("printSIde",value)
+   
     if (
       name === "color" ||
       name === "teshirtSize" ||
@@ -569,7 +563,6 @@ const removeFileFromServer = async (fileId) => {
 
     if (response.ok) {
       // Order data sent successfully
-      console.log('add tocart data sent to server successfully');
       setShowAlert(true);
     } else {
       // Handle errors
@@ -640,13 +633,7 @@ setShowLoginPopup(true)
     userEmail:user?.email,userRegId:user?._id
   };
 
-  // Add the filled items to the cart
-  // addToCart(filledItems);
-  // setCartItems(prevItems => {
-  //   const updatedItems = [...prevItems, filledItems];
-  //   localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-  //   return updatedItems;
-  // });
+  
   const newItem = {
     ...formData,
     orderDetailArr: formData.orderDetailArr?.filter(item => isItemFilled(item)),
@@ -673,7 +660,6 @@ setShowLoginPopup(true)
 
     if (response.ok) {
       // Order data sent successfully
-      console.log('add tocart data sent to server successfully');
       setShowBuyNowAlert(true);
     } else {
       // Handle errors

@@ -16,9 +16,6 @@ import BackToTop from '../backToTop/BackToTop';
     const [popupId, setPopupId] = useState('');
     const [usersTickets, setUsersTickets] = useState([]);
     const[fetchAllTicket,setFetchAllTicket]=useState([])
-    const { fetchedData,searchProduct,setSearchProduct, } = useGetData(id, collections, dbData);
-    const [shownPopupTicketId, setShownPopupTicketId] = useState(null);
-    const [usersStoredTickets, setUsersStoredTickets] = useState([]);
     const [getSpecificOrderById, setGetSpecificOrderById] = useState();
     const [showTicket, setShowTicket] = useState(false);
     const [show,setShow]=useState(false)
@@ -301,50 +298,7 @@ const copyOrderId = () => {
      }
 
 <hr />
-     {/* <h4 style={{marginTop:"20px"}}>All Support Tickets</h4>
-     {
-   usersTickets?.map(tickets =>
-  
-       <Accordion defaultActiveKey="0">
-     
-      <Accordion.Item eventKey="1">
-        <Accordion.Header>
-         Ticket Id:  <span style={{color:"blue",fontWeight:"bold",marginLeft:"10px"}}>{ tickets?.ticketId}</span> 
-         
-      {
-         tickets?.ticketStatus==="open" &&
-         <span style={{marginLeft:"10px",color:"purple",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      }  
-       {
-         tickets?.ticketStatus==="replied" &&
-         <span style={{marginLeft:"10px",color:"green",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      } 
-       {
-         tickets?.ticketStatus==="pending" &&
-         <span style={{marginLeft:"10px",color:"orange",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      }  {
-         tickets?.ticketStatus==="close" &&
-         <span style={{marginLeft:"10px",color:"red",fontStyle:"italic"}}>{ tickets?.ticketStatus} </span> 
-      }
-         </Accordion.Header>
-        <Accordion.Body>
-        <UsersStoredSupportTickets
-                   userOrderId={getSpecificOrderById?._id}
-                   
-                   onClose={() => setShownPopupTicketId(null)}
-                   ticketId={tickets?.ticketId}
-                   ticketIssue={tickets?.ticketIssue}
-                   adminUser={tickets?.adminUser}
-                   userEmail={getSpecificOrderById?.userMail}
-                   userName={getSpecificOrderById?.name}
-               />
-        </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
-   )} */}
-    
-      
-
+   
                 </div>
               </div>
             </div>
@@ -529,37 +483,7 @@ getSpecificOrderById?.orderStatus==="returned"?
                     
                   </div>
                 </div>
-                {/* <div className="bg-white p-3 shadow-sm">
-                  <div className="row amu-title">
-                    <div className="col-12">
-                      <h3 className="all-title">Cost of Order</h3>
-                      <h6>Printbaz Cost</h6>
-                      <p>{getSpecificOrderById?.printbazcost}</p>
-                      <h6>Delivery Fee</h6>
-                      <p>{getSpecificOrderById?.deliveryFee}</p>
-                      <h6>Collect Amount</h6>
-                      <p>{getSpecificOrderById?.collectAmount}</p>
-                      <h6>Cash Handling Fee</h6>
-                      <p>2%</p>
-                      {
-getSpecificOrderById?.orderStatus==="returned"?
-<>
-
-<h6 style={{color:"red"}}>Returned Amount</h6>
-<p style={{color:"red"}}> {getSpecificOrderById?.returnedAmount}</p>
-</>
-:
-<>
-
-<h6>Receivable Amount</h6>
-<p>{parseInt(getSpecificOrderById?.recvMoney)}</p>
-</>
-                      }
-                      
-                     
-                    </div>
-                  </div>
-                </div> */}
+                
               </div>
             </div>
            {/* //instruction box  */}
@@ -652,21 +576,7 @@ getSpecificOrderById?.orderStatus==="returned"?
       <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
         <h4 className='font10px'>Quantity</h4>
       </div>
-      {/* <div className="col-1" style={{display:"flex",justifyContent:"center"}}>
-        <h4>Print Size</h4>
-      </div> */}
-      {/* <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4>Main File</h4>
-      </div> */}
-      {/* <div className="col-3" style={{display:"flex",justifyContent:"center"}}>
-        <h4 className='font10px'>Picture </h4>
-      </div> */}
-        {/* <div className="col-1">
-        <h4>BrandLogo</h4>
-      </div> */}
-      {/* <div className="col-2">
-        <h4>Picture</h4>
-      </div> */}
+     
     </div>
     {
       getSpecificOrderById?.orderDetailArr?.map((orderDetail,orderIndex)=>{ 
@@ -711,13 +621,6 @@ getSpecificOrderById?.orderStatus==="returned"?
       <div className="">
 {
 orderDetail?.image?.map(imageUrl => {
-// Extract the file ID from the URL
-//  let fileId = "";
-//  if (imageUrl.includes("/file/d/")) {
-//    fileId = imageUrl.split("/file/d/")[1].split("/")[0];
-//  } else if (imageUrl.includes("id=")) {
-//    fileId = imageUrl.split("id=")[1];
-//  }
 
 const fileId = imageUrl?.split('/d/')[1].split('/view')[0];
 const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
@@ -788,13 +691,7 @@ return (
 </div>
 
 </div>
-     
-     {/* <p >Main File :<div className="file-info">
-<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
-<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
 
-</div></p> */}
-   
 
 {
 orderDetail?.brandLogo &&
@@ -909,19 +806,10 @@ orderDetail?.brandLogo ?
       <div className="card file">
 {
 orderDetail?.file?.map((fileUrl,fileIndex) => {
-// Extract the file ID from the URL
-//  let fileId = "";
-//  if (fileUrl?.includes("/file/d/")) {
-//    fileId = fileUrl?.split("/file/d/")[1]?.split("/")[0];
-//  } else if (fileUrl?.includes("id=")) {
-//    fileId = fileUrl?.split("id=")[1];
-//  }
-
 const fileId = fileUrl?.split('/d/')[1].split('/view')[0];
 const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 const previewURL = `https://drive.google.com/file/d/${fileId}/preview`;
 // Construct the direct download link
-//  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 let dropdownId = `dropdown${orderIndex}-${fileIndex}`;
 return (
 <div key={fileIndex}>
@@ -939,11 +827,7 @@ return (
 
 </div>
      
-     {/* <p >Main File :<div className="file-info">
-<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
-<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
-
-</div></p> */}
+   
                 <div className="col-lg-12" >
      <p>Picture :</p>
       <div className="card file">
@@ -1058,11 +942,7 @@ orderDetail?.brandLogo ?
    
       
         <div className="col-lg-2" style={{display:"flex",justifyContent:"center"}}>
-        {/* <div className="">
-        <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.image?.fileId}`}alt="file" className="img-fluid" />
-        <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.image?.fileId}`}>download picture</a>
-  </div> */}
-
+      
 <div style={{position: "relative" ,display: "inline-block"}}>
 <h4>Picture :</h4>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.image?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
@@ -1086,8 +966,7 @@ orderDetail?.brandLogo ?
        <div className="col-lg-12" >
        <h4>Main File :</h4>
         <div className='phone_flex_center' style={{display:"flex"}}>
-        {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.file?.fileId}`}alt="file" className="img-fluid" />
-        <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.file?.fileId}`}>download Main File</a> */}
+       
 
 <div style={{position: "relative" ,display: "inline-block"}}>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.file?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
@@ -1097,20 +976,12 @@ orderDetail?.brandLogo ?
   
   </div>
        
-       {/* <p >Main File :<div className="file-info">
-  <iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
-  <a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
-  
-  </div></p> */}
-     
-  
+ 
   {
   orderDetail?.brandLogo &&
   <>
   <h4>Brang Logo :</h4>
   <div className="">
-  {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`}alt="file" className="img-fluid" />
-  <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`}>download logo</a> */}
 
 <div style={{position: "relative" ,display: "inline-block"}}>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
@@ -1150,8 +1021,7 @@ orderDetail?.brandLogo ?
        <div className="col-lg-12" >
        <p>Main File :</p>
         <div className="card file">
-        {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.file?.fileId}`}alt="file" className="img-fluid" />
-        <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.file?.fileId}`}>download mockup</a> */}
+    
         <div style={{position: "relative" ,display: "inline-block"}}>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.file?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
     <img style={{width:"100px",height:"100px"}} src={`https://drive.google.com/uc?id=${orderDetail?.file?.fileId}`} alt="file" className="img-fluid" />
@@ -1159,18 +1029,10 @@ orderDetail?.brandLogo ?
   </div>
   
   </div>
-       
-       {/* <p >Main File :<div className="file-info">
-  <iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
-  <a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
-  
-  </div></p> */}
+   
                   <div className="col-lg-12" >
        <p>Picture :</p>
         <div className="card file">
-        {/* const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`; */}
-        {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.image?.fileId}`}alt="file" className="img-fluid" />
-        <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.image?.fileId}`}>download picture</a> */}
         <div style={{position: "relative" ,display: "inline-block"}}>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.image?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
     <img style={{width:"100px",height:"100px"}} src={`https://drive.google.com/uc?id=${orderDetail?.image?.fileId}`} alt="file" className="img-fluid" />
@@ -1184,9 +1046,7 @@ orderDetail?.brandLogo ?
   <>
   <p>Brang Logo :</p>
   <div className="card file">
-  {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`}alt="file" className="img-fluid" />
-  <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`}>download logo</a> */}
-
+ 
 <div style={{position: "relative" ,display: "inline-block"}}>
     <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
     <img style={{width:"100px",height:"100px"}} 
@@ -1204,20 +1064,15 @@ orderDetail?.brandLogo ?
       </div>
       </>
 
-      :(!orderDetail?.printSide && orderDetail?.brandLogo?.fileId)&&
+      :((!orderDetail?.printSide && orderDetail?.brandLogo?.fileId)|| !orderDetail?.printSide)&&
       <>
       <div className="row order-tab  " key={orderIndex}>
-      {/* <h3 style={{color:"orange"}}>Line Item: {itemIndex+1}</h3> */}
-      
-   
+    
     <div className="col-3">
 
       <p  className='font12px'>{orderDetail?.color}</p>
     </div>
-     {/* <div className="col-3">
-
-    <p > <span style={{fontweight:'700'}}> {orderDetail?.productType}</span></p>
-    </div> */}
+   
     <div className="col-3 " style={{display:"flex",justifyContent:"center"}}>
   
     <ul>
@@ -1248,19 +1103,6 @@ orderDetail?.brandLogo ?
     {/* <h3 style={{color:"orange"}}>Line Item: {orderIndex+1}</h3> */}
     <div className="col-12 "  key={orderIndex}>
   
-    {/* {orderDetail?.printSide} */}
-  
- 
-   
-  
-     
-  
-  
-   {/* <p >Main File :<div className="file-info">
-<iframe src={previewURL}  style={{ textDecoration: "none" }} height="auto" width="auto" title="orcode"></iframe>
-<a className="dropdown-item" href={downloadUrl} download><p style={{cursor:"pointer"}} href={downloadUrl} download>download</p></a>
-
-</div></p> */}
  
   <p style={{color:"orange",fontWeight:"800"}}> {orderDetail?.productType}</p>
 {
@@ -1268,8 +1110,6 @@ orderDetail?.brandLogo &&
 <>
 <h4>Brang Logo :</h4>
 <div className="">
-{/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`}alt="file" className="img-fluid" />
-<a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`}>download logo</a> */}
 
 <div style={{position: "relative" ,display: "inline-block"}}>
 <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
@@ -1306,20 +1146,12 @@ orderDetail?.brandLogo &&
     )}
   </ul>
    <p >Quantity : <span className='bold'> {orderDetail?.quantity}</span></p>
-   {/* <p >productType: <span style={{fontweight:'700'}}> {orderDetail?.productType}</span></p> */}
- 
-   
- 
-     
 
 {
 orderDetail?.brandLogo &&
 <>
 <p>Brang Logo :</p>
 <div className="card file">
-{/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`}alt="file" className="img-fluid" />
-<a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`}>download logo</a> */}
-
 <div style={{position: "relative" ,display: "inline-block"}}>
 <a href={`https://drive.google.com/uc?export=download&id=${orderDetail?.brandLogo?.fileId}`} style={{position: "absolute", top: "50px", left: "10px", backgroundColor:" rgba(255, 255, 255, 0.7)", padding: "5px"}}>Download</a>
 <img style={{width:"100px",height:"100px"}} src={`https://drive.google.com/uc?id=${orderDetail?.brandLogo?.fileId}`} alt="file" className="img-fluid" />

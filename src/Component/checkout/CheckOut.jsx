@@ -14,7 +14,6 @@ const CheckOut = () => {
   const { setFormData,setCartItems,editCartItem,cartItems} = useContext(CartContext);
   const {user,logoutUser}=useContext(AuthContext);
   const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
-  console.log("user............",user)
   const [isConfirmAlertOpen, setIsConfirmAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -52,7 +51,7 @@ useEffect(()=>{fetchOrders()},[fetchCartItems])
     navigate('/addToCart')
   }
  const copyCartOrders=mycartItems?.map(items=>removeEmptyArraysFromObject(items))
-  console.log("ordersAll",copyCartOrders)
+
   const currentDate = new Date();
 const options = {
   year: 'numeric',
@@ -95,7 +94,6 @@ const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', 
   
   })
 
-  console.log("fetchCartItems..........",fetchCartItems)
   const [districts, setDistricts] = useState([]);
   const [zones, setZones] = useState([]);
   const [areas, setAreas] = useState([]); 
@@ -109,7 +107,6 @@ const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', 
     const value = parseInt(str);
     return isNaN(value) ? 0 : value;
 };
-console.log("totalDelivFee",totalDelivFee)
 
 // fetch location dropdown data 
   // Fetch unique districts when the component mounts
@@ -129,7 +126,6 @@ console.log("totalDelivFee",totalDelivFee)
       axios.get(`https://mserver.printbaz.com/zones?district=${encodeURIComponent(formDataSelected?.districts)}`)
         .then(response => {
           setZones(response.data);
-          // console.log("response.data", response.data);
         })
         .catch(error => {
           console.error('Error fetching zones:', error);
@@ -162,7 +158,7 @@ console.log("totalDelivFee",totalDelivFee)
     // fetch delievryArea 
     useEffect(() => {
       if (formDataSelected?.districts && formDataSelected?.zones && formDataSelected?.areas) {
-        console.log("finddeliv areas")
+      
         // axios.get(`http://localhost:5000/deliveryAreaByLocation?District=${formDataSelected?.districts}&Zone=${formDataSelected?.zones}&Area=${formDataSelected?.areas}`)
         axios.get(`https://mserver.printbaz.com/deliveryAreaByLocation?District=${formDataSelected?.districts}&Zone=${formDataSelected?.zones}&Area=${formDataSelected?.areas}`)
           .then((res) => setDeliveryAreas(res.data.deliveryArea))
@@ -170,10 +166,6 @@ console.log("totalDelivFee",totalDelivFee)
       }
     }, [formDataSelected?.districts ,formDataSelected?.zones , formDataSelected?.areas]);
   
-
-// const allCustomRoundNeckProducts = cartItems.flatMap(item => 
-//   item.orderDetailArr.filter(roundNeck => roundNeck.productType === 'Custom Round Neck tshirt')
-// );
 const allCustomRoundNeckProducts = fetchCartItems?.filter(obj => 
   obj.orderDetailArr.some(item => item.productType === "Custom Round Neck tshirt")
 );
@@ -194,7 +186,6 @@ const allBlankHoodieProducts = fetchCartItems?.filter(obj =>
   obj.orderDetailArrBlankHoodie.some(blankHoodie => blankHoodie.productType === 'Blank Hoodie')
 );
 
-console.log("allCustomHoodieProducts",allCustomHoodieProducts)
 const [showContent, setShowContent] = useState(false);
 
 const handleMouseEnter = () => {
@@ -221,14 +212,12 @@ let totalTshit=individualCustomRoundNeckQuantity+individualBlankRoundNeckQuantit
 let totalDropSholder=individualCustomDropSholdQuantity+individualBlankDropSholQuantity
 let totalHoodie=individualCustomHoodieQuantity+individualBlankHoodieQuantity
 
-console.log("totalTshit",totalTshit)
-console.log("totalDropSholder",totalDropSholder)
-console.log("totalHoodie",totalHoodie)
+
 let totalOrderItemQuantity=mycartItems?.reduce((acc, item) => 
 acc + safeParseInt(item.quantity) , 0);
 
 const getIndividualProductCostSumAndQuantity=(indiviaualFilterProduct)=>{
-  console.log("getIndividualProductCostSumAndQuantity called")
+
    const productCost = indiviaualFilterProduct?.reduce((total, item) => {
     return total + item.printbazcost;
   }, 0);
@@ -238,52 +227,42 @@ acc + safeParseInt(item.quantity) , 0);
 // setIndividualProductQuantity(productQuantity)
 return{productQuantity,productCost}
 }
-console.log("individualCostCustomRoundNeckProductCost.............",individualCostCustomRoundNeckProductCost)
+
 useEffect(()=>{
   if(allCustomRoundNeckProducts) {
-    console.log("allCustomRoundNeckProducts from use effect")
     const {productQuantity,productCost}=getIndividualProductCostSumAndQuantity(allCustomRoundNeckProducts)
     setIndividualProductCost( productCost)
     setIndividualProductQuantity(productQuantity)
   
   }
   if(allCustomDropSholderProducts) {
-    console.log("allCustomRoundNeckProducts from use effect")
     const {productQuantity,productCost}=getIndividualProductCostSumAndQuantity(allCustomDropSholderProducts)
     setIndividualCustomDropSholdProductCost(productCost)
     setIndividualCustomDropSholdQuantity(productQuantity)
   }
   if(allCustomHoodieProducts) {
-    console.log("allCustomRoundNeckProducts from use effect")
     const {productQuantity,productCost}=getIndividualProductCostSumAndQuantity(allCustomHoodieProducts)
-    console.log("productQuantity of custom hoodie",productQuantity)
+  
     setindividualCustomHoodieProductCost(productCost)
     setIndividualCustomHoodieQuantity(productQuantity)
   }
   if(allBlankRoundNeckProducts) {
-    console.log("allCustomRoundNeckProducts from use effect")
     const {productQuantity,productCost}=getIndividualProductCostSumAndQuantity(allBlankRoundNeckProducts)
     setIndividualBlankRoundNeckProductCost(productCost)
     setIndividualBlankRoundNeckQuantity(productQuantity)
   }
   if(allBlankDropSholderProducts) {
-    console.log("allCustomRoundNeckProducts from use effect")
     const {productQuantity,productCost}=getIndividualProductCostSumAndQuantity(allBlankDropSholderProducts)
     setIndividualBlankDropSholProductCost(productCost)
     setIndividualBlankDropSholQuantity(productQuantity)
   }
   if(allBlankHoodieProducts) {
-    console.log("allCustomRoundNeckProducts from use effect")
     const {productQuantity,productCost}=getIndividualProductCostSumAndQuantity(allBlankHoodieProducts)
   
     setIndividualBlankHoodieProductCost(productCost)
     setIndividualBlankHoodieQuantity(productQuantity)
   }
 
-  // if(cartItems) {
-  //   console.log("allCustomRoundNeckProducts from use effect")
-  //   getIndividualProductCostSumAndQuantity(cartItems)
-  // }
 },[allCustomRoundNeckProducts,allCustomDropSholderProducts,allCustomHoodieProducts,allBlankRoundNeckProducts,allBlankDropSholderProducts,allBlankHoodieProducts])
 
  // charge based on weight 
@@ -360,8 +339,6 @@ else{
 
 
 let suggestedCollectAmount = Math.ceil((1 + formDataSelected?.grandCost) / 0.97);
-// console.log("recvMoney",recvMoney)
-// console.log("suggestedCollectAmount",suggestedCollectAmount)
 const validateForm = () => {
   if (recvMoney < 0 &&formDataSelected.paymentSystem === "cashOnDelivery" ) {
     setFormValid(true);
@@ -476,7 +453,6 @@ const handleConfirmOrder = () => {
 
 const handleSubmitOrder=async(e)=>{
   e.preventDefault()
- console.log( "click to submit")
  if (validateForm()) {
   setIsLoading(false) // Set loading status to false if form is invalid
   return; // Exit the function if form is invalid
@@ -488,7 +464,6 @@ const handleSubmitOrder=async(e)=>{
 }
  const isConfirmed = await handleConfirmOrder(); // Wait for user's decision
   if (!isConfirmed) {
-    console.log("Order submission cancelled.");
     return; // Exit if user cancels
   }
   
@@ -497,7 +472,6 @@ const handleSubmitOrder=async(e)=>{
   // Create a FormData object to handle files
   const formDataSendOrdertoServer = new FormData();
 
-  console.log("formDataSelected............",formDataSelected)
  
  // Iterate over each item in selectedItemsDetailArr
  formDataSelected.selectedItemsDetailArr?.forEach((item, index) => {
@@ -603,7 +577,6 @@ await fetch(`https://mserver.printbaz.com/deleteAllCartItems`, {
         
       
       })
-      console.log(result); // Handle the response
       // You can add additional logic here based on the response
     } catch (error) {
       console.error('Error submitting order:', error);

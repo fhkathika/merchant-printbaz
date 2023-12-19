@@ -41,8 +41,6 @@ const CustomHoodie = () => {
     useContext(CartContext);
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
-    console.log("formData",formData)
-  // const { itemToEdit } = useFilterProducts();
 
   let id = "resellerOrdersId";
   let collections = "resellerInfo";
@@ -83,7 +81,7 @@ const CustomHoodie = () => {
     setShowLoginPopup(false);
   };
   const { user } = useContext(AuthContext);
-  console.log("user",user)
+
   const userEmail = user?.email;
   const [isLoading, setIsLoading] = useState(false);
   const [recvAmount, setRecvAmount] = useState();
@@ -125,7 +123,7 @@ const CustomHoodie = () => {
   let backSideDtfprice_5X5=customHoodieinputBack5X5?.backSideprice
   let backSideDtfprice_2p5X5=customHoodieinputBack2p5X5?.backSideprice
   let backSideDtfprice_2p5X2p5=customHoodieinputBack2p5X2p5?.backSideprice
-  console.log(" hoodie ............. backSideDtfprice_11p7x16p5",backSideDtfprice_11p7x16p5)
+  
   let additionalCost=tshirtPrice[0]?.additionalCost
   //////////////////////////////////////////
 
@@ -140,13 +138,12 @@ const CustomHoodie = () => {
 
 
   const [addBrandLogoArray, setAddBrandLogoArray] = useState([]);
-  console.log("addBrandLogoArray",addBrandLogoArray)
  
 const handleFileChange = async (event, index, fileType, oldFileId = null) => {
   const { files } = event.target;
   const updatedBrandLogoArray = [...addBrandLogoArray];
   if (files && files.length > 0) {
-    console.log("has file")
+  
     const file = files[0];
     const formData = new FormData();
     formData.append('file', file);
@@ -222,7 +219,7 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
        if (uploadedFile) {
         await removeFileFromServer(uploadedFile.fileId);
         setUploadedFile(null);
-        console.log("File is deleted")
+       
         alert('File is deleted.'); // Display confirmation message
   
        
@@ -236,7 +233,7 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
 };
 useEffect(()=>{},[addBrandLogoArray,uploadedFile,formData])
-console.log("uploadedFile.............",uploadedFile)
+
 const removeFileFromServer = async (fileId) => {
   try {
     // const response = await fetch(`http://localhost:5000/deleteFileApi/${fileId}`, {
@@ -249,8 +246,7 @@ const removeFileFromServer = async (fileId) => {
     }
 
     // Handle the response from the server confirming the file has been deleted
-    console.log('File removed from server');
-
+  
   } catch (error) {
     console.error('Error removing file from server:', error);
   }
@@ -315,17 +311,16 @@ const removeFileFromServer = async (fileId) => {
   ).backDtfAndAdditionalCost;
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = i < addBrandLogoArray.length && addBrandLogoArray[i];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+ 
         if (EditItemDetail?.orderDetailArrCustomHoodie[i]?.brandLogo?.fileId) {
           // printbazcost=parseInt(printbazcostbase+5)
           let brandLogoCost = 5 * formData?.orderDetailArrCustomHoodie[i]?.totalQuantity;
           printbazcostbase =
             Number(totalPrice) + backSidePrintCost + brandLogoCost;
-          // console.log("brandLogoCost",brandLogoCost);
-          // console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
+        
           printbazcost += printbazcostbase;
           const test = printbazcost + backSidePrintCost;
-          // console.log("addbrandLogo",addbrandLogo);
+          
         } else {
           printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
           printbazcost += printbazcostbase;
@@ -380,17 +375,16 @@ const removeFileFromServer = async (fileId) => {
   ).backDtfAndAdditionalCost;
     // Check if brand logo is selected for the current index
     const isBrandLogoSelected = j < addBrandLogoArray.length && addBrandLogoArray[j];
-  console.log("isBrandLogoSelected",isBrandLogoSelected)
+
         if (isBrandLogoSelected) {
-          // printbazcost=parseInt(printbazcostbase+5)
+         
           let brandLogoCost = 5 * formData?.orderDetailArrCustomHoodie[j]?.totalQuantity;
           printbazcostbase =
             Number(totalPrice) + backSidePrintCost + brandLogoCost;
-          // console.log("brandLogoCost",brandLogoCost);
-          // console.log("prinbazcostbaze", Number(totalPrice)+backSidePrintCost ,"+",brandLogoCost);
+         
           printbazcost += printbazcostbase;
           const test = printbazcost + backSidePrintCost;
-          // console.log("addbrandLogo",addbrandLogo);
+         
         } else {
           printbazcostbase = Number(totalPrice) + Number(backSidePrintCost);
           printbazcost += printbazcostbase;
@@ -408,7 +402,7 @@ const removeFileFromServer = async (fileId) => {
     const newOrderDetailArr = [...formData.orderDetailArrCustomHoodie];
 
     let itemIndex = newOrderDetailArr.findIndex((item) => item.color === color);
-    // console.log("printSIde",value)
+   
     if (
       name === "color" ||
       name === "teshirtSize" ||
@@ -567,7 +561,6 @@ const removeFileFromServer = async (fileId) => {
 
     if (response.ok) {
       // Order data sent successfully
-      console.log('add tocart data sent to server successfully');
       setShowAlert(true);
     } else {
       // Handle errors

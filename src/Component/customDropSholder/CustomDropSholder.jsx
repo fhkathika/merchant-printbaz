@@ -38,6 +38,7 @@ import BuyNowAlert from "../alert/BuyNowAlert";
 
 const CustomDropSholder = () => {
   const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
+ 
     useContext(CartContext);
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
@@ -926,7 +927,7 @@ setShowLoginPopup(true)
                         <div className="accordion" id="accordionExample">
                        
 
-{formData.orderDetailArrCustomDropSholder?.map((item, index) => (
+{formData?.orderDetailArrCustomDropSholder?.map((item, index) => (
   <div className="accordion-item" key={index}>
     <h2 className="accordion-header" id={`heading${index}`}>
       <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>

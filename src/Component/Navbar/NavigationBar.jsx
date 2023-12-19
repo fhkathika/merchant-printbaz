@@ -12,7 +12,7 @@ const NavigationBar = () => {
   const {user,logoutUser}=useContext(AuthContext);
   const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
   useContext(CartContext);
-  const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
+  // const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
   let id = "resellerId";
   let collections = "resellerInfo";
   const [dbData, setDbData] = useState({});
@@ -325,8 +325,8 @@ const handleShowTicketPopUp=()=>{
           <li>
           <Link className="nav-link scrollto " to="/addToCart">
 <img  style={{width:"35px",height:"30px"}}src="https://media.discordapp.net/attachments/1181515624455872602/1182942257658200106/shopping-cart.png?ex=658687d4&is=657412d4&hm=68969a99571dfa5dd6f0cf3da17e7054a28f34aeeec045de7e718bbc9fbc9812&=&format=webp&quality=lossless" alt="Icon" />
-                        {mycartItems?.length > 0 &&
-                        <span className="notification-badge" >{mycartItems?.length}</span>}
+                        {cartItems?.length > 0 &&
+                        <span className="notification-badge" >{cartItems?.length}</span>}
             </Link>
             {
    fetchAllTicket?.forEach(readMsg => {

@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 const AddToCart = () => {
     const { formData,setFormData,cartItems,deleteCartItem} = useContext(CartContext)
     const {user}=useContext(AuthContext)
-    const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
+    // const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
     const navigate=useNavigate()
     const handleBackToHomepage=()=>{
       navigate('/')
@@ -484,7 +484,7 @@ const AddToCart = () => {
 const startEdit = (e, itemIdentifier) => {
   e.preventDefault();
   
-  const itemToEdit = mycartItems?.find(item => item._id === itemIdentifier);
+  const itemToEdit = cartItems?.find(item => item._id === itemIdentifier);
  
   if (itemToEdit) {
     let updatedFormData = { ...itemToEdit };
@@ -528,7 +528,7 @@ const startEdit = (e, itemIdentifier) => {
         const handleCheckOut=()=>{
           navigate("/checkout")
         }
-        const allProductsPrintbazCost = mycartItems?.reduce((total, item) => {
+        const allProductsPrintbazCost = cartItems?.reduce((total, item) => {
           return total + item.printbazcost;
       }, 0);
       
@@ -569,7 +569,7 @@ const startEdit = (e, itemIdentifier) => {
                          
                             {
                              
-                             mycartItems
+                             cartItems
                               ?.map((selectedProduct,index)=><>
                             <tr key={selectedProduct?.uniqueId}> 
                             <table className="table table-bordered"><thead>
@@ -591,7 +591,7 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/85b9H6S/Round-Neck-Maroon.jpg" alt="" className="img-fluid" />
+                              <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg" alt="" className="img-fluid" />
                               {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" /> */}
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
@@ -631,7 +631,7 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/WzhzNv1/Drop-Shoulder-Bottle-Green.jpg" alt="" className="img-fluid" />
+                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg" alt="" className="img-fluid" />
                            
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
@@ -665,7 +665,7 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg" alt="" className="img-fluid" />
+                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg" alt="" className="img-fluid" />
                              
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
@@ -849,7 +849,7 @@ const startEdit = (e, itemIdentifier) => {
                         </div>
                         <div className="row mb-5">
                           {
-                            mycartItems?.length>0 &&
+                            cartItems?.length>0 &&
                             <div className="col-md-12">
                             <button className="btn btn-primary btn-lg py-3 btn-block" style={{backgroundColor:"#012652",border:"none"}} onClick={handleCheckOut}>Proceed To Checkout</button>
                           </div>

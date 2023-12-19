@@ -11,21 +11,27 @@ const NewOrdersWithOption = () => {
   const navigate=useNavigate()
   const handleClickNeworder=()=>{
     navigate("/newOrder")
+    window.location.reload();
   } 
    const handleClickCustomDropSholder=()=>{
     navigate("/customDropSholder")
+    window.location.reload();
   } 
    const handleClickBlankRoundNeck=()=>{
     navigate("/blankRoundNeck")
+    window.location.reload();
   }
    const handleClickBlankDropSholder=()=>{
     navigate("/blankDropSholder")
+    window.location.reload();
   }  
   const handleClickCustonHoodie=()=>{
     navigate("/custonHoodie")
+    window.location.reload();
   }
   const handleClickBlankHoodie=()=>{
     navigate("/blankHoodie")
+    window.location.reload();
   }
 
   useEffect(() => {

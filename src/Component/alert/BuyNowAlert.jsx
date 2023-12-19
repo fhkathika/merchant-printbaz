@@ -32,7 +32,7 @@ const navigate=useNavigate()
     <h2>{message}</h2>
         {/* <span style={{color:"white"}}>{message2}</span> */}
         <span></span>
-        <button onClick={goToCart} id="neonShadow">Go To checkout</button>
+        <button onClick={goToCart} style={{color:"white"}} id="neonShadow">Go To checkout</button>
         </div>
       </div>
       </div>

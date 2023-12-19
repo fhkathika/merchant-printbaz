@@ -515,15 +515,18 @@ const deleteCartItem = async (itemIdentifier) => {
   try {
     // Assuming itemIdentifier is a unique attribute to identify the item to be deleted
     const updatedCartItems = cartItems?.filter(item => item._id !== itemIdentifier);
-
     // Update the cart items in the local state
     setCartItems(updatedCartItems);
-
+  
     // Update the cart items in the database
     // await fetch(`http://localhost:5000/deleteCartItem/${itemIdentifier}`, {
-    await fetch(`https://mserver.printbaz.com/deleteCartItem/${itemIdentifier}`, {
+   await fetch(`https://mserver.printbaz.com/deleteCartItem/${itemIdentifier}`, {
       method: 'DELETE',
     });
+   
+     
+    // const data = await response.json();
+          // setCartItems(response);
 
   } catch (error) {
     console.error('Error deleting cart item:', error);

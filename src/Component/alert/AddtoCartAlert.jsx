@@ -15,7 +15,7 @@ const AddtoCartAlert = ({ message, onClose }) => {
 const navigate=useNavigate()
   const goToCart=()=>{
     navigate('/addToCart')
-     window.location.reload();
+    //  window.location.reload();
   }
   return (
     <>
@@ -32,7 +32,7 @@ const navigate=useNavigate()
     <h2>{message}</h2>
         {/* <span style={{color:"white"}}>{message2}</span> */}
         <span></span>
-        <button onClick={goToCart} id="neonShadow">Go To Cart</button>
+        <button onClick={goToCart} style={{color:"white"}} id="neonShadow">Go To Cart</button>
         </div>
       </div>
       </div>

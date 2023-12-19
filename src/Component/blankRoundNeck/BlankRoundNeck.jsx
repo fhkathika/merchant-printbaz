@@ -669,7 +669,7 @@ setShowLoginPopup(true)
                         <div className="accordion" id="accordionExample">
                        
 
-{formData.orderDetailArrBlankRoundNeck?.map((item, index) => (
+{formData?.orderDetailArrBlankRoundNeck?.map((item, index) => (
   <div className="accordion-item" key={index}>
     <h2 className="accordion-header" id={`heading${index}`}>
       <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>

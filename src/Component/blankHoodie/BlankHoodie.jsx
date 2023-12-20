@@ -34,6 +34,7 @@ import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import LogoFileInput from "../logoFIleInput/LogoFileInput";
 import BuyNowAlert from "../alert/BuyNowAlert";
+import Footer from "../footer/Footer";
 
 // import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
 
@@ -65,7 +66,7 @@ const BlankHoodie = () => {
     collectionsPrice,
     dbData
   );
-  const [mainImage, setMainImage] = useState('https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg');
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/VQd1Zgt/Hoodies-02.webp');
 
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
@@ -618,7 +619,7 @@ setShowLoginPopup(true)
           </div>
         </>
       )}
-      <Row className="m-auto">
+      {/* <Row className="m-auto">
         <Col xs={12} md={12} className="mt-5 ">
           <h3 style={{ cursor: "pointer" }} onClick={handleBack}>
             <span style={{ cursor: "pointer" }}>
@@ -632,7 +633,7 @@ setShowLoginPopup(true)
             Custom Hoodie
           </h3>
         </Col>
-      </Row>
+      </Row> */}
 
       <Form  onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart}className="mb-4">
     
@@ -663,48 +664,40 @@ setShowLoginPopup(true)
           <img src={mainImage} alt="Custom T-shirt" />
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg"
+            src="https://i.ibb.co/ScZGKy5/Hoodies-01.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/ScZGKy5/Hoodies-01.webp')}
           />
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-3">
         <div className="productMoreImg" id="preview2">
           <img
-            src="https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg"
+            src="https://i.ibb.co/VQd1Zgt/Hoodies-02.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/VQd1Zgt/Hoodies-02.webp')}
           />
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/h1svWPZ/Hoodies-Neon-Green.jpg"
+            src="https://i.ibb.co/frnvJB7/Hoodies-03.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/h1svWPZ/Hoodies-Neon-Green.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/frnvJB7/Hoodies-03.webp')}
           />
         </div>
       </div>
-      <div className="col-2">
+     
+      <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg"
+            src="https://i.ibb.co/mFg1Nfy/Hoodies-04.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg')}
-          />
-        </div>
-      </div>
-      <div className="col-2">
-        <div className="productMoreImg">
-          <img
-            src="https://i.ibb.co/tM08Ww7/Hoodies-Black.jpg"
-            alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/tM08Ww7/Hoodies-Black.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/mFg1Nfy/Hoodies-04.webp')}
           />
         </div>
       </div>
@@ -921,7 +914,20 @@ setShowLoginPopup(true)
           } */}
         </div>
       </Form>
-      <ProductTab describtion=""/>
+      <ProductTab describtion={ 
+     <div className="row m45 m_1responsive700 mb-3">
+     <ul>
+        <li><span>Fabric Quality:</span>  Knitted and Dyed, Cotton Fleece</li>
+        <li><span>GSM:</span> 300+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Pullover Regular fit </li>
+        <li>Kangaroo Pocket </li>
+        <li>No print <p style={{visibility:"hidden"}}>Custom high-quality </p></li>
+        {/* <li>--</li> */}
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+  </div>
+  }/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert
@@ -935,6 +941,7 @@ setShowLoginPopup(true)
           onClose={() => setShowBuyNowAlert(false)}
         />
       )}
+       <Footer/>
     </div>
   );
 };

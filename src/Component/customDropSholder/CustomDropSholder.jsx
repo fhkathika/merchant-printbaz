@@ -33,6 +33,7 @@ import { CartContext } from "../../context/CartProvider";
 import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import BuyNowAlert from "../alert/BuyNowAlert";
+import Footer from "../footer/Footer";
 
 // import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
 
@@ -82,7 +83,7 @@ const CustomDropSholder = () => {
     setShowRegPopup(false);
     setShowLoginPopup(false);
   };
-  const [mainImage, setMainImage] = useState('https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg');
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp');
 
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
@@ -95,6 +96,8 @@ const CustomDropSholder = () => {
   const [recvAmount, setRecvAmount] = useState();
   const [formValid, setFormValid] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [fileAlert, setFileAlert] = useState('');
+
   const {
     customDropSholderinputFront11p7X16p5,
     customDropSholderinputFront10X14,
@@ -186,19 +189,31 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
           fileUrl: fileUrl, // URL for preview
         };
  // Save the uploaded file data to state
- setUploadedFile({
-  fileId: uploadedFileData.fileId,
-  fileUrl: fileUrl
-});
+//  setUploadedFile({
+//   fileId: uploadedFileData.fileId,
+//   fileUrl: fileUrl
+// });
         if (fileType === 'mainFile') {
           newOrderDetailArr[index].file = fileData;
+          setUploadedFile({
+            fileId: uploadedFileData.fileId,
+            fileUrl: fileUrl
+          });
         } else if (fileType === 'image') {
           newOrderDetailArr[index].image = fileData;
+          setUploadedFile({
+            fileId: uploadedFileData.fileId,
+            fileUrl: fileUrl
+          });
         }
         else if (fileType === 'brandLogo') {
           updatedBrandLogoArray[index] = true; // Set true when file is selected
           setAddBrandLogoArray(updatedBrandLogoArray);
           newOrderDetailArr[index].brandLogo = fileData;
+          // setUploadedFile({
+          //   fileId: uploadedFileData.fileId,
+          //   fileUrl: fileUrl
+          // });
           }
 
         return { ...prevFormData, orderDetailArrCustomDropSholder: newOrderDetailArr };
@@ -523,6 +538,10 @@ const removeFileFromServer = async (fileId) => {
       }, 2000);
       return () => clearTimeout(timeoutId);
     }
+    if(uploadedFile===null){
+      setFileAlert("loading file")
+      return
+    }
   if(user){
   // Filter the items that have been filled out
   const filledItems = {
@@ -625,6 +644,10 @@ setShowLoginPopup(true)
         setAlert(false);
       }, 2000);
       return () => clearTimeout(timeoutId);
+    }
+    if(uploadedFile===null){
+      setFileAlert("loading file")
+      return
     }
   if(user){
   // Filter the items that have been filled out
@@ -738,7 +761,7 @@ setShowLoginPopup(true)
           </div>
         </>
       )}
-      <Row className="m-auto">
+      {/* <Row className="m-auto">
         <Col xs={12} md={12} className="mt-5 ">
           <h3 style={{ cursor: "pointer" }} onClick={handleBack}>
             <span style={{ cursor: "pointer" }}>
@@ -752,7 +775,7 @@ setShowLoginPopup(true)
             Custom Drop Sholder
           </h3>
         </Col>
-      </Row>
+      </Row> */}
 
       <Form onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart} className="mb-4">
     
@@ -781,28 +804,28 @@ setShowLoginPopup(true)
                 {/* <div className="row">
                   <div className="col-12">
                     <div className="productMainImg active show" id="preview1">
-                      <img src="https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg" alt="Custom T-shirt" />
+                      <img src="https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp" alt="Custom T-shirt" />
                     </div>
                   </div>
                   <div className="col-3">
                     <div className="productMoreImg">
-                      <img src="https://i.ibb.co/QHPTMkX/Drop-Shoulder-White-Custom.jpg" alt="Custom T-shirt" />
+                      <img src="https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp" alt="Custom T-shirt" />
                     </div>
                   </div>
                   <div className="col-3">
                     <div className="productMoreImg" id="preview2">
-                      <img src="https://i.ibb.co/VjrwxkT/Drop-Shoulder-Black-Custom.jpg" alt="Custom T-shirt" />
+                      <img src="https://i.ibb.co/8j6bjPC/Custom-Round-Neck-T-Shirt-01.webp" alt="Custom T-shirt" />
                     </div>
                   </div>
                   <div className="col-3">
                     <div className="productMoreImg">
-                      <img src="https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg" alt="Custom T-shirt" />
+                      <img src="https://i.ibb.co/hmS80TK/Custom-Round-Neck-T-Shirt-02.webp" alt="Custom T-shirt" />
                     </div>
                   </div>
                  
                   <div className="col-3">
                     <div className="productMoreImg">
-                      <img src="https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg" alt="Custom T-shirt" />
+                      <img src="https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp" alt="Custom T-shirt" />
                     </div>
                   </div>
                 </div> */}
@@ -816,36 +839,36 @@ setShowLoginPopup(true)
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/QHPTMkX/Drop-Shoulder-White-Custom.jpg"
+            src="https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/QHPTMkX/Drop-Shoulder-White-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/VjrwxkT/Drop-Shoulder-Black-Custom.jpg"
+            src="https://i.ibb.co/8j6bjPC/Custom-Round-Neck-T-Shirt-01.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/VjrwxkT/Drop-Shoulder-Black-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/8j6bjPC/Custom-Round-Neck-T-Shirt-01.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg"
+            src="https://i.ibb.co/hmS80TK/Custom-Round-Neck-T-Shirt-02.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/hmS80TK/Custom-Round-Neck-T-Shirt-02.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg"
+            src="https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp')}
           />
         </div>
       </div>
@@ -1180,9 +1203,10 @@ onChange={(e) => handleFileChange(e, index)}/> */}
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="productButton">
-                       
+                        <p style={{color:"red"}}> {fileAlert}</p>
                           {  !EditItemDetail && 
                          <><button type="submit" onClick={()=>setOpenCheckout(true)}>Buy Now</button>
+                     
                          <button  type="submit">Add To Cart</button></>}
                          {   EditItemDetail &&  <button  type="submit"> Update Cart</button>}
 
@@ -1270,7 +1294,18 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           } */}
         </div>
       </Form>
-      <ProductTab describtion=""/>
+      <ProductTab describtion={
+        <div className="row m45 m_1responsive700 mb-3">
+      <ul>
+        <li><span>Fabric Quality:</span> Knitted and Dyed, Cotton</li>
+        <li><span>GSM:</span> 190+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Regular fit</li>
+        <li><p>Custom high-quality DTF print available</p></li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+  </div>
+  }/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert
@@ -1284,6 +1319,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           onClose={() => setShowBuyNowAlert(false)}
         />
       )}
+       <Footer/>
     </div>
   );
 };

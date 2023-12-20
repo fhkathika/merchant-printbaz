@@ -837,7 +837,7 @@ placeholder=""
                   </div>
                 </div>
              <div className='col-md-12' style={{position:"relative"}}>
-             {showContent && (
+             {/* {showContent && (
         <div id="Terms & Condition" className="popup-content">
         <div className="row m45 m_1responsive700 mb-3">
                 <div className="col-12">
@@ -876,7 +876,7 @@ placeholder=""
                 </div>
               </div>
         </div>
-             )}
+             )} */}
                 <input type="checkbox" required className="terrms" />
                 <span
         style={{ cursor: 'pointer' }}

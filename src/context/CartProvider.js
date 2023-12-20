@@ -209,23 +209,23 @@ brandLogo:null
                 image: null,
 brandLogo:null
               }, 
-               {
-                productType:'Custom hoodie',
-                color: 'Gray',
-                teshirtSize: {},
-                categoryImg:"https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg",
-                quantityM: '',
-                quantityL: '',
-                quantityXL: '',
-                quantityXXL: '',
-                quantityXXXL:'',
-                printSide: '',
-                printSize: '',
-                printSizeBack: '',
-                file: null,
-                image: null,
-brandLogo:null
-              }, 
+//                {
+//                 productType:'Custom hoodie',
+//                 color: 'Gray',
+//                 teshirtSize: {},
+//                 categoryImg:"https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg",
+//                 quantityM: '',
+//                 quantityL: '',
+//                 quantityXL: '',
+//                 quantityXXL: '',
+//                 quantityXXXL:'',
+//                 printSide: '',
+//                 printSize: '',
+//                 printSizeBack: '',
+//                 file: null,
+//                 image: null,
+// brandLogo:null
+//               }, 
               {
                 productType:'Custom hoodie',
                 color: 'Red',
@@ -440,24 +440,24 @@ brandLogo:null
 brandLogo:null
                  
               }, 
-               {
-                productType:'Blank Hoodie',
-                color: 'Gray',
-                teshirtSize: {},
-                categoryImg:"https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg",
-                quantityM: '',
-                quantityL: '',
-                quantityXL: '',
-                quantityXXL: '',
-                quantityXXXL:'',
-                printSide: '',
-                printSize: '',
-                printSizeBack: '',
-                file: null,
-                image: null,
-brandLogo:null
+//                {
+//                 productType:'Blank Hoodie',
+//                 color: 'Gray',
+//                 teshirtSize: {},
+//                 categoryImg:"https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg",
+//                 quantityM: '',
+//                 quantityL: '',
+//                 quantityXL: '',
+//                 quantityXXL: '',
+//                 quantityXXXL:'',
+//                 printSide: '',
+//                 printSize: '',
+//                 printSizeBack: '',
+//                 file: null,
+//                 image: null,
+// brandLogo:null
                  
-              },
+//               },
               {
                 productType:'Blank Hoodie',
                 color: 'Red',

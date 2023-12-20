@@ -16,7 +16,7 @@ const ProductTab = ({describtion}) => {
       {/* Tab Content */}
       {activeTab === 'Describtion' && (
         <div id="Describtion" className="city " >
-          <h2>Describtion</h2>
+          {/* <h2>Describtion</h2> */}
           <p>{describtion}</p>
         </div>
       )}

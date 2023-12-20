@@ -591,8 +591,24 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg" alt="" className="img-fluid" />
-                              {/* <img style={{width:"60px",height:"60px"}} src={`https://drive.google.com/uc?id=${item?.file?.fileId}`}alt="file" className="img-fluid" /> */}
+                                {
+                                  item?.color==="Black"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="White"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/7VtxHWr/Round-Neck-White-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Bottle Green"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/bQRDfhL/Round-Neck-Bottle-Green-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Maroon"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/NtznFwg/Round-Neck-Maroon-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                            
+                           
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -630,8 +646,24 @@ const startEdit = (e, itemIdentifier) => {
                                     item?.totalQuantity>0 &&(item?.printSide &&  
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
-                              <td className="product-thumbnail">
-                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg" alt="" className="img-fluid" />
+                               <td className="product-thumbnail">
+                                {
+                                  item?.color==="Black"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/VjrwxkT/Drop-Shoulder-Black-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="White"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/QHPTMkX/Drop-Shoulder-White-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Bottle Green"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/8dQdFCD/Drop-Shoulder-Bottle-Green-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Maroon"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/7pXqkZr/Drop-Shoulder-Maroon-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                            
                            
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
@@ -665,8 +697,28 @@ const startEdit = (e, itemIdentifier) => {
                                      ( item?.printSize|| item?.printSizeBack) ) &&
                               <>
                               <td className="product-thumbnail">
-                              <img style={{width:"60px",height:"60px"}}  src="https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg" alt="" className="img-fluid" />
-                             
+                                {
+                                  item?.color==="Black"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Nevy Blue"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Green"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Gray"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Red"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg" alt="" className="img-fluid" />
+                                }
+                            
+                           
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -701,8 +753,24 @@ const startEdit = (e, itemIdentifier) => {
                                   
                               <>
                               <td className="product-thumbnail">
+                                {
+                                  item?.color==="Black"?
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg" alt="" className="img-fluid" />
+                                
+                               : 
+                                  item?.color==="White"?
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/zffxNhp/Round-Neck-White.jpg" alt="" className="img-fluid" />
+                                
+                               : 
+                                  item?.color==="Bottle Green"?
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/1sFzNJ0/Round-Neck-Bottle-Green.jpg" alt="" className="img-fluid" />
+                                :
+                                
+                                  item?.color==="Maroon" &&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/85b9H6S/Round-Neck-Maroon.jpg" alt="" className="img-fluid" />
+                                }
                             
-                              <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/sQfVyNz/Round-Neck-Black.jpg" alt="file" className="img-fluid" /> 
+                           
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -733,9 +801,26 @@ const startEdit = (e, itemIdentifier) => {
 
                                   {  
                               <>
+                              
                               <td className="product-thumbnail">
+                                {
+                                  item?.color==="Black"?
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/kxwpVfX/Drop-Shoulder-Black.jpg" alt="" className="img-fluid" />
+                                
+                               : 
+                                  item?.color==="White"?
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/zZq85J2/Drop-Shoulder-White.jpg" alt="" className="img-fluid" />
+                                
+                               : 
+                                  item?.color==="Bottle Green"?
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/WzhzNv1/Drop-Shoulder-Bottle-Green.jpg" alt="" className="img-fluid" />
+                                :
+                                
+                                  item?.color==="Maroon" &&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/ydx7zVC/Drop-Shoulder-Maroon.jpg" alt="" className="img-fluid" />
+                                }
+                            
                            
-                              <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/kxwpVfX/Drop-Shoulder-Black.jpg" alt="file" className="img-fluid" /> 
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>
@@ -769,8 +854,28 @@ const startEdit = (e, itemIdentifier) => {
                                    
                               <>
                               <td className="product-thumbnail">
-                             
-                              <img style={{width:"60px",height:"60px"}}src="https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg" alt="file" className="img-fluid" /> 
+                                {
+                                  item?.color==="Black"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/tM08Ww7/Hoodies-Black.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Nevy Blue"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/fCnCjhK/Hoodies-Nevy-Blue.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Green"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/h1svWPZ/Hoodies-Neon-Green.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Gray"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/SxMzfND/Hoodies-Gray.jpg" alt="" className="img-fluid" />
+                                }
+                                {
+                                  item?.color==="Red"&&
+                                  <img style={{width:"80px",height:"80px"}}  src="https://i.ibb.co/QbSnvWT/Hoodies-Red.jpg" alt="" className="img-fluid" />
+                                }
+                            
+                           
                             </td>
                             <td className="product-name" style={{textAlign: 'left'}}>
                               <h5>{item?.productType}</h5>

@@ -32,12 +32,14 @@ import { CartContext } from "../../context/CartProvider";
 import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import BuyNowAlert from "../alert/BuyNowAlert";
+import Footer from "../footer/Footer";
 
 // import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
 
 const NewOrder = () => {
   const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
     useContext(CartContext);
+    console.log("formData............",formData)
     const [uploadedFile, setUploadedFile] = useState(null);
     const location = useLocation();
     console.log("formData",formData)
@@ -123,7 +125,7 @@ const NewOrder = () => {
   let backSideDtfprice_2p5X2p5 = customRoundNeckinputBack2p5X2p5?.backSideprice;
   let additionalCost = tshirtPrice[0]?.additionalCost;
 
-  const [mainImage, setMainImage] = useState('https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg');
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp');
 
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
@@ -178,14 +180,22 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
           fileUrl: fileUrl, // URL for preview
         };
  // Save the uploaded file data to state
- setUploadedFile({
-  fileId: uploadedFileData.fileId,
-  fileUrl: fileUrl
-});
+//  setUploadedFile({
+//   fileId: uploadedFileData.fileId,
+//   fileUrl: fileUrl
+// });
         if (fileType === 'mainFile') {
           newOrderDetailArr[index].file = fileData;
+          setUploadedFile({
+            fileId: uploadedFileData.fileId,
+            fileUrl: fileUrl
+          });
         } else if (fileType === 'image') {
           newOrderDetailArr[index].image = fileData;
+          setUploadedFile({
+            fileId: uploadedFileData.fileId,
+            fileUrl: fileUrl
+          });
         }
         else if (fileType === 'brandLogo') {
           updatedBrandLogoArray[index] = true; // Set true when file is selected
@@ -494,7 +504,7 @@ const removeFileFromServer = async (fileId) => {
     navigate("/");
   };
 
-  
+  const [fileAlert, setFileAlert] = useState('');
   const isItemFilled = (item) => {
     // You can customize this logic based on how you determine if an item is "filled"
     return item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL || item.quantityXXXL;
@@ -510,6 +520,10 @@ const removeFileFromServer = async (fileId) => {
         setAlert(false);
       }, 2000);
       return () => clearTimeout(timeoutId);
+    }
+    if(uploadedFile===null){
+      setFileAlert("loading file")
+      return
     }
   if(user){
   // Filter the items that have been filled out
@@ -613,6 +627,10 @@ setShowLoginPopup(true)
         setAlert(false);
       }, 2000);
       return () => clearTimeout(timeoutId);
+    }
+    if(uploadedFile===null){
+      setFileAlert("loading file")
+      return
     }
   if(user){
   // Filter the items that have been filled out
@@ -732,7 +750,7 @@ setShowLoginPopup(true)
           </div>
         </>
       )}
-      <Row className="m-auto">
+      {/* <Row className="m-auto">
         <Col xs={12} md={12} className="mt-5 ">
           <h3 style={{ cursor: "pointer" }} onClick={handleBack}>
             <span style={{ cursor: "pointer" }}>
@@ -746,7 +764,7 @@ setShowLoginPopup(true)
             Custom Round Neck
           </h3>
         </Col>
-      </Row>
+      </Row> */}
       <Form onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart} className="mb-4">
     
      
@@ -770,6 +788,7 @@ setShowLoginPopup(true)
               <div className="col-lg-5">
             
                 {/*====== Product Image ======*/}
+            
                 <div className="row">
       <div className="col-12">
         <div className="productMainImg active show" id="preview1">
@@ -779,36 +798,36 @@ setShowLoginPopup(true)
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg"
+            src="https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/1np6ZMQ/Round-Neck-Black-Custom.jpg')}
-          />
-        </div>
-      </div>
-      <div className="col-3">
-        <div className="productMoreImg" id="preview2">
-          <img
-            src="https://i.ibb.co/7VtxHWr/Round-Neck-White-Custom.jpg"
-            alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/7VtxHWr/Round-Neck-White-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/bQRDfhL/Round-Neck-Bottle-Green-Custom.jpg"
+            src="https://i.ibb.co/8j6bjPC/Custom-Round-Neck-T-Shirt-01.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/bQRDfhL/Round-Neck-Bottle-Green-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/8j6bjPC/Custom-Round-Neck-T-Shirt-01.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/NtznFwg/Round-Neck-Maroon-Custom.jpg"
+            src="https://i.ibb.co/hmS80TK/Custom-Round-Neck-T-Shirt-02.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/NtznFwg/Round-Neck-Maroon-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/hmS80TK/Custom-Round-Neck-T-Shirt-02.webp')}
+          />
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="productMoreImg">
+          <img
+            src="https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp"
+            alt="Custom T-shirt"
+            onClick={() => handleThumbnailClick('https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp')}
           />
         </div>
       </div>
@@ -1100,6 +1119,7 @@ accept="image/jpeg, image/png"
 onChange={(e) => handleFileChange(e, index)}/> */}
 {/* file inputs component */}
 <FileInputFields itemToEdit={EditItemDetail} handleFileChange={handleFileChange} index={index} item={item}/>
+
      </div>
    </div>
     </div>
@@ -1125,6 +1145,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="productButton">
+                        <p style={{color:"red"}}> {fileAlert}</p>
                         {  !EditItemDetail && 
                          <><button type="submit" onClick={()=>setOpenCheckout(true)}>Buy Now</button>
                          <button  type="submit">Add To Cart</button></>}
@@ -1214,7 +1235,17 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           } */}
         </div>
       </Form>
-      <ProductTab describtion=""/>
+      <ProductTab describtion={
+        <div className="row m45 m_1responsive700 mb-3">
+     <ul>
+     <li><span>Fabric Quality:</span> Knitted and Dyed, Cotton</li>
+     <li><span>GSM:</span> 180</li>
+     <li>Matching 1/1 Ribs</li>
+     <li>Regular fit</li>
+     <li><p>Custom high-quality DTF print available</p></li>
+     <li className="highlight">NO MINIMUM</li>
+</ul>
+</div>}/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert
@@ -1228,6 +1259,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           onClose={() => setShowBuyNowAlert(false)}
         />
       )}
+       <Footer/>
     </div>
   );
 };

@@ -60,49 +60,49 @@ const NewOrdersWithOption = () => {
     const [show, setShow] = useState(false);
     // Define your color options with their corresponding image URLs
     const colorsBlankRoundNeck = {
-      blankRoundNeckblack: '/images/categoryImgs/Round Neck Black.jpg',
-      blankRoundNeckwhite: '/images/categoryImgs/Round Neck White.jpg',
-      blankRoundNeckmaroon: '/images/categoryImgs/Round Neck Maroon.jpg',
-      blankRoundNeckbottleGreen: '/images/categoryImgs/Round Neck Bottle Green.jpg',
+      blankRoundNeckblack: 'https://i.ibb.co/nDttFMg/Round-Neck-T-Shirt-01.webp',
+      blankRoundNeckwhite: 'https://i.ibb.co/pdYTzzY/Round-Neck-T-Shirt-02.webp',
+      blankRoundNeckmaroon: 'https://i.ibb.co/qkSnRjD/Round-Neck-T-Shirt-03.webp',
+      blankRoundNeckbottleGreen: 'https://i.ibb.co/m6BRJZF/Round-Neck-T-Shirt-04.webp',
     }; 
     
     const colorsCustomRoundNeck = {
-      customRoundNeckBlack: '/images/categoryImgs/Round Neck Black Custom.jpg',
-      customRoundNeckWhite: '/images/categoryImgs/Round Neck White Custom.jpg',
-      customRoundNeckbottleGreen: '/images/categoryImgs/Round Neck Bottle Green Custom.jpg',
-      customRoundNeckMaroon: '/images/categoryImgs/Round Neck Maroon Custom.jpg',
+      customRoundNeckBlack: 'https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp',
+      customRoundNeckWhite: 'https://i.ibb.co/hmS80TK/Custom-Round-Neck-T-Shirt-02.webp',
+      customRoundNeckbottleGreen: 'https://i.ibb.co/8j6bjPC/Custom-Round-Neck-T-Shirt-01.webp',
+      customRoundNeckMaroon: 'https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp',
 
 
     }; 
      const colorsBlankDropSholder = {
-      blankDropSholderBlack: '/images/categoryImgs/Drop Shoulder Black.jpg',
-      blankDropSholderWhite: '/images/categoryImgs/Drop Shoulder White.jpg',
-      blankDropSholderbottleGreen: '/images/categoryImgs/Drop Shoulder Bottle Green.jpg',
-      blankDropSholderMaroon: '/images/categoryImgs/Drop Shoulder Maroon.jpg',
+      blankDropSholderBlack:'https://i.ibb.co/nDttFMg/Round-Neck-T-Shirt-01.webp',
+      blankDropSholderWhite:'https://i.ibb.co/pdYTzzY/Round-Neck-T-Shirt-02.webp',
+      blankDropSholderbottleGreen:'https://i.ibb.co/m6BRJZF/Round-Neck-T-Shirt-04.webp',
+      blankDropSholderMaroon:'https://i.ibb.co/qkSnRjD/Round-Neck-T-Shirt-03.webp',
 
 
     }; 
       const colorsCustomDropSholder = {
-      customDropSholderBlack: '/images/categoryImgs/Drop Shoulder Black Custom.jpg',
-      customDropSholderWhite: '/images/categoryImgs/Drop Shoulder White Custom.jpg',
-      customDropSholderbottleGreen: '/images/categoryImgs/Drop Shoulder Bottle Green Custom.jpg',
-      customDropSholderMaroon: '/images/categoryImgs/Drop Shoulder Maroon Custom.jpg',
+      customDropSholderBlack: 'https://i.ibb.co/N76kwmk/Custom-Round-Neck-T-Shirt-01-1.webp',
+      customDropSholderWhite: 'https://i.ibb.co/hmS80TK/Custom-Round-Neck-T-Shirt-02.webp',
+      customDropSholderbottleGreen: 'https://i.ibb.co/8j6bjPC/Custom-Round-Neck-T-Shirt-01.webp',
+      customDropSholderMaroon: 'https://i.ibb.co/jTddGNV/Custom-Round-Neck-T-Shirt-03.webp',
 
 
     }; 
        const colorsCustomHoodie = {
-      customHoodieNevyBlue: '/images/categoryImgs/Hoodies Nevy Blue Custom.jpg',
-      customHoodieBlack: '/images/categoryImgs/Hoodies Black Custom.jpg',
-      customHoodieGray: '/images/categoryImgs/Hoodies Gray Custom.jpg',
-      customHoodieRed: '/images/categoryImgs/Hoodies Red Custom.jpg',
-      customHoodieNeonGreen: '/images/categoryImgs/Hoodies Neon Green Custom.jpg',
+      customHoodieNevyBlue: 'https://i.ibb.co/9NT22sS/Custom-Hoodies-02.webp',
+      customHoodieBlack: 'https://i.ibb.co/zXkmLxF/Custom-Hoodies-01.webp',
+      // customHoodieGray: '/images/categoryImgs/Hoodies Gray Custom.jpg',
+      customHoodieRed: 'https://i.ibb.co/HTbR5yt/Custom-Hoodies-03.webp',
+      customHoodieNeonGreen: 'https://i.ibb.co/mNF5Qdx/Custom-Hoodies-04.webp',
 };  
      const colorsBlankHoodie = {
-      BlankHoodieBlue: '/images/categoryImgs/Hoodies Nevy Blue.jpg',
-      BlankHoodieBlack: '/images/categoryImgs/Hoodies Black.jpg',
-      BlankHoodieGray: '/images/categoryImgs/Hoodies Gray.jpg',
-      BlankHoodieRed: '/images/categoryImgs/Hoodies Red.jpg',
-      BlankHoodieNeonGreen: '/images/categoryImgs/Hoodies Neon Green.jpg',
+      BlankHoodieBlue: 'https://i.ibb.co/VQd1Zgt/Hoodies-02.webp',
+      BlankHoodieBlack: 'https://i.ibb.co/ScZGKy5/Hoodies-01.webp',
+    
+      BlankHoodieRed: 'https://i.ibb.co/frnvJB7/Hoodies-03.webp',
+      BlankHoodieNeonGreen: 'https://i.ibb.co/mFg1Nfy/Hoodies-04.webp',
 
 
     };
@@ -180,7 +180,7 @@ const NewOrdersWithOption = () => {
         <Col className='mobile-col-adjustment'>
         <Card className="baseCard">
         <div className="card_newOrder">
-        <div className="card-inner">
+        <div className="">
             <div className="card-front">
                <Card.Img className="cardImg"  src={colorsBlankRoundNeck[forRoundNeck]} />
             </div>
@@ -231,14 +231,14 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-          <Button onClick={handleClickBlankRoundNeck} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Order Now</Button>
+          <Button onClick={handleClickBlankRoundNeck} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Shop Now</Button>
         </Card.Body>
       </Card>
         </Col>   
          <Col className='mobile-col-adjustment'>
           <Card className="baseCard" >
           <div className="card_newOrder">
-        <div className="card-inner">
+        <div className="">
             <div className="card-front">
             <Card.Img className="cardImg" src={colorsCustomRoundNeck[customforRoundNeck]} />
             </div>
@@ -288,14 +288,14 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickNeworder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Order Now</Button>
+              <Button onClick={handleClickNeworder} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Shop Now</Button>
             </Card.Body>
           </Card>
         </Col>  
           <Col className='mobile-col-adjustment' >
           <Card className="baseCard">
           <div className="card_newOrder">
-        <div className="card-inner">
+        <div className="">
             <div className="card-front">
             <Card.Img className="cardImg" src={colorsBlankDropSholder[blankDropSholder]}/>
             </div>
@@ -332,7 +332,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickBlankDropSholder} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor"> Order Now</Button>
+              <Button onClick={handleClickBlankDropSholder} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor"> Shop Now</Button>
             </Card.Body>
           </Card>
         </Col>  
@@ -340,7 +340,7 @@ const NewOrdersWithOption = () => {
 
           <Card className="baseCard">
           <div class="card_newOrder">
-        <div class="card-inner">
+        <div class="">
             <div class="card-front">
             <Card.Img className="cardImg" src={colorsCustomDropSholder[customDrop]} />
             </div>
@@ -378,7 +378,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickCustomDropSholder}  style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor"> Order Now</Button>
+              <Button onClick={handleClickCustomDropSholder}  style={{backgroundColor:"#07183e",border:"none"}} className="w-100 whiteColor"> Shop Now</Button>
             </Card.Body>
           </Card>
         </Col>   
@@ -386,7 +386,7 @@ const NewOrdersWithOption = () => {
           <Card className="baseCard">
            
             <div class="card_newOrder">
-        <div class="card-inner">
+        <div class="">
             <div class="card-front">
             <Card.Img className="cardImg" src={colorsBlankHoodie[blankHoodie]} />
             </div>
@@ -425,14 +425,14 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickBlankHoodie} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor"> Order Now</Button>
+              <Button onClick={handleClickBlankHoodie} style={{backgroundColor:"#07183e",border:"none"}} className=" w-100 whiteColor"> Shop Now</Button>
             </Card.Body>
           </Card>
         </Col>   
          <Col className='mobile-col-adjustment'>
           <Card className="baseCard">
           <div class="card_newOrder">
-        <div class="card-inner">
+        <div class="">
             <div class="card-front">
             <Card.Img src={colorsCustomHoodie[customHoodie]} />
             </div>
@@ -472,7 +472,7 @@ const NewOrdersWithOption = () => {
               ></div>
             ))}
           </div>
-              <Button onClick={handleClickCustonHoodie} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Order Now</Button>
+              <Button onClick={handleClickCustonHoodie} style={{backgroundColor:"#07183e",border:"none"}} className="w-100"> Shop Now</Button>
             </Card.Body>
            
           </Card>

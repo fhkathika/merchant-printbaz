@@ -33,6 +33,7 @@ import { CartContext } from "../../context/CartProvider";
 import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import BuyNowAlert from "../alert/BuyNowAlert";
+import Footer from "../footer/Footer";
 
 // import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
 
@@ -46,7 +47,7 @@ const CustomHoodie = () => {
   let collections = "resellerInfo";
   let idPrice = "teeShirtCampingId";
   let collectionsPrice = "productValues";
-  const [mainImage, setMainImage] = useState('https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg');
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/9NT22sS/Custom-Hoodies-02.webp');
 
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
@@ -68,7 +69,7 @@ const CustomHoodie = () => {
     collectionsPrice,
     dbData
   );
-
+  const [fileAlert, setFileAlert] = useState('');
   const EditItemDetail = location?.state?.itemToEdit;
   console.log("EditItemDetail",EditItemDetail)
   // const itemToEdit =  cartItems?.find(item => item?._id === EditItemDetail?._id);
@@ -182,14 +183,22 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
           fileUrl: fileUrl, // URL for preview
         };
  // Save the uploaded file data to state
- setUploadedFile({
-  fileId: uploadedFileData.fileId,
-  fileUrl: fileUrl
-});
+//  setUploadedFile({
+//   fileId: uploadedFileData.fileId,
+//   fileUrl: fileUrl
+// });
         if (fileType === 'mainFile') {
           newOrderDetailArr[index].file = fileData;
+          setUploadedFile({
+            fileId: uploadedFileData.fileId,
+            fileUrl: fileUrl
+          });
         } else if (fileType === 'image') {
           newOrderDetailArr[index].image = fileData;
+          setUploadedFile({
+            fileId: uploadedFileData.fileId,
+            fileUrl: fileUrl
+          });
         }
         else if (fileType === 'brandLogo') {
           updatedBrandLogoArray[index] = true; // Set true when file is selected
@@ -521,6 +530,10 @@ const removeFileFromServer = async (fileId) => {
       }, 2000);
       return () => clearTimeout(timeoutId);
     }
+    if(uploadedFile===null){
+      setFileAlert("loading file")
+      return
+    }
   if(user){
   // Filter the items that have been filled out
   const filledItems = {
@@ -622,6 +635,10 @@ setShowLoginPopup(true)
         setAlert(false);
       }, 2000);
       return () => clearTimeout(timeoutId);
+    }
+    if(uploadedFile===null){
+      setFileAlert("loading file")
+      return
     }
   if(user){
   // Filter the items that have been filled out
@@ -741,7 +758,7 @@ setShowLoginPopup(true)
           </div>
         </>
       )}
-      <Row className="m-auto">
+      {/* <Row className="m-auto">
         <Col xs={12} md={12} className="mt-5 ">
           <h3 style={{ cursor: "pointer" }} onClick={handleBack}>
             <span style={{ cursor: "pointer" }}>
@@ -755,7 +772,7 @@ setShowLoginPopup(true)
             Custom Hoodie
           </h3>
         </Col>
-      </Row>
+      </Row> */}
 
       <Form onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart} className="mb-4">
     
@@ -786,51 +803,43 @@ setShowLoginPopup(true)
           <img src={mainImage} alt="Custom T-shirt" />
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg"
+            src="https://i.ibb.co/zXkmLxF/Custom-Hoodies-01.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/JjFmL11/Hoodies-Nevy-Blue-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/zXkmLxF/Custom-Hoodies-01.webp')}
           />
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-3">
         <div className="productMoreImg" id="preview2">
           <img
-            src="https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg"
+            src="https://i.ibb.co/9NT22sS/Custom-Hoodies-02.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/MRf1tBD/Hoodies-Red-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/9NT22sS/Custom-Hoodies-02.webp')}
           />
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg"
+            src="https://i.ibb.co/HTbR5yt/Custom-Hoodies-03.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/VDp04Mx/Hoodies-Black-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/HTbR5yt/Custom-Hoodies-03.webp')}
           />
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg"
+            src="https://i.ibb.co/mNF5Qdx/Custom-Hoodies-04.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/NKhyMyp/Hoodies-Gray-Custom.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/mNF5Qdx/Custom-Hoodies-04.webp')}
           />
         </div>
       </div>
-      <div className="col-2">
-        <div className="productMoreImg">
-          <img
-            src="https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg"
-            alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/v36RXc6/Hoodies-Neon-Green-Custom.jpg')}
-          />
-        </div>
-      </div>
+    
     </div>
            
   
@@ -1153,7 +1162,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="productButton">
-                          
+                        <p style={{color:"red"}}> {fileAlert}</p>
                          {  !EditItemDetail && 
                          <><button type="submit" onClick={()=>setOpenCheckout(true)}>Buy Now</button>
                          <button  type="submit">Add To Cart</button></>}
@@ -1243,7 +1252,19 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           } */}
         </div>
       </Form>
-      <ProductTab describtion=""/>
+      <ProductTab describtion={
+        <div className="row m45 m_1responsive700 mb-3">
+      <ul>
+        <li><span>Fabric Quality:</span>  Knitted and Dyed, Cotton Fleece</li>
+        <li><span>GSM:</span> 300+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Pullover Regular fit </li>
+        <li>Kangaroo Pocket </li>
+        <li><p>Custom high-quality DTF print available</p> </li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+  </div>
+  }/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert
@@ -1257,6 +1278,7 @@ onChange={(e) => handleFileChange(e, index)}/> */}
           onClose={() => setShowBuyNowAlert(false)}
         />
       )}
+       <Footer/>
     </div>
   );
 };

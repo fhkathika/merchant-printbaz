@@ -17,6 +17,7 @@ import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import LogoFileInput from "../logoFIleInput/LogoFileInput";
 import BuyNowAlert from "../alert/BuyNowAlert";
+import Footer from "../footer/Footer";
 
 const BlankDropSholder  = () => {
   const { formData, setFormData, setCartItems, editCartItem, cartItems,addToCart } =
@@ -357,7 +358,7 @@ let perCategoryCost=0
     navigate("/");
   };
 
-  const [mainImage, setMainImage] = useState('https://i.ibb.co/ydx7zVC/Drop-Shoulder-Maroon.jpg');
+  const [mainImage, setMainImage] = useState('https://i.ibb.co/pdYTzzY/Round-Neck-T-Shirt-02.webp');
 
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
@@ -597,7 +598,7 @@ setShowLoginPopup(true)
           </div>
         </>
       )}
-      <Row className="m-auto">
+      {/* <Row className="m-auto">
         <Col xs={12} md={12} className="mt-5 ">
           <h3 style={{ cursor: "pointer" }} onClick={handleBack}>
             <span style={{ cursor: "pointer" }}>
@@ -611,7 +612,7 @@ setShowLoginPopup(true)
             Blank Drop Sholder
           </h3>
         </Col>
-      </Row>
+      </Row> */}
 
      
       <Form onSubmit={EditItemDetail?handleEdit:OpenCheckout===true?handleGotoCheckout:handleGotoAddToCart} className="mb-4">
@@ -646,36 +647,36 @@ setShowLoginPopup(true)
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/kxwpVfX/Drop-Shoulder-Black.jpg"
+            src="https://i.ibb.co/nDttFMg/Round-Neck-T-Shirt-01.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/kxwpVfX/Drop-Shoulder-Black.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/nDttFMg/Round-Neck-T-Shirt-01.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg" id="preview2">
           <img
-            src="https://i.ibb.co/ydx7zVC/Drop-Shoulder-Maroon.jpg"
+            src="https://i.ibb.co/pdYTzzY/Round-Neck-T-Shirt-02.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/ydx7zVC/Drop-Shoulder-Maroon.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/pdYTzzY/Round-Neck-T-Shirt-02.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/WzhzNv1/Drop-Shoulder-Bottle-Green.jpg"
+            src="https://i.ibb.co/qkSnRjD/Round-Neck-T-Shirt-03.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/WzhzNv1/Drop-Shoulder-Bottle-Green.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/qkSnRjD/Round-Neck-T-Shirt-03.webp')}
           />
         </div>
       </div>
       <div className="col-3">
         <div className="productMoreImg">
           <img
-            src="https://i.ibb.co/zZq85J2/Drop-Shoulder-White.jpg"
+            src="https://i.ibb.co/m6BRJZF/Round-Neck-T-Shirt-04.webp"
             alt="Custom T-shirt"
-            onClick={() => handleThumbnailClick('https://i.ibb.co/zZq85J2/Drop-Shoulder-White.jpg')}
+            onClick={() => handleThumbnailClick('https://i.ibb.co/m6BRJZF/Round-Neck-T-Shirt-04.webp')}
           />
         </div>
       </div>
@@ -892,7 +893,18 @@ setShowLoginPopup(true)
           } */}
         </div>
       </Form>
-      <ProductTab describtion=""/>
+      <ProductTab describtion={
+        <div className="row m45 m_1responsive700 mb-3">
+      <ul>
+        <li><span>Fabric Quality:</span> Knitted and Dyed, Cotton</li>
+        <li><span>GSM:</span> 190+</li>
+        <li>Matching 1/1 Ribs</li>
+        <li>Regular fit</li>
+        <li><p>Custom high-quality DTF print available</p></li>
+        <li className="highlight">NO MINIMUM</li>
+    </ul>
+    </div>
+    }/>
       {/* new order all design will be here  */}
       {showAlert === true && (
         <AddtoCartAlert
@@ -906,6 +918,7 @@ setShowLoginPopup(true)
           onClose={() => setShowBuyNowAlert(false)}
         />
       )}
+       <Footer/>
     </div>
   );
 };

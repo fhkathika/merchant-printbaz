@@ -10,7 +10,7 @@ const AddToCart = () => {
     // const mycartItems = cartItems?.filter(item => item?.userRegId === user?._id);
     const navigate=useNavigate()
     const handleBackToHomepage=()=>{
-      navigate('/')
+      navigate('/newOrdersWithOption')
     }
    
   

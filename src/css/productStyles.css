@@ -216,6 +216,7 @@ input[type=number] {
    color: white;
       overflow: scroll;
    bottom: 60%;
+   height:"300px";
      width: auto;
         background-color: rgb(5, 5, 48);
         border: 1px solid #ccc;

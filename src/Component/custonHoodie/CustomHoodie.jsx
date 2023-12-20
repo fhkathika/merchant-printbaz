@@ -70,6 +70,7 @@ const CustomHoodie = () => {
   );
 
   const EditItemDetail = location?.state?.itemToEdit;
+  console.log("EditItemDetail",EditItemDetail)
   // const itemToEdit =  cartItems?.find(item => item?._id === EditItemDetail?._id);
   const [showRegPopup, setShowRegPopup] = useState(false);
   const switchToLogin = () => {
@@ -984,7 +985,7 @@ setShowLoginPopup(true)
         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL || item.quantityXXXL}
         
        >
-         <option selected>Select Print Side</option>
+         <option  value="">Select Print Side</option>
          <option value="frontSide">Front Side</option>
          <option value="backSide">Back Side</option>
          <option value="bothSide">Both Side</option>
@@ -1004,9 +1005,9 @@ setShowLoginPopup(true)
  name="printSize"
  required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
 >
- <option selected>Select Print Size</option>
+ {/* <option selected>Select Print Size</option> */}
  
-                          {/* <option value="">select print size</option>  */}
+                          <option value="">select print size</option> 
                           {/* <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option> */}
                           <option value="10 x 14">10″ x 14″</option>
                           <option value="10 x 10">10″ x 10″(A4)</option>
@@ -1033,7 +1034,7 @@ setShowLoginPopup(true)
  name="printSize"
  required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
 >
- <option selected>Select Print Size</option>
+ <option  value="">Select Print Size</option>
  
                           {/* <option value="">select print size</option>  */}
                           {/* <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option> */}
@@ -1062,7 +1063,7 @@ setShowLoginPopup(true)
                       name="printSize"
                       required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                      >
-                      <option selected>Select Print Size</option>
+                      <option  value="">Select Print Size</option>
                       
                                                {/* <option value="">select print size</option>  */}
                                                {/* <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option> */}
@@ -1087,7 +1088,7 @@ setShowLoginPopup(true)
                       }}
                      
                       required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}>
-         <option selected>Select Print Size</option>
+         <option  value="">Select Print Size</option>
       
                            {/* <option value="">select print size</option>  */}
                            <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>

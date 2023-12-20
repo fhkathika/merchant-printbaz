@@ -1012,7 +1012,7 @@ setShowLoginPopup(true)
         required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL || item.quantityXXXL}
         
        >
-         <option selected>Select Print Side</option>
+         <option value="">Select Print Side</option>
          <option value="frontSide">Front Side</option>
          <option value="backSide">Back Side</option>
          <option value="bothSide">Both Side</option>
@@ -1032,7 +1032,7 @@ setShowLoginPopup(true)
  name="printSize"
  required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
 >
- <option selected>Select Print Size</option>
+ <option value="">Select Print Size</option>
  
                           {/* <option value="">select print size</option>  */}
                           <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
@@ -1061,7 +1061,7 @@ setShowLoginPopup(true)
  name="printSize"
  required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
 >
- <option selected>Select Print Size</option>
+ <option value="">Select Print Size</option>
  
                           {/* <option value="">select print size</option>  */}
                           <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
@@ -1090,7 +1090,7 @@ setShowLoginPopup(true)
                       name="printSize"
                       required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}
                      >
-                      <option selected>Select Print Size</option>
+                      <option value="">Select Print Size</option>
                       
                                                {/* <option value="">select print size</option>  */}
                                                <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
@@ -1115,7 +1115,7 @@ setShowLoginPopup(true)
                       }}
                      
                       required={item.quantityM || item.quantityL || item.quantityXL || item.quantityXXL}>
-         <option selected>Select Print Size</option>
+         <option value="">Select Print Size</option>
       
                            {/* <option value="">select print size</option>  */}
                            <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>

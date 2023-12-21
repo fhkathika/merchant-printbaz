@@ -19,6 +19,7 @@ const CheckOut = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [fetchCartItems,setFetchCartItems]=useState([])
   const [noPaymentSystem, setNoPaymentSystem] = useState(false);
+  console.log("user.....",user)
   const navigate=useNavigate()
   // State to hold handlers
 const [confirmHandlers, setConfirmHandlers] = useState({ onConfirm: () => {}, onClose: () => {} });
@@ -512,6 +513,7 @@ const handleSubmitOrder=async(e)=>{
  
   formDataSendOrdertoServer.append('clientName', user?.name);
   formDataSendOrdertoServer.append('clientbrandName', user?.brandName);
+  formDataSendOrdertoServer.append('clientPhone', user?.phone);
   formDataSendOrdertoServer.append("address",formDataSelected?.address);
   formDataSendOrdertoServer.append("instruction",formDataSelected?.instruction);
   formDataSendOrdertoServer.append("districts",formDataSelected?.districts);

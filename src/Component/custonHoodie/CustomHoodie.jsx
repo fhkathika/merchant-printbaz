@@ -69,7 +69,18 @@ const CustomHoodie = () => {
     collectionsPrice,
     dbData
   );
-  const [fileAlert, setFileAlert] = useState('');
+  const [fileAlert, setFileAlert] = useState(null);
+ // useEffect to clear fileAlert after 2 seconds
+ useEffect(() => {
+  if (fileAlert) {
+    const timeoutId = setTimeout(() => {
+      setFileAlert(null); // Clear the fileAlert after 2 seconds
+    }, 4000);
+
+    // Cleanup the timeout to avoid potential memory leaks
+    return () => clearTimeout(timeoutId);
+  }
+}, [fileAlert]);
   const EditItemDetail = location?.state?.itemToEdit;
   console.log("EditItemDetail",EditItemDetail)
   // const itemToEdit =  cartItems?.find(item => item?._id === EditItemDetail?._id);
@@ -189,22 +200,31 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 // });
         if (fileType === 'mainFile') {
           newOrderDetailArr[index].file = fileData;
-          setUploadedFile({
-            fileId: uploadedFileData.fileId,
-            fileUrl: fileUrl
-          });
+        
         } else if (fileType === 'image') {
           newOrderDetailArr[index].image = fileData;
-          setUploadedFile({
-            fileId: uploadedFileData.fileId,
-            fileUrl: fileUrl
-          });
+         
         }
         else if (fileType === 'brandLogo') {
           updatedBrandLogoArray[index] = true; // Set true when file is selected
           setAddBrandLogoArray(updatedBrandLogoArray);
           newOrderDetailArr[index].brandLogo = fileData;
           }
+
+          // Check if all three files are uploaded
+        const mainFileUploaded = newOrderDetailArr.some((item) => item.file);
+        const imageUploaded = newOrderDetailArr.some((item) => item.image);
+        // const brandLogoUploaded = updatedBrandLogoArray.some((value) => value);
+
+        const brandLogoUploaded = updatedBrandLogoArray[index];
+
+ if (mainFileUploaded && imageUploaded && (brandLogoUploaded || brandLogoUploaded === undefined)) {
+          // Set the uploadedFile state with the file details from the last uploaded file
+          setUploadedFile({
+               fileId: uploadedFileData.fileId,
+               fileUrl: fileUrl
+             });
+        }
 
         return { ...prevFormData, orderDetailArrCustomHoodie: newOrderDetailArr };
       });
@@ -488,6 +508,10 @@ const removeFileFromServer = async (fileId) => {
           return () => clearTimeout(timeoutId);
       
     }
+    if(uploadedFile===null){
+      setFileAlert("plaese wait! file is loading...")
+      return
+    }
     // if (isAddToCartEnabled(formData?.orderDetailArr)) {
    
       editCartItem(EditItemDetail?._id, formData); // Pass the unique ID and the updated form data
@@ -531,9 +555,10 @@ const removeFileFromServer = async (fileId) => {
       return () => clearTimeout(timeoutId);
     }
     if(uploadedFile===null){
-      setFileAlert("loading file")
+      setFileAlert("please wait! file is loading....")
       return
     }
+   
   if(user){
   // Filter the items that have been filled out
   const filledItems = {
@@ -637,7 +662,7 @@ setShowLoginPopup(true)
       return () => clearTimeout(timeoutId);
     }
     if(uploadedFile===null){
-      setFileAlert("loading file")
+      setFileAlert("please wait! file is loading....")
       return
     }
   if(user){

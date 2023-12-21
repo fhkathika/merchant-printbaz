@@ -257,7 +257,7 @@ const handleShowTicketPopUp=()=>{
           </li>
           <li>
           <Link className="nav-link scrollto " to="/newOrdersWithOption">
-              NEW ORDER
+             SHOP
             </Link>
           </li>
           <li>

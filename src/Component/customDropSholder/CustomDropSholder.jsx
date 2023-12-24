@@ -912,7 +912,7 @@ setShowLoginPopup(true)
                 <div className="productInformation">
                   {/*====== Product Title ======*/}
                   <div className="productTitle marginTop10_mobile" >
-                    <h2 style={{textAlign:"left"}}>Custom Drop Sholder</h2>
+                    <h2 style={{textAlign:"left"}}>Custom Dropshoulder</h2>
                   </div>
                   <div className="self-product-description">
                             <h5><strong>Size chart - In inches</strong></h5>

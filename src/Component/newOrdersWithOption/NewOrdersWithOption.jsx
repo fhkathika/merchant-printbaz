@@ -315,7 +315,7 @@ const NewOrdersWithOption = () => {
     </div>
             
             <Card.Body>
-              <Card.Title className='cardTitle' style={{textAlign:"center"}}>Blank Drop Sholder</Card.Title>
+              <Card.Title className='cardTitle' style={{textAlign:"center"}}>Blank Dropshoulder</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsBlankDropSholder).map(color => (
@@ -361,7 +361,7 @@ const NewOrdersWithOption = () => {
             
             
             <Card.Body>
-              <Card.Title className='cardTitle' style={{textAlign:"center"}}>custom Drop Sholder</Card.Title>
+              <Card.Title className='cardTitle' style={{textAlign:"center"}}>Custom Dropshoulder</Card.Title>
                <div style={{display: 'flex', margin: '10px 0px',justifyContent:"center"}}>
             {/* Render color boxes */}
             {Object.keys(colorsCustomDropSholder).map(color => (

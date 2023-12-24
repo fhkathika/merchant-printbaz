@@ -690,7 +690,7 @@ setShowLoginPopup(true)
                 <div className="productInformation">
                   {/*====== Product Title ======*/}
                   <div className="productTitle marginTop10_mobile" >
-                    <h2 style={{textAlign:"left"}}>Blank Drop Sholder</h2>
+                    <h2 style={{textAlign:"left"}}>Blank Dropshoulder</h2>
                   </div>
                  
                   {/*====== Product Color/Size/Files/Price/Button ======*/}

@@ -935,7 +935,7 @@ setShowLoginPopup(true)
   <div className="accordion-item" key={index}>
     <h2 className="accordion-header" id={`heading${index}`}>
       <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>
-        {item.color}
+        {item.color==="Nevy Blue"? "Navy Blue":item.color}
         <input data-color={item.color} name="color" type="hidden" value={item.color} />
       </button>
     </h2>

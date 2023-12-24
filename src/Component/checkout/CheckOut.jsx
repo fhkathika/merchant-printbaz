@@ -24,6 +24,7 @@ const CheckOut = () => {
   // State to hold handlers
 const [confirmHandlers, setConfirmHandlers] = useState({ onConfirm: () => {}, onClose: () => {} });
 const id=user?._id
+// const id="6527f49f8e263473dbad235b"
 const fetchOrders = async () => {
   try {
       // const response = await fetch(`http://localhost:5000/getCartItemsbyregid/${id}`);
@@ -33,6 +34,8 @@ const fetchOrders = async () => {
       }
       const data = await response.json();
       setFetchCartItems(data);
+      // setFetchCartItems(Array.isArray(data) ? data : [data]);
+
   } catch (error) {
       console.error('Error fetching orders:', error);
   }
@@ -399,9 +402,9 @@ const handleCheckboxChange = (event) => {
 };
 
 const getToBeOrerDetail=()=>{
- const newItems = copyCartOrders.flatMap(cartItem => {
+ const newItems = copyCartOrders?.flatMap(cartItem => {
   // Extract and transform relevant arrays from cartItem
-  return Object.entries(cartItem).flatMap(([key, value]) => {
+  return Object.entries(cartItem)?.flatMap(([key, value]) => {
     if (key.includes("orderDetailArr") && Array.isArray(value)) {
       return [{
         productType: key, // or derive the product type based on your logic
@@ -422,7 +425,7 @@ const getToBeOrerDetail=()=>{
     ...prevFormData, // Copy all the existing state
     selectedItemsDetailArr: [
       // ...prevFormData?.selectedItemsDetailArr,
-      ...newItems.filter(item => item?.productType !== '' && item?.individualProductArr.length > 0)
+      ...newItems?.filter(item => item?.productType !== '' && item?.individualProductArr.length > 0)
 
     ],
     grandQuantity:grandQuantity,
@@ -485,6 +488,14 @@ const handleSubmitOrder=async(e)=>{
     if (product?.image?.fileId) {
       formDataSendOrdertoServer.append(`image${index}_${productIndex}`, product.image.fileId);
     }
+    // Append file and image IDs if they exist
+// if (product?.file?.fileId) {
+//   formDataSendOrdertoServer.append(`file[${index}][${productIndex}]`, product.file.fileId);
+// }
+// if (product?.image?.fileId) {
+//   formDataSendOrdertoServer.append(`image[${index}][${productIndex}]`, product.image.fileId);
+// }
+
 
     formDataSendOrdertoServer.append(`color${index}_${productIndex}`, product.color);
     formDataSendOrdertoServer.append(`productType${index}_${productIndex}`, product.productType);

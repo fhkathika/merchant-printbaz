@@ -495,6 +495,8 @@ brandLogo:null
     };
    
     const id=user?._id
+    // const id="6527f49f8e263473dbad235b"
+    // const id="6527f49f8e263473dbad235b"
     const fetchOrders = async () => {
       try {
           // const response = await fetch(`http://localhost:5000/getCartItemsbyregid/${id}`);
@@ -504,6 +506,7 @@ brandLogo:null
           }
           const data = await response.json();
           setCartItems(data);
+        
       } catch (error) {
           console.error('Error fetching orders:', error);
       }

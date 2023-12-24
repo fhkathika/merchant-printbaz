@@ -166,20 +166,29 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
   const { files } = event.target;
   const updatedBrandLogoArray = [...addBrandLogoArray];
   if (files && files.length > 0) {
- 
-    const file = files[0];
-    const formData = new FormData();
-    formData.append('file', file);
+    const fileDataArray = [];
+    // const file = files[0];
+    // const formData = new FormData();
+    // formData.append('file', file);
     
-    // If there is an old file to replace, append its ID to the form data
-    if (oldFileId) {
-      formData.append('oldFileId', oldFileId);
-    }
+    // // If there is an old file to replace, append its ID to the form data
+    // if (oldFileId) {
+    //   formData.append('oldFileId', oldFileId);
+    // }
+    for (const file of files) {
+      // Your existing file handling logic goes here
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // If there is an old file to replace, append its ID to the form data
+      if (oldFileId) {
+        formData.append('oldFileId', oldFileId);
+      }
 
     try {
       // Send the file to your backend server
-      // const response = await fetch('http://localhost:5000/uploadOrderedFile', {
-      const response = await fetch('https://mserver.printbaz.com/uploadOrderedFile', {
+      const response = await fetch('http://localhost:5000/uploadOrderedFile', {
+      // const response = await fetch('https://mserver.printbaz.com/uploadOrderedFile', {
         method: 'POST',
         body: formData, // Send the file within FormData
       });
@@ -187,39 +196,44 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      const uploadedFileData = await response.json(); // Get the response from the server
+      const uploadedFileData = await response.json();
+      const fileData = {
+        fileId: uploadedFileData.fileIds, // Change to fileIds since it's an array
+        fileUrl: URL.createObjectURL(file),
+      };
 
-      // Create a preview URL
-      const fileUrl = URL.createObjectURL(file);
+      fileDataArray.push(fileData);
 
-      // Update the component state with the file details from the server
-      setFormData(prevFormData => {
-        const newOrderDetailArr = [...prevFormData.orderDetailArrCustomDropSholder];
-        const fileData = {
-          fileId: uploadedFileData.fileId, // File ID from the server response
-          fileUrl: fileUrl, // URL for preview
-        };
- // Save the uploaded file data to state
+    
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }
+
+  setFormData(prevFormData => {
+    const newOrderDetailArr = [...prevFormData.orderDetailArrCustomDropSholder];
+   
+// Save the uploaded file data to state
 //  setUploadedFile({
 //   fileId: uploadedFileData.fileId,
 //   fileUrl: fileUrl
 // });
-        if (fileType === 'mainFile') {
-          newOrderDetailArr[index].file = fileData;
-        
-        } else if (fileType === 'image') {
-          newOrderDetailArr[index].image = fileData;
-         
-        }
-        else if (fileType === 'brandLogo') {
-          updatedBrandLogoArray[index] = true; // Set true when file is selected
-          setAddBrandLogoArray(updatedBrandLogoArray);
-          newOrderDetailArr[index].brandLogo = fileData;
-          // setUploadedFile({
-          //   fileId: uploadedFileData.fileId,
-          //   fileUrl: fileUrl
-          // });
-          }
+    if (fileType === 'mainFile') {
+      newOrderDetailArr[index].file = fileDataArray;
+    
+    } else if (fileType === 'image') {
+      newOrderDetailArr[index].image = fileDataArray;
+     
+    }
+    else if (fileType === 'brandLogo') {
+      updatedBrandLogoArray[index] = true; // Set true when file is selected
+      setAddBrandLogoArray(updatedBrandLogoArray);
+      newOrderDetailArr[index].brandLogo = fileDataArray;
+      // setUploadedFile({
+      //   fileId: uploadedFileData.fileId,
+      //   fileUrl: fileUrl
+      // });
+      }
 // Check if all three files are uploaded
 const mainFileUploaded = newOrderDetailArr.some((item) => item.file);
 const imageUploaded = newOrderDetailArr.some((item) => item.image);
@@ -228,17 +242,13 @@ const imageUploaded = newOrderDetailArr.some((item) => item.image);
 const brandLogoUploaded = updatedBrandLogoArray[index];
 
 if (mainFileUploaded && imageUploaded && (brandLogoUploaded || brandLogoUploaded === undefined)) {
-  // Set the uploadedFile state with the file details from the last uploaded file
   setUploadedFile({
-       fileId: uploadedFileData.fileId,
-       fileUrl: fileUrl
-     });
+    fileId: fileDataArray.map((data) => data.fileId).join(','), // Join file IDs into a comma-separated string
+    fileUrl: fileDataArray[0].fileUrl, // Use the first file URL for preview
+  });
 }
-        return { ...prevFormData, orderDetailArrCustomDropSholder: newOrderDetailArr };
-      });
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
+    return { ...prevFormData, orderDetailArrCustomDropSholder: newOrderDetailArr };
+  });
       // Update state
       setFormData((prevState) => ({
         ...prevState,
@@ -599,8 +609,8 @@ const removeFileFromServer = async (fileId) => {
   try {
     // Make a POST request to your server with the order data
     // const response = await fetch('https://server.printbaz.com/addToCart', {
-    // const response = await fetch('http://localhost:5000/addToCart', {
-    const response = await fetch('https://mserver.printbaz.com/addToCart', {
+    const response = await fetch('http://localhost:5000/addToCart', {
+    // const response = await fetch('https://mserver.printbaz.com/addToCart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

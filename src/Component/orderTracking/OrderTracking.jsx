@@ -941,14 +941,36 @@ orderDetail?.brandLogo ?
         </div>
    
       
-        <div className="col-lg-2" style={{display:"flex",justifyContent:"center"}}>
+        <div className="col-lg-2" style={{display:"block",justifyContent:"center"}}>
     
-      
+    {
+orderDetail?.image?.fileId ?
+
+
+
+<div className="col-lg-2" style={{display:"flex",justifyContent:"center"}}>
+
+
 <div className="file-info" style={{marginLeft:"",border:"none"}}>
 <iframe src={`https://drive.google.com/file/d/${orderDetail?.image?.fileId}/preview`}  style={{ textDecoration: "none",border:"none" }} height="auto" width="auto" title="orcode"></iframe>
 <a className="dropdown-item" href={`https://drive.google.com/uc?export=download&id=${orderDetail?.image?.fileId}`} download><p style={{cursor:"pointer"}} href={`https://drive.google.com/uc?export=download&id=${orderDetail?.image?.fileId}`} download>download</p></a>
 
 </div>
+
+
+</div>
+
+
+:
+
+      orderDetail?.image?.map((images,fileIndex)=>
+      <div className="file-info" style={{marginLeft:"",border:"none"}}>
+<iframe src={`https://drive.google.com/file/d/${images?.fileId[0]}/preview`}  style={{ textDecoration: "none",border:"none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={`https://drive.google.com/uc?export=download&id=${images?.fileId[0]}`} download><p style={{cursor:"pointer"}} href={`https://drive.google.com/uc?export=download&id=${images?.fileId[0]}`} download>download</p></a>
+
+</div>
+   ) }  
+
 
 
         </div>
@@ -969,8 +991,12 @@ orderDetail?.brandLogo ?
 
   <div className="col-lg-12" >
      <h4>Main File :</h4>
-      <div className='phone_flex_center' style={{display:"flex"}}>
-      <div  style={{display:"flex"}}>
+      <div className='phone_flex_center' style={{display:"block"}}>
+      <div  style={{display:"block"}}>
+{
+  orderDetail?.file?.fileId?
+  <div className='phone_flex_center' style={{display:"flex"}}>
+  <div  style={{display:"flex"}}>
 
 <div className="file-info" style={{marginLeft:"15px",border:"none"}}>
 <iframe src={`https://drive.google.com/file/d/${orderDetail?.file?.fileId}/preview`}  style={{ textDecoration: "none",border:"none" }} height="auto" width="auto" title="orcode"></iframe>
@@ -979,15 +1005,29 @@ orderDetail?.brandLogo ?
 </div>
 </div>
 </div>
+:
+  orderDetail?.file?.map((files,fileIndex)=>
+  <div className="file-info" style={{marginLeft:"15px",border:"none"}}>
+  <iframe src={`https://drive.google.com/file/d/${files?.fileId[0]}/preview`}  style={{ textDecoration: "none",border:"none" }} height="auto" width="auto" title="orcode"></iframe>
+  <a className="dropdown-item" href={`https://drive.google.com/uc?export=download&id=${files?.fileId[0]}`} download><p style={{cursor:"pointer"}} href={`https://drive.google.com/uc?export=download&id=${files?.fileId[0]}`} download>download</p></a>
+  
+  </div> 
+  
+  )
+}
+
+</div>
+</div>
 
 </div>
        
  
-  {
-  orderDetail?.brandLogo &&
   <>
   <h4>Brang Logo :</h4>
   <div className="">
+{
+orderDetail?.brandLogo?.fileId ?
+<div className="">
 
 <div className="file-info" style={{marginLeft:"15px",border:"none"}}>
 <iframe src={`https://drive.google.com/file/d/${orderDetail?.brandLogo?.fileId}/preview`}  style={{ textDecoration: "none",border:"none" }} height="auto" width="auto" title="orcode"></iframe>
@@ -995,9 +1035,19 @@ orderDetail?.brandLogo ?
 
 </div>
   </div>
+  :
+    orderDetail?.brandLogo?.map(logos=>
+      <div className="file-info" style={{marginLeft:"15px",border:"none"}}>
+<iframe src={`https://drive.google.com/file/d/${logos?.fileId[0]}/preview`}  style={{ textDecoration: "none",border:"none" }} height="auto" width="auto" title="orcode"></iframe>
+<a className="dropdown-item" href={`https://drive.google.com/uc?export=download&id=${logos?.fileId[0]}`} download><p style={{cursor:"pointer"}} href={`https://drive.google.com/uc?export=download&id=${logos?.fileId[0]}`} download>download</p></a>
+
+</div>
+)}
+
+  </div>
   </>
   
-  }
+  
   
         </div>
         <hr />

@@ -101,7 +101,7 @@ function App() {
           }
         />  
           <Route
-          path="/invoice"
+          path="/invoice/:id/:regId"
           element={
             <PrivateRoute>
               <Invoice />
@@ -118,7 +118,7 @@ function App() {
         />  
          <Route path="/viewTicket/:id" element={<ViewTicket/>} />
             <Route
-          path="/invoicePdf/:id"
+          path="/invoicePdf/:id/:regId"
           element={
             <PrivateRoute>
               <InvoicePdf />

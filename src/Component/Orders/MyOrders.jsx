@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Container, Overlay, Tooltip } from 'react-bootstrap';
+import { Button, Container, Overlay, Table, Tooltip } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useGetData } from '../../hooks/useGetData';
@@ -10,7 +10,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../css/dashboardStyles.css'
 import BackToTop from '../backToTop/BackToTop';
-
+import InvoicePdf from '../invoicePdf/InvoicePdf';
+import ReactDOM from 'react-dom';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 const MyOrders = () => {
     let id = "resellerOrdersId";
     let collections = "resellerInfo";
@@ -102,9 +105,7 @@ useEffect(() => {
     window.removeEventListener('scroll', toggleBacktotop);
   };
 }, []);
-const handleTabClick = (tabId) => {
-      setActiveTab(tabId);
-    }
+
 // start date Handler 
 const handleChangeStartDate=(date)=>{
   setStartDate(date)
@@ -292,13 +293,200 @@ const filerByOrderDate=info.filter(order=>{
           return latestB - latestA; // Descending sort
         });
     }, [orderMap]);
+    const styles = {
+      tabContainer: {
+        display: 'flex',
+        // justifyContent: 'space-between',
+        marginBottom: '20px ',
+        marginTop: '40px ',
+       
+      },
+      tabButton: {
+        flex: 1,
+        padding: '10px',
+        textAlign: 'center',
+        cursor: 'pointer',
+        border: '1px solid #ddd',
+        backgroundColor: '#f9f9f9',
+        color: '#333',
+        borderRadius:"10px",
+        width:"100%",
+        marginLeft:"10px"
+      },
+      activeTab: {
+        backgroundColor: '#0d1552',
+        color: 'white',
+        borderRadius:"10px",
+        width:"100%",
+        marginLeft:"10px"
+      },
+    };
+    const [filterPaymentReleasedDate, setFilterPaymentReleasedDate] = useState();
+    const [getPaymentDetailById, setGetPaymentDetailById] = useState([]);
+    const getPerSegmentPaymentDetailById=async()=>{
+      // Fetch the updated order details
+    await fetch(`https://mserver.printbaz.com/getPaymentDetailRegId/${user?._id}`)
+    // await fetch(`http://localhost:5000/getPaymentDetailRegId/${viewClient?._id}`)
+    .then(res=>res.json())
+    .then(data => {setGetPaymentDetailById(data)})
+    }
+    console.log("getPaymentDetailById",getPaymentDetailById)
+    // State to track the active tab
+ const [activeOrderTab, setActiveOrderTab] = useState('allOrders'); // 'allOrders' or 'invoice'
+
+ // Function to handle tab change
+ const handleTabChange = (tab) => {
+  console.log("click handleTabChange.....")
+  setActiveOrderTab(tab);
+ };
+    // Inside InvoiceDetail component
+useEffect(() => {
+  // Signal that the component has been rendered
+  window.dispatchEvent(new Event('component-rendered'));
+}, []);
+
+// Inside your downloadInvoiceDetail function
+const downloadInvoiceDetail = async (releaseOrderId, releaseOrderRegId) => {
+  const tempElement = document.createElement('div');
+  document.body.appendChild(tempElement);
+
+  // Render InvoiceDetail in the temporary element
+  ReactDOM.render(
+    <InvoicePdf
+      releaseOrderId={releaseOrderId}
+      releaseOrderRegId={releaseOrderRegId}
+    />,
+    tempElement
+  );
+
+  // Wait for the component to be rendered
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  // Capture a screenshot of the temporary element with html2canvas
+  html2canvas(tempElement, { scale: 1 })
+    .then((canvas) => {
+      // Convert the canvas to a data URL
+      const imgData = canvas.toDataURL('image/png');
+
+      // Create a new PDF with jsPDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+      // Set the selected release order IDs before saving the PDF
     
+      // Save the PDF
+      pdf.save("InvoiceDetail.pdf");
+
+      // Remove the temporary element
+      document.body.removeChild(tempElement);
+    });
+};
+    useEffect(()=>{
+      getPerSegmentPaymentDetailById()
+          
+          },[user])
+    
+    const handleInputSearchChange = (event) => {
+      const { id, value } = event.target;
+      switch (id) {
+       
+      case 'date-filter':
+          setFilterPaymentReleasedDate(value); // Assuming you have a state variable for the paymentReleasedDate filter
+          break;
+        // ...other cases
+        default:
+          break;
+      }
+      
+    };
+
+    const applyFiltersInvoice = () => {
+      return  getPaymentDetailById?.length>0 && getPaymentDetailById?.filter((order) => {
+        // Include orders with no clientPaymentStatus when "unPaidToClient" is selected
+        if (filterPaymentReleasedDate && order.paymentReleasedDate) {
+          // Parse the order's paymentReleasedDate using a custom parsing function
+          const orderDate = parseCustomDate(order.paymentReleasedDate);
+    
+          // Convert the filterPaymentReleasedDate to a Date object for proper comparison
+          const filterDate = new Date(filterPaymentReleasedDate);
+    
+          // Extract the year, month, and date parts from orderDate
+          const orderYear = orderDate.getFullYear();
+          const orderMonth = orderDate.getMonth() + 1; // Adding 1 to get the correct month
+          const orderDay = orderDate.getDate();
+    
+          // Extract the year, month, and date parts from filterDate
+          const filterYear = filterDate.getFullYear();
+          const filterMonth = filterDate.getMonth() + 1; // Adding 1 to get the correct month
+          const filterDay = filterDate.getDate();
+    
+         
+    
+          // Compare the dates (ignoring the time part)
+          return orderMonth === filterMonth && orderDay === filterDay && orderYear === filterYear;
+        }
+    
+        return true; // Include all orders when no specific date is selected
+      });
+    };
+    
+    // Custom parsing function for the non-standard date format
+    const parseCustomDate = (dateString) => {
+      const parts = dateString.split(' ');
+      const monthName = parts[0];
+      const day = parseInt(parts[1].replace(',', ''), 10);
+      const year = parseInt(parts[2], 10);
+    
+      // Note: JavaScript months are zero-based, so we need to subtract 1 from the month
+      const month = new Date(Date.parse(monthName + ' 1, 2000')).getMonth();
+    
+      return new Date(year, month, day);
+    };
+    
+    
+    const invoiceMap=applyFiltersInvoice()
+    
+     
+
+ const sortedInvoiceData = invoiceMap?.length>0 && invoiceMap?.sort((a, b) => {
+  const timeA = new Date(a.paymentReleasedDate?.replace(" at ", " "));
+  const timeB = new Date(b.paymentReleasedDate?.replace(" at ", " "));
+
+  return timeB - timeA;
+});
     return (
         <div className='payment_container'>
        
           <NavigationBar/>
-       
-          <div className="main-div " style={{margin:"45px"}}>
+          
+        <div className="mb-5">
+  
+        <div style={styles.tabContainer} >
+            {/* Tab for All Orders */}
+            <div className="col-lg-2 col-sm-12">
+              <button
+                style={{ ...styles.tabButton, ...(activeOrderTab === 'allOrders' ? styles.activeTab : {}) }}
+                onClick={() => handleTabChange('allOrders')}
+              >
+                All Orders
+              </button>
+            </div>
+            {/* Tab for Invoice */}
+            <div className="col-lg-2 col-sm-12">
+              <button
+                style={{ ...styles.tabButton, ...(activeOrderTab === 'invoice' ? styles.activeTab : {}) }}
+                onClick={() => handleTabChange('invoice')}
+              >
+                Invoice
+              </button>
+            </div>
+          </div>
+   
+     
+          {activeOrderTab === 'allOrders' && (
+            <div className="main-div " style={{margin:"45px"}}>
             <div className="row mt-4">
               <div className="col-sm-6">
                 <h1>Order List</h1>
@@ -467,6 +655,76 @@ const filerByOrderDate=info.filter(order=>{
             
               } 
           </div>
+          )}
+
+          {activeOrderTab === 'invoice' && (
+            <div className="invoice" style={{margin:"45px"}}>
+               <div className="col-lg-3 col-sm-12">
+               <label htmlFor="date-filter" style={{marginBottom:"8px"}}>Payment Released Date:</label>
+               <input type="date" id="date-filter" className="form-control" value={filterPaymentReleasedDate}  onChange={handleInputSearchChange} />
+             </div>
+          {/* <div className="col-lg-1 col-sm-12 " style={{marginTop:"36px"}} >
+             <span style={{cursor:"pointer",border:"1px solid #dad5d5",padding:"10px",borderRadius:"4px"}} onClick={downloadInfIntoXl} data-order-id="view-order-detail"><img style={{width:"30px",hight:"25px"}} src="/images/download.png" alt='download'/></span>
+             <div id="view-order-detail"style={{position: 'absolute', left: '-10000px', top: '-10000px'}}>
+             <GetReleaseOrderXl paymentRelasedOrders={paymentRelasedOrders}/>
+         </div> 
+         </div>  */}
+         {
+          sortedInvoiceData?.length>0 &&
+          <Table responsive>
+          <thead>
+            <tr>
+              <th>Payment Release Date</th>
+              <th>Collect Amount</th>
+              <th>Delivery Fee</th>
+              <th>Rcv Amount</th>
+              <th>Payment Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedInvoiceData?.map((releaseOrder, index) => (
+             
+                <tr key={index}>
+                  
+                  <td>{releaseOrder?.paymentReleasedDate}</td>
+                  <td >{releaseOrder?.totalCollectAmount}</td>
+                  <td >{releaseOrder?.totalDeliveryFee}</td>
+                  <td >{releaseOrder?.totalRecvableAmount}</td>
+                  <td >{releaseOrder?.segmentPayStatus}</td>
+                  <td >
+                    <div className="view-client-title " style={{ marginRight: "10px" }}>
+                 
+                      <Button variant="warning" onClick={() => downloadInvoiceDetail(releaseOrder?._id, releaseOrder?.regId)}>
+                        <span><img style={{ width: "23px", height: "20px" }} src="/images/download.png" alt='download' /></span>PDF
+                      </Button>
+                   
+                     
+                     
+                      <Link to={`/invoice/${releaseOrder?._id}/${releaseOrder?.regId}`} state={{ releaseOrder }} key={index}> 
+                    
+                      <Button style={{backgroundColor:"#012970",marginLeft:"5px"}} >
+                       VIEW
+                      </Button>
+                      </Link>
+                     
+                    </div>
+                  
+                  </td>
+                </tr>
+            
+            ))}
+          </tbody>
+        </Table>
+         }
+        
+
+              
+              {/* ... (your code for displaying invoices) */}
+            </div>
+          )}
+        </div>
+      
           
           <Footer/>
     <BackToTop/>

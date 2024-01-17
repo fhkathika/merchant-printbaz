@@ -330,7 +330,8 @@ const handleShowTicketPopUp=()=>{
             </Link>
             {
    fetchAllTicket?.forEach(readMsg => {
-    if( user?.email===readMsg?.userEmail && readMsg?.unread === "true"){
+    if( user?.email===readMsg?.userEmail && readMsg?.unread === "true" 
+    ){
       msgCount++
    }
    else{
@@ -339,10 +340,10 @@ const handleShowTicketPopUp=()=>{
 
   })
    }
-   {
+   {/* {
      msgCount>0 &&
      <span className='notification-badge' >{msgCount}</span>
-   }
+   } */}
           </li>
         </ul>
      

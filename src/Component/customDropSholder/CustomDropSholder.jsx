@@ -34,6 +34,7 @@ import NavigationBar from "../Navbar/NavigationBar";
 import ProductTab from "../ProductTab";
 import BuyNowAlert from "../alert/BuyNowAlert";
 import Footer from "../footer/Footer";
+import useDynamicSizes from "../../hooks/useDynamicSizes";
 
 // import isAddToCartEnabled from "../../globalFunctions/isAddToCartEnabled";
 
@@ -187,8 +188,8 @@ const handleFileChange = async (event, index, fileType, oldFileId = null) => {
 
     try {
       // Send the file to your backend server
-      const response = await fetch('http://localhost:5000/uploadOrderedFile', {
-      // const response = await fetch('https://mserver.printbaz.com/uploadOrderedFile', {
+      // const response = await fetch('http://localhost:5000/uploadOrderedFile', {
+      const response = await fetch('https://mserver.printbaz.com/uploadOrderedFile', {
         method: 'POST',
         body: formData, // Send the file within FormData
       });
@@ -609,8 +610,8 @@ const removeFileFromServer = async (fileId) => {
   try {
     // Make a POST request to your server with the order data
     // const response = await fetch('https://server.printbaz.com/addToCart', {
-    const response = await fetch('http://localhost:5000/addToCart', {
-    // const response = await fetch('https://mserver.printbaz.com/addToCart', {
+    // const response = await fetch('http://localhost:5000/addToCart', {
+    const response = await fetch('https://mserver.printbaz.com/addToCart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -768,7 +769,12 @@ setShowLoginPopup(true)
   
   };
   
+  const {sizeData}=useDynamicSizes()
 
+  const getSizesForColor = (color) => {
+    // Assuming sizeData is an array containing available sizes
+    return sizeData.filter((size) => size.colors[color]);
+  };
   return (
     <div>
       <meta charSet="UTF-8" />
@@ -992,68 +998,32 @@ setShowLoginPopup(true)
     </h2>
     <div id={`collapse${index}`} className="accordion-collapse collapse" aria-labelledby={`heading${index}`} data-bs-parent="#accordionExample">
     <div className="accordion-body">
-     <div className="productSizeColor">
-       <div className="productSize">
-         <h6 value="m">M</h6>
-         <input 
-                   data-size="m"
-                   data-color={item.color}
-                   name="quantityM"
-                   type="number"
-                   value={item.quantityM}
-                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
-                   onChange={(e) => handleInputChange(e, index)}
-               />
-       </div>
-       <div className="productSize">
-         <h6 value="L">L</h6>
-         <input 
-                   data-size="L"
-                   data-color={item.color}
-                   name="quantityL"
-                   type="number"
-                   value={item.quantityL}
-                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
-                   onChange={(e) => handleInputChange(e, index)}
-               />
-       </div>
-       <div className="productSize">
-         <h6 value="XL">XL</h6>
-         <input 
-                   data-size="XL"
-                   data-color={item.color}
-                   name="quantityXL"
-                   type="number"
-                   value={item.quantityXL}
-                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
-                   onChange={(e) => handleInputChange(e, index)}
-               />
-       </div>
-       <div className="productSize">
-         <h6 value="XXL">2XL</h6>
-         <input 
-                   data-size="XXL"
-                   data-color={item.color}
-                   name="quantityXXL"
-                   type="number"
-                   value={item.quantityXXL}
-                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
-                   onChange={(e) => handleInputChange(e, index)}
-               />
-       </div>
-       <div className="productSize">
-         <h6 value="XXXL">3XL</h6>
-         <input 
-                   data-size="XXXL"
-                   data-color={item.color}
-                   name="quantityXXXL"
-                   type="number"
-                   value={item.quantityXXXL}
-                   style={{marginLeft:"auto",height:"30px",border:"1px solid #ddd8d8"}}
-                   onChange={(e) => handleInputChange(e, index)}
-               />
-       </div>
-     </div>
+    <div className="productSizeColor">
+  {getSizesForColor(item.color).map((size) => (
+    <div key={size._id} className="productSize">
+      <h6 value={size.size}>{size.size}</h6>
+      {/* You may customize the input fields based on your requirements */}
+      {size?.colors[item.color].custom_Drop_Shoulder ? (
+        <input
+          data-size={size.size}
+          data-color={item?.color}
+          name={`quantity${size.size === "m" ? "M" : size.size}`}
+          type="number"
+          value={item[`quantity${size.size === "m" ? "M" : size.size}`]}
+          style={{ marginLeft: "auto", height: "30px", border: "1px solid #ddd8d8" }}
+          onChange={(e) => handleInputChange(e, index)}
+        />
+      ) : (
+        <input
+          disabled
+         
+          style={{ marginLeft: "auto", height: "30px", cursor: 'not-allowed', border: "1px solid #ddd8d8", backgroundColor: '#ccc' }}
+         
+        />
+      )}
+    </div>
+  ))}
+</div>
      <div className="productPrintSizeAndFiles">
        <label htmlFor="formFile" className="form-label fileUploadTitle">Print
          Side</label>

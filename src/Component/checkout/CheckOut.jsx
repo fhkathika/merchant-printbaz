@@ -195,6 +195,10 @@ const [showContent, setShowContent] = useState(false);
 const handleMouseEnter = () => {
   setShowContent(true);
 };
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 const handleMouseLeave = () => {
   setShowContent(false);
@@ -484,9 +488,12 @@ const handleSubmitOrder=async(e)=>{
     // Append file and image IDs if they exist
     if (product?.file?.fileId) {
       formDataSendOrdertoServer.append(`file${index}_${productIndex}`, product.file.fileId);
+    
+   
     }
     if (product?.image?.fileId) {
       formDataSendOrdertoServer.append(`image${index}_${productIndex}`, product.image.fileId);
+     
     }
     // Append file and image IDs if they exist
 // if (product?.file?.fileId) {

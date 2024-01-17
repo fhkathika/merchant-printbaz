@@ -18,6 +18,7 @@ import Footer from '../Component/footer/Footer';
 import NavigationBar from '../Component/Navbar/NavigationBar';
 import BackToTop from '../Component/backToTop/BackToTop';
 import ProductInfoTab from '../Component/productInfoTab/ProductInfoTab';
+import useGetAllTicket from '../hooks/useGetAllTicket';
 const DashBoard = () => {
   const {user,logoutUser}=useContext(AuthContext);
 
@@ -25,31 +26,42 @@ const DashBoard = () => {
   const {info}=useGetMongoData()
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const[fetchAllTicket,setFetchAllTicket]=useState([])
+  
     const [popupId, setPopupId] = useState('');
     const [createTicket, setCreateTicket] = useState(false);
     const [reqBtnStatus, setReqBtnStatus] = useState(true);
     const [reqAlert, setReqAlert] = useState('');
     const closePopup = () => {setShowPopup(false);};
-    
-   useEffect(()=>{
-    fetchAllTicketData()
-   },[])
-    const fetchAllTicketData = async () => {
-      try {
-        // const response = await axios.get('http://localhost:5000/allTicketIds');
-        const response = await axios.get('https://mserver.printbaz.com/allTicketIds');
-        setFetchAllTicket(response.data);
+    const {fetchAllTicket}=useGetAllTicket()
+    const [allticket,setAllTicket]=useState()
+   // UseEffect to retrieve data from local storage on component mount
+useEffect(() => {
+  const storedData = localStorage.getItem('fetchAllTicketData');
+
+  if (storedData) {
+    setAllTicket(JSON.parse(storedData));
+  }
+}, []);
+
+    // const fetchAllTicketData = async () => {
+    //   try {
+    //     // const response = await axios.get('http://localhost:5000/allTicketIds');
+    //     const response = await axios.get('https://mserver.printbaz.com/allTicketIds');
+    //     setFetchAllTicket(response.data);
      
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
     let idCounter = 1; // Initialize a counter for the IDs
-    const generateId = () => {
+    const generateId =() => {
+      // Assuming useGetAllTicket returns an object with a fetchAllTicket property
+  
       const paddedId = String(idCounter).padStart(6, '0'); // Convert counter to string and pad with leading zeros
     
-      if (fetchAllTicket?.filter(ticketId => ticketId === paddedId).length > 0){
+    
+      // Check if the generated ID already exists
+      if (allticket?.filter(ticketId => ticketId === paddedId).length > 0) {
         idCounter++; // Increment the counter
         return generateId(); // Recursively call the function to generate the next ID
       }
@@ -57,6 +69,10 @@ const DashBoard = () => {
       idCounter++; // Increment the counter
       return paddedId;
     };
+    
+    
+   
+    
     const [display, setDisplay] = useState('flex');
     const [displayNone, setDisplayNone] = useState('none');
     const showRegister = () => {
@@ -152,11 +168,12 @@ const handleCreateTicket=(e)=>{
  localStorage.setItem('lastClicked', Date.now());
   setCreateTicket(true)
  
-  fetchAllTicketData()
+ 
   setShowPopup(true)
   setPopupId(generateId()); // Set the generated ID
 
 }
+
 const handleRequestAlert=(e)=>{
   e.preventDefault()
   setReqAlert("your total bill must be 1000/- or more")
@@ -219,47 +236,47 @@ user.payments[user.payments.length-1] : null;
 // Calculate the grand due amount
 let grandDueNow = dueAmount;
 
-useEffect(() => {
-  const getOrderById = async () => {
-      // Ensure there's an ID before making a request
-    if (user?._id) {
-          try {
+// useEffect(() => {
+//   const getOrderById = async () => {
+//       // Ensure there's an ID before making a request
+//     if (user?._id) {
+//           try {
         
-              const response = await fetch(
-                  `https://mserver.printbaz.com/updateBill/${user._id}`,
-                  // `http://localhost:5000/updateBill/${viewClient._id}`,
-                  {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ 
-                        totalBill: statusPaidbase, 
-                        totalReceiveBase: totalReceiveBase?totalReceiveBase:0,
-                        totalReturnAmmountBase: totalReturnAmmountBase,
-                        dueAmount:  grandDueNow 
-                    }),
-                }
-              );
+//               const response = await fetch(
+//                   `https://mserver.printbaz.com/updateBill/${user._id}`,
+//                   // `http://localhost:5000/updateBill/${viewClient._id}`,
+//                   {
+//                     method: "PUT",
+//                     headers: {
+//                         "Content-Type": "application/json",
+//                     },
+//                     body: JSON.stringify({ 
+//                         totalBill: statusPaidbase, 
+//                         totalReceiveBase: totalReceiveBase?totalReceiveBase:0,
+//                         totalReturnAmmountBase: totalReturnAmmountBase,
+//                         dueAmount:  grandDueNow 
+//                     }),
+//                 }
+//               );
 
-              const data = await response.json();
-              if (response.status === 200) {
-                  // Handle success, for instance:
+//               const data = await response.json();
+//               if (response.status === 200) {
+//                   // Handle success, for instance:
                  
-              } else {
-                  // Handle error
-                  console.error("Error updating the bill:", data.message);
-              }
+//               } else {
+//                   // Handle error
+//                   console.error("Error updating the bill:", data.message);
+//               }
 
-          } catch (error) {
-              console.error("Network or server error:", error);
-          }
-      }
-  };
+//           } catch (error) {
+//               console.error("Network or server error:", error);
+//           }
+//       }
+//   };
 
-  getOrderById();
+//   getOrderById();
 
-}, [user,statusPaidbase, totalReceiveBase, totalReturnAmmountBase, dueAmount]);
+// }, [user,statusPaidbase, totalReceiveBase, totalReturnAmmountBase, dueAmount]);
 
 
 useEffect(() => {
@@ -382,6 +399,89 @@ useEffect(() => {
 
 }, []);
 
+// new calculation for billing system 
+//totalbill is sum of all rcv money
+let newTotalBill=0;
+if (PaymentStausPaid?.length !== 0) {
+  newTotalBill = PaymentStausPaid?.reduce((sum, receiveAmount) => {
+    let amount = parseInt(receiveAmount?.recvMoney);
+    return sum + (isNaN(amount) ? 0 : amount);
+  }, 0); // Initialize sum to 0
+}
+
+// new return calculation 
+let sumofReturnOrderPrintbazcost=0;
+let sumofReturnOrderDeliveryFee=0
+if (orderSatatusReturned?.length !== 0) {
+  sumofReturnOrderPrintbazcost = orderSatatusReturned?.reduce((sum, pbCost) => {
+    let amount = parseInt(pbCost?.printbazcost);
+    return sum + (isNaN(amount) ? 0 : amount);
+  }, 0); // Initialize sum to 0
+}
+if (orderSatatusReturned?.length !== 0) {
+  sumofReturnOrderDeliveryFee = orderSatatusReturned?.reduce((sum, delivFee) => {
+    let amount = parseInt(delivFee?.deliveryFee);
+    return sum + (isNaN(amount) ? 0 : amount);
+  }, 0); // Initialize sum to 0
+}
+let newTotalReturn=sumofReturnOrderPrintbazcost+sumofReturnOrderDeliveryFee+sumofReturnOrderDeliveryFee/2
+let newTotalDue=newTotalBill-(user?.paymentReleasedAmount?user?.paymentReleasedAmount:0+newTotalReturn)
+let totalnewDueAmount=newTotalDue>0?newTotalDue:0
+
+useEffect(()=>{
+  const getUpdatebillinMerchantProfile= async () => {
+    // Ensure there's an ID before making a request
+   console.log("call getUpdatebillinMerchantProfile.........")
+  if(user?._id){
+  try {
+      
+            const response = await fetch(
+                `https://mserver.printbaz.com/updateBill/${user?._id}`,
+                // `http://localhost:5000/updateBill/${viewClient._id}`,
+                {
+                  method: "PUT",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ 
+                      // totalBill: statusPaidbase, 
+                      // totalReceiveBase: totalReceiveBase,
+                      // totalReturnAmmountBase: totalReturnAmmountBase,
+                      // dueAmount: dueAmount
+                      totalBill: newTotalBill,
+                      totalReturnAmmountBase: newTotalReturn,
+                      dueAmount: totalnewDueAmount
+                  }),
+              }
+            );
+  
+            const data = await response.json();
+            if (response.status === 200) {
+                // Handle success, for instance:
+                console.log("updated bill.......", totalnewDueAmount)
+            } else {
+                // Handle error
+                console.error("Error updating the bill:", data.message);
+            }
+  
+        }
+         catch (error) {
+            console.error("Network or server error:", error);
+        }
+      }
+  };
+
+  // if (!user?.totalBill && PaymentStausPaid.length > 0 && (!user?.dueAmount||user?.dueAmount==="null")) {
+   
+    getUpdatebillinMerchantProfile();
+  // }
+ 
+  console.log("totalnewDueAmount..........",totalnewDueAmount)
+
+ },[newTotalBill,
+  newTotalReturn,
+  totalnewDueAmount])
+
   return (
     <>
   <meta charSet="utf-8" />
@@ -461,6 +561,7 @@ useEffect(() => {
           className="col-12"
           style={{ textAlign: "center", marginBottom: 20 }}
         >
+        
           <Link to="/newOrdersWithOption" style={{textDecoration:"none"}} className="btn-buy">
             Create A New Order
           </Link>
@@ -577,7 +678,8 @@ useEffect(() => {
             <div className="box">
               <h3 style={{ color: "#07d5c0" }}>Total Payment Received</h3>
               <div className="payments">
-                <sup>৳</sup>{lastPayment?.totalReleasedAmount?Math.floor(lastPayment?.totalReleasedAmount):0}
+                {/* <sup>৳</sup>{lastPayment?.totalReleasedAmount?Math.floor(lastPayment?.totalReleasedAmount):0} */}
+                <sup>৳</sup>{user?.paymentReleasedAmount?user?.paymentReleasedAmount:0}
               </div>
             </div>
           </div>
@@ -589,7 +691,8 @@ useEffect(() => {
             <div className="box">
               <h3 style={{ color: "#65c600" }}>Total Bill</h3>
               <div className="payments">
-                <sup>৳</sup>{Math.floor(lastPayment?.totalBill)}
+                {/* <sup>৳</sup>{Math.floor(lastPayment?.totalBill)} */}
+                <sup>৳</sup>{Math.floor(user?.totalBill)}
               </div>
             </div>
           </div>
@@ -601,7 +704,8 @@ useEffect(() => {
             <div className="box">
               <h3 style={{ color: "#ff901c" }}>Return Value</h3>
               <div className="payments">
-                <sup>৳</sup>{Math.floor(lastPayment?.totalReturnAmmountBase)}
+                {/* <sup>৳</sup>{Math.floor(lastPayment?.totalReturnAmmountBase)} */}
+                <sup>৳</sup>{Math.floor(user?.totalReturnAmmountBase)}
               </div>
             </div>
           </div>
@@ -613,7 +717,8 @@ useEffect(() => {
             <div className="box">
               <h3 style={{ color: "#ff0071" }}>Due Amount</h3>
               <div className="payments">
-                <sup>৳</sup>{Math.floor(user?.dueAmountNow)}
+                {/* <sup>৳</sup>{Math.floor(user?.dueAmountNow)} */}
+                <sup>৳</sup>{Math.floor(user?.dueAmount?user?.dueAmount:0)}
               </div>
             </div>
           </div>
@@ -633,7 +738,7 @@ useEffect(() => {
                  
                    :
                    
-                    statusPaidbase<=1000 ?
+                    user?.totalBill<=1000 ?
                     <>
                      <p  style={{textDecoration:"none"}} className="btn-buy"  onClick={handleRequestAlert}>
                      Request

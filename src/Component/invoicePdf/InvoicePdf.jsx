@@ -1,88 +1,156 @@
-import { useLocation } from "react-router-dom";
 
-const InvoicePdf = ({ style, id, order }) => {
-    const location = useLocation();
-    const viewOrder = location.state ? location?.state?.orderInfo : null;
+import React, { useEffect, useState } from 'react';
+import { Container, Table } from 'react-bootstrap';
+import { useLocation, useParams } from "react-router-dom";
+
+const InvoicePdf = ({releaseOrderId,releaseOrderRegId}) => {
+ 
+  const [paymentRelasedOrders,setPaymentRelasedOrders]=useState([])
+  const [getPaymentDetailById, setGetPaymentDetailById] = useState([]);
+    const getPaymentReleasedOrdersByRefId = async () => {
+         await fetch(`https://mserver.printbaz.com/getPaymentReleasedOrderByRegId/${releaseOrderRegId}`) //for main site
+        // await fetch(`http://localhost:5000/getPaymentReleasedOrderByRegId/${releaseOrderRegId}`)
+        .then(res=>res.json())
+        .then(data => setPaymentRelasedOrders(data))
+        }
+      
+
+        const getPerSegmentPaymentDetailById=async()=>{
+          // Fetch the updated order details
+        await fetch(`https://mserver.printbaz.com/getPaymentDetailbyId/${releaseOrderId}`)
+        // await fetch(`http://localhost:5000/getPaymentDetailRegId/${releaseOrderRegId}`)
+        .then(res=>res.json())
+        .then(data => {setGetPaymentDetailById(data)})
+        }
+      
+        useEffect(()=>{
+          getPaymentReleasedOrdersByRefId()
+          getPerSegmentPaymentDetailById()
+            
+              },[getPaymentDetailById,paymentRelasedOrders])
+         
+        const specificPayDetail=getPaymentDetailById?.find(detail=> detail?._id===releaseOrderId)
+        // console.log("specificPayDetail",specificPayDetail)
+      const filterByDate=paymentRelasedOrders?.filter(order=>order?.paymentReleasedDate===specificPayDetail?.paymentReleasedDate)
+
     return (
-        <div id={id} style={style}>
-          <meta charSet="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-          <title>Invoice</title>
-          <style dangerouslySetInnerHTML={{__html: "\n        \n    " }} />
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <a target="_blank" href="https://printbaz.com/">
-                  <img src="https://media.discordapp.net/attachments/1069579536842379305/1103281899469811712/logo01.png?width=1440&height=392" style={{width: '10%', marginTop: '50px'}} alt="" />
-                </a>
-              </div>
-              <div className="row" style={{marginTop: '50px'}}>
-                <div className="col-6 invoice-to" style={{display: 'inline-block'}}>
-                  <h2>Invoice To</h2>
-                  <p>e: {order?.userMail}</p>
-                  <p>p: {order?.phone}</p>
-                </div>
-                <div className="col-6 card" style={{width: '18rem', display: 'inline-block'}}>
-                  <ul className="list-group list-group-flush">
-                    <li className="list-group-item bg-light">Total Paid Out: BDT {viewOrder?.recvMoney}</li>
-                    <li className="list-group-item">Invoice Date: {viewOrder?.createdAt}</li>
-                    <li className="list-group-item bg-light">Order Id {viewOrder?.id}</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="row" style={{marginTop: '50px', marginBottom: '30px', backgroundColor: 'aliceblue'}}>
-                <div className="col-12">
-                  <h2 className="my-3">Payment Break Down</h2>
-                </div>
-                <div className="col-md-2 col-sm-12 mb-3">
-                  <strong>Order Info</strong>
-                  <p>{viewOrder?.name}</p>
-                  <p>{viewOrder?.phone}</p>
-                  <p>{viewOrder?.address}</p>
-                </div>
-                <div className="col-md-2 col-sm-12 mb-3">
-                  <strong>Invoice Type</strong>
-                  <p>{viewOrder?.orderStatus}</p>
-                </div>
-                <div className="col-md-2 col-sm-12 mb-3">
-                  <strong>Printbaz Cost</strong>
-                  <p>{viewOrder?.printbazcost}</p>
-                </div>
-                <div className="col-md-2 col-sm-12 mb-3">
-                  <strong>Delivery Fee</strong>
-                  <p>{viewOrder?.deliveryFee}</p>
-                </div>
-                <div className="col-md-2 col-sm-12 mb-3">
-                  <strong>Collect Amount</strong>
-                  <p>{viewOrder?.collectAmount}</p>
-                  
-                </div>
-                <div className="col-md-1 col-sm-12 mb-3">
-                  <strong>Cash Handling Fee</strong>
-                  <p>2%</p>
-                </div>
-                <div className="col-md-1 col-sm-12 mb-3">
-                  <strong>Receivable Amount</strong>
-                  <p>{viewOrder?.recvMoney}</p>
-                </div>
-              </div>
-              <div className="row">
-              </div>
-              <div className="row">
-                <div className="col-12">
-                  <h4 className="my-3">Terms and Conditions:</h4>
-                  <p>Payment should be made within 48 hours by bank or mobile-banking.</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 text-center" style={{marginTop: '50px'}}>
-                  <p>(This is a computer generated invoice and requires no signature)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <Container className="invoice mt-5">
+      <div style={{display:"flex"}}>
+  <div >
+  {/* <img style={{width:"20px",height:"20px"}} src="https://i.ibb.co/N1NY2D2/favicon2.jpg" alt="Company Logo"/> */}
+ <h2>Printbaz</h2>
+  <p style={{marginTop:"5px",fontSize:"12px"}}>Banani Breeze,</p>
+  <p style={{lineHeight:"1px",fontSize:"12px"}}> House 76 Rd No 2, Dhaka 1213</p>
+  <p style={{marginTop:"5px",fontSize:"12px"}}>01927-854949</p>
+
+</div>
+  <div  style={{marginLeft:"40px",borderLeft:"1px solid black"}}>
+  {/* <img style={{width:"20px",height:"20px",marginLeft:"20px"}} src="https://i.ibb.co/zJTM5Zk/call-1.png" alt="phone logo"/> */}
+  {/* <p style={{marginTop:"5px",fontSize:"12px",marginLeft:"20px"}}>01927-854949</p> */}
+
+  {/* <img style={{textAlign:"center"}} src='https://i.ibb.co/zJTM5Zk/call-1.png'/> 
+  <p style={{fontSize:"15px"}}>01927-854949</p> */}
+</div>
+{/* <div>
+ 
+  </div>
+<div>
+ 
+  </div>
+<div>
+ 
+  </div>
+<div>
+ 
+  </div> */}
+
+ 
+  
+</div>
+<hr />
+<div class="header">
+{/* <img src="your-company-logo.png" alt="Company Logo"/> */}
+
+</div>
+<div style={{display:"flex",justifyContent:"space-between"}}>
+<div class="bill-to">
+<h1 style={{textAlign:"left"}}>Invoice To</h1>
+<p style={{textAlign:"left"}}>{specificPayDetail?.clientName}</p>
+<p style={{textAlign:"left"}}>{specificPayDetail?.clientAddress}</p>
+
+</div>
+
+<Table striped="columns" style={{width:"40%"}}>
+
+<tbody>
+<tr>
+<td><strong>Total Paid Out</strong> </td>         
+   <td>{specificPayDetail?.totalRecvableAmount} </td> 
+</tr>
+<tr>
+<td ><strong>Invoice Date </strong></td>
+<td >{specificPayDetail?.paymentReleasedDate} </td>
+</tr>
+
+</tbody>
+</Table>
+</div>
+
+
+
+<table class="table">
+<thead>
+  <tr>
+  <th >Order Info </th>
+  <th >Payment Release Date</th>
+              <th >Collect Amount</th>
+              <th >Delivery Fee</th>
+              <th >Rcv Amount</th>
+             
+  </tr>
+</thead>
+<tbody>
+  {
+      filterByDate?.map(order=> 
+      <tr>
+              <td><p>{order?.address}</p>
+<p>{order?.reciepientFirstname}</p>
+<p>{order?.reciepientLastname}</p>
+
+<p>{order?.phone}</p>
+
+</td>
+          <td>{order?.paymentReleasedDate}</td>
+          <td>{order?.collectAmount}</td>
+          <td>{order?.deliveryFee}</td>
+          <td>{order?.recvMoney}</td>
+      
+        
+        </tr>)
+  }
+
+<tr className='highlightedrow'>
+<td className='highlightedrow'><strong>Total:</strong></td>
+<td className='highlightedrow'></td>
+<td className='highlightedrow'><strong>{specificPayDetail?.totalCollectAmount}</strong></td>
+<td className='highlightedrow'><strong>{specificPayDetail?.totalDeliveryFee}</strong></td>
+<td className='highlightedrow'><strong>{specificPayDetail?.totalRecvableAmount}</strong></td>
+
+</tr>
+
+ 
+
+</tbody>
+</table>
+
+
+{/* <div class="footer">
+<p>For payment, please use the following bank details:</p>
+<p>Bank Name: Your Bank Name</p>
+<p>Account Number: Your Account Number</p>
+</div> */}
+</Container>
+
      );
     };
     

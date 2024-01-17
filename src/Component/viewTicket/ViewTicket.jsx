@@ -99,15 +99,29 @@ useEffect(() => {
     }, [ messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })]);
     
       const fetchOrderIddata = async () => {
-        try {
-          // const response = await axios.get(`http://localhost:5000/getOrderIdmessages/${viewTicketDetail?.orderId}`);
-          const response = await axios.get(`https://mserver.printbaz.com/getOrderIdmessages/${viewTicketDetail?.orderId}`);
- 
-          setUsersStoredTickets(response.data.messages);
-       
-        } catch (err) {
-          console.error(err);
+        if(viewTicketDetail?.orderId){
+          try {
+            // const response = await axios.get(`http://localhost:5000/getOrderIdmessages/${viewTicketDetail?.orderId}`);
+            const response = await axios.get(`https://mserver.printbaz.com/getOrderIdmessages/${viewTicketDetail?.orderId}`);
+   
+            setUsersStoredTickets(response.data.messages);
+         
+          } catch (err) {
+            console.error(err);
+          }
         }
+        if(viewTicketDetail?.userId){
+          try {
+            // const response = await axios.get(`http://localhost:5000/getuesrIdmessages/${viewTicketDetail?.userId}`);
+            const response = await axios.get(`https://mserver.printbaz.com/getuesrIdmessages/${viewTicketDetail?.userId}`);
+   
+            setUsersStoredTickets(response.data.messages);
+         
+          } catch (err) {
+            console.error(err);
+          }
+        }
+       
       }; 
       const fetchUserIddata = async () => {
         try {

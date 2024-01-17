@@ -45,6 +45,7 @@ const NewOrder = () => {
     const location = useLocation();
     console.log("formData",formData)
   // const { itemToEdit } = useFilterProducts();
+  const {sizeData}=useDynamicSizes()
 
   let id = "resellerOrdersId";
   let collections = "resellerInfo";
@@ -761,8 +762,7 @@ setShowLoginPopup(true)
   }
   
   };
-  const {sizeData}=useDynamicSizes()
-
+ 
   const getSizesForColor = (color) => {
     // Assuming sizeData is an array containing available sizes
     return sizeData.filter((size) => size.colors[color]);

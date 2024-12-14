@@ -94,12 +94,14 @@ const NewOrder = () => {
   const [formValid, setFormValid] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const {
+    customRoundNeckinputFront11p7X16p5,
     customRoundNeckinputFront10X14,
     customRoundNeckinputFront10X10,
     customRoundNeckinputFront10X5,
     customRoundNeckinputFront5X5,
     customRoundNeckinputFront2p5X5,
     customRoundNeckinputFront2p5X2p5,
+    customRoundNeckinputBack11p7X16p5,
     customRoundNeckinputBack10X14,
     customRoundNeckinputBack10X10,
     customRoundNeckinputBack10X5,
@@ -112,6 +114,7 @@ const NewOrder = () => {
   const formattedDate = d.toLocaleDateString("en-US", options);
   const { tshirtPrice } = useGetTshirtPrice();
  
+  let price_11p7x16p5 = customRoundNeckinputFront11p7X16p5?.frontSideprice;
   let price_10x14 = customRoundNeckinputFront10X14?.frontSideprice;
   let price_10x10 = customRoundNeckinputFront10X10?.frontSideprice;
   let price_10x5 = customRoundNeckinputFront10X5?.frontSideprice;
@@ -119,6 +122,7 @@ const NewOrder = () => {
   let price_2p5X5 = customRoundNeckinputFront2p5X5?.frontSideprice;
   let price_2p5X2p5 = customRoundNeckinputFront2p5X2p5?.frontSideprice;
 
+  let backSideDtfprice_11p7x16p5= customRoundNeckinputBack11p7X16p5?.backSideprice;
   let backSideDtfprice_10x14 = customRoundNeckinputBack10X14?.backSideprice;
   let backSideDtfprice_10x10 = customRoundNeckinputBack10X10?.backSideprice;
   let backSideDtfprice_10x5 = customRoundNeckinputBack10X5?.backSideprice;
@@ -305,6 +309,7 @@ const removeFileFromServer = async (fileId) => {
         formData?.quantity &&
         formData?.orderDetailArr[i]?.totalQuantity &&
         formData?.orderDetailArr[i]?.printSize &&
+        price_11p7x16p5 &&
         price_10x14 &&
         price_10x10 &&
         price_10x5 &&
@@ -317,6 +322,7 @@ const removeFileFromServer = async (fileId) => {
           formData?.quantity,
           formData?.orderDetailArr[i]?.totalQuantity,
           formData?.orderDetailArr[i]?.printSize,
+          price_11p7x16p5,
           price_10x14,
           price_10x10,
           price_10x5,
@@ -331,6 +337,7 @@ const removeFileFromServer = async (fileId) => {
           formData?.orderDetailArr[i]?.totalQuantity,
           formData?.orderDetailArr[i]?.printSizeBack,
           formData?.orderDetailArr[i]?.printSide,
+          backSideDtfprice_11p7x16p5,
           backSideDtfprice_10x14,
           backSideDtfprice_10x10,
           backSideDtfprice_10x5,
@@ -365,6 +372,7 @@ const removeFileFromServer = async (fileId) => {
         formData?.quantity &&
         formData?.orderDetailArr[j]?.totalQuantity &&
         formData?.orderDetailArr[j]?.printSize &&
+        price_11p7x16p5 &&
         price_10x14 &&
         price_10x10 &&
         price_10x5 &&
@@ -377,6 +385,7 @@ const removeFileFromServer = async (fileId) => {
           formData?.quantity,
           formData?.orderDetailArr[j]?.totalQuantity,
           formData?.orderDetailArr[j]?.printSize,
+          price_11p7x16p5,
           price_10x14,
           price_10x10,
           price_10x5,
@@ -391,6 +400,7 @@ const removeFileFromServer = async (fileId) => {
           formData?.orderDetailArr[j]?.totalQuantity,
           formData?.orderDetailArr[j]?.printSizeBack,
           formData?.orderDetailArr[j]?.printSide,
+          backSideDtfprice_11p7x16p5,
           backSideDtfprice_10x14,
           backSideDtfprice_10x10,
           backSideDtfprice_10x5,
@@ -1036,7 +1046,7 @@ setShowLoginPopup(true)
  <option value="">Select Print Size</option>
  
                           {/* <option value="">select print size</option>  */}
-                          {/* <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option> */}
+                          <option value="11.7 x 16.5">11.7″ x 16.5″(A3)</option>
                           <option value="10 x 14">10″ x 14″</option>
                           <option value="10 x 10">10″ x 10″(A4)</option>
                           <option value="10 x 5">10″ x 5″</option>

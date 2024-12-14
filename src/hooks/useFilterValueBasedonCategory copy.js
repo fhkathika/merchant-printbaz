@@ -14,6 +14,7 @@ const blankRoundNeckFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Bl
 const blankDropSholderFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Drop Sholder")
 const blankHoodieFilter=tshirtPrice?.filter(thsirt => thsirt.category === "Blank Hoodie")
 // custom round neck backside 
+let customRoundNeckinputFront11p7X16p5=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === "11.7 x 16.5 (A3)")
 let customRoundNeckinputFront10X14=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === "10 x 14")
 let customRoundNeckinputFront10X10=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === "10 x 10")
 let customRoundNeckinputFront10X5=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === "10 x 5")
@@ -21,6 +22,7 @@ let customRoundNeckinputFront5X5=customRoundNeckFilter?.find(thsirt => thsirt.pr
 let customRoundNeckinputFront2p5X5=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === "2.5 x 5")
 let customRoundNeckinputFront2p5X2p5=customRoundNeckFilter?.find(thsirt => thsirt.printSizeFront === "2.5 x 2.5")
 // custom round neck backside 
+let customRoundNeckinputBack11p7X16p5=customRoundNeckFilter?.find(thsirt => thsirt.printSizeBack === "11.7 x 16.5 (A3)")
 let customRoundNeckinputBack10X14=customRoundNeckFilter?.find(thsirt => thsirt.printSizeBack === "10 x 14")
 let customRoundNeckinputBack10X10=customRoundNeckFilter?.find(thsirt => thsirt.printSizeBack === "10 x 10")
 let customRoundNeckinputBack10X5=customRoundNeckFilter?.find(thsirt => thsirt.printSizeBack === "10 x 5")
@@ -64,12 +66,13 @@ let customHoodieinputBack5X5=customHoodieFilter?.find(thsirt => thsirt.printSize
 let customHoodieinputBack2p5X5=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "2.5 x 5")
 let customHoodieinputBack2p5X2p5=customHoodieFilter?.find(thsirt => thsirt.printSizeBack === "2.5 x 2.5")
 return({blankRoundNeckFilter,blankDropSholderFilter,
-    blankHoodieFilter,customRoundNeckinputFront10X14,
+    blankHoodieFilter,customRoundNeckinputFront11p7X16p5,customRoundNeckinputFront10X14,
     customRoundNeckinputFront10X10,
     customRoundNeckinputFront10X5,
     customRoundNeckinputFront5X5,
     customRoundNeckinputFront2p5X5,
     customRoundNeckinputFront2p5X2p5,
+    customRoundNeckinputBack11p7X16p5,
     customRoundNeckinputBack10X14,
     customRoundNeckinputBack10X10,
     customRoundNeckinputBack10X5,

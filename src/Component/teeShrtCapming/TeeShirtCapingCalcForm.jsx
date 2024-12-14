@@ -487,6 +487,7 @@ const [printSide, setPrintSide] = useState('frontSide');
                                 :
                                 <>
                                    <option value="">select print size</option> 
+                                   <option value="11.7 x 16.5 (A3)"> 11.7″ x 16.5″ (A3)</option>
                                 <option value="10 x 14">10″ x 14″</option>
                                 <option value="10 x 10">10″ x 10″</option>
                                 <option value="10 x 5">10″ x 5″</option>
